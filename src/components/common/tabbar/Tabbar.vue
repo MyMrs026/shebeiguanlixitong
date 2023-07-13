@@ -66,10 +66,10 @@
             XXX研究机构
           </el-col>
           <el-col :span="8">
-            <img src="src/assets/img/logo.jpg">
+            <img src="../../../assets/img/logo.jpg" style="width:70px;height:70px">
           </el-col>
           <el-col :span="8">
-            <el-button>登出</el-button>
+            <el-button @click="logOut">登出</el-button>
           </el-col>
         </el-col>
       </el-col>
@@ -89,6 +89,9 @@ export default {
     toggleNavbar() {
       this.showNavbar = !this.showNavbar;
     },
+    logOut(){
+      this.$router.push('/login')
+    }
   }
 }
 </script>

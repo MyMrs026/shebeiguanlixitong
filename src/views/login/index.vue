@@ -36,13 +36,14 @@
 export default {
   data() {
     return {
-      usernanadaome: '',
+      username: '',
       password: '',
+      identity: '',
       options: [{
-        value: '选项1',
+        value: 'staff',
         label: '普通人员'
       }, {
-        value: '选项2',
+        value: 'admin',
         label: '管理人员'
       }],
       value: '',
@@ -55,13 +56,20 @@ export default {
       // 在这里进行账号密码验证
       const validUsername = 'admin';
       const validPassword = 'admin';
-
-      if (this.username === validUsername && this.password === validPassword) {
+      const validUsername1 = 'staff';
+      const validPassword1 = 'staff';
+      if (this.username === validUsername && this.password === validPassword && (this.value == 'admin')) {
         // 登录成功，跳转到 home 页面
         this.$router.push('/home');
-      } else {
+        // console.log("进入主页");
+        console.log(this.value);
+      }else if(this.username === validUsername1 && this.password === validPassword1 && (this.value == 'staff')){
+        this.$router.push('/project');
+      }else if(this.username == '' || this.password == '' || this.value == ''){
+        alert('请输入完整。');
+      }  else {
         // 登录失败，进行相应的处理，比如显示错误消息
-        alert('Invalid credentials. Please try again.');
+        alert('账户或密码错误，验证失败请重新尝试。');
       }
 
       // 清空输入框
