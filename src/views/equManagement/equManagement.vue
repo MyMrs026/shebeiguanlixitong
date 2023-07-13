@@ -2,13 +2,13 @@
   <div class="equp-container">
     <div class="centered-div">
       <div>
-        <p>Use Equipment</p>
+        <p>使用的设备</p>
       </div>
       <div class="equp-container2">
         <el-row>
           <el-col :span="6">
             <div>
-              <p>Equipment</p>
+              <p>设备</p>
             </div>
           </el-col>
           <el-col :span="18">
@@ -34,7 +34,7 @@
     </div>
     <div class="centered-div">
       <div style="margin-left: 6px;">
-        <p>Equipment Being Used</p>
+        <p>被使用的设备情况</p>
       </div>
 
       <div class="table-equ-use">
