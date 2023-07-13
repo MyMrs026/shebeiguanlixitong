@@ -17,7 +17,7 @@
       </p>
     </div>
     <div class="text-home">
-      <p>EquimentBeing Used</p>
+      <p>设备使用表</p>
     </div>
     <div class="table-equ-use">
       <template>
@@ -39,7 +39,7 @@
     </div>
     <hr style="border: 1px solid darkred; margin-left:10px; margin-right:10px" />
     <div class="text-home">
-      <p>My Booking Today</p>
+      <p>我的预约</p>
     </div>
     <div class="table-book-use">
       <el-table :data="tableData2" class="table-book">
@@ -53,15 +53,15 @@
         </el-table-column>
         <el-table-column prop="end" label="结束" width="100">
         </el-table-column>
-        <el-table-column prop="cal" label="Calendar" width="105">
+        <el-table-column prop="cal" label="日期" width="105">
         </el-table-column>
-        <el-table-column prop="action" label="Action" width="158">
+        <el-table-column prop="action" label="动作" width="158">
         </el-table-column>
       </el-table>
     </div>
     <hr style="border: 1px solid darkred; margin-left:10px; margin-right:10px" />
     <div class="text-home">
-      <p>Equipment inService'"Limited UseOut of use(DCH)</p>
+      <p>设备使用状态</p>
     </div>
     <div class="table-dch-use">
       <template>
