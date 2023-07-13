@@ -3,6 +3,7 @@
     <tabbar v-if="isShowTabbar"/>
     <hr v-if="isShowTabbar" class="divided-line"/>
     <router-view/>
+    <hr/>
   </div>
 </template>
 
