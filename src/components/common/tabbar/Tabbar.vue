@@ -36,7 +36,7 @@
           </div>
         </div>
       </el-col>
-      <el-col :span="10">
+      <el-col :span="15">
         <el-row class="title">实验室设备预约管理系统</el-row>
         <el-row>
           <router-link to="/home">
@@ -48,9 +48,9 @@
           <router-link to="/equp">
             <el-button class="custom-button" type="info" round size="mini">设备管理</el-button>
           </router-link>
-          <router-link to="/craft">
+          <!-- <router-link to="/craft">
             <el-button class="custom-button" type="info" round size="mini">工艺管理</el-button>
-          </router-link>
+          </router-link> -->
           <router-link to="/book">
             <el-button class="custom-button" type="info" round size="mini">预约管理</el-button>
           </router-link>
@@ -68,33 +68,38 @@
           </router-link>
         </el-row>
       </el-col>
-      <el-col :span="12">
-        <el-col :span="8">
+      <el-col :span="7">
+        <el-col :span="9">
           <div class="research-box">
-            <div>已有项目</div>
+            <div style="color:white">已有项目</div>
             <el-input placeholder="请输入内容" v-model="input" clearable>
             </el-input>
           </div>
 
         </el-col>
-        <el-col :span="2">
+        <el-col :span="5">
           <div class="help-box">
             <i class="icon-help el-icon-question"></i>
             <p class="font-help">帮助</p>
           </div>
 
         </el-col>
-        <el-col :span="12">
-          <el-col :span="8">
-            XXX研究机构
+        <el-col :span="7" class="institution">
+          <el-row >
+          <el-col >
+            <img  src="../../../assets/img/logo.jpg" style="width: 70px;height:70px">
+          </el-col >
+          <el-col >
+            <div class="lab">
+              XXX研究机构
+            </div>           
           </el-col>
-          <el-col :span="8">
-            <img src="../../../assets/img/logo.jpg" style="width:70px;height:70px">
-          </el-col>
-          <el-col :span="8">
-            <el-button @click="logOut">登出</el-button>
-          </el-col>
+          </el-row>
+          <el-row >
+            <el-button class="btn" @click="logOut">登出</el-button>
+          </el-row>
         </el-col>
+
       </el-col>
     </el-row>
   </div>
@@ -119,53 +124,67 @@ export default {
 }
 </script>
 <style scoped>
-.title {
-  align-items: center;
-  text-align: center;
+.tabbar {
+  background-image:url("../../../assets/img/tabbar2.jpg");
+  width:100%
 }
-
+.title {
+  text-align: center;
+  margin-top:10px;
+  height:40px;
+  color:white;
+}
 .custom-button {
   margin-right: 0px;
   margin-left: 0px;
-  border-color: red;
+  margin-bottom: 10px;
+  border-color: white;
+  background-color:rgb(151, 184, 216,0.5);
+  
 }
-
 .icon-help {
   display: flex;
   font-size: 45px;
-  color: red;
+  color: white;
   justify-content: center;
   align-items: center;
+  margin:10px;
 }
-
 .font-help {
-  display: flex;
-  font-size: 15px;
-  justify-content: center;
   align-items: center;
   margin-top: 0;
   margin-bottom: 0;
-  color: red;
+  color: white;
 }
-
 .research-box {
-  border: 1px solid red;
+  border: 1px solid white;
   border-radius: 4px;
+  margin:4px;
 }
-
 .help-box {
-  border: 1px solid red;
+  border: 1px solid white;
   border-radius: 4px;
-
+  margin:4px;
 }
-
-.navbar-container {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
+.institution {
+  float:left;
+  margin:5px;
 }
-
+.lab{
+  color:#fff;
+}
+.btn{
+  width:50px;
+  height:25px;
+  display:flex;
+  align-items: center;
+  justify-content: center;
+  line-height:20px;
+  font-size: 13px;
+  float:right;
+  text-align: center;
+  color:white;
+}
 .navbar-toggle {
   margin: 15px;
 }
