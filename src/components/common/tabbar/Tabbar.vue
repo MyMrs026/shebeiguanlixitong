@@ -5,16 +5,39 @@
         <div class="navbar-container">
           <el-button class="navbar-toggle" icon="el-icon-menu" @click="toggleNavbar"></el-button>
           <div class="navbar-menu" :class="{ 'show': showNavbar }">
-            <el-menu mode="horizontal">
-              <el-menu-item index="1">导航1</el-menu-item>
-              <el-menu-item index="2">导航2</el-menu-item>
-              <el-menu-item index="3">导航3</el-menu-item>
+            <el-menu>
+              <el-submenu index="1"> 
+                <template slot="title">信息</template>
+                <el-menu-item index="1-1">首页信息</el-menu-item>
+                <el-menu-item index="1-2">一般信息</el-menu-item>
+                <el-menu-item index="1-3">联系信息</el-menu-item>
+              </el-submenu>
+              <el-submenu index="2"> 
+                <template slot="title">设备</template>
+                <el-menu-item index="2-1">使用设备</el-menu-item>
+                <el-menu-item index="2-2">信息</el-menu-item>
+                <el-menu-item index="2-3">设备列表</el-menu-item>
+                <el-menu-item index="2-4">日志</el-menu-item>
+              </el-submenu>
+              <el-submenu index="3"> 
+                <template slot="title">预约</template>
+                <el-menu-item index="3-1">预约设备</el-menu-item>
+                <el-menu-item index="3-2">日程表</el-menu-item>
+                <el-menu-item index="3-3">周程表</el-menu-item>
+                <el-menu-item index="3-4">月程表</el-menu-item>
+              </el-submenu>
+              <el-submenu index="4"> 
+                <template slot="title">账户</template>
+                <el-menu-item index="4-1">编辑信息</el-menu-item>
+                <el-menu-item index="4-2">组织信息</el-menu-item>
+                <el-menu-item index="4-3">邮件联系</el-menu-item>
+              </el-submenu>
             </el-menu>
           </div>
         </div>
       </el-col>
       <el-col :span="10">
-        <el-row class="title">XXX管理系统</el-row>
+        <el-row class="title">实验室设备预约管理系统</el-row>
         <el-row>
           <router-link to="/home">
             <el-button class="custom-button" type="info" round size="mini">首页</el-button>
@@ -91,7 +114,7 @@ export default {
     },
     logOut(){
       this.$router.push('/login')
-    }
+    },
   }
 }
 </script>
