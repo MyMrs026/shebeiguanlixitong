@@ -65,28 +65,28 @@ export default {
     return {
       input: '',
       tableData1: [{
-        prop: 'ASE',
+        equ: 'ASE',
         status: 'Open',
         user: 'ansimon',
         org: 'KU-Rekvisition 6516-00638',
         starttime: '2016-11-10 17:30:03',
         endtime: '2016-11-10 19:49:21'
       }, {
-        prop: 'ASE',
+        equ: 'ASE',
         status: 'Open',
         user: 'ansimon',
         org: 'KU-Rekvisition 6516-00638',
         starttime: '2016-11-10 17:30:03',
         endtime: '2016-11-10 19:49:21'
       }, {
-        prop: 'ASE',
+        equ: 'ASE',
         status: 'Open',
         user: 'ansimon',
         org: 'KU-Rekvisition 6516-00638',
         starttime: '2016-11-10 17:30:03',
         endtime: '2016-11-10 19:49:21'
       }, {
-        prop: 'ASE',
+        equ: 'ASE',
         status: 'Open',
         user: 'ansimon',
         org: 'KU-Rekvisition 6516-00638',

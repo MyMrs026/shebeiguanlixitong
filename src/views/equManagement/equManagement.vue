@@ -13,20 +13,33 @@
           </el-col>
           <el-col :span="18">
             <div>
-              <el-input style="width:300px" v-model="input"></el-input>
+              <el-input style="width:300px" placeholder="请输入设备名" v-model="searchKeyword"></el-input>
+              <el-button type="info" style="margin-left:12px;" size="mini" @click="handleSearch" :disabled="isButtonDisabled" >搜索</el-button>
             </div>
             <br>
-            <div>
-              <el-button type="info" style="margin-left:12px;" size="mini">开始使用</el-button>
+            <div ref="tab1" class="table-equ">
+              <el-table :data="pageData" style="width: 100%">
+                <el-table-column prop="name" label="姓名"></el-table-column>
+                <el-table-column prop="age" label="年龄"></el-table-column>
+                <el-table-column prop="id" label="学号"></el-table-column>
+              </el-table>
+              <el-pagination
+                @size-change="handlePageSizeChange"
+                @current-change="handleCurrentPageChange"
+                :current-page="currentPage"
+                :page-sizes="[5]"
+                :page-size="pageSize"
+                layout="pager"
+                :total="students.length"
+              ></el-pagination> 
             </div>
-            <br>
-            <div>
-              <el-tag type="success">DCH(All)</el-tag>
-              <el-tag type="success">Last Used(Project)</el-tag>
-              <el-tag type="success">Ready Again</el-tag>
-              <br>
-              <el-tag type="success">Last Used</el-tag>
-              <el-tag type="success">Most Popular(DCH)</el-tag>
+            <div ref="tab2" class="search-area">
+              <el-table v-if="searchResult.length > 0" :data="searchResult" style="width: 100%">
+                <el-table-column prop="name" label="姓名"></el-table-column>
+                <el-table-column prop="age" label="年龄"></el-table-column>
+                <el-table-column prop="id" label="学号"></el-table-column>
+              </el-table>
+              <p v-else> 未找到匹配的记录</p>
             </div>
           </el-col>
         </el-row>
@@ -63,7 +76,6 @@
 export default {
   data() {
     return {
-      input: '',
       tableData1: [{
         equp: 'ASE',
         status: 'Open',
@@ -93,10 +105,28 @@ export default {
         starttime: '2016-11-10 17:30:03',
         endtime: '2016-11-10 19:49:21'
       }],
+      students: [],
+      currentPage: 1,
+      pageSize: 5,
+      searchKeyword: '',
+      searchResult: []
     }
   },
+  computed : {
+    pageData() {
+      const startIndex = (this.currentPage - 1) * this.pageSize
+      const endIndex = startIndex + this.pageSize
+      return this.students.slice(startIndex, endIndex)
+    },
+    isButtonDisabled() {
+      return this.searchKeyword === '';
+    }
+  },  
+  mounted() {
+    this.generateRandomStudents()
+  },  
   methods: {
-    tableRowClassName({ row, rowIndex }) {
+    tableRowClassName({ row, rowIndex }) { //表格灰黑相间
       if ((rowIndex % 2) === 0) {
         return 'warning-row';
       } else if ((rowIndex % 2) === 1) {
@@ -104,7 +134,40 @@ export default {
       }
       return '';
     },
-  }
+    generateRandomStudents() {
+      for (let i = 0; i < 10; i++) {
+        const student = {
+          name: this.generateRandomName(),
+          age: this.generateRandomAge(),
+          id: this.generateRandomID(),
+        }
+        this.students.push(student)
+      }
+    },
+    generateRandomName() {
+      const names = ['Alice', 'Bob', 'Charlie', 'David', 'Emma', 'Frank', 'Grace', 'Henry', 'Ivy', 'Jack']
+      return names[Math.floor(Math.random() * names.length)]
+    },
+    generateRandomAge() {
+      return Math.floor(Math.random() * 10) + 15
+    },
+    generateRandomID() {
+      return Math.floor(Math.random() * 10000) + 10000
+    },
+    handlePageSizeChange(pageSize) {
+      this.pageSize = pageSize
+    },
+    handleCurrentPageChange(currentPage) {
+      this.currentPage = currentPage
+    },
+    handleSearch() {
+      this.searchResult = this.students.filter(student => {
+        return student.name.toLowerCase().includes(this.searchKeyword.toLowerCase())
+      })
+      this.$refs.tab1.style.display = 'none';
+      this.$refs.tab2.style.display = 'block';
+    },
+  },
 }
 </script>
 <style scoped>
@@ -147,4 +210,9 @@ export default {
 
 .el-table .success-row {
   background: #e0e0e0;
-}</style>
+}
+
+.search-area{
+  display: none;
+}
+</style>

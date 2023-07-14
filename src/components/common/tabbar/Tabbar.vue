@@ -34,13 +34,13 @@
           <router-link to="/train">
             <el-button class="custom-button" type="info" round size="mini">培训管理</el-button>
           </router-link>
-          <router-link to="/train">
+          <!-- <router-link to="/train">
             <el-button class="custom-button" type="info" round size="mini">测试任务</el-button>
-          </router-link>
-          <router-link to="/train">
+          </router-link> -->
+          <router-link to="/information">
             <el-button class="custom-button" type="info" round size="mini">信息管理</el-button>
           </router-link>
-          <router-link to="/train">
+          <router-link to="/system">
             <el-button class="custom-button" type="info" round size="mini">系统管理</el-button>
           </router-link>
         </el-row>
