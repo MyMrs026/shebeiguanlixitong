@@ -3,7 +3,7 @@
     <div class="top-div">
       <!-- 第一个 div 的内容 -->
       <div>
-        <p>Equipment Booking. Day View</p>
+        <p>设备预约日视图</p>
       </div>
       <div class="block">
         <el-date-picker
@@ -14,57 +14,35 @@
           :picker-options="pickerOptions">
         </el-date-picker>
       </div>
-      <div><button>update</button></div>
-      <div><button>Month</button><button>Week</button><button>Day</button></div>
-      <div><button>Equipment</button><button>User</button></div>
-      <div><button>Make New Booking</button></div>
+      <div><button>更新</button></div>
+      <div><button>月份</button><button>周数</button><button>日期</button></div>
+      <div><button>设备</button><button>用户</button></div>
+      <div><button>创建新的预约</button></div>
     </div>
     <div class="bottom-div">
       <!-- 第二个 div 的内容 -->
-        <el-row>
-          <el-col :span="8">
+        <el-row style="height: 100%;">
+          <el-col :span="8" style="height: 100%;">
             <button>隐藏</button>
             <div><p>使用用户</p></div>
-            <div class="block">
-              <el-time-picker
-              is-range
-              v-model="value2"
-              range-separator="至"
-              start-placeholder="开始时间"
-              end-placeholder="结束时间"
-              placeholder="选择时间范围">
-            </el-time-picker>
+            <div class="schedular-area"> 
+              <Schedular/>
             </div>
           </el-col>
-          <el-col :span="8">
+          <el-col :span="8" style="height: 100%;">
             <div >
               <button>隐藏</button>
               <p>设备名</p>
             </div>
-            
-            <div class="block">
-              <el-time-picker
-              is-range
-              v-model="value3"
-              range-separator="至"
-              start-placeholder="开始时间"
-              end-placeholder="结束时间"
-              placeholder="选择时间范围">
-            </el-time-picker>
+            <div class="schedular-area"> 
+              <Schedular/>
             </div>
           </el-col>
-          <el-col :span="8">
+          <el-col :span="8" style="height: 100%;">
             <button>隐藏</button>
             <div><p>选择新设备</p></div>
-            <div class="block">
-              <el-time-picker
-              is-range
-              v-model="value4"
-              range-separator="至"
-              start-placeholder="开始时间"
-              end-placeholder="结束时间"
-              placeholder="选择时间范围">
-            </el-time-picker>
+            <div class="schedular-area"> 
+              <Schedular/>
             </div>
           </el-col>
         </el-row>
@@ -73,7 +51,11 @@
 </template>
 
 <script>
+import Schedular from '../../components/common/schedular/Schedular.vue'
 export default {
+    components:{
+      Schedular,
+    },
     data() {
       return {
         pickerOptions: {
@@ -136,5 +118,10 @@ export default {
   height: 800px;
   border: 1px solid #000;
   border-radius: 8px;
+}
+.schedular-area {
+  width: 90%;
+  height: 90%;
+  overflow: hidden;
 }
 </style>

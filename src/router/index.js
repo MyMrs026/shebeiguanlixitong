@@ -7,6 +7,8 @@ const Equp = () => import('@/views/equManagement/equManagement')
 const Craft = () => import('@/views/craftManagement/craftManagement')
 const Book = () => import('@/views/bookManagement/bookManagement')
 const Train = () => import('@/views/trainManagement/trainManagement')
+const Information = () => import('../views/informationManagement/informationManagement')
+const System = () =>import('../views/systemManagement/systemManagement')
 
 const Login =() => import('@/views/login/index.vue')
 const Register =() => import('@/views/register/register.vue')
@@ -41,6 +43,14 @@ const routes = [
   {
     path: '/train',
     component:Train
+  },
+  {
+    path: '/information',
+    component:Information
+  },
+  {
+    path: '/system',
+    component:System
   },
   {
     path:'/login',
