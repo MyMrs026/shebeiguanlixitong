@@ -94,24 +94,26 @@ export default {
   background-size:100% 100%;
 }
 .login {
-  position: fixed;
+  position: absolute;
   border-radius:10px;
-  padding:20px;
+  padding:30px;
   left: 70%;
+  top:50%;
   transform: translate(-50%, -50%);
-  margin:325px auto;
+  margin:auto; 
   background-color:#fff;
   opacity: 0.7;
   border:2px solid rgba(255,255,255,.5);
   backdrop-filter: blur;
-  width:400px;
-  height:500px;
+  width:30%;
+  height:70%;
 }
 .title {
   align-items: center;
   text-align: center;
-  height: 80px;
-  margin:30px
+  height: 50px;
+  margin:20px;
+  margin-bottom: 30px;
 }
 .login-form {
   margin: 10px;

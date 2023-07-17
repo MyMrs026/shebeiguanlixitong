@@ -36,7 +36,7 @@
           </div>
         </div>
       </el-col>
-      <el-col :span="15">
+      <el-col :span="14">
         <el-row class="title">实验室设备预约管理系统</el-row>
         <el-row>
           <router-link to="/home">
@@ -85,7 +85,7 @@
 
         </el-col>
         <el-col :span="7" class="institution">
-          <el-row >
+          <el-col >
           <el-col >
             <img  src="../../../assets/img/logo.jpg" style="width: 70px;height:70px">
           </el-col >
@@ -94,13 +94,13 @@
               XXX研究机构
             </div>           
           </el-col>
-          </el-row>
-          <el-row >
-            <el-button class="btn" @click="logOut">登出</el-button>
-          </el-row>
-        </el-col>
-
+          </el-col>
+          </el-col>
+          
       </el-col>
+      <el-col :span="1" >
+            <el-button class="btn" @click="logOut">登出</el-button>
+          </el-col>
     </el-row>
   </div>
 </template>
@@ -126,7 +126,9 @@ export default {
 <style scoped>
 .tabbar {
   background-image:url("../../../assets/img/tabbar2.jpg");
-  width:100%
+  width:100%;
+  height:100%;
+  background-size:100% 100%;
 }
 .title {
   text-align: center;
@@ -140,7 +142,7 @@ export default {
   margin-bottom: 10px;
   border-color: white;
   background-color:rgb(151, 184, 216,0.5);
-  
+  font-size: 100%;
 }
 .icon-help {
   display: flex;
@@ -165,6 +167,7 @@ export default {
   border: 1px solid white;
   border-radius: 4px;
   margin:4px;
+  text-align: center;
 }
 .institution {
   float:left;
@@ -176,6 +179,7 @@ export default {
 .btn{
   width:50px;
   height:25px;
+  margin:20px;
   display:flex;
   align-items: center;
   justify-content: center;
@@ -185,12 +189,17 @@ export default {
   text-align: center;
   color:white;
 }
+.btn:hover{
+  background-color: rgb(151, 184, 216,0.5);
+}
 .navbar-toggle {
   margin: 15px;
+  margin-top:40px;
 }
 
 .navbar-menu {
   display: none;
+  width:200px;
 }
 
 .navbar-menu.show {
