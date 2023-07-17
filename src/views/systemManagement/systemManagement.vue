@@ -20,33 +20,58 @@
         </el-form-item>
       </el-form>
     </div>
-    <div class="role">
-      角色管理
-    </div>
     <div class="authority">
-      权限管理
-      <el-table :data="tableData.filter(data => !search || data.name.toLowerCase().includes(search.toLowerCase()))"
-        style="width: 100%">
-        <el-table-column label="账号" prop="account">
-        </el-table-column>
+      <p class="label-auth">权限管理</p>
+      <el-table :data="information" border class="table_auth">
         <el-table-column label="用户名" prop="username">
         </el-table-column>
         <el-table-column label="用户邮箱" prop="email">
         </el-table-column>
-        <el-table-column align="right">
-          <template slot="header" slot-scope="scope">
-            <el-input v-model="search" size="mini" placeholder="输入关键字搜索" />
-          </template>
+        <el-table-column label="权限" prop="role">
+        </el-table-column>
+        <el-table-column label="操作">
           <template slot-scope="scope">
-            <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">普通人员</el-button>
-            <el-button size="mini" type="danger" @click="handleDelete(scope.$index, scope.row)">管理员</el-button>
+            <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
+            <el-button size="mini" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
+      <el-button plain>
+        保存更改
+      </el-button>
+      <el-dialog title="编辑人员信息" :visible.sync="editDialogVisible">
+        <el-form v-model="editedInform" label-width="80px">
+          <el-form-item label="用户名:">
+            <el-input 
+              v-model="editedInform[currentIndex].username" 
+              :disabled="true"
+              style="width: 300px;">
+          </el-input>
+          </el-form-item>
+          <el-form-item label="邮箱:">
+            <el-input 
+              
+              v-model="editedInform[currentIndex].email" 
+              :disabled="true" 
+              style="width:300px;">
+            </el-input>
+          </el-form-item>
+          <el-form-item label="权限:">
+            <el-select v-model="editedInform[currentIndex].role">
+              <el-option label="管理员" value="管理员"></el-option>
+              <el-option label="普通人员" value="普通人员"></el-option>
+            </el-select>
+          </el-form-item>
+        </el-form>
+        <div slot="footer" class="dialog-footer">
+          <el-button @click="editDialogVisible = false">取消</el-button>
+          <el-button type="primary" @click="saveInform">确定</el-button>
+        </div>
+      </el-dialog>
     </div>
-    <div class="account">
-      账号管理
-    </div>
+    <!-- <div class="account">
+      账号管理：自动生成账号？
+    </div> -->
 
   </div>
 </template>
@@ -63,24 +88,30 @@ export default {
         type: '',
         layout: '',
       },
-      tableData: [{
-        account: 'admin',
-        username:'admin',
+      information: [{
+        username: 'admin',
         email: 'admin@edu.cn',
+        role: '管理员'
       }, {
-        account: 'admin',
-        username:'admin',
-        email: 'admin@edu.cn',
+        username: 'staff',
+        email: 'staff@edu.cn',
+        role: '普通人员'
       }, {
-        account: 'admin',
-        username:'admin',
-        email: 'admin@edu.cn',
+        username: 'xiaoming',
+        email: 'xiaoming@edu.cn',
+        role: '普通人员'
       }, {
-        account: 'admin',
-        username:'admin',
-        email: 'admin@edu.cn',
+        username: 'root',
+        email: 'root@edu.cn',
+        role: '管理员'
       }],
-      search: ''
+      editDialogVisible: false,
+      editedInform: [{
+        username: '',
+        email: '',
+        role: ''
+      }],
+      currentIndex: 0
     };
   },
   methods: {
@@ -88,10 +119,17 @@ export default {
       console.log('提交信息');
     },
     handleEdit(index, row) {
-      console.log(index, row);
+      this.editedInform = { ...this.information };
+      this.editDialogVisible = true;
+      console.log(this.editedInform);
+      this.currentIndex=index;
     },
     handleDelete(index, row) {
       console.log(index, row);
+    },
+    saveInform() {
+      this.editDialogVisible = false;
+      console.log("保存成功");
     }
   }
 }
@@ -101,6 +139,24 @@ export default {
 .lab {
   margin-left: 8px;
   width: 60%;
+  border: 1px solid black;
+  border-radius: 6px;
+}
+
+.authority {
+  margin: 8px;
+  border: 1px solid black;
+  border-radius: 6px;
+  width: 60%;
+}
+
+.label-auth {
+  margin: 4px;
+}
+
+.table_auth {
+  width: 90%;
+  margin: 4px;
   border: 1px solid black;
   border-radius: 6px;
 }
