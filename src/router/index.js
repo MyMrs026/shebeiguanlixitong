@@ -9,6 +9,7 @@ const Book = () => import('@/views/bookManagement/bookManagement')
 const Train = () => import('@/views/trainManagement/trainManagement')
 const Information = () => import('../views/informationManagement/informationManagement')
 const System = () =>import('../views/systemManagement/systemManagement')
+const Test = () =>import('../views/testingTasks/testingTasks.vue')
 
 const Login =() => import('@/views/login/index.vue')
 const Register =() => import('@/views/register/register.vue')
@@ -51,6 +52,10 @@ const routes = [
   {
     path: '/system',
     component:System
+  },
+  {
+    path: '/test',
+    component:Test
   },
   {
     path:'/login',
