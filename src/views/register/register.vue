@@ -12,6 +12,15 @@
           <el-input type="password" v-model="registerData.password"></el-input>
         </el-form-item>
 
+        <el-select v-model="value" placeholder="请选择" style="margin-bottom:20px">
+          <el-option
+            v-for="item in options"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value">
+          </el-option>
+        </el-select>
+
         <el-form-item>
           <el-button type="primary" @click="register">注册</el-button>
           <el-button @click="cancel">取消</el-button>
@@ -29,6 +38,15 @@ export default {
         username: '',
         password: '',
       },
+      options:[{
+        value:'管理员',
+        label:'管理员'
+      },{
+        value:'普通人员',
+        label:'普通人员'
+      },
+    ],
+    value: '',
     };
   },
   methods: {

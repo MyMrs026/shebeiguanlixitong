@@ -13,6 +13,7 @@ const Test = () =>import('../views/testingTasks/testingTasks.vue')
 
 const Login =() => import('@/views/login/index.vue')
 const Register =() => import('@/views/register/register.vue')
+const Error =() => import('../components/common/error/Error.vue')
 //1.安装插件
 Vue.use(Router)
 //创建router
@@ -22,35 +23,48 @@ const routes = [
     redirect: '/login',
   },
   {
+    path: '/404',
+    name:'index-notFount',
+    component: Error
+  },
+  {
     path: '/home',
+    name: 'Home',
     component: Home
   },
   {
     path: '/project',
-    component:Project
+    name: 'Project',
+    component: Project
   },
   {
     path: '/equp',
+    name: 'Equp',
     component:Equp
   },
   {
     path: '/craft',
+    name: 'Craft',
     component:Craft
   },
   {
     path: '/book',
+    name: 'Book',
     component:Book
   },
   {
     path: '/train',
+    name: 'Train',
     component:Train
   },
   {
     path: '/information',
+    name: 'Information',
     component:Information
   },
   {
     path: '/system',
+    name: 'System',
     component:System
   },
   {
@@ -59,10 +73,12 @@ const routes = [
   },
   {
     path:'/login',
+    name:'Login',
     component: Login
   },
   {
     path:'/register',
+    name: 'Register',
     component: Register
   }
 
@@ -70,6 +86,18 @@ const routes = [
 const router = new Router({
   routes,
   mode: 'history'
+})
+
+//添加路由守卫
+router.beforeEach((to,from,next)=> {
+  const token = localStorage.getItem('token')
+  const isAuthenticated = !!token
+
+  if ((to.name !== 'Login' && to.name!=='Register') && !isAuthenticated){
+    next('/login')
+  }else{
+    next()
+  }
 })
 
 export default router
