@@ -64,7 +64,7 @@
             <el-button class="custom-button" type="info" round size="mini">信息管理</el-button>
           </router-link>
           <router-link to="/system">
-            <el-button class="custom-button" type="info" round size="mini">系统管理</el-button>
+            <el-button class="custom-button" type="info" round size="mini" v-if="this.$store.state.cu_role==='admin'">系统管理</el-button>
           </router-link>
         </el-row>
       </el-col>
@@ -119,6 +119,7 @@ export default {
     },
     logOut(){
       this.$router.push('/login')
+      localStorage.removeItem('token')
     },
   }
 }

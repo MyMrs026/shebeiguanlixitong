@@ -35,6 +35,7 @@
 </template>
 
 <script>
+import { mapState,mapMutations } from 'vuex';
 export default {
   data() {
     return {
@@ -61,28 +62,41 @@ export default {
       const validUsername1 = 'staff';
       const validPassword1 = 'staff';
       if (this.username === validUsername && this.password === validPassword && (this.value == 'admin')) {
+        const token = this.generateToken();
+        localStorage.setItem('token',token)
         // 登录成功，跳转到 home 页面
         this.$router.push('/home');
-        // console.log("进入主页");
+        this.updateCurole(this.value);
         console.log(this.value);
+        console.log(this.$store.state.cu_role);
       } else if (this.username === validUsername1 && this.password === validPassword1 && (this.value == 'staff')) {
-        this.$router.push('/project');
+        const token = this.generateToken();
+        localStorage.setItem('token',token);
+        this.updateCurole(this.value)
+        this.$router.push('/home');
+        console.log(this.value);
+        console.log(this.$store.state.cu_role);
       } else if (this.username == '' || this.password == '' || this.value == '') {
         alert('请输入完整。');
       } else {
-        // 登录失败，进行相应的处理，比如显示错误消息
         alert('账户或密码错误，验证失败请重新尝试。');
       }
-
-      // 清空输入框
       this.username = '';
       this.password = '';
     },
     register(event) {
       event.preventDefault();
       this.$router.push('/register');
+    },
+    generateToken() {
+      return Math.random().toString(36).substr(2)
+    },
+    updateCurole(value){
+      // this.$store.mutations.setCu_role(value)
+      this.$store.commit('setCurole',value)
     }
   }
+ 
 }
 </script>
 <style scoped>
