@@ -61,6 +61,8 @@ export default {
       const validUsername1 = 'staff';
       const validPassword1 = 'staff';
       if (this.username === validUsername && this.password === validPassword && (this.value == 'admin')) {
+        const token = this.generateToken();
+        localStorage.setItem('token',token)
         // 登录成功，跳转到 home 页面
         this.$router.push('/home');
         // console.log("进入主页");
@@ -81,6 +83,9 @@ export default {
     register(event) {
       event.preventDefault();
       this.$router.push('/register');
+    },
+    generateToken() {
+      return Math.random().toString(36).substr(2)
     }
   }
 }
