@@ -133,7 +133,7 @@
                   size="small">
                   移除
                 </el-button>
-                <el-button type="text"size="small">
+                <el-button type="text" size="small">
                   查看详情
                 </el-button>
               </template>
