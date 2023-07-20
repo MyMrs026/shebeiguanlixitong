@@ -54,14 +54,14 @@
           :before-close="handleClose">
           <div>  
             <el-form ref="form" :model="form" label-width="80px">    
-              <el-form-item for="recipient" label="收件人">
-                <input v-model="recipient" id="recipient" type="email">
+              <el-form-item  label="收件人">
+                <input v-model="form.recipient" id="recipient" type="email">
               </el-form-item>   
-              <el-form-item for="subject" label="主题">
-                <input v-model="subject" id="subject" type="text">
+              <el-form-item  label="发件人">
+                <input v-model="form.subject" id="subject" type="text">
               </el-form-item>  
-              <el-form-item for="content" label="内容">
-                <textarea v-model="content" id="content"></textarea>
+              <el-form-item  label="申请培训项目">
+                <textarea v-model="form.content" id="content"></textarea>
               </el-form-item> 
             </el-form>  
           </div>
@@ -85,16 +85,21 @@
     <el-table-column
       prop="date"
       label="日期"
-      width="180">
+      width="130">
     </el-table-column>
     <el-table-column
       prop="name"
       label="姓名"
-      width="180">
+      width="130">
     </el-table-column>
     <el-table-column
       prop="projectName"
       label="项目名称">
+    </el-table-column>
+    <el-table-column
+      prop="evaluate"
+      label="考核评定"
+      width="130">
     </el-table-column>
   </el-table>
   </el-tab-pane>
@@ -103,10 +108,18 @@
     <el-collapse v-model="activeNames" @change="handleChange">
     <el-collapse-item title="培训内容" name="1">
       <div>
-    <h2>Files:</h2>
+    <h2>文档:</h2>
     <ul>
       <li v-for="file in files" :key="file.name">
         <a :href="file.url" :download="file.name">{{ file.name }}</a>
+      </li>
+    </ul>
+      </div>
+      <div>
+    <h2>视频列表：</h2>
+    <ul>
+      <li v-for="video in videos" :key="video.id">
+        <a :href="video.url" target="_blank" rel="noopener">{{ video.name }}</a>
       </li>
     </ul>
       </div>
@@ -155,20 +168,31 @@
         trainRecords: [{
           date: '2016-05-03',
           name: '王小虎',
-          projectName: '作业规程培训2'
+          projectName: '作业规程培训2',
+          evaluate:'优秀'
         }, {
           date: '2016-05-02',
           name: '王小虎',
-          projectName: '专业知识培训1'
+          projectName: '专业知识培训1',
+          evaluate:'优秀'
         }, {
           date: '2016-05-04',
           name: '王小虎',
-          projectName: '作业规程培训3'
+          projectName: '作业规程培训3',
+          evaluate:'优秀'
         }, ],
         dialogVisible: false,
-        recipient: '',
-        subject: '',
-        content: ''
+        form:
+        {
+          recipient: '',
+          subject: '',
+          content: ''
+        },
+        videos: [
+      { id: 1, name: 'Video 1', url: 'https://example.com/video1.mp4' },
+      { id: 2, name: 'Video 2', url: 'https://example.com/video2.mp4' },
+      { id: 3, name: 'Video 3', url: 'https://example.com/video3.mp4' }
+        ],
       }
     },
     methods: {
