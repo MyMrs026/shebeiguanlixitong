@@ -70,9 +70,13 @@
           <el-input
             placeholder="请输入检索内容"
             prefix-icon="el-icon-search"
-            v-model="input1">
+            v-model="searchTerm"
+            style="width:300px">
           </el-input>
-        <el-table
+          <el-button type="info" style="margin-left:12px;" 
+          :disabled="isButtonDisabled" >搜索
+          </el-button>
+          <el-table
             :data="tableData"
             style="width: 100%"
             max-height="250">
@@ -127,15 +131,32 @@
               label="操作"
               width="120">
               <template slot-scope="scope">
-                <el-button
-                  @click.native.prevent="deleteRow(scope.$index, tableData)"
-                  type="text"
-                  size="small">
-                  移除
-                </el-button>
-                <el-button type="text"size="small">
-                  查看详情
-                </el-button>
+                <el-popover
+                  placement="top"
+                  width="160"
+                  v-model="visible">
+                  <p>确定删除此条记录吗？</p>
+                  <div style="text-align: right; margin: 0">
+                    <el-button size="mini" type="text" @click="visible = false">取消</el-button>
+                    <el-button type="primary" size="mini" @click="visible = false" @click.native.prevent="deleteRow(scope.$index, tableData)">确定</el-button>
+                  </div>
+                  <el-button slot="reference" type="text"
+                  size="small">删除</el-button>
+                </el-popover>
+                /
+                <el-popover
+                  placement="top"
+                  width="400"
+                  trigger="click">
+                  <el-table :data="gridData">
+                    <el-table-column width="150" property="param1" label="参数1"></el-table-column>
+                    <el-table-column width="100" property="param2" label="参数2"></el-table-column>
+                    <el-table-column width="300" property="content" label="测试内容"></el-table-column>
+                  </el-table>
+                  <el-button slot="reference" type="text"
+                  size="small">查看详情</el-button>
+                </el-popover>
+                
               </template>
             </el-table-column>
           </el-table>
@@ -148,7 +169,7 @@
 export default {
     data() {
       return {
-        input1:'',
+        searchTerm:'',
         currentStep: 0,
         dialogTableVisible: false,
         dialogFormVisible: false,
@@ -241,6 +262,15 @@ export default {
           result:'成功'
         }
         ],
+        gridData: [{
+          param1: '0.9',
+          param2: '1.5',
+          content: '检测内容1'
+        }, {
+          param1: '3.33',
+          param2: '1.33',
+          content: '检测内容2'
+        },],
       }
    },
     methods: {
@@ -293,8 +323,6 @@ export default {
       deleteRow(index, rows) {
         rows.splice(index, 1);
       },
-      
-      
     },
   };
 
