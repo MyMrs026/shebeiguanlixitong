@@ -11,54 +11,43 @@
           </div>
           <div class="right_content" frag="窗口7" portletmode="simpleList">
             <div id="wp_news_w7">
-
               <ul class="news">
-
-                <li><a href="#" target="_blank" title="2023年浙江大学全球人才招聘，欢迎加盟!">
+                <li v-for="item in notices">
+                  <a href="#" target="_blank" title="item.content">
+                    <font style="font-weight:bold;color:#000000;">{{item.content}}</font>
+                    <font>{{item.date | formatDate}}</font>
+                  </a>
+                </li>
+                <!-- <li><a href="#" target="_blank" title="2023年浙江大学全球人才招聘，欢迎加盟!">
                     <font style="font-weight:bold;color:#000000;">2023年浙江大学全球人才招聘，欢迎加盟!</font>
                   </a>[2023-07-05]</li>
-
                 <li><a href="#" target="_blank" title="浙江大学2023年行政专员、技术专员公开招聘公告">
                     <font style="font-weight:bold;">浙江大学2023年行政专员、技术专员公开招聘公告</font>
                   </a>[2023-04-10]</li>
-
                 <li><a href="#" target="_blank" title="浙江大学全球人才招聘，欢迎加盟!">浙江大学全球人才招聘，欢迎加盟!</a>[2022-12-20]</li>
-
                 <li><a href="#" target="_blank" title="浙江大学计划财务处公开招聘技术专员启事">浙江大学计划财务处公开招聘技术专员启事</a>[2023-04-28]</li>
-
                 <li><a href="#" target="_blank"
                     title="浙江大学超重力研究中心2023年上半年实验技术岗位公开招聘公告">浙江大学超重力研究中心2023年上半年实验技术岗位公开招聘公...</a>[2023-04-10]</li>
-
                 <li><a href="#" target="_blank"
                     title="浙江大学图书资料报废处置招标公告（20230404）">浙江大学图书资料报废处置招标公告（20230404）</a>[2023-04-06]</li>
-
                 <li><a href="#" target="_blank"
                     title="浙江大学2023年技术专员岗位公开招聘拟录用人员公示（三）">浙江大学2023年技术专员岗位公开招聘拟录用人员公示（三）</a>[2023-03-23]</li>
-
                 <li><a href="#" target="_blank" title="浙江大学2023年拟录用人员名单公示（四）">浙江大学2023年拟录用人员名单公示（四）</a>[2023-03-23]</li>
-
                 <li><a href="#" target="_blank"
                     title="关于浙江大学2023年党政管理人员招聘拟录用名单的公示">关于浙江大学2023年党政管理人员招聘拟录用名单的公示</a>[2023-03-06]</li>
-
                 <li><a href="#" target="_blank"
                     title="关于浙江大学2023年专职辅导员招聘拟录用名单的公示">关于浙江大学2023年专职辅导员招聘拟录用名单的公示</a>[2023-03-06]</li>
-
                 <li><a href="#" target="_blank" title="浙江大学2022年拟录用人员名单公示（二十一）">浙江大学2022年拟录用人员名单公示（二十一）</a>[2022-12-22]
                 </li>
-
                 <li><a href="#" target="_blank" title="国际教育学院面向海内外招聘英才">国际教育学院面向海内外招聘英才</a>[2022-12-16]</li>
-
                 <li><a href="#" target="_blank"
                     title="浙江大学国际化雇员全球招聘启事 Zhejiang University International Job Opportunities">浙江大学国际化雇员全球招聘启事 Zhejiang
                     University Inter...</a>[2022-12-15]</li>
-
                 <li><a href="#" target="_blank" title="浙江大学2022年拟录用人员名单公示（二十）">浙江大学2022年拟录用人员名单公示（二十）</a>[2022-12-07]</li>
-
                 <li><a href="#" target="_blank"
                     title="浙江大学建筑设计研究院公开招聘高级专业技术人员启事">浙江大学建筑设计研究院公开招聘高级专业技术人员启事</a>[2022-12-06]</li>
-
                 <li><a href="#" target="_blank"
-                    title="浙江大学2023年党政管理人员和专职辅导员招聘启事">浙江大学2023年党政管理人员和专职辅导员招聘启事</a>[2022-11-17]</li>
+                    title="浙江大学2023年党政管理人员和专职辅导员招聘启事">浙江大学2023年党政管理人员和专职辅导员招聘启事</a>[2022-11-17]</li> -->
               </ul>
             </div>
 
@@ -110,9 +99,22 @@
 export default {
   data () {
     return {
-      textarea: ''
+      textarea: '',
+      notices:[],
     }
-  }
+  },
+  mounted() {
+    this.notices = this.$store.state.notices;
+  },
+  filters:{
+    formatDate: function(value) {
+      if (!value) return ''
+      const year = value.getFullYear()
+      const month = String(value.getMonth() + 1).padStart(2, '0')
+      const day = String(value.getDate()).padStart(2, '0')
+      return `${year}年${month}月${day}日`
+    }
+  },
 }
 
 </script>

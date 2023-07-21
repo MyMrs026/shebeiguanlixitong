@@ -7,21 +7,21 @@
       <div class="equp-container2">
         <el-row>
           <el-col :span="6">
-            <div>
+            <div style="margin-top:10px;margin-left:10px;">
               <p>设备</p>
             </div>
           </el-col>
           <el-col :span="18">
             <div>
-              <el-input style="width:300px" placeholder="请输入设备名" v-model="searchKeyword"></el-input>
+              <el-input style="width:300px;margin-top:10px;" placeholder="请输入设备名" v-model="searchKeyword"></el-input>
               <el-button type="info" style="margin-left:12px;" size="mini" @click="handleSearch" :disabled="isButtonDisabled" >搜索</el-button>
             </div>
             <br>
             <div ref="tab1" class="table-equ">
               <el-table :data="pageData" style="width: 100%">
                 <el-table-column prop="name" label="姓名"></el-table-column>
-                <el-table-column prop="age" label="年龄"></el-table-column>
-                <el-table-column prop="id" label="学号"></el-table-column>
+                <el-table-column prop="func" label="功能"></el-table-column>
+                <el-table-column prop="lab" label="实验室"></el-table-column>
               </el-table>
               <el-pagination
                 @size-change="handlePageSizeChange"
@@ -30,14 +30,14 @@
                 :page-sizes="[5]"
                 :page-size="pageSize"
                 layout="pager"
-                :total="students.length"
+                :total="equps.length"
               ></el-pagination> 
             </div>
             <div ref="tab2" class="search-area">
               <el-table v-if="searchResult.length > 0" :data="searchResult" style="width: 100%">
                 <el-table-column prop="name" label="姓名"></el-table-column>
-                <el-table-column prop="age" label="年龄"></el-table-column>
-                <el-table-column prop="id" label="学号"></el-table-column>
+                <el-table-column prop="func" label="功能"></el-table-column>
+                <el-table-column prop="lab" label="实验室"></el-table-column>
               </el-table>
               <p v-else> 未找到匹配的记录</p>
             </div>
@@ -105,7 +105,7 @@ export default {
         starttime: '2016-11-10 17:30:03',
         endtime: '2016-11-10 19:49:21'
       }],
-      students: [],
+      equps: [],
       currentPage: 1,
       pageSize: 5,
       searchKeyword: '',
@@ -116,14 +116,14 @@ export default {
     pageData() {
       const startIndex = (this.currentPage - 1) * this.pageSize
       const endIndex = startIndex + this.pageSize
-      return this.students.slice(startIndex, endIndex)
+      return this.equps.slice(startIndex, endIndex)
     },
     isButtonDisabled() {
       return this.searchKeyword === '';
     }
   },  
   mounted() {
-    this.generateRandomStudents()
+     this.equps = this.$store.state.equps;
   },  
   methods: {
     tableRowClassName({ row, rowIndex }) { //表格灰黑相间
@@ -134,26 +134,6 @@ export default {
       }
       return '';
     },
-    generateRandomStudents() {
-      for (let i = 0; i < 10; i++) {
-        const student = {
-          name: this.generateRandomName(),
-          age: this.generateRandomAge(),
-          id: this.generateRandomID(),
-        }
-        this.students.push(student)
-      }
-    },
-    generateRandomName() {
-      const names = ['Alice', 'Bob', 'Charlie', 'David', 'Emma', 'Frank', 'Grace', 'Henry', 'Ivy', 'Jack']
-      return names[Math.floor(Math.random() * names.length)]
-    },
-    generateRandomAge() {
-      return Math.floor(Math.random() * 10) + 15
-    },
-    generateRandomID() {
-      return Math.floor(Math.random() * 10000) + 10000
-    },
     handlePageSizeChange(pageSize) {
       this.pageSize = pageSize
     },
@@ -161,8 +141,8 @@ export default {
       this.currentPage = currentPage
     },
     handleSearch() {
-      this.searchResult = this.students.filter(student => {
-        return student.name.toLowerCase().includes(this.searchKeyword.toLowerCase())
+      this.searchResult = this.equps.filter(equp => {
+        return equp.name.toLowerCase().includes(this.searchKeyword.toLowerCase())
       })
       this.$refs.tab1.style.display = 'none';
       this.$refs.tab2.style.display = 'block';
@@ -180,17 +160,17 @@ export default {
 
 .centered-div {
   width: 95%;
-
   border: 1px solid #000;
   border-radius: 8px;
   margin: 3px;
 }
 
 .equp-container2 {
-  width: 50%;
+  width: 80%;
   border: 1px solid #000;
   border-radius: 8px;
   margin-left: 3px;
+  margin-bottom: 10px;
 }
 
 .table-equ-use {
@@ -198,10 +178,11 @@ export default {
 }
 
 .table-equ {
-  width: 62%;
+  width: 95%;
   border: 1px solid #000000;
   border-radius: 8px;
   font-size: 6px;
+  margin-bottom: 10px;
 }
 
 .el-table .warning-row {

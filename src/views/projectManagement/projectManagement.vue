@@ -11,32 +11,32 @@
         </el-select>
       </div>
       <div class="table_inform">
-        <el-table :data="filteredData" style="width: 95%;border:1px solid black;margin:10px">
+        <el-table :data="filteredData" style="width: 95%;border:1px solid black;border-radius: 6px;margin:10px">
           <el-table-column type="expand">
             <template slot-scope="props">
               <el-form label-position="left" inline class="demo-table-expand">
-                <el-form-item label="项目名称">
+                <el-form-item label="项目名称:">
                   <span>{{ props.row.name }}</span>
                 </el-form-item>
-                <el-form-item label="项目类别">
+                <el-form-item label="项目类别:">
                   <span>{{ props.row.category }}</span>
                 </el-form-item>
-                <el-form-item label="项目编号">
+                <el-form-item label="项目编号:">
                   <span>{{ props.row.id }}</span>
                 </el-form-item>
-                <el-form-item label="项目描述">
+                <el-form-item label="项目描述:">
                   <span>{{ props.row.desc }}</span>
                 </el-form-item>
-                <el-form-item label="项目目的">
+                <el-form-item label="项目目的:">
                   <span>{{ props.row.purpose }}</span>
                 </el-form-item>
-                <el-form-item label="使用设备">
+                <el-form-item label="使用设备:">
                   <span>{{ props.row.equp }}</span>
                 </el-form-item>
-                <el-form-item label="项目成员">
+                <el-form-item label="项目成员:">
                   <span>{{ props.row.member }}</span>
                 </el-form-item>
-                <el-form-item label="项目组长">
+                <el-form-item label="项目组长:">
                   <span>{{ props.row.leader }}</span>
                 </el-form-item>
               </el-form>
@@ -57,6 +57,9 @@
       </div>
       <div class="pro_form">
         <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
+          <el-form-item label="项目id" prop="id" style="margin-top: 10px;">
+            <el-input v-model="ruleForm.id" style="width: 50%;"></el-input>
+          </el-form-item>
           <el-form-item label="项目名称" prop="name" style="margin-top: 10px;">
             <el-input v-model="ruleForm.name" style="width: 50%;"></el-input>
           </el-form-item>
@@ -71,8 +74,8 @@
           <el-form-item label="项目描述" prop="desc">
             <el-input v-model="ruleForm.desc" style="width: 50%;"></el-input>
           </el-form-item>
-          <el-form-item label="实验设备" prop="pro_equps">
-            <el-select v-model="equ_value" placeholder="请选择实验所需的设备">
+          <el-form-item label="实验设备" prop="equ_value">
+            <el-select v-model="ruleForm.equ_value" placeholder="请选择实验所需的设备">
               <el-option
                 v-for="item in pro_equps"
                 :key="item.name"
@@ -91,7 +94,7 @@
             <el-input v-model="ruleForm.leader" style="width: 50%;"></el-input>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" @click="submitForm('ruleForm')">立即创建</el-button>
+            <el-button type="primary" @click="submitForm">立即创建</el-button>
             <el-button @click="resetForm('ruleForm')">重置</el-button>
           </el-form-item>
         </el-form>
@@ -155,15 +158,19 @@ export default {
       }],
       pro_equps:[],
       ruleForm: {
+        id:'',
         name: '',
         category: '',
         desc: '',
-        equp: '',
+        equ_value: '',
         purpose: '',
         member: '',
         leader: '',
       },
       rules: {
+        id: [
+          { required: true, message: '请填写项目的id', trigger: 'blur' }
+        ],
         name: [
           { required: true, message: '请输入项目名字', trigger: 'blur' },
           { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
@@ -190,9 +197,8 @@ export default {
           { required: true, message: '请填写项目的组长', trigger: 'blur' }
         ],
         
+        
       },
-      equ_value:'',
-
     }
   },
   mounted(){
@@ -204,15 +210,19 @@ export default {
     },
   },
   methods: {
-    submitForm(formName) {
-      this.$refs[formName].validate((valid) => {
-        if (valid) {
-          alert('submit!');
-        } else {
-          console.log('error submit!!');
-          return false;
-        }
-      });
+    submitForm() {
+      this.proData.push({...this.ruleForm});
+      console.log(this.proData);
+      this.ruleForm = {
+        id:'',
+        name: '',
+        category: '',
+        desc: '',
+        equ_value: '',
+        purpose: '',
+        member: '',
+        leader: ''
+      }
     },
     resetForm(formName) {
       this.$refs[formName].resetFields();

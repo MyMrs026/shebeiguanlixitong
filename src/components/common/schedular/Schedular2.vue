@@ -3,7 +3,7 @@ import FullCalendar from '@fullcalendar/vue'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import timeGridPlugin from '@fullcalendar/timegrid'
 import interactionPlugin from '@fullcalendar/interaction'
-import { INITIAL_EVENTS, createEventId } from '../../../common/event-utils.js'
+import { INITIAL_EVENTS2, createEventId } from '../../../common/event-utils.js'
 
 export default {
   components: {
@@ -24,7 +24,7 @@ export default {
           right: ''
         },
         initialView: 'timeGridDay',
-        initialEvents: INITIAL_EVENTS, // alternatively, use the `events` setting to fetch from a feed
+        initialEvents: INITIAL_EVENTS2, // alternatively, use the `events` setting to fetch from a feed
         editable: true,
         selectable: true,
         selectMirror: true,
