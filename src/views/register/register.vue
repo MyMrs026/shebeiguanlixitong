@@ -76,10 +76,20 @@ export default {
 }
 
 .register-card {
-  width: 400px;
-  padding: 20px;
-  border-radius: 4px;
-  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+  position: absolute;
+  border-radius:10px;
+  padding:30px;
+  left: 70%;
+  top:50%;
+  transform: translate(-50%, -50%);
+  margin:auto; 
+  background-color:#fff;
+  opacity: 0.85;
+  border:2px solid rgba(255,255,255,.5);
+  backdrop-filter: blur;
+  width:400px;
+  height:500px;
+
 }
 
 .register-title {

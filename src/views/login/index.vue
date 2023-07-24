@@ -116,11 +116,11 @@ export default {
   transform: translate(-50%, -50%);
   margin:auto; 
   background-color:#fff;
-  opacity: 0.7;
+  opacity: 0.85;
   border:2px solid rgba(255,255,255,.5);
   backdrop-filter: blur;
-  width:30%;
-  height:70%;
+  width:400px;
+  height:500px;
 }
 .title {
   align-items: center;
