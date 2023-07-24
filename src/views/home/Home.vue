@@ -22,17 +22,17 @@
     <div class="table-equ-use">
       <template>
         <el-table border :data="tableData1" class="table-equ" :row-class-name="tableRowClassName">
-          <el-table-column prop="equp" label="设备名" width="180">
+          <el-table-column prop="equp" label="设备名" width="170">
           </el-table-column>
-          <el-table-column prop="status" label="使用情况" width="100">
+          <el-table-column prop="status" label="使用情况" width="110">
           </el-table-column>
-          <el-table-column prop="user" label="使用用户" width="100">
+          <el-table-column prop="user" label="使用用户" width="110">
           </el-table-column>
-          <el-table-column prop="org" label="使用组织" width="180">
+          <el-table-column prop="org" label="使用组织" width="265">
           </el-table-column>
-          <el-table-column prop="starttime" label="开始时间" width="180">
+          <el-table-column prop="starttime" label="开始时间" width="190">
           </el-table-column>
-          <el-table-column prop="endtime" label="结束时间" width="193">
+          <el-table-column prop="endtime" label="结束时间" width="190">
           </el-table-column>
         </el-table>
       </template>
@@ -43,19 +43,19 @@
     </div>
     <div class="table-book-use">
       <el-table :data="tableData2" class="table-book">
-        <el-table-column prop="equp" label="设备" width="120">
+        <el-table-column prop="equp" label="设备" width="170">
         </el-table-column>
-        <el-table-column prop="status" label="状态" width="100">
+        <el-table-column prop="status" label="状态" width="120">
         </el-table-column>
         <el-table-column prop="user" label="用户/操作人员" width="150">
         </el-table-column>
-        <el-table-column prop="start" label="开始" width="100">
+        <el-table-column prop="start" label="开始" width="150">
         </el-table-column>
-        <el-table-column prop="end" label="结束" width="100">
+        <el-table-column prop="end" label="结束" width="150">
         </el-table-column>
-        <el-table-column prop="cal" label="日期" width="105">
+        <el-table-column prop="cal" label="日期" width="125">
         </el-table-column>
-        <el-table-column prop="action" label="动作" width="158">
+        <el-table-column prop="action" label="动作" width="165">
         </el-table-column>
       </el-table>
     </div>
@@ -68,11 +68,11 @@
         <el-table border :data="tableData3" class="table-dch" :row-class-name="getRowClassName">
           <el-table-column prop="equp" label="设备名" width="300">
           </el-table-column>
-          <el-table-column prop="status" label="状态" width="150">
+          <el-table-column prop="status" label="状态" width="200">
           </el-table-column>
-          <el-table-column prop="expected" label="预期就绪" width="180">
+          <el-table-column prop="expected" label="预期就绪" width="200">
           </el-table-column>
-          <el-table-column prop="statuslog" label="状态日志" width="300">
+          <el-table-column prop="statuslog" label="状态日志" width="330">
           </el-table-column>
         </el-table>
       </template>
@@ -182,12 +182,13 @@ export default {
 
 <style>
 .text-area {
-  margin-left: 10px;
+  margin-left: 20px;
   margin-bottom: 0px;
-  width: 55%;
+  width: 95%;
   background-color: rgb(227, 227, 227);
   border-radius: 3px;
-  font-size: 8px;
+  font-size: 13px;
+  
 }
 
 .fist-line {
@@ -200,24 +201,23 @@ export default {
 
 .text-home {
   margin-top: 0px;
-  margin-left: 10px;
-  font-size: 8px;
+  margin-left: 20px;
+  font-size: 20px;
 }
 
 .table-equ-use {
-  margin-left: 10px;
+  margin-left: 20px;
 }
 
 .table-equ {
-  width: 62%;
+  width: 96%;
   border: 1px solid #000000;
   border-radius: 8px;
-  font-size: 6px;
 }
 
 .table-equ .el-table__body td,
 .table-equ .el-table__header th {
-  font-size: 6px !important;
+  font-size: 13px !important;
 }
 
 .el-table .warning-row {
@@ -229,33 +229,33 @@ export default {
 }
 
 .el-table .red-row {
-  background: rgb(255, 103, 103);
+  background: rgb(230, 171, 171);
 }
 
 .el-table .yellow-row {
-  background: rgb(255, 242, 0);
+  background: rgb(223, 220, 166);
 }
 
 .el-table .gray-row {
-  background: rgb(142, 142, 142);
+  background: rgb(206, 204, 204);
 }
 
 .table-book-use {
-  margin-left: 10px;
+  margin-left: 20px;
 }
 
 .table-book {
-  width: 58%;
+  width: 96%;
   border: 2px solid black;
   border-radius: 8px;
 }
 
 .table-dch-use {
-  margin-left: 10px;
+  margin-left: 20px;
 }
 
 .table-dch {
-  width: 62%;
+  width: 96%;
   border: 2px solid black;
   border-radius: 8px;
 }

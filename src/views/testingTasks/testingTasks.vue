@@ -169,6 +169,8 @@
 export default {
     data() {
       return {
+        visible:'',
+        isButtonDisabled:'',
         searchTerm:'',
         currentStep: 0,
         dialogTableVisible: false,

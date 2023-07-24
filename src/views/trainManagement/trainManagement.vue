@@ -2,7 +2,7 @@
   <div class="card">
     <el-tabs type="border-card">
   <el-tab-pane label="培训项目">
-    <el-table
+    <!-- <el-table
       ref="filterTable"
       :data="trainProject"
       style="width: 100%">
@@ -68,12 +68,60 @@
           <span slot="footer" class="dialog-footer">
             <el-button @click="sendEmail">发送邮件</el-button>
             <el-button @click="dialogVisible = false">取 消</el-button>
-            <!-- <el-button type="primary" @click="dialogVisible = false">确 定</el-button> -->
           </span>
         </el-dialog>
       </template>
     </el-table-column>
-    </el-table>
+    </el-table> -->
+    <div class="book-container">
+    <div class="top-div">
+      <!-- 第一个 div 的内容 -->
+      <div>
+        <p>设备预约日视图</p>
+      </div>
+      <div class="block">
+        <el-date-picker
+          v-model="value1"
+          align="right"
+          type="date"
+          placeholder="选择日期"
+          :picker-options="pickerOptions">
+        </el-date-picker>
+      </div>
+      <div><button>更新</button></div>
+      <div><button>月份</button><button>周数</button><button>日期</button></div>
+      <div><button>设备</button><button>用户</button></div>
+      <div><button>创建新的预约</button></div>
+    </div>
+    <div class="bottom-div">
+      <!-- 第二个 div 的内容 -->
+        <el-row style="height: 100%;">
+          <el-col :span="8" style="height: 100%;">
+            <button>隐藏</button>
+            <div><p>使用用户</p></div>
+            <div class="schedular-area"> 
+              <Schedular/>
+            </div>
+          </el-col>
+          <el-col :span="8" style="height: 100%;">
+            <div >
+              <button>隐藏</button>
+              <p>设备名</p>
+            </div>
+            <div class="schedular-area"> 
+              <Schedular/>
+            </div>
+          </el-col>
+          <el-col :span="8" style="height: 100%;">
+            <button>隐藏</button>
+            <div><p>选择新设备</p></div>
+            <div class="schedular-area"> 
+              <Schedular/>
+            </div>
+          </el-col>
+        </el-row>
+    </div>
+  </div>
   </el-tab-pane>
 
   <el-tab-pane label="培训记录">
@@ -135,30 +183,63 @@
 </template>
 
 <script>
+  import Schedular from '../../components/common/schedular/Schedular.vue'
   export default {
+    components:{
+      Schedular,
+    },
     data() {
       return {
-        trainProject: [{
-          number: '1',
-          name: '专业知识培训1',
-          introduce: '包括各种设备的结构原理，如基础架构、工作原理、控制系统、监测办法等',
-          tag: '箱体设备'
-        }, {
-          number: '2',
-          name: '作业规程培训1',
-          introduce: '包括设备操作、运行管理、安装维修、维护保养的标准作业规程等',
-          tag: '食品检测设备'
-        }, {
-          number: '3',
-          name: '作业规程培训2',
-          introduce: '包括设备操作、运行管理、安装维修、维护保养的标准作业规程等',
-          tag: '环境检测设备'
-        }, {
-          number: '4',
-          name: '技能培训1',
-          introduce: '技能培训包括检测技能、故障解决能力、维修技能、创新改进能力等',
-          tag: '环境检测设备'
-        }],
+        // trainProject: [{
+        //   number: '1',
+        //   name: '专业知识培训1',
+        //   introduce: '包括各种设备的结构原理，如基础架构、工作原理、控制系统、监测办法等',
+        //   tag: '箱体设备'
+        // }, {
+        //   number: '2',
+        //   name: '作业规程培训1',
+        //   introduce: '包括设备操作、运行管理、安装维修、维护保养的标准作业规程等',
+        //   tag: '食品检测设备'
+        // }, {
+        //   number: '3',
+        //   name: '作业规程培训2',
+        //   introduce: '包括设备操作、运行管理、安装维修、维护保养的标准作业规程等',
+        //   tag: '环境检测设备'
+        // }, {
+        //   number: '4',
+        //   name: '技能培训1',
+        //   introduce: '技能培训包括检测技能、故障解决能力、维修技能、创新改进能力等',
+        //   tag: '环境检测设备'
+        // }],
+        pickerOptions: {
+          disabledDate(time) {
+            return time.getTime() > Date.now();
+          },
+          shortcuts: [{
+            text: '今天',
+            onClick(picker) {
+              picker.$emit('pick', new Date());
+            }
+          }, {
+            text: '昨天',
+            onClick(picker) {
+              const date = new Date();
+              date.setTime(date.getTime() - 3600 * 1000 * 24);
+              picker.$emit('pick', date);
+            }
+          }, {
+            text: '一周前',
+            onClick(picker) {
+              const date = new Date();
+              date.setTime(date.getTime() - 3600 * 1000 * 24 * 7);
+              picker.$emit('pick', date);
+            }
+          }]
+        },
+        value1: '',
+        value2: 'new Date(2016, 9, 10, 18, 40)',
+        value3: 'new Date(2016, 9, 10, 18, 40)',
+        value4: 'new Date(2016, 9, 10, 18, 40)',
         files: [
       { name: 'File 1', url: 'https://example.com/file1.pdf' },
       { name: 'File 2', url: 'https://example.com/file2.doc' },
@@ -221,5 +302,35 @@
   }
 </script>
 <style scoped>
+.book-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100vh;
+  margin-left: 10px;
+}
 
+.top-div {
+  display: flex;
+  flex-direction: row;
+  width: 95%;
+  height: 8%;
+  border: 1px solid #000;
+  border-radius: 8px;
+  margin-bottom: 25px;
+  background-color: rgb(230, 230, 230);
+  /* 可以根据需要进行其他样式设置 */
+}
+
+.bottom-div {
+  width: 90%;
+  height: 800px;
+  border: 1px solid #000;
+  border-radius: 8px;
+}
+.schedular-area {
+  width: 90%;
+  height: 90%;
+  overflow: hidden;
+}
 </style>
