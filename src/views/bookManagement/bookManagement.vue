@@ -2,126 +2,176 @@
   <div class="book-container">
     <div class="top-div">
       <!-- 第一个 div 的内容 -->
-      <div>
+      <div class="book-title">
         <p>设备预约日视图</p>
       </div>
-      <div class="block">
-        <el-date-picker
-          v-model="value1"
-          align="right"
-          type="date"
-          placeholder="选择日期"
-          :picker-options="pickerOptions">
+      <!-- <div class="block">
+        <el-date-picker v-model="value1" align="right" type="date" placeholder="选择日期" :picker-options="pickerOptions">
         </el-date-picker>
+      </div> -->
+      <div class="button-group">
+        <button>更新</button>
+        <button>月份</button>
+        <button>周数</button>
+        <button>日期</button>
+        <button>设备</button><button>用户</button>
+        <button>创建新的预约</button>
       </div>
-      <div><button>更新</button></div>
-      <div><button>月份</button><button>周数</button><button>日期</button></div>
-      <div><button>设备</button><button>用户</button></div>
-      <div><button>创建新的预约</button></div>
     </div>
     <div class="bottom-div">
       <!-- 第二个 div 的内容 -->
-        <el-row style="height: 100%;">
-          <el-col :span="8" style="height: 100%;">
-            <button>隐藏</button>
-            <div><p>使用用户</p></div>
-            <div class="schedular-area"> 
-              <Schedular/>
-            </div>
-          </el-col>
-          <el-col :span="8" style="height: 100%;">
-            <div >
-              <button>隐藏</button>
-              <p>设备名</p>
-            </div>
-            <div class="schedular-area"> 
-              <Schedular/>
-            </div>
-          </el-col>
-          <el-col :span="8" style="height: 100%;">
-            <button>隐藏</button>
-            <div><p>选择新设备</p></div>
-            <div class="schedular-area"> 
-              <Schedular/>
-            </div>
-          </el-col>
-        </el-row>
+      <el-row style="height: 100%;">
+        <el-col :span="8" style="height: 100%;">
+          <div class="button-area">
+            <el-button plain @click="hideClick1">{{buttonText1}}</el-button>
+          </div>
+          <div class="schedular-area" v-if="isShow1">
+            <p style="margin: 10px;">当前用户:{{this.$store.state.cu_role}}</p>
+            <Schedular />
+          </div>
+        </el-col>
+        <el-col :span="8" style="height: 100%;">
+          <div class="button-area">
+            <el-button @click="hideClick2">{{buttonText2}}</el-button>
+          </div>
+          <div class="schedular-area" v-if="isShow2">
+            <p style="margin: 10px;">设备名</p>
+            <Schedular2 />
+          </div>
+        </el-col>
+        <el-col :span="8" style="height: 100%;">
+          <div class="button-area">
+            <el-button @click="hideClick3">{{buttonText3}}</el-button>
+          </div>
+          <div class="schedular-area" v-if="isShow3">
+            <p style="margin: 10px;">选择新设备</p>
+            <Schedular3 />
+          </div>
+        </el-col>
+      </el-row>
     </div>
   </div>
 </template>
 
 <script>
 import Schedular from '../../components/common/schedular/Schedular.vue'
+import Schedular2 from '../../components/common/schedular/Schedular2.vue';
+import Schedular3 from '../../components/common/schedular/Schedular3.vue';
 export default {
-    components:{
-      Schedular,
+  components: {
+    Schedular,
+    Schedular2,
+    Schedular3
+  },
+  data() {
+    return {
+      // pickerOptions: {
+      //   disabledDate(time) {
+      //     return time.getTime() > Date.now();
+      //   },
+      //   shortcuts: [{
+      //     text: '今天',
+      //     onClick(picker) {
+      //       picker.$emit('pick', new Date());
+      //     }
+      //   }, {
+      //     text: '昨天',
+      //     onClick(picker) {
+      //       const date = new Date();
+      //       date.setTime(date.getTime() - 3600 * 1000 * 24);
+      //       picker.$emit('pick', date);
+      //     }
+      //   }, {
+      //     text: '一周前',
+      //     onClick(picker) {
+      //       const date = new Date();
+      //       date.setTime(date.getTime() - 3600 * 1000 * 24 * 7);
+      //       picker.$emit('pick', date);
+      //     }
+      //   }]
+      // },
+      value1: '',
+      isShow1: true,
+      isShow2: true,
+      isShow3: true,
+
+    };
+  },
+  computed:{
+    buttonText1(){
+      return this.isShow1?'隐藏':'显示';
     },
-    data() {
-      return {
-        pickerOptions: {
-          disabledDate(time) {
-            return time.getTime() > Date.now();
-          },
-          shortcuts: [{
-            text: '今天',
-            onClick(picker) {
-              picker.$emit('pick', new Date());
-            }
-          }, {
-            text: '昨天',
-            onClick(picker) {
-              const date = new Date();
-              date.setTime(date.getTime() - 3600 * 1000 * 24);
-              picker.$emit('pick', date);
-            }
-          }, {
-            text: '一周前',
-            onClick(picker) {
-              const date = new Date();
-              date.setTime(date.getTime() - 3600 * 1000 * 24 * 7);
-              picker.$emit('pick', date);
-            }
-          }]
-        },
-        value1: '',
-        value2: 'new Date(2016, 9, 10, 18, 40)',
-        value3: 'new Date(2016, 9, 10, 18, 40)',
-        value4: 'new Date(2016, 9, 10, 18, 40)'
-      };
+    buttonText2(){
+      return this.isShow2?'隐藏':'显示';
+    },
+    buttonText3(){
+      return this.isShow3?'隐藏':'显示';
+    },
+  },
+  methods: {
+    hideClick1() {
+      console.log("hideClick1");
+      this.isShow1 = !this.isShow1;
+    },
+    hideClick2() {
+      console.log("hideClick2");
+      this.isShow2 = !this.isShow2;
+    },
+    hideClick3() {
+      console.log("hideClick3");
+      this.isShow3 = !this.isShow3;
     }
-  };
+  },
+};
 
 </script>
 <style scoped>
 .book-container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  height: 100vh;
-  margin-left: 10px;
+  margin: 10px;
 }
 
 .top-div {
   display: flex;
   flex-direction: row;
-  width: 95%;
-  height: 8%;
+  justify-content: space-evenly;
+  width: 90%;
+  height: auto;
   border: 1px solid #000;
   border-radius: 8px;
+  margin-top: 10px;
   margin-bottom: 25px;
   background-color: rgb(230, 230, 230);
   /* 可以根据需要进行其他样式设置 */
 }
-
+.book-title{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 .bottom-div {
   width: 90%;
   height: 800px;
   border: 1px solid #000;
   border-radius: 8px;
 }
+
 .schedular-area {
   width: 90%;
   height: 90%;
   overflow: hidden;
 }
+.button-area {
+  margin: 10px;
+}
+.button-group {
+  display: flex;
+  align-content: center;
+}
+.button-group .button {
+  margin-right: 15px;
+}
+.button-group .button:last-child {
+  margin-right: 0;
+}
+
 </style>
