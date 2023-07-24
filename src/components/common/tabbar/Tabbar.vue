@@ -5,32 +5,60 @@
         <div class="navbar-container">
           <el-button class="navbar-toggle" icon="el-icon-menu" @click="toggleNavbar"></el-button>
           <div class="navbar-menu" :class="{ 'show': showNavbar }">
-            <el-menu>
+            <el-menu v-if="isShowMenu" @select="handleMenuSelect">
               <el-submenu index="1"> 
-                <template slot="title">信息</template>
-                <el-menu-item index="1-1">首页信息</el-menu-item>
-                <el-menu-item index="1-2">一般信息</el-menu-item>
-                <el-menu-item index="1-3">联系信息</el-menu-item>
+                <template slot="title">信息</template>  
+                <router-link to="/home">
+                  <el-menu-item index="1-1">首页信息</el-menu-item>
+                </router-link>
+                <router-link to="/information">
+                  <el-menu-item index="1-2">一般信息</el-menu-item>
+                </router-link>
+                <router-link to="/labinform">
+                  <el-menu-item index="1-3">联系信息</el-menu-item>
+                </router-link>
               </el-submenu>
               <el-submenu index="2"> 
                 <template slot="title">设备</template>
-                <el-menu-item index="2-1">使用设备</el-menu-item>
-                <el-menu-item index="2-2">信息</el-menu-item>
-                <el-menu-item index="2-3">设备列表</el-menu-item>
-                <el-menu-item index="2-4">日志</el-menu-item>
+                <router-link to="/equp">
+                   <el-menu-item index="2-1">使用设备</el-menu-item>
+                </router-link>
+                <router-link to="/equp">
+                  <el-menu-item index="2-2">信息</el-menu-item>
+                </router-link>
+                <router-link to="/equp">
+                  <el-menu-item index="2-3">设备列表</el-menu-item>
+                </router-link>
+                <router-link to="/equp">
+                  <el-menu-item index="2-4">日志</el-menu-item>
+                </router-link>
               </el-submenu>
               <el-submenu index="3"> 
                 <template slot="title">预约</template>
-                <el-menu-item index="3-1">预约设备</el-menu-item>
-                <el-menu-item index="3-2">日程表</el-menu-item>
-                <el-menu-item index="3-3">周程表</el-menu-item>
-                <el-menu-item index="3-4">月程表</el-menu-item>
+                <router-link to="/book">
+                  <el-menu-item index="3-1">预约设备</el-menu-item>
+                </router-link>
+                <router-link to="/book">
+                  <el-menu-item index="3-2">日程表</el-menu-item>
+                </router-link>
+                <router-link to="/book">
+                  <el-menu-item index="3-3">周程表</el-menu-item>
+                </router-link>
+                <router-link to="/book">
+                  <el-menu-item index="3-4">月程表</el-menu-item>
+                </router-link>
               </el-submenu>
               <el-submenu index="4"> 
                 <template slot="title">账户</template>
-                <el-menu-item index="4-1">编辑信息</el-menu-item>
-                <el-menu-item index="4-2">组织信息</el-menu-item>
-                <el-menu-item index="4-3">邮件联系</el-menu-item>
+                <router-link to="/system">
+                  <el-menu-item index="4-1">编辑信息</el-menu-item>
+                </router-link>
+                <router-link to="/system">
+                  <el-menu-item index="4-2">组织信息</el-menu-item>
+                </router-link>
+                <router-link to="/system">
+                  <el-menu-item index="4-3">邮件联系</el-menu-item>
+                </router-link>
               </el-submenu>
             </el-menu>
           </div>
@@ -111,6 +139,7 @@ export default {
     return {
       input: '',
       showNavbar: false, // 导航栏是否可见
+      isShowMenu: true //menu是否可见
     }
   },
   methods: {
@@ -121,6 +150,14 @@ export default {
       this.$router.push('/login')
       localStorage.removeItem('token')
     },
+    handleMenuSelect(index) {
+      this.isShowMenu = !this.isShowMenu
+    }
+  },
+  computed: {
+    switchShowMenu(){
+      return !(this.isShowMenu)
+    }
   }
 }
 </script>

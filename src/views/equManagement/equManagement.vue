@@ -1,6 +1,6 @@
 <template>
   <div class="equp-container">
-    <div class="centered-div">
+    <div class="centered-div" id="part1">
       <div>
         <p>使用的设备</p>
       </div>
@@ -45,7 +45,7 @@
         </el-row>
       </div>
     </div>
-    <div class="centered-div">
+    <div class="centered-div" id="part2">
       <div style="margin-left: 6px;">
         <p>被使用的设备情况</p>
       </div>
@@ -64,6 +64,25 @@
             <el-table-column prop="starttime" label="开始时间" width="180">
             </el-table-column>
             <el-table-column prop="endtime" label="结束时间" width="193">
+            </el-table-column>
+          </el-table>
+        </template>
+      </div>
+    </div>
+    <div class="centered-div" id="part3">
+      <div class="text-home">
+        <p>设备使用状态</p>
+      </div>
+      <div class="table-dch-use">
+        <template>
+          <el-table border :data="tableData3" class="table-dch" :row-class-name="getRowClassName">
+            <el-table-column prop="equp" label="设备名" width="300">
+            </el-table-column>
+            <el-table-column prop="status" label="状态" width="200">
+            </el-table-column>
+            <el-table-column prop="expected" label="预期就绪" width="200">
+            </el-table-column>
+            <el-table-column prop="statuslog" label="状态日志" width="330">
             </el-table-column>
           </el-table>
         </template>
@@ -109,7 +128,38 @@ export default {
       currentPage: 1,
       pageSize: 5,
       searchKeyword: '',
-      searchResult: []
+      searchResult: [],
+      tableData3: [{
+        equp: '7-up(masks)',
+        status: 'Out of use',
+        expected: 'Not set',
+        statuslog: 'still not working'
+      },
+      {
+        equp: '7-up 6"',
+        status: 'Out of use',
+        expected: 'Not set',
+        statuslog: 'Is being decommissioned'
+      },
+      {
+        equp: 'ALD Picosun R200',
+        status: 'Limited use',
+        expected: '11-11-2016',
+        statuslog: 'no DEZ;TiO2 and AI2O3 are fine'
+      },
+      {
+        equp: 'Aligner',
+        status: 'Limited use',
+        expected: '11-11-2016',
+        statuslog: 'Intensity low,max power'
+      },
+      {
+        equp: 'ICP Metal Etch',
+        status: 'Being Serviced',
+        expected: '14-11-2016',
+        statuslog: 'Yearly service by SPTS 1 of 3'
+      },
+    ],
     }
   },
   computed : {
@@ -147,6 +197,16 @@ export default {
       this.$refs.tab1.style.display = 'none';
       this.$refs.tab2.style.display = 'block';
     },
+    getRowClassName({row,rowIndex}) {
+      if ((row.status) === 'Out of use') {
+        return 'red-row';
+      } else if ((row.status) === 'Limited use') {
+        return 'yellow-row';
+      } else if ((row.status) === 'Being Serviced') {
+        return 'gray-row';
+      }
+      return '';
+    }
   },
 }
 </script>
@@ -195,5 +255,14 @@ export default {
 
 .search-area{
   display: none;
+}
+.table-dch-use {
+  margin: 20px;
+}
+
+.table-dch {
+  width: 96%;
+  border: 1px solid black;
+  border-radius: 8px;
 }
 </style>

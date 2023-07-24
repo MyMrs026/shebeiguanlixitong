@@ -69,9 +69,6 @@
         </div>
       </el-dialog>
     </div>
-    <!-- <div class="account">
-      账号管理：自动生成账号？
-    </div> -->
 
   </div>
 </template>
