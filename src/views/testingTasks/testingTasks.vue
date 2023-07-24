@@ -140,8 +140,7 @@
                     <el-button size="mini" type="text" @click="visible = false">取消</el-button>
                     <el-button type="primary" size="mini" @click="visible = false" @click.native.prevent="deleteRow(scope.$index, tableData)">确定</el-button>
                   </div>
-                  <el-button slot="reference" type="text"
-                  size="small">删除</el-button>
+                  <el-button slot="reference" type="text" size="small">删除</el-button>
                 </el-popover>
                 /
                 <el-popover
@@ -153,8 +152,7 @@
                     <el-table-column width="100" property="param2" label="参数2"></el-table-column>
                     <el-table-column width="300" property="content" label="测试内容"></el-table-column>
                   </el-table>
-                  <el-button slot="reference" type="text"
-                  size="small">查看详情</el-button>
+                  <el-button slot="reference" type="text" size="small">查看详情</el-button>
                 </el-popover>
                 
               </template>
