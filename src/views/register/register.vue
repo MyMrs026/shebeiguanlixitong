@@ -69,7 +69,10 @@ export default {
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background-color: #f5f7fa;
+  background: url("../../assets/img/loginbg1.jpg");
+  width:100%;
+  position:fixed;
+  background-size:100% 100%;
 }
 
 .register-card {
