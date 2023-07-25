@@ -10,6 +10,8 @@ const Train = () => import('@/views/trainManagement/trainManagement')
 const Information = () => import('../views/informationManagement/informationManagement')
 const System = () =>import('../views/systemManagement/systemManagement')
 const Test = () =>import('../views/testingTasks/testingTasks.vue')
+const LabInform =() =>import('../views/labInformation/labInformation.vue')
+const EquList =() => import('../views/equList/equList.vue')
 
 const Login =() => import('@/views/login/index.vue')
 const Register =() => import('@/views/register/register.vue')
@@ -80,6 +82,16 @@ const routes = [
     path:'/register',
     name: 'Register',
     component: Register
+  },
+  {
+    path:'/labinform',
+    name: 'LabInform',
+    component: LabInform
+  },
+  {
+    path: '/equlist',
+    name: 'EquList',
+    component: EquList
   }
 
 ]
