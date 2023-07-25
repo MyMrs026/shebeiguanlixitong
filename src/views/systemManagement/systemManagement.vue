@@ -74,6 +74,7 @@
 </template>
 
 <script>
+import { getLabList } from '../../network/labtory';
 
 export default {
   data() {
@@ -128,6 +129,11 @@ export default {
       this.editDialogVisible = false;
       console.log("保存成功");
     }
+  },
+  created(){
+    getLabList().then(res => {
+      console.log(res);
+    })
   }
 }
 

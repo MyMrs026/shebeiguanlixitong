@@ -11,6 +11,7 @@ const Information = () => import('../views/informationManagement/informationMana
 const System = () =>import('../views/systemManagement/systemManagement')
 const Test = () =>import('../views/testingTasks/testingTasks.vue')
 const LabInform =() =>import('../views/labInformation/labInformation.vue')
+const EquList =() => import('../views/equList/equList.vue')
 
 const Login =() => import('@/views/login/index.vue')
 const Register =() => import('@/views/register/register.vue')
@@ -86,6 +87,11 @@ const routes = [
     path:'/labinform',
     name: 'LabInform',
     component: LabInform
+  },
+  {
+    path: '/equlist',
+    name: 'EquList',
+    component: EquList
   }
 
 ]

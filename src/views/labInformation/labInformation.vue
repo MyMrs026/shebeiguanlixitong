@@ -1,11 +1,11 @@
 <template>
   <div class="lab_inform">
     <el-descriptions class="margin-top" title="实验室信息详情" direction="vertical" :column="4" border style="margin: 10px;">
-      <el-descriptions-item label="实验室名称">XXX高级实验室</el-descriptions-item>
-      <el-descriptions-item label="实验室管理员">张三</el-descriptions-item>
-      <el-descriptions-item label="实验室联系电话" :span="2">15865545716</el-descriptions-item>
+      <el-descriptions-item label="实验室名称">{{labinform[0].labName}}</el-descriptions-item>
+      <el-descriptions-item label="实验室管理员">{{labinform[0].linkman}}</el-descriptions-item>
+      <el-descriptions-item label="实验室联系电话" :span="2">{{labinform[0].tel}}</el-descriptions-item>
       <el-descriptions-item label="实验室布局">
-        <el-tag size="small">这里到时候可以插入图片</el-tag>
+        <el-tag size="small">{{labinform[0].layout}}</el-tag>
       </el-descriptions-item>
       <el-descriptions-item label="实验室介绍">
         国家实验室，属于科学与工程研究类国家科技创新基地，体现国家意志、实现国家使命、代表国家水平的战略科技力量，是面向国际科技竞争的创新基础平台，是保障国家安全的核心支撑，是突破型、引领型、平台型一体化的大型综合性研究基地。
@@ -18,9 +18,23 @@
 </template>
 
 <script>
-
+import { getLabList } from '../../network/labtory';
 export default {
+  data(){
+    return {
+      labinform: [], 
+    }
+  },
+  methods:{
 
+  },
+  created() {
+    getLabList().then(res => {
+      // console.log(res);
+      this.labinform = res.data
+      console.log(this.labinform);
+    })
+  }
 }
 
 </script>

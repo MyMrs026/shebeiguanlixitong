@@ -26,7 +26,7 @@
                 <router-link to="/equp">
                   <el-menu-item index="2-2">信息</el-menu-item>
                 </router-link>
-                <router-link to="/equp">
+                <router-link to="/equlist">
                   <el-menu-item index="2-3">设备列表</el-menu-item>
                 </router-link>
                 <router-link to="/equp">
