@@ -1,29 +1,32 @@
 <template>
   <div class="register-container">
     <el-card class="register-card">
-      <i class="el-icon-back" @click="backItem"></i>
-      <h1 class="register-title">注册</h1>
+      <img src="../../assets/img/return.png" class="el-icon-back" @click="backItem" title="return icon" ></img>
+      <h1 class="register-title" style="margin-bottom:40px;">注册</h1>
       <el-form ref="registerForm" :model="registerData">
-        <el-form-item label="用户名" prop="username">
-          <el-input v-model="registerData.username"></el-input>
+        <img src="../../assets/img/my.png" title="user icon" style="width:40px;height:40px;float:left;"></img> 
+        <el-form-item label="用户名" prop="username" >
+          <input class="registername" v-model="registerData.username"></input>
         </el-form-item>
-
-        <el-form-item label="密码" prop="password">
-          <el-input type="password" v-model="registerData.password"></el-input>
+        <img src="../../assets/img/pwd.png" title="pwd icon" style="width:40px;height:40px;float:left"></img>
+        <el-form-item label="密 码"  prop="password">
+          <input class="registerpwd" type="password" v-model="registerData.password"></input>
         </el-form-item>
-
-        <el-select v-model="value" placeholder="请选择" style="margin-bottom:20px">
-          <el-option
+        <img src="../../assets/img/rights.png" title="rights icon" style="width:40px;height:40px;float:left"></img>
+        <el-form-item label="权 限 " prop="right">
+        <select class="registerselect" v-model="value"  style="margin-bottom:10px">
+          <option id="r" v-model="value" disabled selected key="id">请选择您的身份</option>
+          <option
             v-for="item in options"
             :key="item.value"
             :label="item.label"
             :value="item.value">
-          </el-option>
-        </el-select>
-
-        <el-form-item>
-          <el-button type="primary" @click="register">注册</el-button>
-          <el-button @click="cancel">取消</el-button>
+          </option>
+        </select>
+        </el-form-item>
+        <el-form-item style="text-align:center;margin-top:40px">
+          <el-button  type="primary" @click="register">注册</el-button>
+          <el-button  @click="cancel">取消</el-button>
         </el-form-item>
       </el-form>
     </el-card>
@@ -76,10 +79,20 @@ export default {
 }
 
 .register-card {
-  width: 400px;
-  padding: 20px;
-  border-radius: 4px;
-  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+  position: absolute;
+  border-radius:10px;
+  padding:30px;
+  padding-top:50px;
+  left: 70%;
+  top:50%;
+  transform: translate(-50%, -50%);
+  margin:auto; 
+  background-color:#fff;
+  opacity: 0.85;
+  border:2px solid rgba(255,255,255,.5);
+  backdrop-filter: blur;
+  width:400px;
+  height:500px;
 }
 
 .register-title {
@@ -95,8 +108,41 @@ export default {
   text-align: center;
 }
 
-
-.button-back .el-icon {
+.el-icon-back {
   vertical-align: middle;
+  width:25px;height:25px;
+  margin:5px;
+  float:left
+}
+
+.registername {
+  border:none;
+  border-bottom-width: 2.3px;
+  border-bottom-color:rgb(57, 127, 233);
+  border-bottom-style: solid;
+  height:35px;
+  outline:none;
+}
+
+.registerpwd {
+  border:none;
+  border-bottom-width: 2.3px;
+  border-bottom-color:rgb(57, 127, 233);
+  border-bottom-style: solid;
+  height:35px;
+  outline:none;
+  margin-left:10px;
+}
+
+.registerselect {
+  border:none;
+  border-bottom-width: 2.3px;
+  border-bottom-color:rgb(57, 127, 233);
+  border-bottom-style: solid;
+  background: #fff;
+  height:35px;
+  outline:none;
+  width: 185px;
+  margin-left:10px;
 }
 </style>

@@ -5,28 +5,31 @@
         <div class="title">
           <h3>***研究机构</h3>
         </div>
+        <br>
       <form @submit="login">
         <div style="text-align: center;">
-          <label for="username">用户名:</label>
-          <input id="username" placeholder="请输入用户名" type="text" v-model="username" required>
+          <img src="../../assets/img/my.png" title="user icon" style="width:40px;height:40px"></img>     
+          <input id="username"  placeholder="请输入用户名" type="text" v-model="username" required >
         </div>
         <br>
         <div style="text-align: center;">
-          <label for="password">密&nbsp&nbsp&nbsp码:</label>
+          <img src="../../assets/img/pwd.png" title="pwd icon" style="width:40px;height:40px"></img>
           <input id="password" placeholder="请输入密码" type="password" v-model="password" required>
         </div>
         <br>
       <div style="text-align: center;">
-        <el-select style="width: 200px;" v-model="value" placeholder="请选择您的身份">
-          <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
-          </el-option>
-        </el-select>
+        <img src="../../assets/img/rights.png" title="rights icon" style="width:40px;height:40px"></img>
+        <select  id="select">
+          <option v-model="value" disabled selected>请选择您的身份</option>
+          <option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
+          </option>
+        </select>
       </div>
-      <br>
-      <div style="text-align: center;"> 
-        <el-button @click="login" plain>登&nbsp&nbsp录</el-button>
-        <el-divider direction="vertical"></el-divider>
-        <el-button @click="register" plain>注&nbsp&nbsp册</el-button>
+      <br><br>
+      <div style="text-align: center;" > 
+        <el-button @click="login"  id="button-3">登&nbsp&nbsp录</el-button>
+        <el-divider direction="vertical" ></el-divider>
+        <el-button @click="register"  id="button-4">注&nbsp&nbsp册</el-button>
       </div>
     </form>
   </div>
@@ -49,7 +52,7 @@ export default {
         value: 'admin',
         label: '管理人员'
       }],
-      value: '',
+      value:undefined,
     };
   },
   methods: {
@@ -99,7 +102,7 @@ export default {
  
 }
 </script>
-<style scoped>
+<style scoped >
 .max {
   background: url("../../assets/img/loginbg1.jpg");
   width:100%;
@@ -110,17 +113,17 @@ export default {
 .login {
   position: absolute;
   border-radius:10px;
-  padding:30px;
+  padding:40px;
   left: 70%;
   top:50%;
   transform: translate(-50%, -50%);
   margin:auto; 
   background-color:#fff;
-  opacity: 0.7;
+  opacity: 0.85;
   border:2px solid rgba(255,255,255,.5);
   backdrop-filter: blur;
-  width:30%;
-  height:70%;
+  width:400px;
+  height:500px;
 }
 .title {
   align-items: center;
@@ -131,5 +134,98 @@ export default {
 }
 .login-form {
   margin: 10px;
+}
+
+#button-3 {
+	position: relative;
+	border:none;
+	padding: 15px;
+	box-shadow: 0 5px 15px -5px rgba(#FCCF31, 0.8);
+  background-image: linear-gradient( 135deg, #FCCF31 10%, #F55555 100%);
+	border-radius: 5px;
+	cursor: pointer;
+  color:rgb(42, 42, 42);
+}
+
+#button-3::before {
+  opacity: 0.5;
+  text-align: center;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 101%;
+	height: 101%;
+	transition: 400ms ease;
+	background-image: linear-gradient( 135deg, #FCCF31 10%, #F55555 100%);
+	border-radius: 5px;
+	transform-origin: left center;
+  color:rgb(42, 42, 42);
+}
+
+#button-3:hover {
+		opacity: 0.5;
+		color:rgb(42, 42, 42);
+}
+
+#button-4 {
+	position: relative;
+	border:none;
+	padding: 15px;
+	box-shadow: 0 5px 15px -5px rgba(#FCCF31, 0.8);
+  background-image: linear-gradient( 135deg, #43CBFF 10%, #9708CC 100%);
+	background-color: #fefefe;
+	border-radius: 5px;
+	cursor: pointer;
+	overflow: hidden;
+  color:rgb(42, 42, 42);
+}
+
+#button-4::before {
+	opacity: 0.5;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100px;
+	height: 100px;
+	transition: 600ms ease;
+	background-image: linear-gradient( 135deg, #43CBFF 10%, #9708CC 100%);
+	border-radius: 50%;
+	transform-origin: center;
+  color:rgb(42, 42, 42);
+}
+
+#button-4:hover {
+		opacity: 0.5;
+		color:rgb(42, 42, 42);
+	
+}
+
+#username {
+  border:none;
+  border-bottom-width: 2.3px;
+  border-bottom-color:rgb(57, 127, 233);
+  border-bottom-style: solid;
+  height:35px;
+  outline:none;
+}
+
+#password {
+  border:none;
+  border-bottom-width: 2.3px;
+  border-bottom-color:rgb(57, 127, 233);
+  border-bottom-style: solid;
+  height:35px;
+  outline:none;
+}
+
+#select {
+  border:none;
+  border-bottom-width: 2.3px;
+  border-bottom-color:rgb(57, 127, 233);
+  border-bottom-style: solid;
+  background: #fff;
+  height:35px;
+  outline:none;
+  width: 210px;
 }
 </style>
