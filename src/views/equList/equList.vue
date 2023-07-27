@@ -21,15 +21,27 @@
     </div>
     <div class="equAdd">
       <h2>添加设备信息</h2>
-      <el-form :label-position="labelPosition" label-width="80px" :model="newEquInform">
+      <el-form label-width="120px" :model="newEquInform">
         <el-form-item label="设备名">
-          <el-input v-model="newEquInform.deviceName"></el-input>
+          <el-input v-model="newDeviceName" style="width: 300px;"></el-input>
         </el-form-item>
         <el-form-item label="设备功能">
-          <el-input v-model="newEquInform.deviceFunc"></el-input>
+          <el-input v-model="newDeviceFunc" style="width: 300px;"></el-input>
         </el-form-item>
-        <el-form-item label="设备使用说明书">
-          <el-input v-model="newEquInform.operationInstructionUrl"></el-input>
+        <el-form-item label="设备类型">
+          <el-select v-model="newDeviceTypeId" placeholder="选择设备类型">
+            <el-option v-for="item in equcategory" :key="item.deviceTypeId" :label="item.typeName" :value="item.deviceTypeId">
+            </el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="实验室">
+          <el-select v-model="newLabId" placeholder="选择实验室">
+            <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
+            </el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="设备说明书">
+          <el-input v-model="newUuid" style="width: 300px;"></el-input>
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="submitForm('newEquInform')">添加</el-button>
@@ -41,35 +53,46 @@
 
 <script>
 import axios from 'axios';
-import { getEquList } from '../../network/equpment';
+import { getEquList,getEquCate } from '../../network/equpment';
 export default {
   data() {
     return {
       eqpinform: [],
-      labelPosition: 'right',
-      newEquInform: {
-        deviceName: '',
-        deviceFunc: '',
-        deviceTypeId: 0,
-        operationInstructionUrl: '',
-        labId: 0,
-        isInUse: 0,
-        isUnderMaintenance: 0,
-      }
+      equcategory:[],
+      equcategoryName:[],
+      newDeviceName: '',
+      newDeviceFunc: '',
+      newDeviceTypeId: '',
+      newLabId: 1,
+      newUuid: '',
+
     }
   },
   methods: {
     submitForm() {
-      
-    }
+      // axios.post('http://172.16.23.115:8080/api/device/addDevice', postData).then(responce=>{
+      //   console.log(responce.data);
+      //   //  this.equcategory = responce.data;
+      // }).catch(error=> {
+      //   console.error(error);
+      // })
+    },
   },
   created() {
     getEquList().then(res => {
       // console.log(res);
       this.eqpinform = res.data
-      console.log(this.eqpinform);
+      // console.log(this.eqpinform);
     })
-  }
+   
+    getEquCate().then(res =>{
+    // console.log(res.data);
+    this.equcategory = res.data
+    console.log(this.equcategory);
+    // this.equcategoryName = this.equcategory.map(item => item.typeName)
+    // console.log(this.equcategoryName);
+    })
+  },
 }
 
 </script>
