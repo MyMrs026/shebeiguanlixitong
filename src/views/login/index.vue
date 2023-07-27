@@ -19,8 +19,8 @@
         <br>
       <div style="text-align: center;">
         <img src="../../assets/img/rights.png" title="rights icon" style="width:40px;height:40px"></img>
-        <select  id="select">
-          <option v-model="value" disabled selected>请选择您的身份</option>
+        <select  id="select" v-model="value">
+          <option   disabled selected>请选择您的身份</option>
           <option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
           </option>
         </select>
@@ -52,7 +52,7 @@ export default {
         value: 'admin',
         label: '管理人员'
       }],
-      value:undefined,
+      value:'',
     };
   },
   methods: {
@@ -119,7 +119,7 @@ export default {
   transform: translate(-50%, -50%);
   margin:auto; 
   background-color:#fff;
-  opacity: 0.85;
+  opacity: 0.75;
   border:2px solid rgba(255,255,255,.5);
   backdrop-filter: blur;
   width:400px;
@@ -141,7 +141,7 @@ export default {
 	border:none;
 	padding: 15px;
 	box-shadow: 0 5px 15px -5px rgba(#FCCF31, 0.8);
-  background-image: linear-gradient( 135deg, #FCCF31 10%, #F55555 100%);
+  background-image: linear-gradient( 135deg, #fab14a 10%, #e857bc 100%);
 	border-radius: 5px;
 	cursor: pointer;
   color:rgb(42, 42, 42);
@@ -156,7 +156,7 @@ export default {
 	width: 101%;
 	height: 101%;
 	transition: 400ms ease;
-	background-image: linear-gradient( 135deg, #FCCF31 10%, #F55555 100%);
+	background-image: linear-gradient( 135deg, #f4b14a 10%, #e857bc  100%);
 	border-radius: 5px;
 	transform-origin: left center;
   color:rgb(42, 42, 42);
@@ -172,7 +172,7 @@ export default {
 	border:none;
 	padding: 15px;
 	box-shadow: 0 5px 15px -5px rgba(#FCCF31, 0.8);
-  background-image: linear-gradient( 135deg, #43CBFF 10%, #9708CC 100%);
+  background-image: linear-gradient( 135deg, #5fd1ff 10%, #a235ca 100%);
 	background-color: #fefefe;
 	border-radius: 5px;
 	cursor: pointer;
@@ -188,7 +188,7 @@ export default {
 	width: 100px;
 	height: 100px;
 	transition: 600ms ease;
-	background-image: linear-gradient( 135deg, #43CBFF 10%, #9708CC 100%);
+	background-image: linear-gradient( 135deg, #5fd1ff 10%, #a235ca 100%);
 	border-radius: 50%;
 	transform-origin: center;
   color:rgb(42, 42, 42);
