@@ -15,8 +15,7 @@
       </el-col>
       <el-col :span="6" >
           <div>
-            <input class="search-box" placeholder="请输入已有项目" v-model="input" clearable  >
-            </input>
+            <input class="search-box" placeholder="请输入已有项目" v-model="input" clearable  />
           </div>
           
       </el-col>
@@ -120,14 +119,18 @@
                 <template slot="title" class="firstly">信息</template>
                 <el-menu-item index="1-1" class="secondly">首页信息</el-menu-item>
                 <el-menu-item index="1-2" class="secondly">一般信息</el-menu-item>
-                <el-menu-item index="1-3" class="secondly">联系信息</el-menu-item>
+                <router-link to="/labinform">
+                  <el-menu-item index="1-3" class="secondly">联系信息</el-menu-item>
+                </router-link>
               </el-submenu>
               <el-submenu index="2"> 
                 <template slot="title" class="firstly">设备</template>
                 <el-menu-item index="2-1" class="secondly">使用设备</el-menu-item>
                 <el-menu-item index="2-2" class="secondly">信息</el-menu-item>
-                <el-menu-item index="2-3" class="secondly">设备列表</el-menu-item>
-                <el-menu-item index="2-4"class="secondly">日志</el-menu-item>
+                <router-link to="/equlist">
+                  <el-menu-item index="2-3" class="secondly">设备列表</el-menu-item>
+                </router-link>
+                <el-menu-item index="2-4" class="secondly">日志</el-menu-item>
               </el-submenu>
               <el-submenu index="3"> 
                 <template slot="title" class="firstly">预约</template>
