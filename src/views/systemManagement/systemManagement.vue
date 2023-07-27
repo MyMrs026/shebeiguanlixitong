@@ -69,14 +69,12 @@
         </div>
       </el-dialog>
     </div>
-    <!-- <div class="account">
-      账号管理：自动生成账号？
-    </div> -->
 
   </div>
 </template>
 
 <script>
+import { getLabList } from '../../network/labtory';
 
 export default {
   data() {
@@ -131,6 +129,11 @@ export default {
       this.editDialogVisible = false;
       console.log("保存成功");
     }
+  },
+  created(){
+    getLabList().then(res => {
+      console.log(res);
+    })
   }
 }
 

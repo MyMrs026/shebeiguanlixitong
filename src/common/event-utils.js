@@ -9,8 +9,49 @@ export const INITIAL_EVENTS = [
   },
   {
     id: createEventId(),
-    title: '共进午餐',
-    start: todayStr + 'T12:00:00'
+    title: '设备ASE的使用',
+    start: todayStr + 'T09:00:00',
+    end: todayStr + 'T11:00:00'
+  }
+]
+
+export const INITIAL_EVENTS2 = [
+  {
+    id: createEventId(),
+    title: '全天的事件',
+    start: todayStr
+  },
+  {
+    id:createEventId(),
+    title:'被王敏预约',
+    start: new Date().toISOString().replace(/T.*$/, '') + 'T09:30:00',
+    end: new Date().toISOString().replace(/T.*$/, '') + 'T10:30:00'
+  },
+  {
+    id:createEventId(),
+    title:'被李华预约',
+    start: new Date().toISOString().replace(/T.*$/, '') + 'T11:30:00',
+    end: new Date().toISOString().replace(/T.*$/, '') + 'T13:30:00'
+  },
+  {
+    id:createEventId(),
+    title:'竞赛使用',
+    start: new Date().toISOString().replace(/T.*$/, '') + 'T15:30:00',
+    end: new Date().toISOString().replace(/T.*$/, '') + 'T18:00:00'
+  },
+]
+
+export const INITIAL_EVENTS3 = [
+  {
+    id: createEventId(),
+    title: '全天的事件',
+    start: todayStr
+  },
+  {
+    id:createEventId(),
+    title:'设备MOX的使用',
+    start: new Date().toISOString().replace(/T.*$/, '') + 'T13:00:00',
+    end: new Date().toISOString().replace(/T.*$/, '') + 'T15:00:00'
   }
 ]
 
