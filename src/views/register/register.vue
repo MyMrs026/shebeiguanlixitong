@@ -88,7 +88,7 @@ export default {
   transform: translate(-50%, -50%);
   margin:auto; 
   background-color:#fff;
-  opacity: 0.85;
+  opacity: 0.75;
   border:2px solid rgba(255,255,255,.5);
   backdrop-filter: blur;
   width:400px;

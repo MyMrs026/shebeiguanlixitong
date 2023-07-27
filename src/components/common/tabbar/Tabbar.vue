@@ -1,10 +1,37 @@
 <template>
+  <div class="navbar-container">
   <div class="tabbar">
     <el-row>
-      <el-col :span="2">
-        <div class="navbar-container">
-          <el-button class="navbar-toggle" icon="el-icon-menu" @click="toggleNavbar"></el-button>
-          <div class="navbar-menu" :class="{ 'show': showNavbar }">
+      <el-col :span="3">
+        <el-col class="institution">
+            <img  src="../../../assets/img/logo.jpg" style="width: 25px;height:25px;float:left">        
+            <div class="lab" style="float:left">
+              XXX研究机构
+            </div> 
+        </el-col>
+      </el-col>
+      <el-col :span="12">
+        <el-col class="title">实验室设备预约管理系统</el-col>
+      </el-col>
+      <el-col :span="6" >
+          <div>
+            <input class="search-box" placeholder="请输入已有项目" v-model="input" clearable  >
+            </input>
+          </div>
+          
+      </el-col>
+      <el-col :span="1" >
+          <i class="el-icon-search" ></i>
+      </el-col>
+      <el-col :span="1" >
+          <div class="help-box">
+            <i class="icon-help el-icon-question"></i>
+          </div>
+      </el-col>
+      <el-col :span="1">
+          <i class="el-icon-s-custom" @click="showDrawer" type="primary" style="margin-left: 16px;"></i>
+          <!-- <el-button class="navbar-toggle" icon="el-icon-menu" @click="toggleNavbar"></el-button> -->
+          <!-- <div class="navbar-menu" :class="{ 'show': showNavbar }">
             <el-menu>
               <el-submenu index="1"> 
                 <template slot="title">信息</template>
@@ -33,12 +60,12 @@
                 <el-menu-item index="4-3">邮件联系</el-menu-item>
               </el-submenu>
             </el-menu>
-          </div>
-        </div>
+          </div> -->
+        
       </el-col>
-      <el-col :span="14">
-        <el-row class="title">实验室设备预约管理系统</el-row>
-        <el-row>
+    </el-row>
+    <el-row>
+      <el-col :span="21">
           <router-link to="/home">
             <el-button class="custom-button" type="info" round size="mini">首页</el-button>
           </router-link>
@@ -66,42 +93,72 @@
           <router-link to="/test">
             <el-button class="custom-button" type="info" round size="mini">测试任务</el-button>
           </router-link>
+        </el-col>
+          <el-col :span="3">
+          <el-button class="btn" @click="logOut">登出</el-button>
+          </el-col>
         </el-row>
-      </el-col>
-      <el-col :span="7">
-        <el-col :span="9">
-          <div class="research-box">
-            <div style="color:white">已有项目</div>
-            <el-input placeholder="请输入内容" v-model="input" clearable>
-            </el-input>
-          </div>
-
-        </el-col>
-        <el-col :span="5">
-          <div class="help-box">
-            <i class="icon-help el-icon-question"></i>
-            <p class="font-help">帮助</p>
-          </div>
-
-        </el-col>
-        <el-col :span="7" class="institution">
-          <el-col >
-          <el-col >
-            <img  src="../../../assets/img/logo.jpg" style="width: 70px;height:70px">
-          </el-col >
-          <el-col >
-            <div class="lab">
-              XXX研究机构
-            </div>           
-          </el-col>
-          </el-col>
-          </el-col>
-          
-      </el-col>
-      <el-col :span="1" >
-            <el-button class="btn" @click="logOut">登出</el-button>
-          </el-col>
-    </el-row>
+        
+    </div>
+    <div>
+      <el-drawer
+        title="我是标题"
+        class="drawer"
+        :key="drawer"
+        :modal="false"
+        :modal-append-to-body="false"
+        size="20%"
+        :visible.sync="drawer"
+        :with-header="false"
+        opacity:0.8
+        >
+        
+            <el-menu accordion class="drawer-menu" :unique-opened="true" text-color="#fff"  
+              active-text-color="#27195e">
+              
+              <el-submenu index="1"> 
+                <template slot="title" class="firstly">信息</template>
+                <el-menu-item index="1-1" class="secondly">首页信息</el-menu-item>
+                <el-menu-item index="1-2" class="secondly">一般信息</el-menu-item>
+                <el-menu-item index="1-3" class="secondly">联系信息</el-menu-item>
+              </el-submenu>
+              <el-submenu index="2"> 
+                <template slot="title" class="firstly">设备</template>
+                <el-menu-item index="2-1" class="secondly">使用设备</el-menu-item>
+                <el-menu-item index="2-2" class="secondly">信息</el-menu-item>
+                <el-menu-item index="2-3" class="secondly">设备列表</el-menu-item>
+                <el-menu-item index="2-4"class="secondly">日志</el-menu-item>
+              </el-submenu>
+              <el-submenu index="3"> 
+                <template slot="title" class="firstly">预约</template>
+                <el-menu-item index="3-1" class="secondly">预约设备</el-menu-item>
+                <el-menu-item index="3-2" class="secondly">日程表</el-menu-item>
+                <el-menu-item index="3-3" class="secondly">周程表</el-menu-item>
+                <el-menu-item index="3-4" class="secondly">月程表</el-menu-item>
+              </el-submenu>
+              <el-submenu index="4"> 
+                <template slot="title" class="firstly">账户</template>
+                <el-menu-item index="4-1" class="secondly">编辑信息</el-menu-item>
+                <el-menu-item index="4-2" class="secondly">组织信息</el-menu-item>
+                <el-menu-item index="4-3" class="secondly">邮件联系</el-menu-item>
+              </el-submenu>
+              <el-submenu index="5"> 
+                <template slot="title" class="firstly">订单</template>
+                <el-menu-item index="5-1" class="secondly">订单列表</el-menu-item>
+              </el-submenu>
+              <el-submenu index="6"> 
+                <template slot="title" class="firstly">商城</template>
+                <el-menu-item index="6-1" class="secondly">硅晶片</el-menu-item>
+                <el-menu-item index="6-2" class="secondly">金属</el-menu-item>
+              </el-submenu>
+              <el-submenu index="7"> 
+                <template slot="title" class="firstly">进程信息</template>
+                <el-menu-item index="7-1" class="secondly">实验室顾问</el-menu-item>
+                <el-menu-item index="7-2" class="secondly">进程分享</el-menu-item>
+              </el-submenu>
+            </el-menu>
+      </el-drawer>
+    </div>
   </div>
 </template>
 
@@ -109,6 +166,10 @@
 export default {
   data() {
     return {
+      drawerVisible: false,
+      activeNames: [], // 控制顶层折叠面板的展开状态
+      activeSubNames: [], // 控制子面板的展开状态
+      drawer: false,
       input: '',
       showNavbar: false, // 导航栏是否可见
     }
@@ -120,6 +181,9 @@ export default {
     logOut(){
       this.$router.push('/login')
       localStorage.removeItem('token')
+    },
+    showDrawer() {
+      this.drawer = true;
     },
   }
 }
@@ -133,54 +197,91 @@ export default {
 }
 .title {
   text-align: center;
-  margin-top:10px;
+  margin-top:15px;
   height:40px;
   color:white;
 }
 .custom-button {
   margin-right: 0px;
-  margin-left: 0px;
+  margin-left: 15px;
   margin-bottom: 10px;
   border-color: white;
   background-color:rgb(151, 184, 216,0.5);
   font-size: 100%;
 }
-.icon-help {
-  display: flex;
-  font-size: 45px;
-  color: white;
-  justify-content: center;
-  align-items: center;
-  margin:10px;
-}
+
 .font-help {
   align-items: center;
   margin-top: 0;
   margin-bottom: 0;
   color: white;
 }
-.research-box {
+/* 搜索输入栏 */
+.search-box {
+  background-color:rgb(151, 184, 216,0.5);
   border: 1px solid white;
-  border-radius: 4px;
-  margin:4px;
+  border-radius:15px ;
+  margin-top:17px;
+  margin-right:20px;
+  float:right;
+  width:180px;
+  height:27px;
+  color:white;
 }
+/* 搜索icon */
+.el-icon-search{
+  float:right;
+  display: flex;
+  font-size: 35px;
+  color: white;
+  justify-content: center;
+  align-items: center;
+  margin-top:15px;
+  margin-left:15px;
+  margin-right:15px;
+}
+/* 帮助icon的div */
 .help-box {
-  border: 1px solid white;
   border-radius: 4px;
-  margin:4px;
   text-align: center;
+  float: right;
+}
+.icon-help {
+  display: flex;
+  font-size: 35px;
+  color: white;
+  justify-content: center;
+  align-items: center;
+  margin-top:15px;
+  margin-left:15px;
+  margin-right:15px;
+  float: right;
+}
+/* 个人icon */
+.el-icon-s-custom{     
+  display: flex;
+  font-size: 35px;
+  color: white;
+  justify-content: center;
+  align-items: center;
+  margin-top:15px;
+  margin-left:15px;
+  margin-right:15px;
+  float: right;
 }
 .institution {
   float:left;
-  margin:5px;
+  margin-top:15px;
+  margin-left:15px;
+  margin-right:15px;
 }
 .lab{
+  margin-left:15px;
   color:#fff;
 }
 .btn{
   width:50px;
   height:25px;
-  margin:20px;
   display:flex;
   align-items: center;
   justify-content: center;
@@ -189,6 +290,7 @@ export default {
   float:right;
   text-align: center;
   color:white;
+  margin-right: 15px;
 }
 .btn:hover{
   background-color: rgb(151, 184, 216,0.5);
@@ -196,14 +298,37 @@ export default {
 .navbar-toggle {
   margin: 15px;
   margin-top:40px;
+  float:right;
 }
 
 .navbar-menu {
   display: none;
-  width:200px;
+  width:100px;
+  
 }
 
 .navbar-menu.show {
-  display: block;
+  display: flex;
+}
+
+::v-deep .drawer_body tr.current-row {
+  background-color: antiquewhite !important;
+}
+::v-deep .drawer-menu .firstly{
+  border:none;
+  border-top:1px black solid;
+  border-bottom:1px black solid;
+}
+.drawer-menu{
+  height: 100%;
+  background-image:url("../../../assets/img/tabbar2.jpg");
+  opacity: 0.8;
+}
+.secondly{
+  background-color:#48425b;
+  
+}
+div /deep/ .el-submenu__title:hover {
+  background-color:rgb(0, 0, 0);
 }
 </style>
