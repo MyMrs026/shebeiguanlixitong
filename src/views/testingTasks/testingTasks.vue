@@ -134,7 +134,7 @@
                 <el-popover
                   placement="top"
                   width="160"
-                  v-model="visible">
+                  trigger="click">
                   <p>确定删除此条记录吗？</p>
                   <div style="text-align: right; margin: 0">
                     <el-button size="mini" type="text" @click="visible = false">取消</el-button>
@@ -167,7 +167,7 @@
 export default {
     data() {
       return {
-        visible:'',
+        visible:false,
         isButtonDisabled:'',
         searchTerm:'',
         currentStep: 0,
