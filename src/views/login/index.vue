@@ -8,19 +8,19 @@
         <br>
       <form @submit="login">
         <div style="text-align: center;">
-          <img src="../../assets/img/my.png" title="user icon" style="width:40px;height:40px"></img>     
+          <img src="../../assets/img/my.png" title="user icon" style="width:40px;height:40px"/>    
           <input id="username"  placeholder="请输入用户名" type="text" v-model="username" required >
         </div>
         <br>
         <div style="text-align: center;">
-          <img src="../../assets/img/pwd.png" title="pwd icon" style="width:40px;height:40px"></img>
+          <img src="../../assets/img/pwd.png" title="pwd icon" style="width:40px;height:40px"/>
           <input id="password" placeholder="请输入密码" type="password" v-model="password" required>
         </div>
         <br>
       <div style="text-align: center;">
-        <img src="../../assets/img/rights.png" title="rights icon" style="width:40px;height:40px"></img>
-        <select  id="select" v-model="value">
-          <option   disabled selected>请选择您的身份</option>
+        <img src="../../assets/img/rights.png" title="rights icon" style="width:40px;height:40px"/>
+        <select id="select" v-model="value">
+          <option disabled selected>请选择您的身份</option>
           <option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
           </option>
         </select>
@@ -45,6 +45,7 @@ export default {
       username: '',
       password: '',
       identity: '',
+      userList: [],
       options: [{
         value: 'staff',
         label: '普通人员'
@@ -98,7 +99,14 @@ export default {
       // this.$store.mutations.setCu_role(value)
       this.$store.commit('setCurole',value)
     }
-  }
+  },
+  created() {
+    getUserList().then( res => {
+      // console.log(res);
+      this.userList = res.data
+      console.log(this.userList)
+    })
+  },
  
 }
 </script>

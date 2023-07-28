@@ -7,11 +7,12 @@ const Equp = () => import('@/views/equManagement/equManagement')
 const Craft = () => import('@/views/craftManagement/craftManagement')
 const Book = () => import('@/views/bookManagement/bookManagement')
 const Train = () => import('@/views/trainManagement/trainManagement')
-const Information = () => import('../views/informationManagement/informationManagement')
+const Notice = () => import('../views/notice/notice')
 const System = () =>import('../views/systemManagement/systemManagement')
 const Test = () =>import('../views/testingTasks/testingTasks.vue')
 const LabInform =() =>import('../views/labInformation/labInformation.vue')
 const EquList =() => import('../views/equList/equList.vue')
+const NoticeDetail =()=>import('../views/notice/noticeDetail.vue')
 
 const Login =() => import('@/views/login/index.vue')
 const Register =() => import('@/views/register/register.vue')
@@ -30,7 +31,7 @@ const routes = [
     component: Error
   },
   {
-    path: '/home',
+    path:'/home',
     name: 'Home',
     component: Home
   },
@@ -47,31 +48,36 @@ const routes = [
   {
     path: '/craft',
     name: 'Craft',
-    component:Craft
+    component: Craft
   },
   {
     path: '/book',
     name: 'Book',
-    component:Book
+    component: Book
   },
   {
     path: '/train',
     name: 'Train',
-    component:Train
+    component: Train
   },
   {
-    path: '/information',
-    name: 'Information',
-    component:Information
+    path: '/notice',
+    name: 'Notice',
+    component: Notice
+  },
+  {
+    path: '/notice/:id',
+    name: 'NoticeDetail',
+    component:  NoticeDetail
   },
   {
     path: '/system',
     name: 'System',
-    component:System
+    component: System
   },
   {
     path: '/test',
-    component:Test
+    component: Test
   },
   {
     path:'/login',
