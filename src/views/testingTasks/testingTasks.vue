@@ -57,62 +57,100 @@
             <el-button>取消</el-button>
           </el-form-item>
         </el-form>
-
-        <el-button v-if="currentStep === 2" @click="currentStep = 0">完成</el-button>
-      </div>
-      <div class="stepbtn">
-        <el-button @click="back" class="backbtn">上一步</el-button>
-        <el-button @click="next" class="nextbtn">下一步</el-button>
-      </div>
-
-      <div class="footer">
-        <h3>历史测试任务记录 </h3>
-        <el-input placeholder="请输入检索内容" prefix-icon="el-icon-search" v-model="searchTerm" style="width:300px">
-        </el-input>
-        <el-button type="info" style="margin-left:12px;" :disabled="isButtonDisabled">搜索
-        </el-button>
-        <el-table :data="tableData" style="width: 100%" max-height="250">
-          <el-table-column fixed prop="number" label="编号" width="60">
-          </el-table-column>
-          <el-table-column prop="startTime" label="开始时间" width="160">
-          </el-table-column>
-          <el-table-column prop="endTime" label="结束时间" width="160">
-          </el-table-column>
-          <el-table-column prop="name" label="测试名称" width="120">
-          </el-table-column>
-          <el-table-column prop="equipment" label="测试设备" width="120">
-          </el-table-column>
-          <el-table-column prop="useEquipment" label="使用设备" width="120">
-          </el-table-column>
-          <el-table-column prop="people" label="人员" width="120">
-          </el-table-column>
-          <el-table-column prop="craft" label="工艺" width="120">
-          </el-table-column>
-          <el-table-column prop="result" label="测试结果" width="100">
-          </el-table-column>
-          <el-table-column fixed="right" label="操作" width="120">
-            <template slot-scope="scope">
-              <el-popover :visible.sync="isVisible" title="删除页面" placement="top" width="200" trigger="click">
-                <p>确定删除此条记录吗？</p>
-                <div style="text-align: right; margin: 0">
-                  <!-- <el-button size="mini" type="text" @click="isShowPopover">取消</el-button> -->
-                  <el-button type="primary" size="mini" @click="isShowPopover"
-                    @click.native.prevent="deleteRow(scope.$index, tableData)">确定</el-button>
-                </div>
-                <el-button slot="reference" type="text" size="small">删除</el-button>
-              </el-popover>
-              <el-popover placement="top" width="400" trigger="click">
-                <el-table :data="gridData">
-                  <el-table-column width="150" property="param1" label="参数1"></el-table-column>
-                  <el-table-column width="100" property="param2" label="参数2"></el-table-column>
-                  <el-table-column width="300" property="content" label="测试内容"></el-table-column>
-                </el-table>
-                <el-button slot="reference" type="text" size="small">查看详情</el-button>
-              </el-popover>
-
-            </template>
-          </el-table-column>
-        </el-table>
+        <div class="footer" >
+          <h3>历史测试任务记录 </h3>
+          <el-input
+            placeholder="请输入检索内容"
+            prefix-icon="el-icon-search"
+            v-model="searchTerm"
+            style="width:300px">
+          </el-input>
+          <el-button type="info" style="margin-left:12px;" 
+          :disabled="isButtonDisabled" >搜索
+          </el-button>
+          <el-table
+            :data="tableData"
+            style="width: 100%"
+            max-height="250">
+            <el-table-column
+              fixed
+              prop="number"
+              label="编号"
+              width="60">
+            </el-table-column>
+            <el-table-column              
+              prop="startTime"
+              label="开始时间"
+              width="160">
+            </el-table-column>
+            <el-table-column
+              prop="endTime"
+              label="结束时间"
+              width="160">
+            </el-table-column>
+            <el-table-column
+              prop="name"
+              label="测试名称"
+              width="120">
+            </el-table-column>
+            <el-table-column
+              prop="equipment"
+              label="测试设备"
+              width="120">
+            </el-table-column>
+            <el-table-column
+              prop="useEquipment"
+              label="使用设备"
+              width="120">
+            </el-table-column>
+            <el-table-column
+              prop="people"
+              label="人员"
+              width="120">
+            </el-table-column>
+            <el-table-column
+              prop="craft"
+              label="工艺"
+              width="120">
+            </el-table-column>
+            <el-table-column
+              prop="result"
+              label="测试结果"
+              width="100">
+            </el-table-column>
+            <el-table-column
+              fixed="right"
+              label="操作"
+              width="120">
+              <template slot-scope="scope">
+                <el-popover
+                  placement="top"
+                  width="160"
+                  trigger="click">
+                  <p>确定删除此条记录吗？</p>
+                  <div style="text-align: right; margin: 0">
+                    <el-button size="mini" type="text" @click="visible = false">取消</el-button>
+                    <el-button type="primary" size="mini" @click="visible = false" @click.native.prevent="deleteRow(scope.$index, tableData)">确定</el-button>
+                  </div>
+                  <el-button slot="reference" type="text" size="small">删除</el-button>
+                </el-popover>
+                /
+                <el-popover
+                  placement="top"
+                  width="400"
+                  trigger="click">
+                  <el-table :data="gridData">
+                    <el-table-column width="150" property="param1" label="参数1"></el-table-column>
+                    <el-table-column width="100" property="param2" label="参数2"></el-table-column>
+                    <el-table-column width="300" property="content" label="测试内容"></el-table-column>
+                  </el-table>
+                  <el-button slot="reference" type="text" size="small">查看详情</el-button>
+                </el-popover>
+                
+              </template>
+            </el-table-column>
+          </el-table>
+        </div>
       </div>
     </div>
   </div>
@@ -122,6 +160,7 @@
 export default {
   data() {
     return {
+      visible:false,
       isVisible: false,
       isButtonDisabled: '',
       searchTerm: '',
