@@ -10,26 +10,6 @@ Vue.use(Vuex)
 
 const state = {
   cu_role:'',
-  equps:[
-    {
-      id:'001',
-      name:'ASE',
-      func:'chemistry use',
-      lab:'zab'
-    },
-    {
-      id:'002',
-      name:'POS',
-      func:'physics use',
-      lab:'cio'
-    },
-    {
-      id:'001',
-      name:'ROL',
-      func:'mathematics use',
-      lab:'huawei'
-    }
-  ],
   notices:[
     {
       notice_id: 1,
@@ -1699,20 +1679,6 @@ const state = {
       `
     },
   ],
-  // events: [
-  //   {
-  //     id:createEventId(),
-  //     title:'设备OOP的使用',
-  //     start: new Date().toISOString().replace(/T.*$/, '') + 'T09:30:00',
-  //     end: new Date().toISOString().replace(/T.*$/, '') + 'T10:30:00'
-  //   },
-  //   {
-  //     id:createEventId(),
-  //     title:'设备MOX的使用',
-  //     start: new Date().toISOString().replace(/T.*$/, '') + 'T13:00:00',
-  //     end: new Date().toISOString().replace(/T.*$/, '') + 'T15:00:00'
-  //   }
-  // ]
   
 }
 const store = new Vuex.Store({

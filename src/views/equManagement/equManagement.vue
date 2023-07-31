@@ -19,9 +19,9 @@
             <br>
             <div ref="tab1" class="table-equ">
               <el-table :data="pageData" style="width: 100%">
-                <el-table-column prop="name" label="姓名"></el-table-column>
-                <el-table-column prop="func" label="功能"></el-table-column>
-                <el-table-column prop="lab" label="实验室"></el-table-column>
+                <el-table-column prop="deviceName" label="姓名"></el-table-column>
+                <el-table-column prop="deviceFunc" label="功能"></el-table-column>
+                <el-table-column prop="lab.labName" label="实验室"></el-table-column>
               </el-table>
               <el-pagination
                 @size-change="handlePageSizeChange"
@@ -35,9 +35,9 @@
             </div>
             <div ref="tab2" class="search-area">
               <el-table v-if="searchResult.length > 0" :data="searchResult" style="width: 100%">
-                <el-table-column prop="name" label="姓名"></el-table-column>
-                <el-table-column prop="func" label="功能"></el-table-column>
-                <el-table-column prop="lab" label="实验室"></el-table-column>
+                <el-table-column prop="deviceName" label="姓名"></el-table-column>
+                <el-table-column prop="deviceFunc" label="功能"></el-table-column>
+                <el-table-column prop="lab.labName" label="实验室"></el-table-column>
               </el-table>
               <p v-else> 未找到匹配的记录</p>
             </div>
@@ -88,11 +88,24 @@
         </template>
       </div>
     </div>
+    <div class="centered-div">
+      <equList></equList>
+    </div>
+    <div class="centered-div">
+      <equMaintain></equMaintain>
+    </div>
   </div>
 </template>
 
 <script>
+import equList from '../equList/equList'
+import equMaintain from '../equManagement/equMaintain.vue'
+import { getEquList } from '../../network/equpment';
 export default {
+  components:{
+    equList,
+    equMaintain
+  },  
   data() {
     return {
       tableData1: [{
@@ -172,9 +185,12 @@ export default {
       return this.searchKeyword === '';
     }
   },  
-  mounted() {
-     this.equps = this.$store.state.equps;
-  },  
+  created () {
+    getEquList().then(res => {
+      console.log(res.data);
+      this.equps = res.data
+    })
+  }, 
   methods: {
     tableRowClassName({ row, rowIndex }) { //表格灰黑相间
       if ((rowIndex % 2) === 0) {
@@ -192,7 +208,7 @@ export default {
     },
     handleSearch() {
       this.searchResult = this.equps.filter(equp => {
-        return equp.name.toLowerCase().includes(this.searchKeyword.toLowerCase())
+        return equp.deviceName.toLowerCase().includes(this.searchKeyword.toLowerCase())
       })
       this.$refs.tab1.style.display = 'none';
       this.$refs.tab2.style.display = 'block';
