@@ -16,7 +16,7 @@ export function getEquCate() {
 
 export function addEqument(param1,param2,param3,param4,param5) {
   return request({
-    url:'/api/device/addDevice',
+    url:'/device/addDevice',
     method: 'post',
     data:{
       param1,

@@ -1,20 +1,15 @@
 <template>
   <div>
     <div class="text-area">
-      <p class="fist-line">Please note regarding working with WetChemistry at Danchip (Update 2016-10-17 15:55)</p>
-      <p>The 2 "old' fume hoods in D-3 vil be emoved October 24 and we will slowly start up using the new ones, starting
-        with fume hood 2 "Acidand bases*& fume hood 3 “solvents".
-        <br />
-        <br />
-        Your wet chemistry compelence (Hands-on aka Labintro) will be removed until you have been trained in the new fume
-        hoods. therelorecontact training@danchipdtudk to get training.
-      </p>
-      <p class="warning-text">YOU ARE NOT ALLOWED TO USE THE NEW FUMEHOODS WITHOUT TRAINING!</p>
-      <p>You can still use the old fume hoods for what you have been trained to
-        <br />
-        Before you get training,you need to have read the <a style="text-decoration:none" href="@">APV/manual for the fume
-          hoods</a>
-      </p>
+      <p class="title">{{ this.notice.title }}&nbsp;&nbsp;日期:{{ this.notice.date | formatDate }}</p>
+      <p class="content-area">{{this.notice.content}}</p>
+      <div class="text-more">
+        <router-link to="/notice">
+          <a href="">更多</a>
+        </router-link>
+        
+      </div>
+      
     </div>
     <div class="text-home">
       <p>设备使用表</p>
@@ -151,9 +146,8 @@ export default {
         status: 'Being Serviced',
         expected: '14-11-2016',
         statuslog: 'Yearly service by SPTS 1 of 3'
-      },
-
-    ],
+      }],
+      notice: {},
     };
   },
   methods: {
@@ -175,86 +169,93 @@ export default {
       }
       return '';
     },
-     
-
+  },
+  mounted() {
+    this.notice = this.$store.state.notices[0];
+    // console.log(this.notice);
+  },
+  filters:{
+    formatDate: function(value) {
+      if (!value) return ''
+      const year = value.getFullYear()
+      const month = String(value.getMonth() + 1).padStart(2, '0')
+      const day = String(value.getDate()).padStart(2, '0')
+      return `${year}年${month}月${day}日`
+    }
   },
 };
 </script>
 
 <style>
 .text-area {
-  margin-left: 20px;
-  margin-bottom: 0px;
+  margin: 20px;
   width: 95%;
   background-color: rgb(227, 227, 227);
+  border: 1px solid #000;
   border-radius: 3px;
   font-size: 13px;
   
 }
-
-.fist-line {
+.title {
+  margin-top: 20px;
   font-weight: bolder;
+  text-align: center;
+  font-size: 16px;
 }
-
-.warning-text {
-  color: rgb(210, 30, 30);
+.content-area {
+  margin:20px;
+  text-indent: 2em;
+  font-size: 13px;
 }
+.text-more{
+  margin-right: 10px;
+  margin-bottom: 10px;
+  text-align: right;
 
+}
 .text-home {
   margin-top: 0px;
   margin-left: 20px;
   font-size: 20px;
 }
-
 .table-equ-use {
   margin-left: 20px;
 }
-
 .table-equ {
   width: 96%;
   border: 1px solid #000000;
   border-radius: 8px;
 }
-
 .table-equ .el-table__body td,
 .table-equ .el-table__header th {
   font-size: 13px !important;
 }
-
 .el-table .warning-row {
   background: rgb(191, 191, 191);
 }
-
 .el-table .success-row {
   background: #e0e0e0;
 }
-
 .el-table .red-row {
   background: rgb(230, 171, 171);
 }
-
 .el-table .yellow-row {
   background: rgb(223, 220, 166);
 }
-
 .el-table .gray-row {
   background: rgb(206, 204, 204);
 }
-
 .table-book-use {
   margin-left: 20px;
 }
-
 .table-book {
   width: 96%;
   border: 2px solid black;
   border-radius: 8px;
 }
-
 .table-dch-use {
   margin-left: 20px;
 }
-
 .table-dch {
   width: 96%;
   border: 2px solid black;
