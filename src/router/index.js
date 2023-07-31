@@ -14,7 +14,7 @@ const LabInform =() =>import('../views/labInformation/labInformation.vue')
 const EquList =() => import('../views/equList/equList.vue')
 const PersonalInfo =() =>import('../views/personalInfo/personalInfo.vue')
 const OrganizationInfo =() =>import('../views/organizationInfo/organizationInfo.vue')
-
+const NoticeDetail =()=>import('../views/notice/noticeDetail.vue')
 const Login =() => import('@/views/login/index.vue')
 const Register =() => import('@/views/register/register.vue')
 const Error =() => import('../components/common/error/Error.vue')
@@ -32,7 +32,7 @@ const routes = [
     component: Error
   },
   {
-    path: '/home',
+    path:'/home',
     name: 'Home',
     component: Home
   },
@@ -49,31 +49,36 @@ const routes = [
   {
     path: '/craft',
     name: 'Craft',
-    component:Craft
+    component: Craft
   },
   {
     path: '/book',
     name: 'Book',
-    component:Book
+    component: Book
   },
   {
     path: '/train',
     name: 'Train',
-    component:Train
+    component: Train
   },
   {
     path: '/notice',
     name: 'Notice',
-    component:Notice
+    component: Notice
+  },
+  {
+    path: '/notice/:id',
+    name: 'NoticeDetail',
+    component:  NoticeDetail
   },
   {
     path: '/system',
     name: 'System',
-    component:System
+    component: System
   },
   {
     path: '/test',
-    component:Test
+    component: Test
   },
   {
     path:'/login',

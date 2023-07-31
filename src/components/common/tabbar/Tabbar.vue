@@ -52,7 +52,7 @@
             <el-button class="custom-button" type="info" round size="mini">培训管理</el-button>
           </router-link>
           <router-link to="/notice">
-            <el-button class="custom-button" type="info" round size="mini">信息管理</el-button>
+            <el-button class="custom-button" type="info" round size="mini">公告信息</el-button>
           </router-link>
           <router-link to="/system">
             <el-button class="custom-button" type="info" round size="mini" v-if="this.$store.state.cu_role==='admin'">系统管理</el-button>
@@ -69,43 +69,46 @@
     </div>
     <div>
       <el-drawer
+        v-show="isShowDrawer"
         title="我是标题"
         class="drawer"
         :key="drawer"
         :modal="false"
         :modal-append-to-body="false"
         size="20%"
-        :visible.sync="drawer"
+        :visible.sync="Drawer"
         :with-header="false"
         opacity:0.8
         >
-        
-            <el-menu accordion class="drawer-menu" :unique-opened="true" text-color="#fff"  
-              active-text-color="#27195e">
-              
+            <el-menu 
+              accordion 
+              class="drawer-menu" 
+              :unique-opened="true" 
+              text-color="#fff"  
+              active-text-color="#27195e" >
               <el-submenu index="1"> 
                 <template slot="title" class="firstly">信息</template>
-                <el-menu-item index="1-1" class="secondly">首页信息</el-menu-item>
-                <el-menu-item index="1-2" class="secondly">一般信息</el-menu-item>
+                <el-menu-item @click="closeDrawer" index="1-1" class="secondly">首页信息</el-menu-item>
+                <el-menu-item @click="closeDrawer" index="1-2" class="secondly">一般信息</el-menu-item>
                 <router-link to="/labinform">
-                  <el-menu-item index="1-3" class="secondly">联系信息</el-menu-item>
+                  <el-menu-item @click="closeDrawer" index="1-3" class="secondly">联系信息</el-menu-item>
                 </router-link>
               </el-submenu>
               <el-submenu index="2"> 
                 <template slot="title" class="firstly">设备</template>
-                <el-menu-item index="2-1" class="secondly">使用设备</el-menu-item>
-                <el-menu-item index="2-2" class="secondly">信息</el-menu-item>
+                <el-menu-item @click="closeDrawer" index="2-1" class="secondly">使用设备</el-menu-item>
+                <el-menu-item @click="closeDrawer" index="2-2" class="secondly">信息</el-menu-item>
                 <router-link to="/equlist">
-                  <el-menu-item index="2-3" class="secondly">设备列表</el-menu-item>
+                  <el-menu-item @click="closeDrawer" index="2-3" class="secondly">设备列表</el-menu-item>
                 </router-link>
-                <el-menu-item index="2-4" class="secondly">日志</el-menu-item>
+                <el-menu-item @click="closeDrawer" index="2-4" class="secondly">日志</el-menu-item>
               </el-submenu>
               <el-submenu index="3"> 
                 <template slot="title" class="firstly">预约</template>
-                <el-menu-item index="3-1" class="secondly">预约设备</el-menu-item>
-                <el-menu-item index="3-2" class="secondly">日程表</el-menu-item>
-                <el-menu-item index="3-3" class="secondly">周程表</el-menu-item>
-                <el-menu-item index="3-4" class="secondly">月程表</el-menu-item>
+                <el-menu-item @click="closeDrawer" index="3-1" class="secondly">预约设备</el-menu-item>
+                <el-menu-item @click="closeDrawer" index="3-2" class="secondly">日程表</el-menu-item>
+                <el-menu-item @click="closeDrawer" index="3-3" class="secondly">周程表</el-menu-item>
+                <el-menu-item @click="closeDrawer" index="3-4" class="secondly">月程表</el-menu-item>
               </el-submenu>
               <el-submenu index="4"> 
                 <template slot="title" class="firstly">账户</template>
@@ -119,17 +122,17 @@
               </el-submenu>
               <el-submenu index="5"> 
                 <template slot="title" class="firstly">订单</template>
-                <el-menu-item index="5-1" class="secondly">订单列表</el-menu-item>
+                <el-menu-item @click="closeDrawer" index="5-1" class="secondly">订单列表</el-menu-item>
               </el-submenu>
               <el-submenu index="6"> 
                 <template slot="title" class="firstly">商城</template>
-                <el-menu-item index="6-1" class="secondly">硅晶片</el-menu-item>
-                <el-menu-item index="6-2" class="secondly">金属</el-menu-item>
+                <el-menu-item @click="closeDrawer" index="6-1" class="secondly">硅晶片</el-menu-item>
+                <el-menu-item @click="closeDrawer" index="6-2" class="secondly">金属</el-menu-item>
               </el-submenu>
               <el-submenu index="7"> 
                 <template slot="title" class="firstly">进程信息</template>
-                <el-menu-item index="7-1" class="secondly">实验室顾问</el-menu-item>
-                <el-menu-item index="7-2" class="secondly">进程分享</el-menu-item>
+                <el-menu-item @click="closeDrawer" index="7-1" class="secondly">实验室顾问</el-menu-item>
+                <el-menu-item @click="closeDrawer" index="7-2" class="secondly">进程分享</el-menu-item>
               </el-submenu>
             </el-menu>
       </el-drawer>
@@ -144,9 +147,10 @@ export default {
       drawerVisible: false,
       activeNames: [], // 控制顶层折叠面板的展开状态
       activeSubNames: [], // 控制子面板的展开状态
-      drawer: false,
       input: '',
       showNavbar: false, // 导航栏是否可见
+      isShowDrawer: true,
+      Drawer:false,
     }
   },
   methods: {
@@ -158,8 +162,14 @@ export default {
       localStorage.removeItem('token')
     },
     showDrawer() {
-      this.drawer = true;
+      this.isShowDrawer = true
+      this.Drawer = true
     },
+    closeDrawer() {
+      this.isShowDrawer = false
+      this.Drawer = false
+    }
+    
   }
 }
 </script>

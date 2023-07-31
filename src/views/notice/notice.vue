@@ -12,9 +12,9 @@
           <div class="right_content" frag="窗口7" portletmode="simpleList">
             <div id="wp_news_w7">
               <ul class="news">
-                <li v-for="item in notices">
-                  <a href="#" target="_blank" title="item.content">
-                    <font style="font-weight:bold;color:#000000;">{{item.content}}</font>
+                <li v-for="item in notices" :key="item.notice_id" @click="gotoNoticeDetail(item.notice_id)">
+                  <a href="" target="" title="item.title">
+                    <font style="font-weight:bold;color:#000000;">{{item.title}}</font>
                     <font>{{item.date | formatDate}}</font>
                   </a>
                 </li>
@@ -65,8 +65,11 @@
 </template>
 
 <script>
-
+import noticeDetail from './noticeDetail.vue';
 export default {
+  components:{
+    noticeDetail
+  },
   data () {
     return {
       textarea: '',
@@ -85,6 +88,12 @@ export default {
       return `${year}年${month}月${day}日`
     }
   },
+  methods:{
+    gotoNoticeDetail(id) {
+      this.$router.push('/notice/' + id);
+      // console.log(id);
+    }
+  }
 }
 
 </script>
