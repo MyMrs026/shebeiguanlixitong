@@ -72,23 +72,22 @@
         v-show="isShowDrawer"
         title="我是标题"
         class="drawer"
-        :key="drawer"
         :modal="false"
         :modal-append-to-body="false"
         size="20%"
         :visible.sync="Drawer"
         :with-header="false"
-        opacity:0.8
+        
         >
             <el-menu 
               accordion 
               class="drawer-menu" 
               :unique-opened="true" 
               text-color="#fff"  
-              active-text-color="#27195e" >
+              active-text-color="azure">
               <el-submenu index="1"> 
-                <template slot="title" class="firstly">信息</template>
-                <el-menu-item @click="closeDrawer" index="1-1" class="secondly">首页信息</el-menu-item>
+                <template slot="title" class="firstly" >信息</template>
+                <el-menu-item @click="closeDrawer" index="1-1" class="secondly" >首页信息</el-menu-item>
                 <el-menu-item @click="closeDrawer" index="1-2" class="secondly">一般信息</el-menu-item>
                 <router-link to="/labinform">
                   <el-menu-item @click="closeDrawer" index="1-3" class="secondly">联系信息</el-menu-item>
@@ -118,7 +117,9 @@
                 <router-link to="/organizationInfo">
                 <el-menu-item index="4-2" class="secondly">组织信息</el-menu-item>
                 </router-link>
-                <el-menu-item index="4-3" class="secondly">邮件联系</el-menu-item>
+                <router-link to="/message">
+                <el-menu-item index="4-3" class="secondly">信息通知</el-menu-item>
+                </router-link>
               </el-submenu>
               <el-submenu index="5"> 
                 <template slot="title" class="firstly">订单</template>
@@ -296,22 +297,17 @@ export default {
   display: flex;
 }
 
-::v-deep .drawer_body tr.current-row {
-  background-color: antiquewhite !important;
+div /deep/ .el-drawer__body .drawer-menu .el-menu {
+  background-color: #252433 ;
 }
-::v-deep .drawer-menu .firstly{
-  border:none;
-  border-top:1px black solid;
-  border-bottom:1px black solid;
-}
+
 .drawer-menu{
   height: 100%;
   background-image:url("../../../assets/img/tabbar2.jpg");
   opacity: 0.8;
 }
-.secondly{
-  background-color:#48425b;
-  
+div /deep/ .el-menu-item:focus, .el-menu-item:hover{
+  background-color:rgb(0, 0, 0);
 }
 div /deep/ .el-submenu__title:hover {
   background-color:rgb(0, 0, 0);

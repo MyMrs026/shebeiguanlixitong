@@ -1699,6 +1699,71 @@ const state = {
       `
     },
   ],
+  equpsBooks:[
+  {
+    equpsBook_id:1,
+    user_id:1,
+    title:'分光光度计-血液葡萄糖的测定',
+    date:new Date('2022-11-01'),
+    content:''
+  },
+  {
+    equpsBook_id:2,
+    user_id:2,
+    title:'离心机-植物组织中维生素c的测定',
+    date:new Date('2022-11-02'),
+  },
+  {
+    equpsBook_id:3,
+    user_id:3,
+    title:'电热恒温水浴锅-双缩脲法测动物蛋白含量',
+    date:new Date('2022-11-03'),
+  },
+  {
+    equpsBook_id:4,
+    user_id:4,
+    title:'离心机-牛奶中蛋白质的提取与鉴定',
+    date:new Date('2022-11-04'),
+  },
+  {
+    equpsBook_id:5,
+    user_id:5,
+    title:'移液器-植物组织中DNA的提取与鉴定',
+    date:new Date('2022-11-05'),
+  },
+  ],
+  trainBooks:[
+    {
+      equpsBook_id:1,
+      user_id:1,
+      title:'作业规程培训2',
+      date:new Date('2022-11-01'),
+    },
+    {
+      equpsBook_id:2,
+      user_id:2,
+      title:'专业知识培训1',
+      date:new Date('2022-11-02'),
+    },
+    {
+      equpsBook_id:3,
+      user_id:3,
+      title:'作业规程培训2',
+      date:new Date('2022-11-03'),
+    },
+    {
+      equpsBook_id:4,
+      user_id:4,
+      title:'技能培训1',
+      date:new Date('2022-11-04'),
+    },
+    {
+      equpsBook_id:5,
+      user_id:5,
+      title:'专业知识培训1',
+      date:new Date('2022-11-05'),
+    },
+  ]
   // events: [
   //   {
   //     id:createEventId(),
