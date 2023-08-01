@@ -1,38 +1,38 @@
 <template>
   <div class="navbar-container">
-  <div class="tabbar">
-    <el-row>
-      <el-col :span="3">
-        <el-col class="institution">
-            <img  src="../../../assets/img/logo.jpg" style="width: 25px;height:25px;float:left">        
+    <div class="tabbar">
+      <el-row>
+        <el-col :span="3">
+          <el-col class="institution">
+            <img src="../../../assets/img/logo.jpg" style="width: 25px;height:25px;float:left">
             <div class="lab" style="float:left">
               XXX研究机构
-            </div> 
+            </div>
+          </el-col>
         </el-col>
-      </el-col>
-      <el-col :span="12">
-        <el-col class="title">实验室设备预约管理系统</el-col>
-      </el-col>
-      <el-col :span="6" >
+        <el-col :span="12">
+          <el-col class="title">实验室设备预约管理系统</el-col>
+        </el-col>
+        <el-col :span="6">
           <div>
-            <input class="search-box" placeholder="请输入已有项目" v-model="input" clearable  />
+            <input class="search-box" placeholder="请输入已有项目" v-model="input" clearable />
           </div>
-          
-      </el-col>
-      <el-col :span="1" >
-          <i class="el-icon-search" ></i>
-      </el-col>
-      <el-col :span="1" >
+
+        </el-col>
+        <el-col :span="1">
+          <i class="el-icon-search"></i>
+        </el-col>
+        <el-col :span="1">
           <div class="help-box">
             <i class="icon-help el-icon-question"></i>
           </div>
-      </el-col>
-      <el-col :span="1">
+        </el-col>
+        <el-col :span="1">
           <i class="el-icon-s-custom" @click="showDrawer" type="primary" style="margin-left: 16px;"></i>
-      </el-col>
-    </el-row>
-    <el-row>
-      <el-col :span="21">
+        </el-col>
+      </el-row>
+      <el-row>
+        <el-col :span="21">
           <router-link to="/home">
             <el-button class="custom-button" type="info" round size="mini">首页</el-button>
           </router-link>
@@ -55,17 +55,18 @@
             <el-button class="custom-button" type="info" round size="mini">公告信息</el-button>
           </router-link>
           <router-link to="/system">
-            <el-button class="custom-button" type="info" round size="mini" v-if="this.$store.state.cu_role==='admin'">系统管理</el-button>
+            <el-button class="custom-button" type="info" round size="mini"
+              v-if="this.$store.state.cu_role === 'admin'">系统管理</el-button>
           </router-link>
           <router-link to="/test">
             <el-button class="custom-button" type="info" round size="mini">测试任务</el-button>
           </router-link>
         </el-col>
-          <el-col :span="3">
+        <el-col :span="3">
           <el-button class="btn" @click="logOut">登出</el-button>
-          </el-col>
-        </el-row>
-        
+        </el-col>
+      </el-row>
+
     </div>
     <div>
       <el-drawer
@@ -76,8 +77,7 @@
         :modal-append-to-body="false"
         size="20%"
         :visible.sync="Drawer"
-        :with-header="false"
-        
+        :with-header="false
         >
             <el-menu 
               accordion 
@@ -151,14 +151,14 @@ export default {
       input: '',
       showNavbar: false, // 导航栏是否可见
       isShowDrawer: true,
-      Drawer:false,
+      Drawer: false,
     }
   },
   methods: {
     toggleNavbar() {
       this.showNavbar = !this.showNavbar;
     },
-    logOut(){
+    logOut() {
       this.$router.push('/login')
       localStorage.removeItem('token')
     },
@@ -170,29 +170,31 @@ export default {
       this.isShowDrawer = false
       this.Drawer = false
     }
-    
+
   }
 }
 </script>
 <style scoped>
 .tabbar {
-  background-image:url("../../../assets/img/tabbar2.jpg");
-  width:100%;
-  height:100%;
-  background-size:100% 100%;
+  background-image: url("../../../assets/img/tabbar2.jpg");
+  width: 100%;
+  height: 100%;
+  background-size: 100% 100%;
 }
+
 .title {
   text-align: center;
-  margin-top:15px;
-  height:40px;
-  color:white;
+  margin-top: 15px;
+  height: 40px;
+  color: white;
 }
+
 .custom-button {
   margin-right: 0px;
   margin-left: 15px;
   margin-bottom: 10px;
   border-color: white;
-  background-color:rgb(151, 184, 216,0.5);
+  background-color: rgb(151, 184, 216, 0.5);
   font-size: 100%;
 }
 
@@ -202,114 +204,126 @@ export default {
   margin-bottom: 0;
   color: white;
 }
+
 /* 搜索输入栏 */
 .search-box {
-  background-color:rgb(151, 184, 216,0.5);
+  background-color: rgb(151, 184, 216, 0.5);
   border: 1px solid white;
-  border-radius:15px ;
-  margin-top:17px;
-  margin-right:20px;
-  float:right;
-  width:180px;
-  height:27px;
-  color:white;
+  border-radius: 15px;
+  margin-top: 17px;
+  margin-right: 20px;
+  float: right;
+  width: 180px;
+  height: 27px;
+  color: white;
 }
+
 /* 搜索icon */
-.el-icon-search{
-  float:right;
+.el-icon-search {
+  float: right;
   display: flex;
   font-size: 35px;
   color: white;
   justify-content: center;
   align-items: center;
-  margin-top:15px;
-  margin-left:15px;
-  margin-right:15px;
+  margin-top: 15px;
+  margin-left: 15px;
+  margin-right: 15px;
 }
+
 /* 帮助icon的div */
 .help-box {
   border-radius: 4px;
   text-align: center;
   float: right;
 }
+
 .icon-help {
   display: flex;
   font-size: 35px;
   color: white;
   justify-content: center;
   align-items: center;
-  margin-top:15px;
-  margin-left:15px;
-  margin-right:15px;
+  margin-top: 15px;
+  margin-left: 15px;
+  margin-right: 15px;
   float: right;
 }
+
 /* 个人icon */
-.el-icon-s-custom{     
+.el-icon-s-custom {
   display: flex;
   font-size: 35px;
   color: white;
   justify-content: center;
   align-items: center;
-  margin-top:15px;
-  margin-left:15px;
-  margin-right:15px;
+  margin-top: 15px;
+  margin-left: 15px;
+  margin-right: 15px;
   float: right;
 }
+
 .institution {
-  float:left;
-  margin-top:15px;
-  margin-left:15px;
-  margin-right:15px;
-}
-.lab{
-  margin-left:15px;
-  color:#fff;
-}
-.btn{
-  width:50px;
-  height:25px;
-  display:flex;
-  align-items: center;
-  justify-content: center;
-  line-height:20px;
-  font-size: 13px;
-  float:right;
-  text-align: center;
-  color:white;
+  float: left;
+  margin-top: 15px;
+  margin-left: 15px;
   margin-right: 15px;
 }
-.btn:hover{
-  background-color: rgb(151, 184, 216,0.5);
+
+.lab {
+  margin-left: 15px;
+  color: #fff;
 }
+
+.btn {
+  width: 50px;
+  height: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 20px;
+  font-size: 13px;
+  float: right;
+  text-align: center;
+  color: white;
+  margin-right: 15px;
+}
+
+.btn:hover {
+  background-color: rgb(151, 184, 216, 0.5);
+}
+
 .navbar-toggle {
   margin: 15px;
-  margin-top:40px;
-  float:right;
+  margin-top: 40px;
+  float: right;
 }
 
 .navbar-menu {
   display: none;
-  width:100px;
-  
+  width: 100px;
+
 }
 
 .navbar-menu.show {
   display: flex;
 }
 
+
 div /deep/ .el-drawer__body .drawer-menu .el-menu {
   background-color: #252433 ;
 }
-
 .drawer-menu{
   height: 100%;
-  background-image:url("../../../assets/img/tabbar2.jpg");
+  background-image: url("../../../assets/img/tabbar2.jpg");
   opacity: 0.8;
 }
 div /deep/ .el-menu-item:focus, .el-menu-item:hover{
   background-color:rgb(0, 0, 0);
+
 }
+
 div /deep/ .el-submenu__title:hover {
-  background-color:rgb(0, 0, 0);
+  background-color: rgb(0, 0, 0);
 }
 </style>

@@ -19,7 +19,7 @@
         </el-table-column>
       </el-table>
     </div>
-    <div class="equAdd">
+    <div class="equAdd" v-if="this.$store.state.cu_role==='admin'">
       <h2>添加设备信息</h2>
       <el-form label-width="120px">
         <el-form-item label="设备名">
@@ -72,12 +72,12 @@ export default {
   },
   methods: {
     submitForm() {
-      // addEqument(deviceName, deviceFunc, deviceTypeId, labId, uuid).then(res => {
-      //   console.log(res);
-      // }).catch(error => {
-      //   console.error(error);
-      // })
-      console.log(newDeviceName, newDeviceFunc, newDeviceTypeId, newLabId, newUuid);
+      addEqument(this.newDeviceName, this.newDeviceFunc, this.newDeviceTypeId, this.newLabId, this.newUuid).then(res => {
+        console.log(res);
+      }).catch(error => {
+        console.error(error);
+      })
+      // console.log(this.newDeviceName,this.newDeviceFunc,this.newDeviceTypeId,this.newLabId,this.newUuid);
     },
   },
   created() {

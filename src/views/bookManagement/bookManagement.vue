@@ -5,10 +5,6 @@
       <div class="book-title">
         <p>设备预约日视图</p>
       </div>
-      <!-- <div class="block">
-        <el-date-picker v-model="value1" align="right" type="date" placeholder="选择日期" :picker-options="pickerOptions">
-        </el-date-picker>
-      </div> -->
       <div class="button-group">
         <button>更新</button>
         <button>月份</button>
