@@ -7,17 +7,16 @@
             <h2 class="catalog_title">设备预约</h2>
           </div>
           <div frag="窗口8">
-
           </div>
           <div class="right_content" frag="窗口7" portletmode="simpleList">
             <div id="wp_news_w7">
               <ul class="news">
                 <li v-for="item in this.equpsBooks" :key="item.equpsBook_id" @click="gotoMessageDetail(item.equpsBook_id)">
-                  <a href="" target="" title="item.title">
-                    <font style="font-weight:bold;color:#000000;">{{item.title}}</font>
+                  <a href="">
+                    <font>{{item.title}}</font>
                     <font>{{item.date | formatDate}}</font>
-                  </a>
-                </li>
+                  </a> 
+              </li>
               </ul>
             </div>
 
@@ -52,7 +51,11 @@
 </template>
 
 <script>
+import messageDetail from './messageDetail.vue';
 export default {
+  components:{
+    messageDetail
+  },
   data () {
     return {
       textarea: '',
@@ -61,7 +64,6 @@ export default {
   },
   mounted() {
     this.equpsBooks = this.$store.state.equpsBooks;
-    // console.log(this.equpsBooks);
   },
   filters:{
     formatDate: function(value) {
@@ -75,7 +77,7 @@ export default {
   methods:{
     gotoMessageDetail(id) {
       this.$router.push('/message/' + id);
-    //   console.log(id);
+      // console.log(id);
     },
     // gotoTrainBooksDetail(id) {
     //   this.$router.push('/TrainBooks/' + id);
