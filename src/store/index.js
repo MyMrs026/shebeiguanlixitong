@@ -1686,31 +1686,35 @@ const state = {
     user_id:1,
     title:'分光光度计-血液葡萄糖的测定',
     date:new Date('2022-11-01'),
-    content:''
+    content:'分光光度计-血液葡萄糖的测定内容'
   },
   {
     equpsBook_id:2,
     user_id:2,
     title:'离心机-植物组织中维生素c的测定',
     date:new Date('2022-11-02'),
+    content:'离心机-植物组织中维生素c的测定内容'
   },
   {
     equpsBook_id:3,
     user_id:3,
     title:'电热恒温水浴锅-双缩脲法测动物蛋白含量',
     date:new Date('2022-11-03'),
+    content:'电热恒温水浴锅-双缩脲法测动物蛋白含量内容'
   },
   {
     equpsBook_id:4,
     user_id:4,
     title:'离心机-牛奶中蛋白质的提取与鉴定',
     date:new Date('2022-11-04'),
+    content:'离心机-牛奶中蛋白质的提取与鉴定内容'
   },
   {
     equpsBook_id:5,
     user_id:5,
     title:'移液器-植物组织中DNA的提取与鉴定',
     date:new Date('2022-11-05'),
+    content:'移液器-植物组织中DNA的提取与鉴定内容'
   },
   ],
   trainBooks:[

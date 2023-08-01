@@ -6,24 +6,26 @@
     <div class="equpsBookContent">
       <p>{{ equpsBook.content }}</p>
     </div>
-
   </div>
 </template>
 
 <script>
+
 export default {
   data() {
     return {
       equpsBook: {},
-    };
+    }
   },
-  methods: {},
+  methods: {
+
+  },
   mounted() {
     const equpsBook_id = this.$route.params.id;
     console.log(equpsBook_id);
     // 根据公告ID获取公告详情的代码逻辑...
-    this.equpsBook = this.$store.state.equpsBooks[equpsBook_id];
-    console.log(equpsBook);
+    this.equpsBook = this.$store.state.equpsBooks[equpsBook_id - 1];
+    // console.log(equpsBook);
   },
 };
 </script>
