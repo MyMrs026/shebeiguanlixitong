@@ -107,11 +107,15 @@ export default {
   },
   methods:{
     gotoMessageDetail(id) {
+      if(this.$store.state.cu_role==='admin'){
       this.$router.push('/message/' + id);
+      }
       // console.log(id);
     },
     gotoTrainBooksDetail(id) {
-      this.$router.push('/trainBook/' + id);
+      if(this.$store.state.cu_role==='admin'){
+        this.$router.push('/trainBook/' + id);
+      }
       // console.log(id);
     }
   }
