@@ -66,6 +66,7 @@
 
 <script>
 import noticeDetail from './noticeDetail.vue';
+import { getNoticeList } from '../../network/notice';
 export default {
   components:{
     noticeDetail
@@ -76,6 +77,13 @@ export default {
       notices:[],
     }
   },
+  // created() {
+  //   getNoticeList().then(res=>{
+  //     console.log(res.data);
+  //     this.notices = res.data;
+  //     console.log(this.notices);
+  //   })
+  // },
   mounted() {
     this.notices = this.$store.state.notices;
   },
