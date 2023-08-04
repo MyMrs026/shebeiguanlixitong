@@ -6,6 +6,14 @@
     <div class="equpsBookContent">
       <p>{{ equpsBook.content }}</p>
     </div>
+    <div>申请人：
+      <p>{{equpsBook.user_id}}</p>
+    </div>
+    <div>使用时间：
+      <p>{{equpsBook.date | formatDate}}</p>
+    </div>
+    <button>通过</button>
+    <button>驳回</button>
   </div>
 </template>
 
@@ -26,6 +34,15 @@ export default {
     // 根据公告ID获取公告详情的代码逻辑...
     this.equpsBook = this.$store.state.equpsBooks[equpsBook_id - 1];
     // console.log(equpsBook);
+  },
+  filters:{
+    formatDate: function(value) {
+      if (!value) return ''
+      const year = value.getFullYear()
+      const month = String(value.getMonth() + 1).padStart(2, '0')
+      const day = String(value.getDate()).padStart(2, '0')
+      return `${year}年${month}月${day}日`
+    }
   },
 };
 </script>

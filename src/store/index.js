@@ -1677,31 +1677,31 @@ const state = {
   ],
   trainBooks:[
     {
-      equpsBook_id:1,
+      trainBook_id:1,
       user_id:1,
       title:'作业规程培训2',
       date:new Date('2022-11-01'),
     },
     {
-      equpsBook_id:2,
+      trainBook_id:2,
       user_id:2,
       title:'专业知识培训1',
       date:new Date('2022-11-02'),
     },
     {
-      equpsBook_id:3,
+      trainBook_id:3,
       user_id:3,
       title:'作业规程培训2',
       date:new Date('2022-11-03'),
     },
     {
-      equpsBook_id:4,
+      trainBook_id:4,
       user_id:4,
       title:'技能培训1',
       date:new Date('2022-11-04'),
     },
     {
-      equpsBook_id:5,
+      trainBook_id:5,
       user_id:5,
       title:'专业知识培训1',
       date:new Date('2022-11-05'),

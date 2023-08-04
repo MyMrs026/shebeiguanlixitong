@@ -22,7 +22,7 @@ const Notice = () => import('../views/notice/notice')
 const NoticeDetail =()=> import('../views/notice/noticeDetail.vue')
 const Message = () => import('../views/message/message')
 const MessageDetail =()=>import('../views/message/messageDetail.vue')
-// const TrainBooksDetail =()=>import('../views/message/trainBooksDetail.vue')
+const TrainBooksDetail =()=>import('../views/message/trainBooksDetail.vue')
 //1.安装插件
 Vue.use(Router)
 //创建router
@@ -125,11 +125,11 @@ const routes = [
     name: 'MessageDetail',
     component: MessageDetail
   },
-  // {
-  //   path: '/trainBook/:id',
-  //   name: 'TrainBooksDetail',
-  //   component:  TrainBooksDetail
-  // }
+  {
+    path: '/trainBook/:id',
+    name: 'TrainBooksDetail',
+    component:  TrainBooksDetail
+  }
 ]
 const router = new Router({
   routes,
