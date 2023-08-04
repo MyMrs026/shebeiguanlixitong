@@ -7,17 +7,22 @@ const Equp = () => import('@/views/equManagement/equManagement')
 const Craft = () => import('@/views/craftManagement/craftManagement')
 const Book = () => import('@/views/bookManagement/bookManagement')
 const Train = () => import('@/views/trainManagement/trainManagement')
-const Notice = () => import('../views/notice/notice')
 const System = () =>import('../views/systemManagement/systemManagement')
 const Test = () =>import('../views/testingTasks/testingTasks.vue')
 const LabInform =() =>import('../views/labInformation/labInformation.vue')
 const EquList =() => import('../views/equList/equList.vue')
 const PersonalInfo =() =>import('../views/personalInfo/personalInfo.vue')
 const OrganizationInfo =() =>import('../views/organizationInfo/organizationInfo.vue')
-const NoticeDetail =()=>import('../views/notice/noticeDetail.vue')
+
 const Login =() => import('@/views/login/index.vue')
 const Register =() => import('@/views/register/register.vue')
 const Error =() => import('../components/common/error/Error.vue')
+
+const Notice = () => import('../views/notice/notice')
+const NoticeDetail =()=> import('../views/notice/noticeDetail.vue')
+const Message = () => import('../views/message/message')
+const MessageDetail =()=>import('../views/message/messageDetail.vue')
+const TrainBooksDetail =()=>import('../views/message/trainBooksDetail.vue')
 //1.安装插件
 Vue.use(Router)
 //创建router
@@ -62,16 +67,6 @@ const routes = [
     component: Train
   },
   {
-    path: '/notice',
-    name: 'Notice',
-    component: Notice
-  },
-  {
-    path: '/notice/:id',
-    name: 'NoticeDetail',
-    component:  NoticeDetail
-  },
-  {
     path: '/system',
     name: 'System',
     component: System
@@ -109,6 +104,31 @@ const routes = [
     path: '/organizationInfo',
     name: 'OrganizationInfo',
     component: OrganizationInfo
+  },
+  {
+    path: '/notice',
+    name: 'Notice',
+    component: Notice
+  },
+  {
+    path: '/notice/:id',
+    name: 'NoticeDetail',
+    component: NoticeDetail
+  },
+  {
+    path: '/message',
+    name: 'Message',
+    component: Message
+  },
+  {
+    path: '/message/:id',
+    name: 'MessageDetail',
+    component: MessageDetail
+  },
+  {
+    path: '/trainBook/:id',
+    name: 'TrainBooksDetail',
+    component:  TrainBooksDetail
   }
 ]
 const router = new Router({

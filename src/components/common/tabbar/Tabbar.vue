@@ -110,7 +110,10 @@
             <router-link to="/organizationInfo">
               <el-menu-item index="4-2" class="secondly">组织信息</el-menu-item>
             </router-link>
-            <el-menu-item index="4-3" class="secondly">邮件联系</el-menu-item>
+            <router-link to="/message">
+              <el-menu-item index="4-3" class="secondly">信息通知</el-menu-item>
+            </router-link>
+            
           </el-submenu>
           <el-submenu index="5">
             <template slot="title" class="firstly">订单</template>

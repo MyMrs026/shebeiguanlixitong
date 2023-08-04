@@ -1679,6 +1679,91 @@ const state = {
       `
     },
   ],
+
+  equpsBooks:[
+  {
+    equpsBook_id:1,
+    user_id:1,
+    title:'分光光度计-血液葡萄糖的测定',
+    date:new Date('2022-11-01'),
+    content:'分光光度计-血液葡萄糖的测定内容'
+  },
+  {
+    equpsBook_id:2,
+    user_id:2,
+    title:'离心机-植物组织中维生素c的测定',
+    date:new Date('2022-11-02'),
+    content:'离心机-植物组织中维生素c的测定内容'
+  },
+  {
+    equpsBook_id:3,
+    user_id:3,
+    title:'电热恒温水浴锅-双缩脲法测动物蛋白含量',
+    date:new Date('2022-11-03'),
+    content:'电热恒温水浴锅-双缩脲法测动物蛋白含量内容'
+  },
+  {
+    equpsBook_id:4,
+    user_id:4,
+    title:'离心机-牛奶中蛋白质的提取与鉴定',
+    date:new Date('2022-11-04'),
+    content:'离心机-牛奶中蛋白质的提取与鉴定内容'
+  },
+  {
+    equpsBook_id:5,
+    user_id:5,
+    title:'移液器-植物组织中DNA的提取与鉴定',
+    date:new Date('2022-11-05'),
+    content:'移液器-植物组织中DNA的提取与鉴定内容'
+  },
+  ],
+  trainBooks:[
+    {
+      trainBook_id:1,
+      user_id:1,
+      title:'作业规程培训2',
+      date:new Date('2022-11-01'),
+    },
+    {
+      trainBook_id:2,
+      user_id:2,
+      title:'专业知识培训1',
+      date:new Date('2022-11-02'),
+    },
+    {
+      trainBook_id:3,
+      user_id:3,
+      title:'作业规程培训2',
+      date:new Date('2022-11-03'),
+    },
+    {
+      trainBook_id:4,
+      user_id:4,
+      title:'技能培训1',
+      date:new Date('2022-11-04'),
+    },
+    {
+      trainBook_id:5,
+      user_id:5,
+      title:'专业知识培训1',
+      date:new Date('2022-11-05'),
+    },
+  ]
+  // events: [
+  //   {
+  //     id:createEventId(),
+  //     title:'设备OOP的使用',
+  //     start: new Date().toISOString().replace(/T.*$/, '') + 'T09:30:00',
+  //     end: new Date().toISOString().replace(/T.*$/, '') + 'T10:30:00'
+  //   },
+  //   {
+  //     id:createEventId(),
+  //     title:'设备MOX的使用',
+  //     start: new Date().toISOString().replace(/T.*$/, '') + 'T13:00:00',
+  //     end: new Date().toISOString().replace(/T.*$/, '') + 'T15:00:00'
+  //   }
+  // ]
+
   
 }
 const store = new Vuex.Store({
