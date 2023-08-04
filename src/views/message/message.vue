@@ -2,68 +2,99 @@
   <div>
     <div class="box-wrap">
       <div class="box-main">
-        <div class="right-box-main" frag="面板6">
-          <div frag="窗口6" portletmode="simpleColumnAttri">
-            <h2 class="catalog_title">设备预约</h2>
-          </div>
-          <div frag="窗口8">
-          </div>
-          <div class="right_content" frag="窗口7" portletmode="simpleList">
-            <div id="wp_news_w7">
-              <ul class="news">
-                <li v-for="item in this.equpsBooks" :key="item.equpsBook_id" @click="gotoMessageDetail(item.equpsBook_id)">
-                  <a href="">
-                    <font>{{item.title}}</font>
-                    <font>{{item.date | formatDate}}</font>
-                  </a> 
-              </li>
-              </ul>
-            </div>
+        <el-tabs type="border-card">
+            <!-- <h2 >设备预约</h2> -->
+              <el-tab-pane label="设备预约" class="catalog_title">
+              <div id="wp_news_w7">
+                <ul class="news">
+                  <li v-for="item in this.equpsBooks" :key="item.equpsBook_id" @click="gotoMessageDetail(item.equpsBook_id)">
+                    <a href="">
+                      <font>{{item.title}}</font>
+                      <font>{{item.date | formatDate}}</font>
+                    </a> 
+                </li>
+                </ul>
+              </div>
 
-            <div id="wp_paging_w7">
-              <ul class="wp_paging clearfix">
-                <li class="pages_count">
-                  <span class="per_page">每页&nbsp;<em class="per_count">10</em>&nbsp;记录&nbsp;</span>
-                  <span class="all_count">总共&nbsp;<em class="all_count">30</em>&nbsp;记录&nbsp;</span>
-                </li>
-                <li class="page_nav">
-                  <a class="first" href="#" target="_self"><span>第一页</span></a>
-                  <a class="prev" href="#" target="_self"><span>&lt;&lt;上一页</span></a>
-                  <a class="next" href="#" target="_self"><span>下一页&gt;&gt;</span></a>
-                  <a class="last" href="#" target="_self"><span>尾页</span></a>
-                </li>
-                <li class="page_jump">
-                  <span class="pages">页码&nbsp;<em class="curr_page">1</em>/<em class="all_pages">2</em></span>
-                  <span><input class="pageNum" type="text"><input type="hidden" class="currPageURL" value=""></span>
-                  <span><a class="pagingJump" href="#" target="_self">跳转到&nbsp;</a></span>
-                </li>
-              </ul>
-            </div>
-          </div>
+              <div id="wp_paging_w7">
+                <ul class="wp_paging clearfix">
+                  <li class="pages_count">
+                    <span class="per_page">每页&nbsp;<em class="per_count">10</em>&nbsp;记录&nbsp;</span>
+                    <span class="all_count">总共&nbsp;<em class="all_count">30</em>&nbsp;记录&nbsp;</span>
+                  </li>
+                  <li class="page_nav">
+                    <a class="first" href="#" target="_self"><span>第一页</span></a>
+                    <a class="prev" href="#" target="_self"><span>&lt;&lt;上一页</span></a>
+                    <a class="next" href="#" target="_self"><span>下一页&gt;&gt;</span></a>
+                    <a class="last" href="#" target="_self"><span>尾页</span></a>
+                  </li>
+                  <li class="page_jump">
+                    <span class="pages">页码&nbsp;<em class="curr_page">1</em>/<em class="all_pages">2</em></span>
+                    <span><input class="pageNum" type="text"><input type="hidden" class="currPageURL" value=""></span>
+                    <span><a class="pagingJump" href="#" target="_self">跳转到&nbsp;</a></span>
+                  </li>
+                </ul>
+              </div>
+          
           <!-- <div class="list_page" id="list_page"> <a href="/c20968/catalog.html">第一页</a> 上一页 <a href="/c20968/catalog_1.html" > 下一页</a> <a href="/c20968/catalog_682.html"> 尾页</a> <span>当前：1/683 页</span> </div>
           -->
-        </div>
+              </el-tab-pane>
+              <el-tab-pane label="培训预约">
+              <div id="wp_news_w7">
+                <ul class="news" style="line-height: 30px;">
+                  <li v-for="item in this.trainBooks" :key="item.trainBook_id" @click="gotoTrainBooksDetail(item.trainBook_id)">
+                    <a href="">
+                      <font>{{item.title}}</font>
+                      <font>{{item.date | formatDate}}</font>
+                    </a> 
+                </li>
+                </ul>
+              </div>
+
+              <div id="wp_paging_w7">
+                <ul class="wp_paging clearfix">
+                  <li class="pages_count">
+                    <span class="per_page">每页&nbsp;<em class="per_count">10</em>&nbsp;记录&nbsp;</span>
+                    <span class="all_count">总共&nbsp;<em class="all_count">30</em>&nbsp;记录&nbsp;</span>
+                  </li>
+                  <li class="page_nav">
+                    <a class="first" href="#" target="_self"><span>第一页</span></a>
+                    <a class="prev" href="#" target="_self"><span>&lt;&lt;上一页</span></a>
+                    <a class="next" href="#" target="_self"><span>下一页&gt;&gt;</span></a>
+                    <a class="last" href="#" target="_self"><span>尾页</span></a>
+                  </li>
+                  <li class="page_jump">
+                    <span class="pages">页码&nbsp;<em class="curr_page">1</em>/<em class="all_pages">2</em></span>
+                    <span><input class="pageNum" type="text"><input type="hidden" class="currPageURL" value=""></span>
+                    <span><a class="pagingJump" href="#" target="_self">跳转到&nbsp;</a></span>
+                  </li>
+                </ul>
+              </div>
+              </el-tab-pane>
+        </el-tabs>
       </div>
-
-
     </div>
   </div>
 </template>
 
 <script>
 import messageDetail from './messageDetail.vue';
+import trainBooksDetail from './trainBooksDetail.vue';
 export default {
   components:{
-    messageDetail
+    messageDetail,
+    trainBooksDetail
   },
   data () {
     return {
       textarea: '',
       equpsBooks:[],
+      trainBooks:[],
     }
   },
   mounted() {
     this.equpsBooks = this.$store.state.equpsBooks;
+    this.trainBooks = this.$store.state.trainBooks;
   },
   filters:{
     formatDate: function(value) {
@@ -79,10 +110,10 @@ export default {
       this.$router.push('/message/' + id);
       // console.log(id);
     },
-    // gotoTrainBooksDetail(id) {
-    //   this.$router.push('/TrainBooks/' + id);
-    //   // console.log(id);
-    // }
+    gotoTrainBooksDetail(id) {
+      this.$router.push('/trainBook/' + id);
+      // console.log(id);
+    }
   }
 }
 

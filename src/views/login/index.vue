@@ -234,6 +234,6 @@ export default {
   background: #fff;
   height:35px;
   outline:none;
-  width: 210px;
+  width: 205px;
 }
 </style>
