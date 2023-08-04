@@ -4,25 +4,27 @@ import Router from "vue-router";
 const Home = () => import('@/views/home/Home')
 const Project = () => import('@/views/projectManagement/projectManagement')
 const Equp = () => import('@/views/equManagement/equManagement')
-const Craft = () => import('@/views/craftManagement/craftManagement')
 const Book = () => import('@/views/bookManagement/bookManagement')
 const Train = () => import('@/views/trainManagement/trainManagement')
-const System = () =>import('../views/systemManagement/systemManagement')
-const Test = () =>import('../views/testingTasks/testingTasks.vue')
-const LabInform =() =>import('../views/labInformation/labInformation.vue')
-const EquList =() => import('../views/equList/equList.vue')
-const PersonalInfo =() =>import('../views/personalInfo/personalInfo.vue')
-const OrganizationInfo =() =>import('../views/organizationInfo/organizationInfo.vue')
+const System = () => import('../views/systemManagement/systemManagement')
+const Test = () => import('../views/testingTasks/testingTasks.vue')
+const LabInform = () => import('../views/labInformation/labInformation.vue')
+const EquList = () => import('../views/equList/equList.vue')
+const PersonalInfo = () => import('../views/personalInfo/personalInfo.vue')
+const OrganizationInfo = () => import('../views/organizationInfo/organizationInfo.vue')
+const Craft = () => import('@/views/craftManagement/craftManagement')
+const Equcraft = () => import('../views/craftManagement/equpCraft.vue')
+const Craftparams = () => import('../views/craftManagement/craftParams.vue')
 
-const Login =() => import('@/views/login/index.vue')
-const Register =() => import('@/views/register/register.vue')
-const Error =() => import('../components/common/error/Error.vue')
+const Login = () => import('@/views/login/index.vue')
+const Register = () => import('@/views/register/register.vue')
+const Error = () => import('../components/common/error/Error.vue')
 
 const Notice = () => import('../views/notice/notice')
-const NoticeDetail =()=> import('../views/notice/noticeDetail.vue')
+const NoticeDetail = () => import('../views/notice/noticeDetail.vue')
 const Message = () => import('../views/message/message')
-const MessageDetail =()=>import('../views/message/messageDetail.vue')
-const TrainBooksDetail =()=>import('../views/message/trainBooksDetail.vue')
+const MessageDetail = () => import('../views/message/messageDetail.vue')
+const TrainBooksDetail = () => import('../views/message/trainBooksDetail.vue')
 //1.安装插件
 Vue.use(Router)
 //创建router
@@ -33,11 +35,11 @@ const routes = [
   },
   {
     path: '/404',
-    name:'index-notFount',
+    name: 'index-notFount',
     component: Error
   },
   {
-    path:'/home',
+    path: '/home',
     name: 'Home',
     component: Home
   },
@@ -49,12 +51,23 @@ const routes = [
   {
     path: '/equp',
     name: 'Equp',
-    component:Equp
+    component: Equp
   },
   {
     path: '/craft',
     name: 'Craft',
-    component: Craft
+    component: Craft,
+    children: [{//子路由
+      path: '/craft/equcraft',
+      name: 'Equcraft',
+      component: Equcraft
+    },
+    {
+      path: '/craft/craftparams',
+      name: 'Craftparams',
+      component: Craftparams
+    }
+    ]
   },
   {
     path: '/book',
@@ -76,17 +89,17 @@ const routes = [
     component: Test
   },
   {
-    path:'/login',
-    name:'Login',
+    path: '/login',
+    name: 'Login',
     component: Login
   },
   {
-    path:'/register',
+    path: '/register',
     name: 'Register',
     component: Register
   },
   {
-    path:'/labinform',
+    path: '/labinform',
     name: 'LabInform',
     component: LabInform
   },
@@ -128,7 +141,7 @@ const routes = [
   {
     path: '/trainBook/:id',
     name: 'TrainBooksDetail',
-    component:  TrainBooksDetail
+    component: TrainBooksDetail
   }
 ]
 const router = new Router({
@@ -137,13 +150,13 @@ const router = new Router({
 })
 
 //添加路由守卫
-router.beforeEach((to,from,next)=> {
+router.beforeEach((to, from, next) => {
   const token = localStorage.getItem('token')
   const isAuthenticated = !!token
 
-  if ((to.name !== 'Login' && to.name!=='Register') && !isAuthenticated){
+  if ((to.name !== 'Login' && to.name !== 'Register') && !isAuthenticated) {
     next('/login')
-  }else{
+  } else {
     next()
   }
 })
