@@ -42,9 +42,9 @@
           <router-link to="/equp">
             <el-button class="custom-button" type="info" round size="mini">设备管理</el-button>
           </router-link>
-          <!-- <router-link to="/craft">
+          <router-link to="/craft">
             <el-button class="custom-button" type="info" round size="mini">工艺管理</el-button>
-          </router-link> -->
+          </router-link>
           <router-link to="/book">
             <el-button class="custom-button" type="info" round size="mini">预约管理</el-button>
           </router-link>
