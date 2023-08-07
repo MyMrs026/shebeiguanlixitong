@@ -21,7 +21,7 @@
       </el-table>
     </div>
     <hr />
-    <div class="equcraft_form">
+    <div class="equcraft_form" v-if="this.$store.state.cu_role === 'admin'">
       <el-form label-width="80px" :model="equCraftForm" style="margin: 10px">
         <el-form-item label="设备名称">
           <el-select v-model="value" placeholder="请选择">

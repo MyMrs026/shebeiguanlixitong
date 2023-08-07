@@ -56,6 +56,7 @@ const routes = [
   {
     path: '/craft',
     name: 'Craft',
+    redirect:'/craft/equcraft',
     component: Craft,
     children: [{//子路由
       path: '/craft/equcraft',
