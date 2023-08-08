@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <tabbar v-if="isShowTabbar"/>
-    <hr v-if="isShowTabbar" class="divided-line"/>
+    <!-- <hr v-if="isShowTabbar" class="divided-line"/> -->
     <router-view/>
   </div>
 </template>
@@ -27,5 +27,6 @@ export default {
   border: 1px solid darkred;  
   margin-left: 10px;
   margin-right: 10px;
+  background-color: black;
 }
 </style>
