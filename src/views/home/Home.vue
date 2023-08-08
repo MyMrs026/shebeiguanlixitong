@@ -1,5 +1,9 @@
 <template>
-  <div>
+  <div class="total">
+    <div style="height=30px">
+      <br/>
+      
+    </div>
     <div class="text-area">
       <p class="title">{{ this.notice.title }}&nbsp;&nbsp;日期:{{ this.notice.date | formatDate }}</p>
       <p class="content-area">{{this.notice.content}}</p>
@@ -9,7 +13,6 @@
         </router-link>
         
       </div>
-      
     </div>
     <div class="text-home">
       <p>设备使用表</p>
@@ -32,7 +35,7 @@
         </el-table>
       </template>
     </div>
-    <hr style="border: 1px solid darkred; margin-left:10px; margin-right:10px" />
+    <hr style="border: 1px solid white; margin-left:10px; margin-right:10px" />
     <div class="text-home">
       <p>我的预约</p>
     </div>
@@ -54,7 +57,7 @@
         </el-table-column>
       </el-table>
     </div>
-    <hr style="border: 1px solid darkred; margin-left:10px; margin-right:10px" />
+    <hr style="border: 1px solid white; margin-left:10px; margin-right:10px" />
     <div class="text-home">
       <p>设备使用状态</p>
     </div>
@@ -187,10 +190,14 @@ export default {
 </script>
 
 <style>
+.total {
+  background-image: url("../../assets/img/qqq2.jpg");
+}
 .text-area {
-  margin: 20px;
+  opacity: 0.8;
+  margin-left: 20px;
   width: 95%;
-  background-color: rgb(227, 227, 227);
+  background-color: rgb(255, 253, 253);
   border: 1px solid #000;
   border-radius: 3px;
   font-size: 13px;
@@ -217,6 +224,7 @@ export default {
   margin-top: 0px;
   margin-left: 20px;
   font-size: 20px;
+  color:aliceblue;
 }
 .table-equ-use {
   margin-left: 20px;
