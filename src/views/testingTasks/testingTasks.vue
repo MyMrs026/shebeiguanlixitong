@@ -57,6 +57,14 @@
             <el-button>取消</el-button>
           </el-form-item>
         </el-form>
+         <el-button v-if="currentStep===2" @click="currentStep=0">完成</el-button>
+        </div>
+        <div class="stepbtn" >
+          <el-button  @click="back" class="backbtn" >上一步</el-button>
+          <el-button  @click="next" class="nextbtn" >下一步</el-button>
+        </div>
+
+
         <div class="footer" >
           <h3>历史测试任务记录 </h3>
           <el-input
