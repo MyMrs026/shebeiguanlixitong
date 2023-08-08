@@ -1,3 +1,6 @@
+/** 
+ * vue路由文件
+*/
 import Vue from 'vue'
 import Router from "vue-router";
 
@@ -31,7 +34,7 @@ Vue.use(Router)
 const routes = [
   {
     path: '/',
-    redirect: '/login',
+    redirect: '/login', //路由重定向，就是默认跳到的路由
   },
   {
     path: '/404',
@@ -58,7 +61,8 @@ const routes = [
     name: 'Craft',
     redirect:'/craft/equcraft',
     component: Craft,
-    children: [{//子路由
+    children: [{
+      //子路由
       path: '/craft/equcraft',
       name: 'Equcraft',
       component: Equcraft
@@ -150,7 +154,7 @@ const router = new Router({
   mode: 'history'
 })
 
-//添加路由守卫
+//添加路由守卫，它的作用就是，如果没有登录就无法直接跳转指定页面
 router.beforeEach((to, from, next) => {
   const token = localStorage.getItem('token')
   const isAuthenticated = !!token

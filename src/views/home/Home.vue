@@ -1,9 +1,10 @@
 <template>
   <div class="total">
+    <!-- 分割线 -->
     <div style="height=30px">
       <br/>
-      
     </div>
+    <!-- 公告部分 -->
     <div class="text-area">
       <p class="title">{{ this.notice.title }}&nbsp;&nbsp;日期:{{ this.notice.date | formatDate }}</p>
       <p class="content-area">{{this.notice.content}}</p>
@@ -11,12 +12,12 @@
         <router-link to="/notice">
           <a href="">更多</a>
         </router-link>
-        
       </div>
     </div>
     <div class="text-home">
       <p>设备使用表</p>
     </div>
+    <!-- 设备使用表(目前：写死的) -->
     <div class="table-equ-use">
       <template>
         <el-table border :data="tableData1" class="table-equ" :row-class-name="tableRowClassName">
@@ -39,6 +40,7 @@
     <div class="text-home">
       <p>我的预约</p>
     </div>
+    <!-- 用户个人的预约表(目前：写死的) -->
     <div class="table-book-use">
       <el-table :data="tableData2" class="table-book">
         <el-table-column prop="equp" label="设备" width="170">
@@ -61,6 +63,7 @@
     <div class="text-home">
       <p>设备使用状态</p>
     </div>
+    <!-- 所有的设备使用状态表格(目前：写死的) -->
     <div class="table-dch-use">
       <template>
         <el-table border :data="tableData3" class="table-dch" :row-class-name="getRowClassName">
@@ -82,6 +85,7 @@
 export default {
   data() {
     return {
+      //设备使用表数据
       tableData1: [{
         equp: 'ASE',
         status: 'Open',
@@ -111,6 +115,7 @@ export default {
         starttime: '2016-11-10 17:30:03',
         endtime: '2016-11-10 19:49:21'
       }],
+      //用户个人设备预约表数据
       tableData2: [{
         equp: '0-TestTool',
         status: 'OK',
@@ -120,6 +125,7 @@ export default {
         cal:'Weekly',
         action:'Not authorized'
       }],
+      //设备使用状态表数据
       tableData3: [{
         equp: '7-up(masks)',
         status: 'Out of use',
@@ -150,10 +156,11 @@ export default {
         expected: '14-11-2016',
         statuslog: 'Yearly service by SPTS 1 of 3'
       }],
-      notice: {},
+      notice: {},//公告信息，用来接收从axios传过来的公告信息
     };
   },
   methods: {
+    //这个方法是为了使表格呈现灰黑相间模式
     tableRowClassName({ row, rowIndex }) {
       if ((rowIndex % 2) === 0) {
         return 'warning-row';
@@ -162,6 +169,7 @@ export default {
       }
       return '';
     },
+    //这个方法是为了使表格呈现红黄灰相间模式
     getRowClassName({row,rowIndex}) {
       if ((row.status) === 'Out of use') {
         return 'red-row';
@@ -174,10 +182,11 @@ export default {
     },
   },
   mounted() {
+    //目前是从vuex中读取数据，后期可以从axios中读取数据
     this.notice = this.$store.state.notices[0];
-    // console.log(this.notice);
   },
   filters:{
+    //处理日期的显示格式问题，使日期以xxxx年xx月xx日的形式显示
     formatDate: function(value) {
       if (!value) return ''
       const year = value.getFullYear()

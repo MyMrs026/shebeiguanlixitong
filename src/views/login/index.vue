@@ -27,49 +27,53 @@
       </div>
       <br><br>
       <div style="text-align: center;" > 
-        <el-button @click="login"  id="button-3">登&nbsp&nbsp录</el-button>
+        <el-button @click="login"  id="button-3">登&nbsp;&nbsp;录</el-button>
         <el-divider direction="vertical" ></el-divider>
-        <el-button @click="register"  id="button-4">注&nbsp&nbsp册</el-button>
+        <el-button @click="register"  id="button-4">注&nbsp;&nbsp;册</el-button>
       </div>
     </form>
-  </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-import { getUserList } from '../../network/user'; 
+/**
+ * 登录逻辑在这里写 
+ */
+import { getUserList } from '../../network/user'; //获取所有用户信息
 export default {
   data() {
     return {
-      username: '',
-      password: '',
-      identity: '',
-      userList: [],
-      options: [{
+      username: '', //与用户名输入框进行v-model绑定
+      password: '', //与密码输入框进行v-model绑定
+      userList: [], //从axios请求得到的用户列表放到这里
+      options: [{   //登录身份选择,这里后期要绑定axios传来的身份数据
         value: 'staff',
         label: '普通人员'
       }, {
         value: 'admin',
         label: '管理人员'
       }],
-      value:'',
+      value:'', //与身份信息下拉框进行v-model双向绑定,也是下面用户登录身份的信息。
     };
   },
   methods: {
     login(event) {
+      // 方法是 JavaScript 中一个常用的事件方法，它用于阻止事件的默认行为或默认操作发生。当事件发生时，通常会触发一些默认行为，例如点击链接时会跳转到链接的URL，提交表单时会发送表单数据到服务器，按下键盘的 Enter 键时可能会触发表单的提交等。
       event.preventDefault();
-
-      // 在这里进行账号密码验证
+      // 在这里进行账号密码验证，这里是写死的，后面应该与后端数据进行绑定
       const validUsername = 'admin';
       const validPassword = 'admin';
       const validUsername1 = 'staff';
       const validPassword1 = 'staff';
       if (this.username === validUsername && this.password === validPassword && (this.value == 'admin')) {
         const token = this.generateToken();
+        //生成令牌,为了防止用户没登陆通过输入路由地址就能访问其他页面
         localStorage.setItem('token',token)
         // 登录成功，跳转到 home 页面
         this.$router.push('/home');
+        //将vuex中用于用户登录状态保存的变量进行改变
         this.updateCurole(this.value);
         console.log(this.value);
         console.log(this.$store.state.cu_role);
@@ -88,21 +92,23 @@ export default {
       this.username = '';
       this.password = '';
     },
+    //跳转到注册界面
     register(event) {
       event.preventDefault();
       this.$router.push('/register');
     },
+    //生成token令牌
     generateToken() {
       return Math.random().toString(36).substr(2)
     },
+    //将vuex中用于用户登录状态保存的变量进行改变
     updateCurole(value){
-      // this.$store.mutations.setCu_role(value)
       this.$store.commit('setCurole',value)
     }
   },
   created() {
-    getUserList().then( res => {
-      // console.log(res);
+    // 页面创建完的时候就读取到了所有的用户信息
+    getUserList().then( res => { //调用axios中所有get方法时候都这样写
       this.userList = res.data
       console.log(this.userList)
     })

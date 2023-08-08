@@ -1,19 +1,23 @@
 <template>
   <div class="project">
+    <!-- 上半区域 -->
     <div class="top_part">
       <div class="pro_font">
         <p>项目分类</p>
       </div>
+      <!-- 选择器，选择列表为项目的类别 -->
       <div class="pro_selector">
         <el-select v-model="value" placeholder="请选择" style="width: 150px;">
           <el-option v-for="item in pro_options" :key="item.value" :label="item.label" :value="item.value">
           </el-option>
         </el-select>
       </div>
+      <!-- 根据选择的项目类别，以表格显示该类别下所有的项目信息 -->
       <div class="table_inform">
         <el-table :data="filteredData" style="width: 95%;border:1px solid black;border-radius: 6px;margin:10px">
           <el-table-column type="expand">
             <template slot-scope="props">
+              <!-- 表格中数据的详细信息在这展示 -->
               <el-form label-position="left" inline class="demo-table-expand">
                 <el-form-item label="项目名称:">
                   <span>{{ props.row.name }}</span>
@@ -51,10 +55,12 @@
         </el-table>
       </div>
     </div>
+    <!-- 下半区域 -->
     <div class="bottom_part">
       <div class="pro_font">
         <p>新建项目</p>
       </div>
+      <!-- 新建项目的表单区域 -->
       <div class="pro_form">
         <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
           <el-form-item label="项目id" prop="id" style="margin-top: 10px;">
@@ -78,9 +84,9 @@
             <el-select v-model="ruleForm.equ_value" placeholder="请选择实验所需的设备">
               <el-option
                 v-for="item in pro_equps"
-                :key="item.name"
-                :label="item.name"
-                :value="item.name">
+                :key="item.deviceName"
+                :label="item.deviceName"
+                :value="item.deviceName">
               </el-option>
             </el-select>
           </el-form-item>
@@ -108,6 +114,7 @@
 export default {
   data() {
     return {
+      // 项目分类选项数组，这里是写死的，后期应该从数据库中进行读取
       pro_options: [{
         value: 'Ⅰ类',
         label: 'Ⅰ类'
@@ -118,7 +125,8 @@ export default {
         value: 'Ⅲ类',
         label: 'Ⅲ类'
       }],
-      value: 'Ⅰ类',
+      value: 'Ⅰ类', // 默认的项目的类别
+      // 所有项目的信息，也是写死的
       proData: [{
         id: '100001',
         name: '项目一',
@@ -156,8 +164,8 @@ export default {
         member: '王浩、张伟、李鹏',
         leader: '王浩',
       }],
-      pro_equps:[],
-      ruleForm: {
+      pro_equps:[], //实验设备选择器绑定的设备列表
+      ruleForm: { //表单绑定的数据信息，写完后传到这里
         id:'',
         name: '',
         category: '',
@@ -167,7 +175,7 @@ export default {
         member: '',
         leader: '',
       },
-      rules: {
+      rules: { //这里是表单的一些规则，比如必填项，字符长度等
         id: [
           { required: true, message: '请填写项目的id', trigger: 'blur' }
         ],
@@ -181,9 +189,6 @@ export default {
         desc: [
           { required: true, message: '请填写项目的描述', trigger: 'blur' }
         ],
-        // equp:[
-        //   { required: true, message: '请选择实验所需设备', trigger: 'change' }
-        // ],
         equ_value: [
           { required: true, message: '请选择实验所需设备', trigger: 'change' }
         ],
@@ -201,10 +206,14 @@ export default {
       },
     }
   },
-  mounted(){
-    this.pro_equps = this.$store.state.equps;
+  created() {
+    //获取所有的设备信息
+    getEquList().then(res => {
+      this.pro_equps = res.data
+    })
   },
   computed: {
+    //这里是上半部分通过选择项目类别筛选出所显示的项目
     filteredData() {
       return this.proData.filter((item) => item.category === this.value);
     },
@@ -233,6 +242,7 @@ export default {
 </script>
 <style scoped>
 .demo-table-expand {
+  margin-left: 70px;
   font-size: 0;
 }
 

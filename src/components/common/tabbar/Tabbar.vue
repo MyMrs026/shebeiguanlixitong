@@ -1,6 +1,8 @@
 <template>
   <div class="navbar-container" >
+    <!-- 导航栏部分 -->
     <div class="tabbar">
+      <!-- 上导航栏内容 -->
       <el-row>
         <el-col :span="3">
           <el-col class="institution">
@@ -31,6 +33,7 @@
           <i class="el-icon-s-custom" @click="showDrawer" type="primary" style="margin-left: 16px;"></i>
         </el-col>
       </el-row>
+      <!-- 下导航栏内容 -->
       <el-row>
         <el-col :span="21">
           <router-link to="/home">
@@ -68,6 +71,7 @@
       </el-row>
 
     </div>
+    <!-- 侧边栏部分 -->
     <div>
       <el-drawer v-show="isShowDrawer" title="我是标题" class="drawer" :modal="false" :modal-append-to-body="false" size="20%"
         :visible.sync="Drawer" :with-header="false" opacity:0.8>
@@ -136,6 +140,9 @@
 </template>
 
 <script>
+/** 
+ * 整个页面的导航栏，不多说了
+*/
 export default {
   data() {
     return {
@@ -168,6 +175,7 @@ export default {
   }
 }
 </script>
+
 <style scoped>
 .navbar-container {
   height:110px;

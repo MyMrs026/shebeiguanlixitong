@@ -1,6 +1,10 @@
+/** 
+ * 所有文件一些公共状态的存放即管理
+*/
 import Vue from 'vue';
 import Vuex from 'vuex';
-import createPersistedState from 'vuex-persistedstate';
+//状态持久化插件，比如说登录用户为admin但是进去后一刷新登录用户就丢失，为了防止这种情况发生
+import createPersistedState from 'vuex-persistedstate'; 
 
 import mutations from './mutations';
 import actions from './actions';
@@ -9,7 +13,10 @@ import getters from './getters';
 Vue.use(Vuex)
 
 const state = {
+  // 用户登录状态
   cu_role:'',
+  
+  // 公告信息
   notices:[
     {
       notice_id: 1,
@@ -1638,6 +1645,7 @@ const state = {
     },
   ],
 
+  //设备预约信息
   equpsBooks:[
   {
     equpsBook_id:1,
@@ -1676,6 +1684,7 @@ const state = {
   },
   ],
 
+  //培训预约信息
   trainBooks:[
     {
       trainBook_id:1,
@@ -1708,6 +1717,8 @@ const state = {
       date:new Date('2022-11-05'),
     },
   ],
+
+  //设备维修数据
   MaintainData:[
     {
       deviceMaintenanceId: 1,
@@ -1771,6 +1782,7 @@ const state = {
     },
   ],
 
+  //设备工艺
   equCrafts:[
     {
       deviceName:'ASE',//设备名
@@ -1802,6 +1814,7 @@ const state = {
     }
   ],
   
+  //工艺参数
   craftParams:[
     {
       deviceName: 'ASE',
@@ -1833,13 +1846,14 @@ const state = {
     }
   ]
 }
+
 const store = new Vuex.Store({
   state,
-  plugins:[createPersistedState({
+  plugins:[createPersistedState({  //将用户登录状态设为持久化状态
     storage:window.localStorage,
     reducer(state) {
       return {
-        cu_role:state.cu_role //只持久化cu_role状态，可以根据需求配置其他状态
+        cu_role:state.cu_role //  只持久化cu_role状态，可以根据需求配置其他状态
       };
     }
   })],
