@@ -1,5 +1,5 @@
 <template>
-  <div class="navbar-container">
+  <div class="navbar-container" >
     <div class="tabbar">
       <el-row>
         <el-col :span="3">
@@ -169,6 +169,9 @@ export default {
 }
 </script>
 <style scoped>
+.navbar-container {
+  height:110px;
+}
 .tabbar {
   background-image: url("../../../assets/img/tabbar2.jpg");
   width: 100%;
