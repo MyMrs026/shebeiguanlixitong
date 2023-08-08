@@ -1675,6 +1675,7 @@ const state = {
     content:'移液器-植物组织中DNA的提取与鉴定内容'
   },
   ],
+
   trainBooks:[
     {
       trainBook_id:1,
@@ -1769,22 +1770,68 @@ const state = {
       remark: "好评",
     },
   ],
-  // events: [
-  //   {
-  //     id:createEventId(),
-  //     title:'设备OOP的使用',
-  //     start: new Date().toISOString().replace(/T.*$/, '') + 'T09:30:00',
-  //     end: new Date().toISOString().replace(/T.*$/, '') + 'T10:30:00'
-  //   },
-  //   {
-  //     id:createEventId(),
-  //     title:'设备MOX的使用',
-  //     start: new Date().toISOString().replace(/T.*$/, '') + 'T13:00:00',
-  //     end: new Date().toISOString().replace(/T.*$/, '') + 'T15:00:00'
-  //   }
-  // ]
 
+  equCrafts:[
+    {
+      deviceName:'ASE',//设备名
+      deviceType:'型号一',//设备型号
+      size:'50in*50in',//设备尺寸
+      weight:'500g',//设备重量
+      power:'180W',//功率信息
+    },
+    {
+      deviceName:'ASF',//设备名
+      deviceType:'型号二',//设备型号
+      size:'60in*60in',//设备尺寸
+      weight:'400g',//设备重量
+      power:'190W',//功率信息
+    },
+    {
+      deviceName:'ASG',//设备名
+      deviceType:'型号三',//设备型号
+      size:'55in*55in',//设备尺寸
+      weight:'550g',//设备重量
+      power:'200W',//功率信息
+    },
+    {
+      deviceName:'ASP',//设备名
+      deviceType:'型号一',//设备型号
+      size:'50in*50in',//设备尺寸
+      weight:'500g',//设备重量
+      power:'180W',//功率信息
+    }
+  ],
   
+  craftParams:[
+    {
+      deviceName: 'ASE',
+      temperature: '105 °F',
+      pressure: '105 Pa',
+      speed: '1000 转/秒',
+      time: '2016-01-05',
+    },
+    {
+      deviceName:'ASF',
+      temperature: '102 °F',
+      pressure: '102 Pa',
+      speed: '1100 转/秒',
+      time: '2016-01-10',
+    },
+    {
+      deviceName:'ASG',
+      temperature: '110 °F',
+      pressure: '120 Pa',
+      speed: '880 转/秒',
+      time: '2016-02-01',
+    },
+    {
+      deviceName:'ASP',
+      temperature: '124 °F',
+      pressure: '120 Pa',
+      speed: '999 转/秒',
+      time: '2016-03-04',
+    }
+  ]
 }
 const store = new Vuex.Store({
   state,
