@@ -1,5 +1,6 @@
 <template>
   <div class="book-container">
+    <!-- 预约管理部分分为两个部分，上半部分为子导航条，下半部分包括当前用户预约设备的日程表、设备被预约的日程表等 -->
     <div class="top-div">
       <!-- 第一个 div 的内容 -->
       <div class="book-title">
@@ -30,6 +31,7 @@
           </div>
           <div class="schedular-area" v-if="isShow1">
             <p style="margin: 10px">当前用户:{{ this.$store.state.cu_role }}</p>
+            <!-- 调用日程表在这里 -->
             <Schedular />
           </div>
         </el-col>
@@ -39,6 +41,7 @@
           </div>
           <div class="schedular-area" v-if="isShow2">
             <p style="margin: 10px">设备名</p>
+            <!-- 后期在这里默认选择下拉设备，设备列表从数据库传出 -->
             <Schedular2 />
           </div>
         </el-col>
@@ -47,6 +50,7 @@
             <el-button @click="hideClick3">{{ buttonText3 }}</el-button>
           </div>
           <div class="schedular-area" v-if="isShow3">
+            <!-- 同样道理 -->
             <p style="margin: 10px">选择新设备</p>
             <Schedular3 />
           </div>
@@ -68,6 +72,7 @@ export default {
   },
   data() {
     return {
+      //elementui中的日期选择器
       pickerOptions: {
         disabledDate(time) {
           return time.getTime() > Date.now();
@@ -93,13 +98,15 @@ export default {
           }
         }]
       },
-      value1: "",
+      value1: "",//日期选择器传回来的数据
+      //日程表是否显示
       isShow1: true,
       isShow2: true,
       isShow3: true,
     };
   },
   computed: {
+    //按钮文字切换的实现
     buttonText1() {
       return this.isShow1 ? "隐藏" : "显示";
     },
@@ -111,6 +118,7 @@ export default {
     },
   },
   methods: {
+    //隐藏按钮的实现
     hideClick1() {
       console.log("hideClick1");
       this.isShow1 = !this.isShow1;

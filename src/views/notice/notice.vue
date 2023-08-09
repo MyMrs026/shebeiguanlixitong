@@ -1,5 +1,6 @@
 <template>
   <div>
+    <!-- 上半部分为所有公告信息 -->
     <div class="box-wrap">
       <div class="box-main">
         <div class="right-box-main" frag="面板6">
@@ -12,27 +13,32 @@
           <div class="right_content" frag="窗口7" portletmode="simpleList">
             <div id="wp_news_w7">
               <ul class="news">
+                <!-- 此处是公告信息列表的展示，此时数据来源vuex中，后续要使用数据库中的数据 -->
                 <li v-for="item in notices" :key="item.notice_id" @click="gotoNoticeDetail(item.notice_id)">
                   <a href="" target="" title="item.title">
                     <font style="font-weight:bold;color:#000000;">{{item.title}}</font>
+                    <!-- 日期的显示格式:xxxx年xx月xx日 -->
                     <font>{{item.date | formatDate}}</font>
                   </a>
                 </li>
               </ul>
             </div>
-
+            <!-- 注意：以下功能没有实现，写死的 -->
             <div id="wp_paging_w7">
-              <ul class="wp_paging clearfix">
+              <ul class="wp_paging clearfix">  
+                <!-- 每页的数量,页面总数 -->
                 <li class="pages_count">
                   <span class="per_page">每页&nbsp;<em class="per_count">10</em>&nbsp;记录&nbsp;</span>
                   <span class="all_count">总共&nbsp;<em class="all_count">30</em>&nbsp;记录&nbsp;</span>
                 </li>
+                <!-- 翻页功能的实现 -->
                 <li class="page_nav">
                   <a class="first" href="#" target="_self"><span>第一页</span></a>
                   <a class="prev" href="#" target="_self"><span>&lt;&lt;上一页</span></a>
                   <a class="next" href="#" target="_self"><span>下一页&gt;&gt;</span></a>
                   <a class="last" href="#" target="_self"><span>尾页</span></a>
                 </li>
+                <!-- 页码跳转的实现 -->
                 <li class="page_jump">
                   <span class="pages">页码&nbsp;<em class="curr_page">1</em>/<em class="all_pages">2</em></span>
                   <span><input class="pageNum" type="text"><input type="hidden" class="currPageURL" value=""></span>
@@ -48,7 +54,7 @@
 
 
     </div>
-
+    <!-- 下半部分为编辑公告内容，只有用户为管理员时才能显示 -->
     <div class="box-bottom" v-if="this.$store.state.cu_role==='admin'">
       <div class="publish_label">
         <p> 编辑公告内容 </p>
@@ -65,12 +71,8 @@
 </template>
 
 <script>
-import noticeDetail from './noticeDetail.vue';
 import { getNoticeList } from '../../network/notice';
 export default {
-  components:{
-    noticeDetail
-  },
   data () {
     return {
       textarea: '',
@@ -97,9 +99,9 @@ export default {
     }
   },
   methods:{
+    //跳转到公告信息详细的页面
     gotoNoticeDetail(id) {
       this.$router.push('/notice/' + id);
-      // console.log(id);
     }
   }
 }

@@ -1,7 +1,9 @@
 <template>
   <div class="card">
+    <!-- 分为三个部分 -->
     <el-tabs type="border-card">
       <el-tab-pane label="培训项目">
+        <!-- 这里的构造与预约管理的构造相同 -->
         <div class="book-container">
           <div class="top-div">
             <!-- 第一个 div 的内容 -->
