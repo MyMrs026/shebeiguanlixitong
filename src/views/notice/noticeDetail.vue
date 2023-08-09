@@ -22,6 +22,7 @@ export default {
 
   },
   mounted() {
+    // 通过传递的路由参数与公告信息的id相匹配
     const notice_id = this.$route.params.id;
     console.log(notice_id);
     // 根据公告ID获取公告详情的代码逻辑...
