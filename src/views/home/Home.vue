@@ -14,8 +14,9 @@
         
       </div>
     </div>
+    <hr style="border: 1px solid white; margin-left:10px; margin-right:10px" />
     <div class="text-home">
-      <p>设备使用表</p>
+      <p>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp设备使用表</p>
     </div>
     <div class="table-equ-use">
       <template>
@@ -37,7 +38,7 @@
     </div>
     <hr style="border: 1px solid white; margin-left:10px; margin-right:10px" />
     <div class="text-home">
-      <p>我的预约</p>
+      <p>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp我的预约</p>
     </div>
     <div class="table-book-use">
       <el-table :data="tableData2" class="table-book">
@@ -59,7 +60,7 @@
     </div>
     <hr style="border: 1px solid white; margin-left:10px; margin-right:10px" />
     <div class="text-home">
-      <p>设备使用状态</p>
+      <p>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp设备使用状态</p>
     </div>
     <div class="table-dch-use">
       <template>
@@ -222,9 +223,12 @@ export default {
 }
 .text-home {
   margin-top: 0px;
-  margin-left: 20px;
+  margin-left: 30px;
+  line-height: 55px;
   font-size: 20px;
   color:aliceblue;
+  background-image: url("../../assets/img/s-titlebg.png");
+  background-repeat: no-repeat;
 }
 .table-equ-use {
   margin-left: 20px;
