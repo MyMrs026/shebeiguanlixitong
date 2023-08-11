@@ -57,7 +57,7 @@
 
       <div class="table-equ-use">
         <template>
-          <el-table border :data="tableData1" class="table-equ" :row-class-name="tableRowClassName">
+          <el-table border :data="equpsUse" class="table-equ" :row-class-name="tableRowClassName">
             <el-table-column prop="equp" label="设备名" width="180">
             </el-table-column>
             <el-table-column prop="status" label="使用情况" width="100">
@@ -81,7 +81,7 @@
       </div>
       <div class="table-dch-use">
         <template>
-          <el-table border :data="tableData3" class="table-dch" :row-class-name="getRowClassName">
+          <el-table border :data="equpsStatus" class="table-dch" :row-class-name="getRowClassName">
             <el-table-column prop="equp" label="设备名" width="300">
             </el-table-column>
             <el-table-column prop="status" label="状态" width="200">
@@ -117,71 +117,13 @@ export default {
   },  
   data() {
     return {
-      tableData1: [{ //被使用的设备的情况
-        equp: 'ASE',
-        status: 'Open',
-        user: 'ansimon',
-        org: 'KU-Rekvisition 6516-00638',
-        starttime: '2016-11-10 17:30:03',
-        endtime: '2016-11-10 19:49:21'
-      }, {
-        equp: 'ASE',
-        status: 'Open',
-        user: 'ansimon',
-        org: 'KU-Rekvisition 6516-00638',
-        starttime: '2016-11-10 17:30:03',
-        endtime: '2016-11-10 19:49:21'
-      }, {
-        equp: 'ASE',
-        status: 'Open',
-        user: 'ansimon',
-        org: 'KU-Rekvisition 6516-00638',
-        starttime: '2016-11-10 17:30:03',
-        endtime: '2016-11-10 19:49:21'
-      }, {
-        equp: 'ASE',
-        status: 'Open',
-        user: 'ansimon',
-        org: 'KU-Rekvisition 6516-00638',
-        starttime: '2016-11-10 17:30:03',
-        endtime: '2016-11-10 19:49:21'
-      }],
+      equpsUse: [],
       equps: [],
       currentPage: 1,//part1分页功能中当前的页码
       pageSize: 5,
       searchKeyword: '',//part1输入框中的内容
       searchResult: [],//part1搜索结果存放的数组
-      tableData3: [{ //所有设备的状态
-        equp: '7-up(masks)',
-        status: 'Out of use',
-        expected: 'Not set',
-        statuslog: 'still not working'
-      },
-      {
-        equp: '7-up 6"',
-        status: 'Out of use',
-        expected: 'Not set',
-        statuslog: 'Is being decommissioned'
-      },
-      {
-        equp: 'ALD Picosun R200',
-        status: 'Limited use',
-        expected: '11-11-2016',
-        statuslog: 'no DEZ;TiO2 and AI2O3 are fine'
-      },
-      {
-        equp: 'Aligner',
-        status: 'Limited use',
-        expected: '11-11-2016',
-        statuslog: 'Intensity low,max power'
-      },
-      {
-        equp: 'ICP Metal Etch',
-        status: 'Being Serviced',
-        expected: '14-11-2016',
-        statuslog: 'Yearly service by SPTS 1 of 3'
-      },
-    ],
+      equpsStatus: [],
     }
   },
   computed : {
@@ -198,7 +140,9 @@ export default {
     getEquList().then(res => {
       // console.log(res.data);
       this.equps = res.data
-    })
+    }),
+    this.equpsUse = this.$store.state.equpsUse
+    this.equpsStatus = this.$store.state.equpsStatus
   }, 
   methods: {
     tableRowClassName({ row, rowIndex }) { //表格灰黑相间
@@ -223,11 +167,11 @@ export default {
       this.$refs.tab2.style.display = 'block';
     },
     getRowClassName({row,rowIndex}) { //part3 红黄灰三种颜色进行切换
-      if ((row.status) === 'Out of use') {
+      if ((row.status) === '不在使用中') {
         return 'red-row';
-      } else if ((row.status) === 'Limited use') {
+      } else if ((row.status) === '限制使用') {
         return 'yellow-row';
-      } else if ((row.status) === 'Being Serviced') {
+      } else if ((row.status) === '正在使用') {
         return 'gray-row';
       }
       return '';

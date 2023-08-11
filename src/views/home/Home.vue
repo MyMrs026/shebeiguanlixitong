@@ -20,7 +20,7 @@
     <!-- 设备使用表(目前：写死的) -->
     <div class="table-equ-use">
       <template>
-        <el-table border :data="tableData1" class="table-equ" :row-class-name="tableRowClassName">
+        <el-table border :data="equpsUse" class="table-equ" :row-class-name="tableRowClassName">
           <el-table-column prop="equp" label="设备名" width="170">
           </el-table-column>
           <el-table-column prop="status" label="使用情况" width="110">
@@ -42,7 +42,7 @@
     </div>
     <!-- 用户个人的预约表(目前：写死的) -->
     <div class="table-book-use">
-      <el-table :data="tableData2" class="table-book">
+      <el-table :data="myBooks" class="table-book">
         <el-table-column prop="equp" label="设备" width="170">
         </el-table-column>
         <el-table-column prop="status" label="状态" width="120">
@@ -53,7 +53,7 @@
         </el-table-column>
         <el-table-column prop="end" label="结束" width="150">
         </el-table-column>
-        <el-table-column prop="cal" label="日期" width="125">
+        <el-table-column prop="cal" label="规划方式" width="125">
         </el-table-column>
         <el-table-column prop="action" label="动作" width="165">
         </el-table-column>
@@ -66,7 +66,7 @@
     <!-- 所有的设备使用状态表格(目前：写死的) -->
     <div class="table-dch-use">
       <template>
-        <el-table border :data="tableData3" class="table-dch" :row-class-name="getRowClassName">
+        <el-table border :data="equpsStatus" class="table-dch" :row-class-name="getRowClassName">
           <el-table-column prop="equp" label="设备名" width="300">
           </el-table-column>
           <el-table-column prop="status" label="状态" width="200">
@@ -86,76 +86,11 @@ export default {
   data() {
     return {
       //设备使用表数据
-      tableData1: [{
-        equp: 'ASE',
-        status: 'Open',
-        user: 'ansimon',
-        org: 'KU-Rekvisition 6516-00638',
-        starttime: '2016-11-10 17:30:03',
-        endtime: '2016-11-10 19:49:21'
-      }, {
-        equp: 'ASE',
-        status: 'Open',
-        user: 'ansimon',
-        org: 'KU-Rekvisition 6516-00638',
-        starttime: '2016-11-10 17:30:03',
-        endtime: '2016-11-10 19:49:21'
-      }, {
-        equp: 'ASE',
-        status: 'Open',
-        user: 'ansimon',
-        org: 'KU-Rekvisition 6516-00638',
-        starttime: '2016-11-10 17:30:03',
-        endtime: '2016-11-10 19:49:21'
-      }, {
-        equp: 'ASE',
-        status: 'Open',
-        user: 'ansimon',
-        org: 'KU-Rekvisition 6516-00638',
-        starttime: '2016-11-10 17:30:03',
-        endtime: '2016-11-10 19:49:21'
-      }],
+      equpsUse: [],
       //用户个人设备预约表数据
-      tableData2: [{
-        equp: '0-TestTool',
-        status: 'OK',
-        user: 'choi',
-        start:'19:00',
-        end:'20:00',
-        cal:'Weekly',
-        action:'Not authorized'
-      }],
+      myBooks: [],
       //设备使用状态表数据
-      tableData3: [{
-        equp: '7-up(masks)',
-        status: 'Out of use',
-        expected: 'Not set',
-        statuslog: 'still not working'
-      },
-      {
-        equp: '7-up 6"',
-        status: 'Out of use',
-        expected: 'Not set',
-        statuslog: 'Is being decommissioned'
-      },
-      {
-        equp: 'ALD Picosun R200',
-        status: 'Limited use',
-        expected: '11-11-2016',
-        statuslog: 'no DEZ;TiO2 and AI2O3 are fine'
-      },
-      {
-        equp: 'Aligner',
-        status: 'Limited use',
-        expected: '11-11-2016',
-        statuslog: 'Intensity low,max power'
-      },
-      {
-        equp: 'ICP Metal Etch',
-        status: 'Being Serviced',
-        expected: '14-11-2016',
-        statuslog: 'Yearly service by SPTS 1 of 3'
-      }],
+      equpsStatus: [],
       notice: {},//公告信息，用来接收从axios传过来的公告信息
     };
   },
@@ -171,19 +106,22 @@ export default {
     },
     //这个方法是为了使表格呈现红黄灰相间模式
     getRowClassName({row,rowIndex}) {
-      if ((row.status) === 'Out of use') {
+      if ((row.status) === '不在使用中') {
         return 'red-row';
-      } else if ((row.status) === 'Limited use') {
+      } else if ((row.status) === '限制使用') {
         return 'yellow-row';
-      } else if ((row.status) === 'Being Serviced') {
+      } else if ((row.status) === '正在使用') {
         return 'gray-row';
       }
       return '';
     },
   },
-  mounted() {
+  created() {
     //目前是从vuex中读取数据，后期可以从axios中读取数据
     this.notice = this.$store.state.notices[0];
+    this.equpsUse = this.$store.state.equpsUse;
+    this.myBooks = this.$store.state.myBooks;
+    this.equpsStatus = this.$store.state.equpsStatus;
   },
   filters:{
     //处理日期的显示格式问题，使日期以xxxx年xx月xx日的形式显示
