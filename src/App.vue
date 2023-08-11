@@ -24,10 +24,11 @@ export default {
 </script>
 
 <style>
-.divided-line{
-  border: 1px solid darkred;  
-  margin-left: 10px;
-  margin-right: 10px;
-  background-color: black;
-}
+  @import "assets/css/base.css";
+  .divided-line{
+    border: 1px solid darkred;  
+    margin-left: 10px;
+    margin-right: 10px;
+    background-color: black;
+  }
 </style>

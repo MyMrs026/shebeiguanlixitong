@@ -293,10 +293,7 @@ export default {
 </script>
 <style scoped>
 .book-container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  height: 100vh;
+  height: auto;
   margin-left: 10px;
 }
 
@@ -308,8 +305,7 @@ export default {
   height: auto;
   border: 1px solid #000;
   border-radius: 8px;
-  margin-top: 10px;
-  margin-bottom: 25px;
+  margin-top: 5px;
   background-color: rgb(230, 230, 230);
   /* 可以根据需要进行其他样式设置 */
 }
@@ -322,6 +318,7 @@ export default {
 .bottom-div {
   width: 90%;
   height: auto;
+  margin-top: 5px;
   border: 1px solid #000;
   border-radius: 8px;
 }

@@ -76,38 +76,45 @@
       <el-drawer v-show="isShowDrawer" title="我是标题" class="drawer" :modal="false" :modal-append-to-body="false" size="20%"
         :visible.sync="Drawer" :with-header="false" opacity:0.8>
         <el-menu accordion class="drawer-menu" :unique-opened="true" text-color="#fff" active-text-color="#27195e">
+          <!-- 信息 -->
           <el-submenu index="1">
-            <template slot="title" class="firstly">信息</template>
+            <div slot="title" class="firstly">信息</div>
             <router-link to="/home">
               <el-menu-item @click="closeDrawer" index="1-1" class="secondly">首页信息</el-menu-item>
             </router-link>
-            <router-link to="/home">
-              <el-menu-item @click="closeDrawer" index="1-2" class="secondly">一般信息</el-menu-item>
+            <router-link to="/notice">
+              <el-menu-item @click="closeDrawer" index="1-2" class="secondly">公告信息</el-menu-item>
             </router-link>
             <router-link to="/labinform">
               <el-menu-item @click="closeDrawer" index="1-3" class="secondly">联系信息</el-menu-item>
             </router-link>
           </el-submenu>
+          <!-- 设备 -->
           <el-submenu index="2">
-            <template slot="title" class="firstly">设备</template>
+            <div slot="title" class="firstly">设备</div>
             <router-link to="/equp">
               <el-menu-item @click="closeDrawer" index="2-1" class="secondly">使用设备</el-menu-item>
             </router-link>
-            <el-menu-item @click="closeDrawer" index="2-2" class="secondly">信息</el-menu-item>
             <router-link to="/equlist">
               <el-menu-item @click="closeDrawer" index="2-3" class="secondly">设备列表</el-menu-item>
             </router-link>
-            <el-menu-item @click="closeDrawer" index="2-4" class="secondly">日志</el-menu-item>
+            <router-link to="/equp">
+              <el-menu-item @click="closeDrawer" index="2-4" class="secondly">日志</el-menu-item>
+            </router-link>
           </el-submenu>
+          <!-- 预约 -->
           <el-submenu index="3">
-            <template slot="title" class="firstly">预约</template>
-            <el-menu-item @click="closeDrawer" index="3-1" class="secondly">预约设备</el-menu-item>
+            <div slot="title" class="firstly">预约</div>
+            <router-link to="/book">
+              <el-menu-item @click="closeDrawer" index="3-1" class="secondly">预约设备</el-menu-item>
+            </router-link>
             <el-menu-item @click="closeDrawer" index="3-2" class="secondly">日程表</el-menu-item>
             <el-menu-item @click="closeDrawer" index="3-3" class="secondly">周程表</el-menu-item>
             <el-menu-item @click="closeDrawer" index="3-4" class="secondly">月程表</el-menu-item>
           </el-submenu>
+          <!-- 账户 -->
           <el-submenu index="4">
-            <template slot="title" class="firstly">账户</template>
+            <div slot="title" class="firstly">账户</div>
             <router-link to="/personalInfo">
               <el-menu-item index="4-1" class="secondly">编辑信息</el-menu-item>
             </router-link>
@@ -119,17 +126,20 @@
             </router-link>
             
           </el-submenu>
+          <!-- 订单 -->
           <el-submenu index="5">
-            <template slot="title" class="firstly">订单</template>
+            <div slot="title" class="firstly">订单</div>
             <el-menu-item @click="closeDrawer" index="5-1" class="secondly">订单列表</el-menu-item>
           </el-submenu>
+          <!-- 商城 -->
           <el-submenu index="6">
-            <template slot="title" class="firstly">商城</template>
+            <div slot="title" class="firstly">商城</div>
             <el-menu-item @click="closeDrawer" index="6-1" class="secondly">硅晶片</el-menu-item>
             <el-menu-item @click="closeDrawer" index="6-2" class="secondly">金属</el-menu-item>
           </el-submenu>
+          <!-- 进程信息 -->
           <el-submenu index="7">
-            <template slot="title" class="firstly">进程信息</template>
+            <div slot="title" class="firstly">进程信息</div>
             <el-menu-item @click="closeDrawer" index="7-1" class="secondly">实验室顾问</el-menu-item>
             <el-menu-item @click="closeDrawer" index="7-2" class="secondly">进程分享</el-menu-item>
           </el-submenu>

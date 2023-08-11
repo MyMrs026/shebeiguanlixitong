@@ -89,15 +89,19 @@ export default {
         },
         {
           value: "选项2",
-          label: "ASF",
+          label: "OEA",
         },
         {
           value: "选项3",
-          label: "ASG",
+          label: "DTP",
         },
         {
           value: "选项4",
-          label: "ASP",
+          label: "MKI",
+        },
+        {
+          value: "选项5",
+          label: "OSD",
         },
       ],
       value: "", //绑定设备的名称

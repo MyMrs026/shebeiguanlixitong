@@ -1645,6 +1645,103 @@ const state = {
     },
   ],
 
+  // 设备使用表
+  equpsUse:[
+    {
+      equp: 'ASE',
+      status: '开启',
+      user: 'admin',
+      org: '红雨伞',
+      starttime: '2023-07-10 17:30:03',
+      endtime: '2023-07-10 19:49:21'
+    }, {
+      equp: 'OEA',
+      status: '开启',
+      user: '关帅奇',
+      org: '浙江大学嘉兴研究院',
+      starttime: '2023-07-11 17:30:03',
+      endtime: '2023-07-11 17:49:21'
+    }, {
+      equp: 'DTP',
+      status: '开启',
+      user: 'admin',
+      org: '红雨伞',
+      starttime: '2023-07-12 17:30:03',
+      endtime: '2023-07-12 19:49:21'
+    }, {
+      equp: 'MKI',
+      status: '开启',
+      user: '小明',
+      org: '华强科技有限公司',
+      starttime: '2023-07-13 17:30:03',
+      endtime: '2023-07-13 19:49:21'
+    },
+    {
+      equp: 'OSD',
+      status: '关闭',
+      user: 'staff',
+      org: '红雨伞',
+      starttime: '2023-07-13 17:30:03',
+      endtime: '2023-07-13 19:49:21'
+    }
+  ],
+
+  // 设备状态表
+  equpsStatus: [
+    {
+      equp: 'ASE',
+      status: '不在使用中',
+      expected: '未设置',
+      statuslog: '正常工作'
+    },
+    {
+      equp: 'OEA',
+      status: '不在使用中',
+      expected: '未设置',
+      statuslog: '正式停止使用'
+    },
+    {
+      equp: 'DTP',
+      status: '限制使用',
+      expected: '2023-07-14',
+      statuslog: '情况良好'
+    },
+    {
+      equp: 'MKI',
+      status: '限制使用',
+      expected: '2023-07-15',
+      statuslog: '最大功率良好运行'
+    },
+    {
+      equp: 'OSD',
+      status: '正在使用',
+      expected: '2023-07-14',
+      statuslog: '设备下一次使用前需要保养'
+    }
+  ],
+
+  //用户预约设备情况
+  myBooks:[
+    {
+      equp: 'ASE',
+      status: '良好',
+      user: 'admin',
+      start:'19:00',
+      end:'20:00',
+      cal:'日程规划',
+      action:'已授权'
+    },
+    {
+      equp: 'DTP',
+      status: '良好',
+      user: 'admin',
+      start:'19:00',
+      end:'20:00',
+      cal:'日程规划',
+      action:'已授权'
+    }
+  ],
+
   //设备预约信息
   equpsBooks:[
   {
@@ -1792,25 +1889,32 @@ const state = {
       power:'180W',//功率信息
     },
     {
-      deviceName:'ASF',//设备名
+      deviceName:'OEA',//设备名
       deviceType:'型号二',//设备型号
       size:'60in*60in',//设备尺寸
       weight:'400g',//设备重量
       power:'190W',//功率信息
     },
     {
-      deviceName:'ASG',//设备名
+      deviceName:'DTP',//设备名
       deviceType:'型号三',//设备型号
       size:'55in*55in',//设备尺寸
       weight:'550g',//设备重量
       power:'200W',//功率信息
     },
     {
-      deviceName:'ASP',//设备名
+      deviceName:'MKI',//设备名
       deviceType:'型号一',//设备型号
       size:'50in*50in',//设备尺寸
       weight:'500g',//设备重量
       power:'180W',//功率信息
+    },
+    {
+      deviceName:'OSD',//设备名
+      deviceType:'型号二',//设备型号
+      size:'50in*50in',//设备尺寸
+      weight:'500g',//设备重量
+      power:'170W',//功率信息
     }
   ],
   
