@@ -215,9 +215,12 @@ export default {
 }
 .text-home {
   margin-top: 0px;
-  margin-left: 20px;
+  margin-left: 30px;
+  line-height: 55px;
   font-size: 20px;
-  color: aliceblue;
+  color:aliceblue;
+  background-image: url("../../assets/img/s-titlebg.png");
+  background-repeat: no-repeat;
 }
 .table-equ-use {
   margin-left: 20px;
