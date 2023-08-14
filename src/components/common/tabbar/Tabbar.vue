@@ -222,15 +222,19 @@ export default {
 
 /* 搜索输入栏 */
 .search-box {
-  background-color: rgb(151, 184, 216, 0.5);
-  border: 1px solid white;
-  border-radius: 15px;
+  /* background-color: rgb(151, 184, 216,0.3); */
+  border:none;
+  border-radius: 5px;
+  border-bottom-width: 1px;
+  border-bottom-color:rgb(255, 255, 255);
+  border-bottom-style: solid;
   margin-top: 17px;
   margin-right: 20px;
   float: right;
   width: 180px;
   height: 27px;
-  color: white;
+  opacity: 0.4;
+  /* color: white; */
 }
 
 /* 搜索icon */
@@ -332,6 +336,12 @@ export default {
   border: none;
   border-top: 1px black solid;
   border-bottom: 1px black solid;
+}
+div /deep/ .el-drawer__body .el-menu{
+  background-color: #48425b;
+}
+div /deep/ .el-drawer__body{
+  background-color: #48425b;
 }
 
 .drawer-menu {
