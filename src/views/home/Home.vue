@@ -2,46 +2,53 @@
   <div class="total">
     <!-- 分割线 -->
     <div style="height=30px">
-      <br/>
+      <br />
     </div>
     <!-- 公告部分 -->
     <div class="text-area">
-      <p class="title">{{ this.notice.title }}&nbsp;&nbsp;日期:{{ this.notice.date | formatDate }}</p>
-      <p class="content-area">{{this.notice.content}}</p>
+      <p class="title">
+        {{ this.notice.title }}&nbsp;&nbsp;日期:{{
+          this.notice.date | formatDate
+        }}
+      </p>
+      <p class="content-area">{{ this.notice.content }}</p>
       <div class="text-more">
         <router-link to="/notice">
           <a href="">更多</a>
         </router-link>
       </div>
     </div>
-    <div class="text-home">
-      <p>设备使用表</p>
-    </div>
     <!-- 设备使用表(目前：写死的) -->
     <div class="table-equ-use">
-      <template>
-        <el-table border :data="equpsUse" class="table-equ" :row-class-name="tableRowClassName">
-          <el-table-column prop="equp" label="设备名" width="170">
-          </el-table-column>
-          <el-table-column prop="status" label="使用情况" width="110">
-          </el-table-column>
-          <el-table-column prop="user" label="使用用户" width="110">
-          </el-table-column>
-          <el-table-column prop="org" label="使用组织" width="265">
-          </el-table-column>
-          <el-table-column prop="starttime" label="开始时间" width="190">
-          </el-table-column>
-          <el-table-column prop="endtime" label="结束时间" width="190">
-          </el-table-column>
-        </el-table>
-      </template>
+      <div class="text-home">
+        <p>设备使用表</p>
+      </div>
+      <el-table
+        border
+        :data="equpsUse"
+        class="table-equ"
+        :row-class-name="tableRowClassName"
+      >
+        <el-table-column prop="equp" label="设备名" width="170">
+        </el-table-column>
+        <el-table-column prop="status" label="使用情况" width="110">
+        </el-table-column>
+        <el-table-column prop="user" label="使用用户" width="110">
+        </el-table-column>
+        <el-table-column prop="org" label="使用组织" width="265">
+        </el-table-column>
+        <el-table-column prop="starttime" label="开始时间" width="190">
+        </el-table-column>
+        <el-table-column prop="endtime" label="结束时间" width="190">
+        </el-table-column>
+      </el-table>
     </div>
-    <hr style="border: 1px solid white; margin-left:10px; margin-right:10px" />
-    <div class="text-home">
-      <p>我的预约</p>
-    </div>
+    <hr style="border: 1px solid white; margin-left: 10px; margin-right: 10px" />
     <!-- 用户个人的预约表(目前：写死的) -->
     <div class="table-book-use">
+      <div class="text-home">
+        <p>我的预约</p>
+      </div>
       <el-table :data="myBooks" class="table-book">
         <el-table-column prop="equp" label="设备" width="170">
         </el-table-column>
@@ -51,32 +58,69 @@
         </el-table-column>
         <el-table-column prop="start" label="开始" width="150">
         </el-table-column>
-        <el-table-column prop="end" label="结束" width="150">
-        </el-table-column>
+        <el-table-column prop="end" label="结束" width="150"> </el-table-column>
         <el-table-column prop="cal" label="规划方式" width="125">
         </el-table-column>
         <el-table-column prop="action" label="动作" width="165">
         </el-table-column>
       </el-table>
     </div>
-    <hr style="border: 1px solid white; margin-left:10px; margin-right:10px" />
-    <div class="text-home">
-      <p>设备使用状态</p>
-    </div>
+    <hr style="border: 1px solid white; margin-left: 10px; margin-right: 10px" />
     <!-- 所有的设备使用状态表格(目前：写死的) -->
     <div class="table-dch-use">
-      <template>
-        <el-table border :data="equpsStatus" class="table-dch" :row-class-name="getRowClassName">
-          <el-table-column prop="equp" label="设备名" width="300">
-          </el-table-column>
-          <el-table-column prop="status" label="状态" width="200">
-          </el-table-column>
-          <el-table-column prop="expected" label="预期就绪" width="200">
-          </el-table-column>
-          <el-table-column prop="statuslog" label="状态日志" width="330">
-          </el-table-column>
-        </el-table>
-      </template>
+      <div class="text-home">
+        <p>设备使用状态</p>
+      </div>
+      <el-table
+        border
+        :data="equpsStatus"
+        class="table-dch"
+        :row-class-name="getRowClassName"
+      >
+        <el-table-column prop="equp" label="设备名" width="300">
+        </el-table-column>
+        <el-table-column prop="status" label="状态" width="200">
+        </el-table-column>
+        <el-table-column prop="expected" label="预期就绪" width="200">
+        </el-table-column>
+        <el-table-column prop="statuslog" label="状态日志" width="330">
+        </el-table-column>
+      </el-table>
+    </div>
+    <hr style="border: 1px solid white; margin-left: 10px; margin-right: 10px" />
+    <!-- 设备故障处理 -->
+    <div class="table-dch-use" v-if="this.$store.state.cu_role === 'admin'">
+      <div class="text-home">
+        <p>设备维修记录</p>
+      </div>
+      <el-table
+        :data="MaintainData"
+        class="table-book"
+        border
+      >
+        <el-table-column
+          prop="deviceMaintenanceId"
+          label="设备维修ID"
+          width="180"
+        >
+        </el-table-column>
+        <el-table-column prop="deviceId" label="设备ID" width="180">
+        </el-table-column>
+        <el-table-column prop="content" label="内容"> </el-table-column>
+        <el-table-column
+          prop="expectedEndTime"
+          label="预期结束时间"
+          width="180"
+        >
+        </el-table-column>
+        <el-table-column prop="startTime" label="开始时间" width="180">
+        </el-table-column>
+        <el-table-column prop="actualEndTime" label="实际结束时间">
+        </el-table-column>
+        <el-table-column prop="maintenanceStaff" label="维修人员" width="180">
+        </el-table-column>
+        <el-table-column prop="remark" label="评价"> </el-table-column>
+      </el-table>
     </div>
   </div>
 </template>
@@ -91,29 +135,30 @@ export default {
       myBooks: [],
       //设备使用状态表数据
       equpsStatus: [],
-      notice: {},//公告信息，用来接收从axios传过来的公告信息
+      notice: {}, //公告信息，用来接收从axios传过来的公告信息
+      MaintainData: [], //设备维保记录
     };
   },
   methods: {
     //这个方法是为了使表格呈现灰黑相间模式
     tableRowClassName({ row, rowIndex }) {
-      if ((rowIndex % 2) === 0) {
-        return 'warning-row';
-      } else if ((rowIndex % 2) === 1) {
-        return 'success-row';
+      if (rowIndex % 2 === 0) {
+        return "warning-row";
+      } else if (rowIndex % 2 === 1) {
+        return "success-row";
       }
-      return '';
+      return "";
     },
     //这个方法是为了使表格呈现红黄灰相间模式
-    getRowClassName({row,rowIndex}) {
-      if ((row.status) === '不在使用中') {
-        return 'red-row';
-      } else if ((row.status) === '限制使用') {
-        return 'yellow-row';
-      } else if ((row.status) === '正在使用') {
-        return 'gray-row';
+    getRowClassName({ row, rowIndex }) {
+      if (row.status === "不在使用中") {
+        return "red-row";
+      } else if (row.status === "限制使用") {
+        return "yellow-row";
+      } else if (row.status === "正在使用") {
+        return "gray-row";
       }
-      return '';
+      return "";
     },
   },
   created() {
@@ -123,15 +168,18 @@ export default {
     this.myBooks = this.$store.state.myBooks;
     this.equpsStatus = this.$store.state.equpsStatus;
   },
-  filters:{
+  filters: {
     //处理日期的显示格式问题，使日期以xxxx年xx月xx日的形式显示
-    formatDate: function(value) {
-      if (!value) return ''
-      const year = value.getFullYear()
-      const month = String(value.getMonth() + 1).padStart(2, '0')
-      const day = String(value.getDate()).padStart(2, '0')
-      return `${year}年${month}月${day}日`
-    }
+    formatDate: function (value) {
+      if (!value) return "";
+      const year = value.getFullYear();
+      const month = String(value.getMonth() + 1).padStart(2, "0");
+      const day = String(value.getDate()).padStart(2, "0");
+      return `${year}年${month}月${day}日`;
+    },
+  },
+  mounted() {
+    this.MaintainData = this.$store.state.MaintainData;
   },
 };
 </script>
@@ -148,7 +196,6 @@ export default {
   border: 1px solid #000;
   border-radius: 3px;
   font-size: 13px;
-  
 }
 .title {
   margin-top: 20px;
@@ -157,21 +204,20 @@ export default {
   font-size: 16px;
 }
 .content-area {
-  margin:20px;
+  margin: 20px;
   text-indent: 2em;
   font-size: 13px;
 }
-.text-more{
+.text-more {
   margin-right: 10px;
   margin-bottom: 10px;
   text-align: right;
-
 }
 .text-home {
   margin-top: 0px;
   margin-left: 20px;
   font-size: 20px;
-  color:aliceblue;
+  color: aliceblue;
 }
 .table-equ-use {
   margin-left: 20px;
