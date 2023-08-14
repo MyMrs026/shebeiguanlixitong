@@ -1,17 +1,23 @@
 <template>
   <div class="craft">
-    <h2>工艺管理</h2>
-    <router-link to="/craft/equcraft">设备工艺</router-link>
-    <router-link to="/craft/craftparams">工艺参数</router-link>
+    <router-link to="/craft/equcraft">
+      <el-button plain>设备工艺</el-button>
+    </router-link>
+    <router-link to="/craft/craftparams">
+      <el-button plain>工艺参数</el-button>
+    </router-link>
     <hr/>
     <router-view></router-view>
   </div>
 </template>
 
 <script>
+export default {
 
-
+}
 </script>
 <style scoped>
-
+.craft{
+  margin: 30px;
+}
 </style>

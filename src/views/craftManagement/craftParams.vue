@@ -56,7 +56,7 @@
           ></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" plain @click="submitForm('device_options')"
+          <el-button type="primary" plain @click="submitForm"
             >提交</el-button
           >
           <el-button @click="resetForm('equCraftForm')">重置</el-button>
@@ -67,6 +67,9 @@
 </template>
 <script>
 export default {
+  /**
+   * 该文件目前和设备工艺文件大同小异，对照着写即可。
+   */
   components: {},
   data() {
     return {
@@ -100,7 +103,7 @@ export default {
     };
   },
   methods: {
-    submitForm(equCraftForm) {
+    submitForm() {
       console.log("提交");
     },
     resetForm(equCraftForm) {

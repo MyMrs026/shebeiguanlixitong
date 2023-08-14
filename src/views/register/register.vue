@@ -1,21 +1,21 @@
 <template>
   <div class="register-container">
     <el-card class="register-card">
-      <img src="../../assets/img/return.png" class="el-icon-back" @click="backItem" title="return icon" ></img>
+      <img src="../../assets/img/return.png" class="el-icon-back" @click="backItem" title="return icon"/>
       <h1 class="register-title" style="margin-bottom:40px;">注册</h1>
       <el-form ref="registerForm" :model="registerData">
-        <img src="../../assets/img/my.png" title="user icon" style="width:40px;height:40px;float:left;"></img> 
+        <img src="../../assets/img/my.png" title="user icon" style="width:40px;height:40px;float:left;"/>
         <el-form-item label="用户名" prop="username" >
-          <input class="registername" v-model="registerData.username"></input>
+          <input class="registername" v-model="registerData.username"/>
         </el-form-item>
-        <img src="../../assets/img/pwd.png" title="pwd icon" style="width:40px;height:40px;float:left"></img>
+        <img src="../../assets/img/pwd.png" title="pwd icon" style="width:40px;height:40px;float:left"/>
         <el-form-item label="密 码"  prop="password">
-          <input class="registerpwd" type="password" v-model="registerData.password"></input>
+          <input class="registerpwd" type="password" v-model="registerData.password"/>
         </el-form-item>
-        <img src="../../assets/img/rights.png" title="rights icon" style="width:40px;height:40px;float:left"></img>
+        <img src="../../assets/img/rights.png" title="rights icon" style="width:40px;height:40px;float:left"/>
         <el-form-item label="权 限 " prop="right">
         <select class="registerselect" v-model="value"  style="margin-bottom:10px">
-          <option id="r" v-model="value" disabled selected key="id">请选择您的身份</option>
+          <option id="r" disabled selected key="id">请选择您的身份</option>
           <option
             v-for="item in options"
             :key="item.value"
@@ -37,10 +37,12 @@
 export default {
   data() {
     return {
+      //绑定输入框中的数据
       registerData: {
         username: '',
         password: '',
       },
+      //此处同理应该从后端读数据
       options:[{
         value:'管理员',
         label:'管理员'
@@ -49,7 +51,7 @@ export default {
         label:'普通人员'
       },
     ],
-    value: '',
+    value: '', //输入框身份信息
     };
   },
   methods: {

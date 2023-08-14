@@ -1,9 +1,14 @@
 <script>
-import FullCalendar from '@fullcalendar/vue'
-import dayGridPlugin from '@fullcalendar/daygrid'
-import timeGridPlugin from '@fullcalendar/timegrid'
-import interactionPlugin from '@fullcalendar/interaction'
-import { INITIAL_EVENTS, createEventId } from '../../../common/event-utils.js'
+/** 
+ * 这里对应的设备预订的第一个schedular
+ * 具体的文档"https://fullcalendar.io/"
+ * 后面的Schedular2、3、4同理，由于我没有找到合适的方法所以写了很多个Schedular组件，如果有可能请找到合适的封装方法
+*/
+import FullCalendar from '@fullcalendar/vue'  
+import dayGridPlugin from '@fullcalendar/daygrid' //日程图
+import timeGridPlugin from '@fullcalendar/timegrid'  //里面的时间显示
+import interactionPlugin from '@fullcalendar/interaction' //日程图的一些交互事件，比如说拖拽选择时间
+import { INITIAL_EVENTS, createEventId } from '../../../common/event-utils.js'  //导入日程图的一些事件
 
 export default {
   components: {
@@ -16,15 +21,15 @@ export default {
         plugins: [
           dayGridPlugin,
           timeGridPlugin,
-          interactionPlugin // needed for dateClick
+          interactionPlugin
         ],
         headerToolbar: {
-          left: 'prev,next today',
+          left: 'prev,next today',//进行前后日子选择，以及跳到今天
           center: 'title',
           right: ''
         },
-        initialView: 'timeGridDay',
-        initialEvents: INITIAL_EVENTS, // alternatively, use the `events` setting to fetch from a feed
+        initialView: 'timeGridDay', //以日程图的方式初始化fullcalendar
+        initialEvents: INITIAL_EVENTS, // 初始化事件
         editable: true,
         selectable: true,
         selectMirror: true,
@@ -33,15 +38,9 @@ export default {
         select: this.handleDateSelect,
         eventClick: this.handleEventClick,
         eventsSet: this.handleEvents,
-        locale: "zh-cn",
-        // eventColor:red,
-        /* you can update a remote database when these fire:
-        eventAdd:
-        eventChange:
-        eventRemove:
-        */
-       slotMinTime: '08:00:00',
-       slotMaxTime: '20:00:00'
+        locale: "zh-cn", //使整个日程图以中文的形式输出
+       slotMinTime: '08:00:00', //日程图从几点开始
+       slotMaxTime: '20:00:00' //到几点结束
       },
       currentEvents: []
     }
@@ -53,7 +52,7 @@ export default {
       this.calendarOptions.weekends = !this.calendarOptions.weekends // update a property
     },
 
-    handleDateSelect(selectInfo) {
+    handleDateSelect(selectInfo) { //拖动来新建一个事件
       let title = prompt('请输入新的事件名：')
       let calendarApi = selectInfo.view.calendar
 
@@ -70,7 +69,7 @@ export default {
       }
     },
 
-    handleEventClick(clickInfo) {
+    handleEventClick(clickInfo) { //删除某个事件
       if (confirm(`你确定要删除这个事件吗？ '${clickInfo.event.title}'`)) {
         clickInfo.event.remove()
       }

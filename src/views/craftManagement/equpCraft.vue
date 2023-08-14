@@ -1,13 +1,14 @@
 <template>
   <div>
     {{ message }}
+    <!-- 页面有两个部分组成 -->
+    <!-- 设备工艺表格 -->
     <div class="equcraft_table">
       <el-table
         :data="equCrafts"
         style="width: auto; margin: 10px"
         height="250"
-        border
-      >
+        border>
         <el-table-column fixed prop="deviceName" label="设备名称" width="150">
         </el-table-column>
         <el-table-column prop="deviceType" label="设备型号" width="120">
@@ -21,6 +22,7 @@
       </el-table>
     </div>
     <hr />
+    <!-- 设备工艺设置，只在登录用户为管理员时显示 -->
     <div class="equcraft_form" v-if="this.$store.state.cu_role === 'admin'">
       <el-form label-width="80px" :model="equCraftForm" style="margin: 10px">
         <el-form-item label="设备名称">
@@ -64,38 +66,45 @@
   </div>
 </template>
 <script>
+/**
+ * 工艺管理页面中的设备工艺子页面
+ */
 export default {
   components: {},
   data() {
     return {
       message: "设备工艺",
-      equCrafts: [],
-      equCraftForm: {
+      equCrafts: [],//目前从vuex中写死，后续从axios中导入
+      equCraftForm: { //表单中的内容传入到这
         deviceName: "",
         deviceType: "",
         size: "",
         weight: "",
         power: "",
       },
-      device_options: [
+      device_options: [ //目前写死，后期也是从数据库中导入
         {
           value: "选项1",
           label: "ASE",
         },
         {
           value: "选项2",
-          label: "ASF",
+          label: "OEA",
         },
         {
           value: "选项3",
-          label: "ASG",
+          label: "DTP",
         },
         {
           value: "选项4",
-          label: "ASP",
+          label: "MKI",
+        },
+        {
+          value: "选项5",
+          label: "OSD",
         },
       ],
-      value: "",
+      value: "", //绑定设备的名称
     };
   },
   methods: {
@@ -107,6 +116,7 @@ export default {
     }
   },
   created() {
+    //此处写的应该是axios传出来的promise函数，参照其他文件
     this.equCrafts = this.$store.state.equCrafts;
     console.log(this.equCrafts);
   },

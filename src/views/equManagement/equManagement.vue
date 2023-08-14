@@ -1,5 +1,7 @@
 <template>
   <div class="equp-container">
+    <!-- 由五个部分组成，对应网页中五个带边框的div -->
+    <!-- 第一部分：使用设备，通过搜索框对已有的设备进行检索，点击即可进行使用 -->
     <div class="centered-div" id="part1">
       <div>
         <p>使用的设备</p>
@@ -23,6 +25,7 @@
                 <el-table-column prop="deviceFunc" label="功能"></el-table-column>
                 <el-table-column prop="lab.labName" label="实验室"></el-table-column>
               </el-table>
+              <!-- 分页显示，为了应对庞大数据量的情况 -->
               <el-pagination
                 @size-change="handlePageSizeChange"
                 @current-change="handleCurrentPageChange"
@@ -33,6 +36,7 @@
                 :total="equps.length"
               ></el-pagination> 
             </div>
+            <!-- 搜索结果也已一个表格的形式进行显示，把上面的表格进行隐藏即可 -->
             <div ref="tab2" class="search-area">
               <el-table v-if="searchResult.length > 0" :data="searchResult" style="width: 100%">
                 <el-table-column prop="deviceName" label="姓名"></el-table-column>
@@ -45,6 +49,7 @@
         </el-row>
       </div>
     </div>
+    <!-- 第二部分：所有被使用的设备的情况，目前是写死的，后期数据从数据库进行读取 -->
     <div class="centered-div" id="part2">
       <div style="margin-left: 6px;">
         <p>被使用的设备情况</p>
@@ -52,7 +57,7 @@
 
       <div class="table-equ-use">
         <template>
-          <el-table border :data="tableData1" class="table-equ" :row-class-name="tableRowClassName">
+          <el-table border :data="equpsUse" class="table-equ" :row-class-name="tableRowClassName">
             <el-table-column prop="equp" label="设备名" width="180">
             </el-table-column>
             <el-table-column prop="status" label="使用情况" width="100">
@@ -69,13 +74,14 @@
         </template>
       </div>
     </div>
+    <!-- 第三部分：所有设备的状态表 -->
     <div class="centered-div" id="part3">
       <div class="text-home">
         <p>设备使用状态</p>
       </div>
       <div class="table-dch-use">
         <template>
-          <el-table border :data="tableData3" class="table-dch" :row-class-name="getRowClassName">
+          <el-table border :data="equpsStatus" class="table-dch" :row-class-name="getRowClassName">
             <el-table-column prop="equp" label="设备名" width="300">
             </el-table-column>
             <el-table-column prop="status" label="状态" width="200">
@@ -88,10 +94,12 @@
         </template>
       </div>
     </div>
-    <div class="centered-div">
+    <!-- 第四部分：设备列表 -->
+    <div class="centered-div" id="part4">
       <equList></equList>
     </div>
-    <div class="centered-div">
+    <!-- 第五部分：设备维修模块 -->
+    <div class="centered-div" id="part5">
       <equMaintain></equMaintain>
     </div>
   </div>
@@ -100,6 +108,7 @@
 <script>
 import equList from '../equList/equList'
 import equMaintain from '../equManagement/equMaintain.vue'
+
 import { getEquList } from '../../network/equpment';
 export default {
   components:{
@@ -108,88 +117,32 @@ export default {
   },  
   data() {
     return {
-      tableData1: [{
-        equp: 'ASE',
-        status: 'Open',
-        user: 'ansimon',
-        org: 'KU-Rekvisition 6516-00638',
-        starttime: '2016-11-10 17:30:03',
-        endtime: '2016-11-10 19:49:21'
-      }, {
-        equp: 'ASE',
-        status: 'Open',
-        user: 'ansimon',
-        org: 'KU-Rekvisition 6516-00638',
-        starttime: '2016-11-10 17:30:03',
-        endtime: '2016-11-10 19:49:21'
-      }, {
-        equp: 'ASE',
-        status: 'Open',
-        user: 'ansimon',
-        org: 'KU-Rekvisition 6516-00638',
-        starttime: '2016-11-10 17:30:03',
-        endtime: '2016-11-10 19:49:21'
-      }, {
-        equp: 'ASE',
-        status: 'Open',
-        user: 'ansimon',
-        org: 'KU-Rekvisition 6516-00638',
-        starttime: '2016-11-10 17:30:03',
-        endtime: '2016-11-10 19:49:21'
-      }],
+      equpsUse: [],
       equps: [],
-      currentPage: 1,
+      currentPage: 1,//part1分页功能中当前的页码
       pageSize: 5,
-      searchKeyword: '',
-      searchResult: [],
-      tableData3: [{
-        equp: '7-up(masks)',
-        status: 'Out of use',
-        expected: 'Not set',
-        statuslog: 'still not working'
-      },
-      {
-        equp: '7-up 6"',
-        status: 'Out of use',
-        expected: 'Not set',
-        statuslog: 'Is being decommissioned'
-      },
-      {
-        equp: 'ALD Picosun R200',
-        status: 'Limited use',
-        expected: '11-11-2016',
-        statuslog: 'no DEZ;TiO2 and AI2O3 are fine'
-      },
-      {
-        equp: 'Aligner',
-        status: 'Limited use',
-        expected: '11-11-2016',
-        statuslog: 'Intensity low,max power'
-      },
-      {
-        equp: 'ICP Metal Etch',
-        status: 'Being Serviced',
-        expected: '14-11-2016',
-        statuslog: 'Yearly service by SPTS 1 of 3'
-      },
-    ],
+      searchKeyword: '',//part1输入框中的内容
+      searchResult: [],//part1搜索结果存放的数组
+      equpsStatus: [],
     }
   },
   computed : {
-    pageData() {
+    pageData() { //搜索得到的数据
       const startIndex = (this.currentPage - 1) * this.pageSize
       const endIndex = startIndex + this.pageSize
       return this.equps.slice(startIndex, endIndex)
     },
-    isButtonDisabled() {
+    isButtonDisabled() { //当输入框中没内容时候设置搜索按钮为不可点击
       return this.searchKeyword === '';
     }
   },  
   created () {
     getEquList().then(res => {
-      console.log(res.data);
+      // console.log(res.data);
       this.equps = res.data
-    })
+    }),
+    this.equpsUse = this.$store.state.equpsUse
+    this.equpsStatus = this.$store.state.equpsStatus
   }, 
   methods: {
     tableRowClassName({ row, rowIndex }) { //表格灰黑相间
@@ -200,25 +153,25 @@ export default {
       }
       return '';
     },
-    handlePageSizeChange(pageSize) {
+    handlePageSizeChange(pageSize) { //part1翻页功能
       this.pageSize = pageSize
     },
-    handleCurrentPageChange(currentPage) {
+    handleCurrentPageChange(currentPage) { //part1当前页码显示切换
       this.currentPage = currentPage
     },
-    handleSearch() {
+    handleSearch() { //对part1的两个表个显示和隐藏进行切换
       this.searchResult = this.equps.filter(equp => {
         return equp.deviceName.toLowerCase().includes(this.searchKeyword.toLowerCase())
       })
       this.$refs.tab1.style.display = 'none';
       this.$refs.tab2.style.display = 'block';
     },
-    getRowClassName({row,rowIndex}) {
-      if ((row.status) === 'Out of use') {
+    getRowClassName({row,rowIndex}) { //part3 红黄灰三种颜色进行切换
+      if ((row.status) === '不在使用中') {
         return 'red-row';
-      } else if ((row.status) === 'Limited use') {
+      } else if ((row.status) === '限制使用') {
         return 'yellow-row';
-      } else if ((row.status) === 'Being Serviced') {
+      } else if ((row.status) === '正在使用') {
         return 'gray-row';
       }
       return '';

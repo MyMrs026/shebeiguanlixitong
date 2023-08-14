@@ -37,7 +37,7 @@
         </el-form-item>
         <el-form-item label="实验室">
           <el-select v-model="newLabId" placeholder="选择实验室">
-            <el-option v-for="item in labinform" :key="labinform.labId" :label="item.labName" :value="item.labId">
+            <el-option v-for="item in labinform" :key="item.labId" :label="item.labName" :value="item.labId">
             </el-option>
           </el-select>
         </el-form-item>
@@ -67,7 +67,6 @@ export default {
       newDeviceTypeId: 1,
       newLabId: 1,
       newUuid: '',
-
     }
   },
   methods: {
@@ -77,7 +76,6 @@ export default {
       }).catch(error => {
         console.error(error);
       })
-      // console.log(this.newDeviceName,this.newDeviceFunc,this.newDeviceTypeId,this.newLabId,this.newUuid);
     },
   },
   created() {

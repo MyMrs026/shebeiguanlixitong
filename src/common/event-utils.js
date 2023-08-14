@@ -1,3 +1,6 @@
+/**
+*该文件的作用是schedular的一些事件
+*/
 let eventGuid = 0
 let todayStr = new Date().toISOString().replace(/T.*$/, '') // YYYY-MM-DD of today
 
@@ -52,6 +55,34 @@ export const INITIAL_EVENTS3 = [
     title:'设备MOX的使用',
     start: new Date().toISOString().replace(/T.*$/, '') + 'T13:00:00',
     end: new Date().toISOString().replace(/T.*$/, '') + 'T15:00:00'
+  }
+]
+
+export const INITIAL_EVENTS4 = [
+  {
+    id: createEventId(),
+    title: '全天的事件',
+    start: todayStr
+  },
+  {
+    id: createEventId(),
+    title: '实验室相关知识培训',
+    start: todayStr + 'T08:00:00',
+    end: todayStr + 'T11:30:00'
+  }
+]
+
+export const INITIAL_EVENTS5 = [
+  {
+    id: createEventId(),
+    title: '全天的事件',
+    start: todayStr
+  },
+  {
+    id: createEventId(),
+    title: '实验室相关知识培训',
+    start: todayStr + 'T08:00:00',
+    end: todayStr + 'T11:30:00'
   }
 ]
 
