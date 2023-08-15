@@ -1644,7 +1644,46 @@ const state = {
       `
     },
   ],
-
+  
+  //项目列表
+  proData: [{
+    id: '1',
+    name: '项目一',
+    category: 'Ⅰ类',
+    desc: '本项目是一个普通项目',
+    equp: 'ASE',
+    purpose: '目的一',
+    member: '张三',
+    leader: '张三',
+  }, {
+    id: '2',
+    name: '项目二',
+    category: 'Ⅰ类',
+    desc: '本项目是一个不普通项目',
+    equp: 'AWM',
+    purpose: '目的二',
+    member: '李四、王五',
+    leader: '李四',
+  }, {
+    id: '3',
+    name: '项目三',
+    category: 'Ⅱ类',
+    desc: '本项目是一个省级项目',
+    equp: 'AOPU',
+    purpose: '目的三',
+    member: '小明、小张、小亮',
+    leader: '小明',
+  }, {
+    id: '4',
+    name: '项目四',
+    category: 'Ⅲ类',
+    desc: '本项目是一个国家级项目',
+    equp: 'OOPEE',
+    purpose: '目的四',
+    member: '王浩、张伟、李鹏',
+    leader: '王浩',
+  }],
+  
   // 设备使用表
   equpsUse:[
     {

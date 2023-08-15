@@ -18,6 +18,7 @@ const OrganizationInfo = () => import('../views/organizationInfo/organizationInf
 const Craft = () => import('@/views/craftManagement/craftManagement')
 const Equcraft = () => import('../views/craftManagement/equpCraft.vue')
 const Craftparams = () => import('../views/craftManagement/craftParams.vue')
+const Help = () =>import('../views/helpPage/help.vue')
 
 const Login = () => import('@/views/login/index.vue')
 const Register = () => import('@/views/register/register.vue')
@@ -117,6 +118,11 @@ const routes = [
     path: '/personalInfo',
     name: 'PersonalInfo',
     component: PersonalInfo
+  },
+  {
+    path: '/help',
+    name: 'Help',
+    component: Help
   },
   {
     path: '/organizationInfo',

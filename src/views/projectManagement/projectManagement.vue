@@ -110,7 +110,7 @@
 </template>
 
 <script>
-
+import { getEquList } from '../../network/equpment'
 export default {
   data() {
     return {
@@ -127,43 +127,7 @@ export default {
       }],
       value: 'Ⅰ类', // 默认的项目的类别
       // 所有项目的信息，也是写死的
-      proData: [{
-        id: '100001',
-        name: '项目一',
-        category: 'Ⅰ类',
-        desc: '本项目是一个普通项目',
-        equp: 'ASE',
-        purpose: '目的一',
-        member: '张三',
-        leader: '张三',
-      }, {
-        id: '100002',
-        name: '项目二',
-        category: 'Ⅰ类',
-        desc: '本项目是一个不普通项目',
-        equp: 'AWM',
-        purpose: '目的二',
-        member: '李四、王五',
-        leader: '李四',
-      }, {
-        id: '100003',
-        name: '项目三',
-        category: 'Ⅱ类',
-        desc: '本项目是一个省级项目',
-        equp: 'AOPU',
-        purpose: '目的三',
-        member: '小明、小张、小亮',
-        leader: '小明',
-      }, {
-        id: '100004',
-        name: '项目四',
-        category: 'Ⅲ类',
-        desc: '本项目是一个国家级项目',
-        equp: 'OOPEE',
-        purpose: '目的四',
-        member: '王浩、张伟、李鹏',
-        leader: '王浩',
-      }],
+      proData: [],
       pro_equps:[], //实验设备选择器绑定的设备列表
       ruleForm: { //表单绑定的数据信息，写完后传到这里
         id:'',
@@ -211,6 +175,9 @@ export default {
     getEquList().then(res => {
       this.pro_equps = res.data
     })
+  },
+  mounted() {
+   
   },
   computed: {
     //这里是上半部分通过选择项目类别筛选出所显示的项目

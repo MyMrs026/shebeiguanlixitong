@@ -17,7 +17,8 @@
         </el-col>
         <el-col :span="6">
           <div>
-            <input class="search-box" placeholder="请输入已有项目" v-model="input" clearable />
+            <label for="project">项目:</label>
+            <input type="text" id="project" class="search-box" :value="getProject" clearable />
           </div>
 
         </el-col>
@@ -26,7 +27,9 @@
         </el-col>
         <el-col :span="1">
           <div class="help-box">
-            <i class="icon-help el-icon-question"></i>
+            <router-link to="/help">
+              <i class="icon-help el-icon-question"></i>
+            </router-link>
           </div>
         </el-col>
         <el-col :span="1">
@@ -156,13 +159,14 @@
 export default {
   data() {
     return {
+      projects:[],
       drawerVisible: false,
       activeNames: [], // 控制顶层折叠面板的展开状态
       activeSubNames: [], // 控制子面板的展开状态
-      input: '',
       showNavbar: false, // 导航栏是否可见
       isShowDrawer: true,
       Drawer: false,
+      proData: [],//项目列表
     }
   },
   methods: {
@@ -182,6 +186,10 @@ export default {
       this.Drawer = false
     }
 
+  },
+  mounted() {
+    this.proData = this.$store.state.proData
+    this.projects = this.proData.map(item=>item.name)
   }
 }
 </script>

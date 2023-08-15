@@ -134,6 +134,7 @@ export default {
   },
 };
 </script>
+
 <style scoped>
 .book-container {
   display: flex;
