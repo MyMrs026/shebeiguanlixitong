@@ -131,7 +131,7 @@ export default {
   methods: {
     //跳转到公告信息详细的页面
     gotoNoticeDetail(id) {
-      this.$router.push("/notice/" + id);
+      this.$router.push('/notice/' + id);
     },
     updatePagination() {
       this.currentPage = 1;

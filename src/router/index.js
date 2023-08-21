@@ -26,6 +26,7 @@ const Error = () => import('../components/common/error/Error.vue')
 
 const Notice = () => import('../views/notice/notice')
 const NoticeDetail = () => import('../views/notice/noticeDetail.vue')
+
 const Message = () => import('../views/message/message')
 const MessageDetail = () => import('../views/message/messageDetail.vue')
 const TrainBooksDetail = () => import('../views/message/trainBooksDetail.vue')
