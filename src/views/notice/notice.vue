@@ -5,7 +5,7 @@
       <div class="box-main">
         <div class="right-box-main" frag="面板6">
           <div frag="窗口6" portletmode="simpleColumnAttri">
-            <h2 class="catalog_title">公告</h2>
+            <h3 class="catalog_title">公告</h3>
           </div>
           <div frag="窗口8"></div>
           <div class="right_content" frag="窗口7" portletmode="simpleList">
@@ -131,7 +131,7 @@ export default {
   methods: {
     //跳转到公告信息详细的页面
     gotoNoticeDetail(id) {
-      this.$router.push("/notice/" + id);
+      this.$router.push('/notice/' + id);
     },
     updatePagination() {
       this.currentPage = 1;

@@ -51,7 +51,14 @@
           </div>
           <div class="schedular-area" v-if="isShow3">
             <!-- 同样道理 -->
-            <p style="margin: 10px">选择新设备</p>
+            <el-select v-model="newEqup" placeholder="请选择新设备" style="width: auto;">
+              <el-option
+                v-for="item in device_options"
+                :key="item.value"
+                :label="item.label"
+                :newEqup="item.value">
+              </el-option>
+            </el-select>
             <Schedular3 />
           </div>
         </el-col>
@@ -62,7 +69,7 @@
 
 <script>
 import Schedular from "../../components/common/schedular/Schedular.vue";
-import Schedular2 from "../../components/common/schedular/Schedular2.vue"
+import Schedular2 from "../../components/common/schedular/Schedular2.vue";
 import Schedular3 from "../../components/common/schedular/Schedular3.vue";
 export default {
   components: {
@@ -77,32 +84,59 @@ export default {
         disabledDate(time) {
           return time.getTime() > Date.now();
         },
-        shortcuts: [{
-          text: '今天',
-          onClick(picker) {
-            picker.$emit('pick', new Date());
-          }
-        }, {
-          text: '昨天',
-          onClick(picker) {
-            const date = new Date();
-            date.setTime(date.getTime() - 3600 * 1000 * 24);
-            picker.$emit('pick', date);
-          }
-        }, {
-          text: '一周前',
-          onClick(picker) {
-            const date = new Date();
-            date.setTime(date.getTime() - 3600 * 1000 * 24 * 7);
-            picker.$emit('pick', date);
-          }
-        }]
+        shortcuts: [
+          {
+            text: "今天",
+            onClick(picker) {
+              picker.$emit("pick", new Date());
+            },
+          },
+          {
+            text: "昨天",
+            onClick(picker) {
+              const date = new Date();
+              date.setTime(date.getTime() - 3600 * 1000 * 24);
+              picker.$emit("pick", date);
+            },
+          },
+          {
+            text: "一周前",
+            onClick(picker) {
+              const date = new Date();
+              date.setTime(date.getTime() - 3600 * 1000 * 24 * 7);
+              picker.$emit("pick", date);
+            },
+          },
+        ],
       },
-      value1: "",//日期选择器传回来的数据
+      value1: "", //日期选择器传回来的数据
       //日程表是否显示
       isShow1: true,
       isShow2: true,
       isShow3: true,
+      newEqup:"",
+      device_options: [ //目前写死，后期也是从数据库中导入
+        {
+          value: "选项1",
+          label: "ASE",
+        },
+        {
+          value: "选项2",
+          label: "OEA",
+        },
+        {
+          value: "选项3",
+          label: "DTP",
+        },
+        {
+          value: "选项4",
+          label: "MKI",
+        },
+        {
+          value: "选项5",
+          label: "OSD",
+        },
+      ],
     };
   },
   computed: {
@@ -134,6 +168,7 @@ export default {
   },
 };
 </script>
+
 <style scoped>
 .book-container {
   display: flex;

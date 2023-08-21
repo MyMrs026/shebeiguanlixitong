@@ -17,16 +17,18 @@
         </el-col>
         <el-col :span="6">
           <div>
-            <input class="search-box" placeholder="请输入已有项目" v-model="input" clearable />
+            <input type="text" id="project" placeholder="输入已有项目" class="search-box" :value="getProject" clearable />
           </div>
 
         </el-col>
-        <el-col :span="1">
+        <!-- <el-col :span="1">
           <i class="el-icon-search"></i>
-        </el-col>
-        <el-col :span="1">
+        </el-col> -->
+        <el-col :span="2">
           <div class="help-box">
-            <i class="icon-help el-icon-question"></i>
+            <router-link to="/help">
+              <i class="icon-help el-icon-question"></i>
+            </router-link>
           </div>
         </el-col>
         <el-col :span="1">
@@ -114,7 +116,7 @@
           </el-submenu>
           <!-- 账户 -->
           <el-submenu index="4">
-            <div slot="title" class="firstly">账户</div>
+            <div slot="title" class="firstly">用户</div>
             <router-link to="/personalInfo">
               <el-menu-item index="4-1" class="secondly">编辑信息</el-menu-item>
             </router-link>
@@ -156,13 +158,15 @@
 export default {
   data() {
     return {
+      projects:[],
       drawerVisible: false,
       activeNames: [], // 控制顶层折叠面板的展开状态
       activeSubNames: [], // 控制子面板的展开状态
-      input: '',
       showNavbar: false, // 导航栏是否可见
       isShowDrawer: true,
       Drawer: false,
+      proData: [],//项目列表
+      getProject:"",
     }
   },
   methods: {
@@ -182,6 +186,10 @@ export default {
       this.Drawer = false
     }
 
+  },
+  mounted() {
+    this.proData = this.$store.state.proData
+    this.projects = this.proData.map(item=>item.name)
   }
 }
 </script>
@@ -189,7 +197,7 @@ export default {
 <style scoped>
 .navbar-container {
   height:110px;
-}
+} 
 .tabbar {
   background-image: url("../../../assets/img/tabbar2.jpg");
   width: 100%;

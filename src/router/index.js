@@ -18,6 +18,7 @@ const OrganizationInfo = () => import('../views/organizationInfo/organizationInf
 const Craft = () => import('@/views/craftManagement/craftManagement')
 const Equcraft = () => import('../views/craftManagement/equpCraft.vue')
 const Craftparams = () => import('../views/craftManagement/craftParams.vue')
+const Help = () =>import('../views/helpPage/help.vue')
 
 const Login = () => import('@/views/login/index.vue')
 const Register = () => import('@/views/register/register.vue')
@@ -25,6 +26,7 @@ const Error = () => import('../components/common/error/Error.vue')
 
 const Notice = () => import('../views/notice/notice')
 const NoticeDetail = () => import('../views/notice/noticeDetail.vue')
+
 const Message = () => import('../views/message/message')
 const MessageDetail = () => import('../views/message/messageDetail.vue')
 const TrainBooksDetail = () => import('../views/message/trainBooksDetail.vue')
@@ -117,6 +119,11 @@ const routes = [
     path: '/personalInfo',
     name: 'PersonalInfo',
     component: PersonalInfo
+  },
+  {
+    path: '/help',
+    name: 'Help',
+    component: Help
   },
   {
     path: '/organizationInfo',
