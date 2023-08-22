@@ -221,6 +221,7 @@ export default {
   border-bottom-style: solid;
   height:35px;
   outline:none;
+  width: 205px;
 }
 
 #password {
@@ -230,6 +231,7 @@ export default {
   border-bottom-style: solid;
   height:35px;
   outline:none;
+  width: 205px;
 }
 
 #select {

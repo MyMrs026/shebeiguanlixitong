@@ -117,6 +117,10 @@
           <!-- 账户 -->
           <el-submenu index="4">
             <div slot="title" class="firstly">用户</div>
+            <router-link to="/informationDisplay">
+              <el-menu-item index="4-4" class="secondly">信息展示</el-menu-item>
+            </router-link>
+
             <router-link to="/personalInfo">
               <el-menu-item index="4-1" class="secondly">编辑信息</el-menu-item>
             </router-link>
