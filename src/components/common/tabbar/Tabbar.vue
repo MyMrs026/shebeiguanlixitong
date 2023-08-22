@@ -135,9 +135,11 @@
           </el-submenu>
           <!-- 商城 -->
           <el-submenu index="6">
-            <div slot="title" class="firstly">商城</div>
-            <el-menu-item @click="closeDrawer" index="6-1" class="secondly">硅晶片</el-menu-item>
-            <el-menu-item @click="closeDrawer" index="6-2" class="secondly">金属</el-menu-item>
+            <div slot="title" class="firstly">商品</div>
+            <router-link to="/goods">
+              <el-menu-item @click="closeDrawer" index="6-1" class="secondly">商品分类</el-menu-item>
+            </router-link>
+            <el-menu-item @click="closeDrawer" index="6-2" class="secondly">商品详情</el-menu-item>
           </el-submenu>
           <!-- 进程信息 -->
           <el-submenu index="7">
