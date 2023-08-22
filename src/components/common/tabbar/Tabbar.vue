@@ -17,16 +17,18 @@
         </el-col>
         <el-col :span="6">
           <div>
-            <input class="search-box" placeholder="请输入已有项目" v-model="input" clearable />
+            <input type="text" id="project" placeholder="输入已有项目" class="search-box" :value="getProject" clearable />
           </div>
 
         </el-col>
-        <el-col :span="1">
+        <!-- <el-col :span="1">
           <i class="el-icon-search"></i>
-        </el-col>
-        <el-col :span="1">
+        </el-col> -->
+        <el-col :span="2">
           <div class="help-box">
-            <i class="icon-help el-icon-question"></i>
+            <router-link to="/help">
+              <i class="icon-help el-icon-question"></i>
+            </router-link>
           </div>
         </el-col>
         <el-col :span="1">
@@ -118,6 +120,7 @@
             <router-link to="/informationDisplay">
               <el-menu-item index="4-4" class="secondly">信息展示</el-menu-item>
             </router-link>
+
             <router-link to="/personalInfo">
               <el-menu-item index="4-1" class="secondly">编辑信息</el-menu-item>
             </router-link>
@@ -136,9 +139,11 @@
           </el-submenu>
           <!-- 商城 -->
           <el-submenu index="6">
-            <div slot="title" class="firstly">商城</div>
-            <el-menu-item @click="closeDrawer" index="6-1" class="secondly">硅晶片</el-menu-item>
-            <el-menu-item @click="closeDrawer" index="6-2" class="secondly">金属</el-menu-item>
+            <div slot="title" class="firstly">商品</div>
+            <router-link to="/goods">
+              <el-menu-item @click="closeDrawer" index="6-1" class="secondly">商品分类</el-menu-item>
+            </router-link>
+            <el-menu-item @click="closeDrawer" index="6-2" class="secondly">商品详情</el-menu-item>
           </el-submenu>
           <!-- 进程信息 -->
           <el-submenu index="7">
@@ -159,13 +164,15 @@
 export default {
   data() {
     return {
+      projects:[],
       drawerVisible: false,
       activeNames: [], // 控制顶层折叠面板的展开状态
       activeSubNames: [], // 控制子面板的展开状态
-      input: '',
       showNavbar: false, // 导航栏是否可见
       isShowDrawer: true,
       Drawer: false,
+      proData: [],//项目列表
+      getProject:"",
     }
   },
   methods: {
@@ -185,6 +192,10 @@ export default {
       this.Drawer = false
     }
 
+  },
+  mounted() {
+    this.proData = this.$store.state.proData
+    this.projects = this.proData.map(item=>item.name)
   }
 }
 </script>
@@ -192,7 +203,7 @@ export default {
 <style scoped>
 .navbar-container {
   height:110px;
-}
+} 
 .tabbar {
   background-image: url("../../../assets/img/tabbar2.jpg");
   width: 100%;

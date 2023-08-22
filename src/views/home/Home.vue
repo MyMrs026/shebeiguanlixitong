@@ -137,6 +137,7 @@ export default {
       equpsStatus: [],
       notice: {}, //公告信息，用来接收从axios传过来的公告信息
       MaintainData: [], //设备维保记录
+     
     };
   },
   methods: {
@@ -180,6 +181,7 @@ export default {
   },
   mounted() {
     this.MaintainData = this.$store.state.MaintainData;
+    this.proData = this.$store.state.proData;
   },
 };
 </script>

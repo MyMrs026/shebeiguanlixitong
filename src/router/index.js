@@ -19,6 +19,11 @@ const OrganizationInfo = () => import('../views/organizationInfo/organizationInf
 const Craft = () => import('@/views/craftManagement/craftManagement')
 const Equcraft = () => import('../views/craftManagement/equpCraft.vue')
 const Craftparams = () => import('../views/craftManagement/craftParams.vue')
+const Help = () =>import('../views/helpPage/help.vue')
+
+const Goods = () => import('../views/goods/goodsPage.vue')
+const Goodscategory = () => import('../views/goods/goodsCategory.vue')
+const Goodsdetails = () => import('../views/goods/goodsDetails.vue')
 
 const Login = () => import('@/views/login/index.vue')
 const Register = () => import('@/views/register/register.vue')
@@ -26,6 +31,7 @@ const Error = () => import('../components/common/error/Error.vue')
 
 const Notice = () => import('../views/notice/notice')
 const NoticeDetail = () => import('../views/notice/noticeDetail.vue')
+
 const Message = () => import('../views/message/message')
 const MessageDetail = () => import('../views/message/messageDetail.vue')
 const TrainBooksDetail = () => import('../views/message/trainBooksDetail.vue')
@@ -120,6 +126,11 @@ const routes = [
     component: PersonalInfo
   },
   {
+    path: '/help',
+    name: 'Help',
+    component: Help
+  },
+  {
     path: '/organizationInfo',
     name: 'OrganizationInfo',
     component: OrganizationInfo
@@ -153,6 +164,22 @@ const routes = [
     path: '/informationDisplay',
     name: 'InformationDisplay',
     component: InformationDisplay
+    path:'/goods',
+    name:'Goods',
+    component:Goods,
+    redirect:'/goods/category',
+    children: [{
+      //子路由
+      path: '/goods/category',
+      name: 'Goodscategory',
+      component: Goodscategory
+    },
+    {
+      path: '/goods/details',
+      name: 'Goodsdetails',
+      component: Goodsdetails
+    }
+    ]
   }
 ]
 const router = new Router({
