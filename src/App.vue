@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <div class="logo"></div>
     <tabbar v-if="isShowTabbar"/>
     <router-view/>
   </div>
@@ -30,5 +31,8 @@ export default {
     margin-left: 10px;
     margin-right: 10px;
     background-color: black;
+  }
+  .logo { 
+    background-image: url("./assets/img/logo.jpg");
   }
 </style>

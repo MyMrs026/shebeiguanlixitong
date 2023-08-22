@@ -20,6 +20,10 @@ const Equcraft = () => import('../views/craftManagement/equpCraft.vue')
 const Craftparams = () => import('../views/craftManagement/craftParams.vue')
 const Help = () =>import('../views/helpPage/help.vue')
 
+const Goods = () => import('../views/goods/goodsPage.vue')
+const Goodscategory = () => import('../views/goods/goodsCategory.vue')
+const Goodsdetails = () => import('../views/goods/goodsDetails.vue')
+
 const Login = () => import('@/views/login/index.vue')
 const Register = () => import('@/views/register/register.vue')
 const Error = () => import('../components/common/error/Error.vue')
@@ -154,6 +158,24 @@ const routes = [
     path: '/trainBook/:id',
     name: 'TrainBooksDetail',
     component: TrainBooksDetail
+  },
+  {
+    path:'/goods',
+    name:'Goods',
+    component:Goods,
+    redirect:'/goods/category',
+    children: [{
+      //子路由
+      path: '/goods/category',
+      name: 'Goodscategory',
+      component: Goodscategory
+    },
+    {
+      path: '/goods/details',
+      name: 'Goodsdetails',
+      component: Goodsdetails
+    }
+    ]
   }
 ]
 const router = new Router({
