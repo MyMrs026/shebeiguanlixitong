@@ -191,7 +191,7 @@ export default {
 .text-area {
   opacity: 0.8;
   margin-left: 20px;
-  width: 95%;
+  width: 94.5%;
   background-color: rgb(255, 253, 253);
   border: 1px solid #000;
   border-radius: 3px;

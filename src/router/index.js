@@ -13,6 +13,7 @@ const System = () => import('../views/systemManagement/systemManagement')
 const Test = () => import('../views/testingTasks/testingTasks.vue')
 const LabInform = () => import('../views/labInformation/labInformation.vue')
 const EquList = () => import('../views/equList/equList.vue')
+const InformationDisplay = () => import('../views/informationDisplay/informationDisplay.vue')
 const PersonalInfo = () => import('../views/personalInfo/personalInfo.vue')
 const OrganizationInfo = () => import('../views/organizationInfo/organizationInfo.vue')
 const Craft = () => import('@/views/craftManagement/craftManagement')
@@ -147,6 +148,11 @@ const routes = [
     path: '/trainBook/:id',
     name: 'TrainBooksDetail',
     component: TrainBooksDetail
+  },
+  {
+    path: '/informationDisplay',
+    name: 'InformationDisplay',
+    component: InformationDisplay
   }
 ]
 const router = new Router({
