@@ -1,26 +1,26 @@
 <template>
   <div>
-    <div
-      class="equMaintainRecord"
-      v-if="this.$store.state.cu_role==='admin'"
-    >
-      <h2>设备维保记录</h2>
+    <div class="equMaintainRecord" v-if="this.$store.state.cu_role==='admin'">
+      <div class="text-home">
+      <p>设备维保记录</p>
+      </div>
       <el-table
         :data="MaintainData"
         height="250"
         border
-        style="width: 100%"
+        style="width: 96%;border: 1px solid rgb(255, 255, 255);
+  border-radius: 8px;margin:30px;"
       >
         <el-table-column
           prop="deviceMaintenanceId"
           label="设备维修ID"
-          width="180"
+          width="100"
         >
         </el-table-column>
         <el-table-column
           prop="deviceId"
           label="设备ID"
-          width="180"
+          width="100"
         >
         </el-table-column>
         <el-table-column
@@ -63,16 +63,18 @@
       class="equMaintainRegistration"
       v-if="this.$store.state.cu_role==='admin'"
     >
-      <h2>设备维保登记</h2>
+    <div class="text-home">
+      <p>设备维保登记</p>
+    </div>
       <el-form
         :label-position="labelPosition"
         label-width="150px"
         :model="equMaintainRegis"
       >
-        <el-form-item label="设备维修ID">
+        <el-form-item label="设备维修ID" >
           <el-input v-model="equMaintainRegis.deviceMaintenanceId"></el-input>
         </el-form-item>
-        <el-form-item label="设备ID">
+        <el-form-item label="设备ID" >
           <el-input v-model="equMaintainRegis.deviceId"></el-input>
         </el-form-item>
         <el-form-item label="维修内容">
@@ -113,7 +115,9 @@
       class="equMaintainModify"
       v-if="this.$store.state.cu_role==='admin'"
     >
-      <h2>设备维保登记修改</h2>
+    <div class="text-home">
+      <p>设备维保登记修改</p>
+    </div>
       <el-form
         :label-position="labelPosition"
         label-width="150px"
@@ -187,23 +191,43 @@ export default {
 <style scoped>
 .equMaintainRecord {
   margin: 10px;
-  border: 1px solid black;
-  border-radius: 8px;
-  width: 80%;
+  /* border: 1px solid rgb(255, 255, 255);
+  border-radius: 8px; */
+  width: 95%;
   height: auto;
 }
 .equMaintainRegistration {
   margin: 10px;
-  border: 1px solid black;
-  border-radius: 8px;
-  width: 80%;
+  /* border: 1px solid rgb(255, 255, 255);
+  border-radius: 8px; */
+  width: 45%;
   height: auto;
+  float:left;
 }
 .equMaintainModify {
   margin: 10px;
-  border: 1px solid black;
-  border-radius: 8px;
-  width: 80%;
+  margin-left:40px;
+  /* border: 1px solid rgb(255, 255, 255);
+  border-radius: 8px; */
+  width: 45%;
   height: auto;
+  float:left;
 }
+.text-home {
+  margin-top: 0px;
+  margin-left: 30px;
+  line-height: 55px;
+  font-size: 20px;
+  color:aliceblue;
+  background-image: url("../../assets/img/s-titlebg.png");
+  background-repeat: no-repeat;
+}
+div /deep/ .el-form-item__label{
+  color:white;
+}
+div /deep/ .el-button.el-button--primary{
+  background-color:rgb(134, 167, 224);
+  border-color:rgb(134, 167, 224);
+  margin-left: 150px;
+} 
 </style>

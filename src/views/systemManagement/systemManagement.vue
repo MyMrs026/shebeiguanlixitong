@@ -1,8 +1,12 @@
 <template>
-  <div>
+<div class="bg">
+  <div class="lab-bg">
+    <div style="height=30px">
+      <br />
+    </div>
     <!-- 实验室信息管理，后续实验室的名字应该做成下拉列表，这样可以改变指定的实验室 -->
     <div class="lab">
-      实验室信息管理
+      <div class="text-home">实验室信息管理</div>
       <el-form :label-position="labelPosition" label-width="200px" :model="formLabelAlign">
         <el-form-item label="实验室名称">
           <el-input v-model="formLabelAlign.name" style="width: 300px;"></el-input>
@@ -21,9 +25,11 @@
         </el-form-item>
       </el-form>
     </div>
+    <div class="twosheep"><img src="../../assets/img/city.png" style="height:300px;margin-top:30px"></div>
     <!-- 用户权限管理模块 -->
+    <hr style="border: 1px solid white; margin-left: 10px; margin-right: 10px;margin-top:400px;" />
+    <div class="text-home" ><p>&nbsp;&nbsp;权限管理</p></div>
     <div class="authority">
-      <p class="label-auth">权限管理</p>
       <el-table :data="information" border class="table_auth">
         <el-table-column label="用户名" prop="username">
         </el-table-column>
@@ -38,9 +44,11 @@
           </template>
         </el-table-column>
       </el-table>
-      <el-button plain>
+      <div style="text-align:center;">
+      <el-button plain >
         保存更改
       </el-button>
+      </div>
       <!-- 点击编辑按钮弹出的对话框 -->
       <el-dialog title="编辑人员信息" :visible.sync="editDialogVisible">
         <el-form v-model="editedInform" label-width="80px">
@@ -73,7 +81,7 @@
         </div>
       </el-dialog>
     </div>
-
+  </div>
   </div>
 </template>
 
@@ -143,28 +151,73 @@ export default {
 
 </script>
 <style scoped>
+.bg{
+  position:fixed;
+  top:110px;
+  left:0;
+  z-index:-1;
+  overflow:hidden;
+  /* background-repeat: no-repeat; */
+  background-image: url("../../assets/img/qqq6.png");
+  width: 100%;
+  height: 100%;
+  background-size: 100% 100%;
+}
+.lab-bg{
+  height:100%;
+  overflow-y: auto;
+}
 .lab {
   margin-left: 8px;
-  width: 60%;
-  border: 1px solid black;
-  border-radius: 6px;
+  width: 45%;
+  /* border: 1px solid rgb(255, 255, 255);
+  border-radius: 6px; */
+  float:left;
 }
 
 .authority {
   margin: 8px;
-  border: 1px solid black;
-  border-radius: 6px;
-  width: 60%;
-}
-
-.label-auth {
-  margin: 4px;
+  margin-left:30px;
+  /* border: 1px solid rgb(255, 255, 255);
+  border-radius: 6px; */
+  width: 95%;
+  height:500px;
+  margin-bottom:30px;
 }
 
 .table_auth {
-  width: 90%;
-  margin: 4px;
-  border: 1px solid black;
+  width: 96%;
+  margin: 10px;
+  border: 1px solid rgb(255, 255, 255);
   border-radius: 6px;
+  margin-bottom:30px;
+}
+
+.text-home {
+  margin-top: 0px;
+  margin-left: 30px;
+  line-height: 55px;
+  font-size: 20px;
+  color:aliceblue;
+  background-image: url("../../assets/img/s-titlebg.png");
+  background-repeat: no-repeat;
+}
+
+.twosheep{
+  float:left;
+  width:50%;
+  height:370px;
+  /* border: 1px solid rgb(255, 255, 255);
+  border-radius: 6px; */
+}
+div /deep/ .el-form-item__label{
+  color:white;
+} 
+div /deep/ .el-button.el-button--primary{
+  background-color:rgb(186, 137, 223);
+  border-color:rgb(186, 137, 223);
+} 
+div /deep/ .el-button.el-button--default.is-plain{
+  text-align: center;
 }
 </style>

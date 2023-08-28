@@ -187,7 +187,8 @@ const routes = [
     name: 'InformationDisplay',
     component: InformationDisplay
   },
-  { 
+
+  {
     path:'/goods',
     name:'Goods',
     component:Goods,
