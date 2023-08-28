@@ -12,6 +12,7 @@ import 'jquery'
 import 'popper.js'
 import store from './store'
 import axios from 'axios'
+import "@/assets/text/text.css"
 
 Vue.config.productionTip = false
 Vue.use(ElementUI)

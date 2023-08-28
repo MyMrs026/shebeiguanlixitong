@@ -8,7 +8,12 @@ const Home = () => import('@/views/home/Home')
 const Project = () => import('@/views/projectManagement/projectManagement')
 const Equp = () => import('@/views/equManagement/equManagement')
 const Book = () => import('@/views/bookManagement/bookManagement')
+
 const Train = () => import('@/views/trainManagement/trainManagement')
+const TrainProject = () =>import('../views/trainManagement/trainProject.vue')
+const TrainLog = () => import('../views/trainManagement/trainLog.vue')
+const TrainList = () => import('../views/trainManagement/traingList.vue')
+
 const System = () => import('../views/systemManagement/systemManagement')
 const Test = () => import('../views/testingTasks/testingTasks.vue')
 const LabInform = () => import('../views/labInformation/labInformation.vue')
@@ -89,7 +94,24 @@ const routes = [
   {
     path: '/train',
     name: 'Train',
-    component: Train
+    redirect:'/train/project',
+    component: Train,
+    children: [{
+      path: '/train/project',
+      name: 'TrainProject',
+      component: TrainProject
+    },
+    {
+      path: '/train/log',
+      name: 'TrainLog',
+      component: TrainLog
+    },
+    {
+      path: '/train/list',
+      name: 'TrainList',
+      component: TrainList
+    }
+  ]
   },
   {
     path: '/system',
@@ -165,6 +187,7 @@ const routes = [
     name: 'InformationDisplay',
     component: InformationDisplay
   },
+
   {
     path:'/goods',
     name:'Goods',
