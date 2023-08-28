@@ -164,6 +164,8 @@ const routes = [
     path: '/informationDisplay',
     name: 'InformationDisplay',
     component: InformationDisplay
+  },
+  {
     path:'/goods',
     name:'Goods',
     component:Goods,

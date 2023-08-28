@@ -26,8 +26,8 @@ export default {
     const notice_id = this.$route.params.id;
     console.log(notice_id);
     // 根据公告ID获取公告详情的代码逻辑...
-    this.notice = this.$store.state.notices[notice_id]
-    console.log(notice);
+    this.notice = this.$store.state.notices[notice_id - 1]
+    // console.log(notice);
   },
  
 }

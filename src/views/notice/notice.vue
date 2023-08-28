@@ -15,14 +15,13 @@
                 <li
                   v-for="item in paginatedData"
                   :key="item.notice_id"
-                  @click="gotoNoticeDetail(item.notice_id)">
-                  <a href="" target="" title="item.title">
-                    <font style="font-weight: bold; color: #000000">{{
-                      item.title
-                    }}</font>
+                  @click="gotoNoticeDetail(item.notice_id)"
+                  style="cursor:pointer;">
+                  <p>
+                    <font >{{item.title}}</font>
                     <!-- 日期的显示格式:xxxx年xx月xx日 -->
                     <font>{{ item.date | formatDate }}</font>
-                  </a>
+                  </p>
                 </li>
               </ul>
             </div>
