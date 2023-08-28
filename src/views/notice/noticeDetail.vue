@@ -32,7 +32,7 @@ export default {
     const notice_id = this.$route.params.id;
     // console.log(notice_id);
     // 根据公告ID获取公告详情的代码逻辑...
-    this.notice = this.$store.state.notices[notice_id - 1];
+    this.notice = this.$store.state.notices[notice_id - 1]
   },
   filters: {
     //处理日期的显示格式问题，使日期以xxxx年xx月xx日的形式显示

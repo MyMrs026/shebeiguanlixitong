@@ -1,32 +1,32 @@
 <template>
+  <div class="equpM">
+    <div style="height=30px">
+      <br />
+    </div>
   <div class="equp-container">
     <!-- 由五个部分组成，对应网页中五个带边框的div -->
     <!-- 第一部分：使用设备，通过搜索框对已有的设备进行检索，点击即可进行使用 -->
     <div class="centered-div" id="part1">
-      <div>
-        <p>使用的设备</p>
+      <div class="text-home">
+        <p style="color:white">使用的设备</p>
       </div>
       <div class="equp-container2">
         <el-row>
-          <el-col :span="6">
+          <el-col >
             <div style="margin-top:10px;margin-left:10px;">
-              <p>设备</p>
-            </div>
-          </el-col>
-          <el-col :span="18">
-            <div>
               <el-input style="width:300px;margin-top:10px;" placeholder="请输入设备名" v-model="searchKeyword"></el-input>
-              <el-button type="info" style="margin-left:12px;" size="mini" @click="handleSearch" :disabled="isButtonDisabled" >搜索</el-button>
+              <el-button type="info" style="margin-left:12px;"  @click="handleSearch" :disabled="isButtonDisabled" >搜索</el-button>
             </div>
             <br>
-            <div ref="tab1" class="table-equ">
-              <el-table :data="pageData" style="width: 100%">
+            <div ref="tab1" class="table-equ1">
+              <el-table :data="pageData" style="width: 100%;border: 1px solid rgb(255, 255, 255);
+  border-radius: 8px;">
                 <el-table-column prop="deviceName" label="姓名"></el-table-column>
                 <el-table-column prop="deviceFunc" label="功能"></el-table-column>
                 <el-table-column prop="lab.labName" label="实验室"></el-table-column>
               </el-table>
               <!-- 分页显示，为了应对庞大数据量的情况 -->
-              <el-pagination
+              <el-pagination style="margin-left:320px;margin-top:10px"
                 @size-change="handlePageSizeChange"
                 @current-change="handleCurrentPageChange"
                 :current-page="currentPage"
@@ -48,16 +48,19 @@
           </el-col>
         </el-row>
       </div>
+      <div style="float:left;width:30%;height:250px;">
+        <img src="../../assets/img/city.png"  style="width:250px;height:250px;text-align:center;margin-left:20px;">
+      </div>
     </div>
     <!-- 第二部分：所有被使用的设备的情况，目前是写死的，后期数据从数据库进行读取 -->
     <div class="centered-div" id="part2">
-      <div style="margin-left: 6px;">
+      <div class="text-home">
         <p>被使用的设备情况</p>
       </div>
 
       <div class="table-equ-use">
         <template>
-          <el-table border :data="equpsUse" class="table-equ" :row-class-name="tableRowClassName">
+          <el-table border :data="equpsUse" class="table-equ2" :row-class-name="tableRowClassName">
             <el-table-column prop="equp" label="设备名" width="180">
             </el-table-column>
             <el-table-column prop="status" label="使用情况" width="100">
@@ -77,7 +80,7 @@
     <!-- 第三部分：所有设备的状态表 -->
     <div class="centered-div" id="part3">
       <div class="text-home">
-        <p>设备使用状态</p>
+        <p style="color:white">设备使用状态</p>
       </div>
       <div class="table-dch-use">
         <template>
@@ -102,6 +105,7 @@
     <div class="centered-div" id="part5">
       <equMaintain></equMaintain>
     </div>
+  </div>
   </div>
 </template>
 
@@ -180,6 +184,12 @@ export default {
 }
 </script>
 <style scoped>
+.equpM{
+  background-image: url("../../assets/img/qqq6.png");
+  width: 100%;
+  height: 100%;
+  background-size: 100% 100%;
+}
 .equp-container {
   display: flex;
   flex-direction: column;
@@ -188,30 +198,33 @@ export default {
 }
 
 .centered-div {
-  width: 95%;
-  border: 1px solid #000;
-  border-radius: 8px;
-  margin: 3px;
+  width: 100%;
+  margin: 10px;
 }
 
 .equp-container2 {
-  width: 80%;
-  border: 1px solid #000;
-  border-radius: 8px;
-  margin-left: 3px;
+  width: 65%;
+  margin-left: 30px;
   margin-bottom: 10px;
+  float:left;
 }
 
 .table-equ-use {
-  margin-left: 10px;
+  margin-left: 30px;
 }
-
-.table-equ {
-  width: 95%;
-  border: 1px solid #000000;
-  border-radius: 8px;
-  font-size: 6px;
+.table-equ1 {
+  width: 93.5%;
+  font-size: 14px;
   margin-bottom: 10px;
+  margin-left:10px;
+}
+.table-equ2 {
+  width: 93.5%;
+  border: 1px solid #ffffff;
+  border-radius: 8px;
+  font-size: 14px;
+  margin-bottom: 10px;
+  margin-left:10px;
 }
 
 .el-table .warning-row {
@@ -230,8 +243,22 @@ export default {
 }
 
 .table-dch {
-  width: 96%;
-  border: 1px solid black;
+  width: 94%;
+  border: 1px solid rgb(255, 255, 255);
   border-radius: 8px;
+  margin-left:20px;
+}
+.text-home {
+  margin-top: 0px;
+  margin-left: 40px;
+  line-height: 55px;
+  font-size: 20px;
+  color:aliceblue;
+  background-image: url("../../assets/img/s-titlebg.png");
+  background-repeat: no-repeat;
+}
+div /deep/ .el-button.el-button--info.is-disabled {
+  background-color:rgb(134, 167, 224);
+  border-color:rgb(134, 167, 224);
 }
 </style>

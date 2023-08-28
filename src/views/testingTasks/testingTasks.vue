@@ -1,9 +1,14 @@
 <template>
-  <div class="system">
+<div class="bg-test">
+  
+  <div class="test">
+    
     <div class="container">
-      <div id="header">
-        <h3>创建测试任务</h3>
+      
+      <div class="text-home">
+        <p>创建测试任务</p>
       </div>
+      <!-- 步骤条部分 -->
       <div class="menu">
         <el-steps :active="currentStep" :space="200" direction="vertical" finish-status="success" class="step">
           <el-step title="新建测试任务"></el-step>
@@ -11,6 +16,7 @@
           <el-step title="测试结果详情"></el-step>
         </el-steps>
       </div>
+      <!-- 新建测试任务表单部分 -->
       <div class="content">
         <div class="tab1" v-if="currentStep === 0">
           <el-form :model="buildForm">
@@ -57,29 +63,31 @@
             <el-button>取消</el-button>
           </el-form-item>
         </el-form>
-         <el-button v-if="currentStep===2" @click="currentStep=0">完成</el-button>
+         <el-button v-if="currentStep===2" @click="currentStep=0" type="primary">完成</el-button>
         </div>
+        <!-- 前进后退按钮 -->
         <div class="stepbtn" >
-          <el-button  @click="back" class="backbtn" >上一步</el-button>
-          <el-button  @click="next" class="nextbtn" >下一步</el-button>
+          <el-button  @click="back" class="backbtn" type="primary">上一步</el-button>
+          <el-button  @click="next" class="nextbtn" type="primary">下一步</el-button>
         </div>
-
-
+        <!-- 历史测试任务记录模块 -->
         <div class="footer" >
-          <h3>历史测试任务记录 </h3>
+          <hr style="border: 1px solid white; margin-left: 10px; margin-right: 10px" />
+          <div class="text-home"><p>历史测试任务记录</p></div>
           <el-input
             placeholder="请输入检索内容"
             prefix-icon="el-icon-search"
             v-model="searchTerm"
-            style="width:300px">
+            style="width:300px;margin-left:30px;">
           </el-input>
           <el-button type="info" style="margin-left:12px;" 
           :disabled="isButtonDisabled" >搜索
           </el-button>
           <el-table
             :data="tableData"
-            style="width: 100%"
-            max-height="250">
+            style="width: 100%;margin-top:20px;margin-left:30px;border: 1px solid rgb(255, 255, 255);
+  border-radius: 6px;margin-bottom:100px;"
+            >
             <el-table-column
               fixed
               prop="number"
@@ -159,7 +167,9 @@
             </el-table-column>
           </el-table>
         </div>
+        
       </div>
+      <div class="clear"></div>
     </div>
   </div>
 </template>
@@ -337,13 +347,42 @@ export default {
 </script>
 
 <style scoped>
+.bg-test{
+  position:fixed;
+  top:110px;
+  left:0;
+  z-index:-1;
+  overflow:hidden;
+  background-image: url("../../assets/img/qqq6.png");
+  background-repeat: no-repeat;
+  width: 100%;
+  height: 100%;
+  background-size: 100% 100%;
+}
+.clear { 
+  clear:both;
+  height:0px;
+}
+.test {
+  height:100%;
+  overflow-y: auto;
+}
+.text-home {
+  margin-top: 0px;
+  margin-left: 30px;
+  line-height: 55px;
+  font-size: 20px;
+  color:aliceblue;
+  background-image: url("../../assets/img/s-titlebg.png");
+  background-repeat: no-repeat;
+}
 .container {
   width: 90%;
   margin: 15px;
 }
 
 .menu {
-  height: 400px;
+  height: 350px;
   width: 20%;
   float: left;
 
@@ -357,7 +396,7 @@ export default {
 }
 
 .content {
-  height: 400px;
+  height: 350px;
   width: 70%;
   float: left;
 }
@@ -374,7 +413,7 @@ export default {
 }
 
 .stepbtn {
-  height: 400px;
+  height: 350px;
   width: 10%;
   float: right;
 }
@@ -391,8 +430,9 @@ export default {
 
 .footer {
   width: 100%;
-  height: 300px;
+  height: auto;
   float: left;
+  margin-bottom:50px;
 }
 
 .el-table .warning-row {
@@ -401,5 +441,25 @@ export default {
 
 .el-table .success-row {
   background: #a3d587;
+}
+div /deep/ .el-step__title.is-process{
+  color:rgb(255, 255, 255);
+}
+div /deep/ .el-step__title.is-success{
+  color:rgb(167, 97, 220);
+}
+div /deep/ .el-step__line{
+  color:rgb(167, 97, 220);
+}
+div /deep/ .el-step__head.is-success{
+  color:rgb(167, 97, 220);
+  border-color:rgb(167, 97, 220);
+}
+div /deep/ .el-form-item__label{
+  color:white;
+}
+div /deep/ .el-button.el-button--primary{
+  background-color: rgb(190, 147, 222);
+  border-color: rgb(190, 147, 222);
 }
 </style>

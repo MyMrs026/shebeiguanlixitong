@@ -187,7 +187,10 @@ export default {
 
 <style>
 .total {
-  background-image: url("../../assets/img/qqq2.jpg");
+  background-image: url("../../assets/img/qqq6.png");
+  width: 100%;
+  height: 100%;
+  background-size: 100% 100%;
   display: flex;
   flex-direction: column;
 }
@@ -228,9 +231,7 @@ export default {
   margin-left: 30px;
   line-height: 55px;
   font-size: 20px;
-  color: aliceblue;
-  background-image: url("../../assets/img/s-titlebg.png");
-  background-repeat: no-repeat;
+  color:rgb(79, 79, 79);
 }
 
 .table-equ-use {

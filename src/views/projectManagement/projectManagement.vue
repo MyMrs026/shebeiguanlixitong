@@ -1,5 +1,8 @@
 <template>
   <div class="project">
+    <div style="height=30px">
+      <br />
+    </div>
     <!-- 上半区域 -->
     <div class="top_part">
       <div class="pro_font">
@@ -14,7 +17,8 @@
       </div>
       <!-- 根据选择的项目类别，以表格显示该类别下所有的项目信息 -->
       <div class="table_inform">
-        <el-table :data="filteredData" style="width: 95%;border:1px solid black;border-radius: 6px;margin:10px">
+        <el-table :data="filteredData" style="width: 100%;margin:30px;border: 1px solid rgb(255, 255, 255);
+  border-radius: 6px;">
           <el-table-column type="expand">
             <template slot-scope="props">
               <!-- 表格中数据的详细信息在这展示 -->
@@ -56,21 +60,25 @@
       </div>
     </div>
     <!-- 下半区域 -->
+    <hr style="border: 1px solid white; margin-left: 10px; margin-right: 10px" />
     <div class="bottom_part">
       <div class="pro_font">
         <p>新建项目</p>
       </div>
-      <!-- 新建项目的表单区域 -->
-      <div class="pro_form">
-        <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
+      <form>
+        <tr >
+          <!-- <td style="width: 45%;"> -->
+           <div style="width: 50%;
+  display:fixed;margin:10px;top:0px;float:left">
+           <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
           <el-form-item label="项目id" prop="id" style="margin-top: 10px;">
-            <el-input v-model="ruleForm.id" style="width: 50%;"></el-input>
+            <el-input v-model="ruleForm.id" style="width: 100%;"></el-input>
           </el-form-item>
           <el-form-item label="项目名称" prop="name" style="margin-top: 10px;">
-            <el-input v-model="ruleForm.name" style="width: 50%;"></el-input>
+            <el-input v-model="ruleForm.name" style="width: 100%;"></el-input>
           </el-form-item>
-          <el-form-item label="项目类别" prop="category">
-            <el-select v-model="ruleForm.category" placeholder="请选择项目的类别">
+          <el-form-item label="项目类别" prop="category" >
+            <el-select v-model="ruleForm.category" placeholder="请选择项目的类别" style="width: 100%;">
               <el-option label="Ⅰ类" value="Ⅰ类"></el-option>
               <el-option label="Ⅱ类" value="Ⅱ类"></el-option>
               <el-option label="Ⅲ类" value="Ⅲ类"></el-option>
@@ -78,10 +86,10 @@
           </el-form-item>
 
           <el-form-item label="项目描述" prop="desc">
-            <el-input v-model="ruleForm.desc" style="width: 50%;"></el-input>
+            <el-input v-model="ruleForm.desc" style="width: 100%;"></el-input>
           </el-form-item>
           <el-form-item label="实验设备" prop="equ_value">
-            <el-select v-model="ruleForm.equ_value" placeholder="请选择实验所需的设备">
+            <el-select v-model="ruleForm.equ_value" placeholder="请选择实验所需的设备" style="width: 100%;">
               <el-option
                 v-for="item in pro_equps"
                 :key="item.deviceName"
@@ -91,20 +99,29 @@
             </el-select>
           </el-form-item>
           <el-form-item label="实验目的" prop="purpose">
-            <el-input v-model="ruleForm.purpose" style="width: 50%;"></el-input>
+            <el-input v-model="ruleForm.purpose" style="width: 100%;"></el-input>
           </el-form-item>
           <el-form-item label="成员" prop="member">
-            <el-input v-model="ruleForm.member" style="width: 50%;"></el-input>
+            <el-input v-model="ruleForm.member" style="width: 100%;"></el-input>
           </el-form-item>
           <el-form-item label="组长" prop="leader">
-            <el-input v-model="ruleForm.leader" style="width: 50%;"></el-input>
+            <el-input v-model="ruleForm.leader" style="width: 100%;"></el-input>
           </el-form-item>
           <el-form-item>
             <el-button type="primary" @click="submitForm">立即创建</el-button>
             <el-button @click="resetForm('ruleForm')">重置</el-button>
           </el-form-item>
         </el-form>
-      </div>
+        </div>
+          <!-- </td>
+          <td style="width: 45%;"> -->
+           <div style="width:45%;
+  float:right;">
+           <img src="../../assets/img/contact-img.svg" style="width:100%;margin-top:100px;text-align:center">
+           </div>
+          <!-- </td> -->
+        </tr>
+      </form>
     </div>
   </div>
 </template>
@@ -208,6 +225,12 @@ export default {
 
 </script>
 <style scoped>
+.project {
+  background-image: url("../../assets/img/qqq6.png");
+  width: 100%;
+  height: 100%;
+  background-size: 100% 100%;
+}
 .demo-table-expand {
   margin-left: 70px;
   font-size: 0;
@@ -215,7 +238,7 @@ export default {
 
 .demo-table-expand label {
   width: 90px;
-  color: #99a9bf;
+  color: #ffffff;
 }
 
 .demo-table-expand .el-form-item {
@@ -225,33 +248,39 @@ export default {
 }
 
 .top_part {
-  width: 80%;
+  width: 91%;
   height: auto;
-  border: 1px solid black;
-  border-radius: 6px;
-  margin: 10px;
+  
+  margin-left: 10px;
 }
 
 .bottom_part {
-  width: 80%;
-  height: auto;
-  border: 1px solid black;
-  border-radius: 6px;
+  width: 90%;
+  height: 850px;
   margin: 10px;
 }
 
 .pro_font {
   margin: 10px;
+  width:100%;
+  margin-left: 30px;
+  line-height: 55px;
+  font-size: 20px;
+  color: #ffffff;
+  background-image: url("../../assets/img/s-titlebg.png");
+  background-repeat: no-repeat;
 }
 
 .pro_selector {
-  margin: 10px;
+  margin: 30px;
 }
-.pro_form{
-  width: 90%;
-  border: 1px solid black;
-  border-radius: 6px;
-  margin: 10px;
 
-}
+div /deep/ .el-form-item__label{
+  color:white;
+} 
+div /deep/ .el-button.el-button--primary{
+  background-color:rgb(171, 87, 235);
+  border-color:rgb(171, 87, 235);
+} 
+
 </style>

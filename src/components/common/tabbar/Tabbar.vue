@@ -308,7 +308,7 @@ export default {
 }
 
 .tabbar {
-  background-image: url("../../../assets/img/tabbar2.jpg");
+  background-image: url("../../../assets/img/tabbar.jpg"); 
   width: 100%;
   height: 100%;
   background-size: 100% 100%;
