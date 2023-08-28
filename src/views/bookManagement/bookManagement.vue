@@ -17,9 +17,9 @@
         </el-date-picker>
       </div>
       <div class="button-group">
-        <button>更新</button>
-        <button>日期</button>
-        <button>创建新的预约</button>
+        <el-button>更新</el-button>
+        <el-button>日期</el-button>
+        <el-button>创建新的预约</el-button>
       </div>
     </div>
     <div class="bottom-div">
@@ -27,39 +27,39 @@
       <el-row style="height: auto">
         <el-col :span="8" style="height: auto">
           <div class="button-area">
-            <el-button plain @click="hideClick1">{{ buttonText1 }}</el-button>
+            <el-button class="button-hide" @click="hideClick1">{{ buttonText1 }}</el-button>
           </div>
           <div class="schedular-area" v-if="isShow1">
-            <p style="margin: 10px">当前用户:{{ this.$store.state.cu_role }}</p>
+            <p class="font-class">当前用户:{{ this.$store.state.cu_role }}</p>
             <!-- 调用日程表在这里 -->
-            <Schedular />
+            <Schedular class="schedular"/>
           </div>
         </el-col>
         <el-col :span="8" style="height: auto">
           <div class="button-area">
-            <el-button @click="hideClick2">{{ buttonText2 }}</el-button>
+            <el-button class="button-hide" @click="hideClick2">{{ buttonText2 }}</el-button>
           </div>
           <div class="schedular-area" v-if="isShow2">
-            <p style="margin: 10px">设备名</p>
+            <p class="font-class">设备名</p>
             <!-- 后期在这里默认选择下拉设备，设备列表从数据库传出 -->
-            <Schedular2 />
+            <Schedular2 style="color: #fff;"/>
           </div>
         </el-col>
         <el-col :span="8" style="height: auto">
           <div class="button-area">
-            <el-button @click="hideClick3">{{ buttonText3 }}</el-button>
+            <el-button class="button-hide" @click="hideClick3">{{ buttonText3 }}</el-button>
           </div>
           <div class="schedular-area" v-if="isShow3">
             <!-- 同样道理 -->
-            <el-select v-model="newEqup" placeholder="请选择新设备" style="width: auto;">
+            <el-select v-model="newEqup" placeholder="请选择新设备" class="select-newequ">
               <el-option
                 v-for="item in device_options"
                 :key="item.value"
                 :label="item.label"
-                :newEqup="item.value">
+                :value="item.value">
               </el-option>
             </el-select>
-            <Schedular3 />
+            <Schedular3 style="color: #fff;"/>
           </div>
         </el-col>
       </el-row>
@@ -171,24 +171,42 @@ export default {
 
 <style scoped>
 .book-container {
+  background-image: url("../../assets/img/qqq2.jpg");
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  height: auto;
-  margin-left: 10px;
+  align-items: center;
+  height: 100vh;
 }
-
+.button-hide {
+  font-size: 1rem;
+  margin-left: 10px
+}
+.font-class {
+  margin-top: 0px;
+  margin-left: 20px;
+  line-height: 55px;
+  font-size: 20px;
+  color: aliceblue;
+  background-image: url("../../assets/img/s-titlebg.png");
+  background-repeat: no-repeat;
+}
+.select-newequ {
+  margin-left: 20px;
+  line-height: 70px;
+  font-size: 20px;
+  font-family: w95fa;
+}
 .top-div {
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
   width: 90%;
   height: auto;
-  border: 1px solid #000;
+  border: 1px solid #fff;
   border-radius: 8px;
   margin-top: 10px;
   margin-bottom: 25px;
-  background-color: rgb(230, 230, 230);
+  color: #fff;
   /* 可以根据需要进行其他样式设置 */
 }
 .book-title {
@@ -199,13 +217,17 @@ export default {
 .bottom-div {
   width: 90%;
   height: auto;
-  border: 1px solid #000;
+  border: 1px solid #fff;
   border-radius: 8px;
 }
 
 .schedular-area {
   width: 90%;
   height: 100%;
+}
+.schedular{
+  color: #fff;
+  font-size: 15px;
 }
 .button-area {
   margin: 10px;
@@ -216,6 +238,7 @@ export default {
 }
 .button-group .button {
   margin-right: 15px;
+  font-size: 2rem;
 }
 .button-group .button:last-child {
   margin-right: 0;

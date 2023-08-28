@@ -7,22 +7,20 @@
     <!-- 公告部分 -->
     <div class="text-area">
       <p class="title">
-        {{ this.notice.title }}&nbsp;&nbsp;日期:{{
-          this.notice.date | formatDate
-        }}
+        {{ this.notice.title }}<br />日期:{{ this.notice.date | formatDate }}
       </p>
       <p class="content-area">{{ this.notice.content }}</p>
       <div class="text-more">
         <router-link to="/notice">
-          <a href="">更多</a>
+          <p>更多>>></p>
         </router-link>
       </div>
     </div>
+    <div class="text-home">
+      <p>设备使用情况</p>
+    </div>
     <!-- 设备使用表(目前：写死的) -->
     <div class="table-equ-use">
-      <div class="text-home">
-        <p>设备使用表</p>
-      </div>
       <el-table
         border
         :data="equpsUse"
@@ -43,12 +41,14 @@
         </el-table-column>
       </el-table>
     </div>
-    <hr style="border: 1px solid white; margin-left: 10px; margin-right: 10px" />
+    <hr
+      style="border: 1px solid white; margin-left: 10px; margin-right: 10px"
+    />
+    <div class="text-home">
+      <p>我的预约</p>
+    </div>
     <!-- 用户个人的预约表(目前：写死的) -->
     <div class="table-book-use">
-      <div class="text-home">
-        <p>我的预约</p>
-      </div>
       <el-table :data="myBooks" class="table-book">
         <el-table-column prop="equp" label="设备" width="170">
         </el-table-column>
@@ -65,12 +65,14 @@
         </el-table-column>
       </el-table>
     </div>
-    <hr style="border: 1px solid white; margin-left: 10px; margin-right: 10px" />
+    <hr
+      style="border: 1px solid white; margin-left: 10px; margin-right: 10px"
+    />
+    <div class="text-home">
+      <p>设备使用状态</p>
+    </div>
     <!-- 所有的设备使用状态表格(目前：写死的) -->
     <div class="table-dch-use">
-      <div class="text-home">
-        <p>设备使用状态</p>
-      </div>
       <el-table
         border
         :data="equpsStatus"
@@ -87,17 +89,15 @@
         </el-table-column>
       </el-table>
     </div>
-    <hr style="border: 1px solid white; margin-left: 10px; margin-right: 10px" />
+    <hr
+      style="border: 1px solid white; margin-left: 10px; margin-right: 10px"
+    />
     <!-- 设备故障处理 -->
+    <div class="text-home">
+      <p>设备维修记录</p>
+    </div>
     <div class="table-dch-use" v-if="this.$store.state.cu_role === 'admin'">
-      <div class="text-home">
-        <p>设备维修记录</p>
-      </div>
-      <el-table
-        :data="MaintainData"
-        class="table-book"
-        border
-      >
+      <el-table :data="MaintainData" class="table-book" border>
         <el-table-column
           prop="deviceMaintenanceId"
           label="设备维修ID"
@@ -137,7 +137,6 @@ export default {
       equpsStatus: [],
       notice: {}, //公告信息，用来接收从axios传过来的公告信息
       MaintainData: [], //设备维保记录
-     
     };
   },
   methods: {
@@ -189,82 +188,119 @@ export default {
 <style>
 .total {
   background-image: url("../../assets/img/qqq2.jpg");
+  display: flex;
+  flex-direction: column;
 }
+
 .text-area {
   opacity: 0.8;
-  margin-left: 20px;
-  width: 94.5%;
+  width: 96%;
+  margin: 0 auto;
+  padding: 10px;
   background-color: rgb(255, 253, 253);
-  border: 1px solid #000;
-  border-radius: 3px;
-  font-size: 13px;
 }
+
 .title {
   margin-top: 20px;
   font-weight: bolder;
   text-align: center;
-  font-size: 16px;
+  font-size: 1.6rem;
 }
+
 .content-area {
   margin: 20px;
   text-indent: 2em;
-  font-size: 13px;
+  line-height: 200%;
+  font-size: 1rem;
+  font-family: Microsoft YaHei;
 }
+
 .text-more {
   margin-right: 10px;
   margin-bottom: 10px;
   text-align: right;
+  font-size: 1.3rem;
+  color: aqua;
 }
+
 .text-home {
   margin-top: 0px;
   margin-left: 30px;
   line-height: 55px;
   font-size: 20px;
-  color:aliceblue;
+  color: aliceblue;
   background-image: url("../../assets/img/s-titlebg.png");
   background-repeat: no-repeat;
 }
+
 .table-equ-use {
-  margin-left: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
+
 .table-equ {
-  width: 96%;
-  border: 1px solid #000000;
-  border-radius: 8px;
+  width: auto;
+  height: auto;
+  border: 0px solid #000000;
+  box-shadow: 0 2px 4px rgba(246, 245, 245, 1);
+  margin: 0 auto;
+  font-size: 1rem;
+  font-family: w95fa;
 }
-.table-equ .el-table__body td,
-.table-equ .el-table__header th {
-  font-size: 13px !important;
-}
+
 .el-table .warning-row {
   background: rgb(191, 191, 191);
 }
+
 .el-table .success-row {
   background: #e0e0e0;
 }
+
 .el-table .red-row {
   background: rgb(230, 171, 171);
 }
+
 .el-table .yellow-row {
   background: rgb(223, 220, 166);
 }
+
 .el-table .gray-row {
   background: rgb(206, 204, 204);
 }
+
 .table-book-use {
-  margin-left: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
+
 .table-book {
-  width: 96%;
-  border: 2px solid black;
-  border-radius: 8px;
+  width: auto;
+  height: auto;
+  border: 0px solid #000000;
+  border-radius: 0px;
+  margin: 0 auto;
+  font-size: 1rem;
+  font-family: w95fa;
 }
+
 .table-dch-use {
-  margin-left: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
+
 .table-dch {
-  width: 96%;
-  border: 2px solid black;
-  border-radius: 8px;
+  width: auto;
+  height: auto;
+  border: 0px solid #000000;
+  border-radius: 0px;
+  margin: 0 auto;
+  font-size: 1rem;
+  font-family: w95fa;
 }
 </style>
