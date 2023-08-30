@@ -29,6 +29,7 @@ const Help = () =>import('../views/helpPage/help.vue')
 const Goods = () => import('../views/goods/goodsPage.vue')
 const Goodscategory = () => import('../views/goods/goodsCategory.vue')
 const Goodsdetails = () => import('../views/goods/goodsDetails.vue')
+const GoodsItem = () => import('../views/goods/goodsItem.vue')
 
 const Login = () => import('@/views/login/index.vue')
 const Register = () => import('@/views/register/register.vue')
@@ -205,7 +206,12 @@ const routes = [
       component: Goodsdetails
     }
     ]
-  }
+  },
+  {
+    path: '/goods/:id',
+    name: 'GoodsItem',
+    component: GoodsItem
+  },
 ]
 const router = new Router({
   routes,

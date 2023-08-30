@@ -1,6 +1,5 @@
 <template>
   <div>
-    {{ message }}
     <!-- 上半区域 -->
     <div
       id="staff"
@@ -35,15 +34,6 @@
           >
           </el-option>
         </el-select>
-        <el-select v-model="value1" placeholder="请选择" style="width: 150px">
-          <el-option
-            v-for="item2 in goods_options2"
-            :key="item2.value"
-            :label="item2.label"
-            :value="item2.value"
-          >
-          </el-option>
-        </el-select>
       </div>
       <!-- 根据选择的项目类别，以表格显示该类别下所有的项目信息 -->
       <div class="table_inform">
@@ -53,9 +43,8 @@
             width: 95%;
             border: 1px solid black;
             border-radius: 6px;
-            margin: 10px;
-          "
-        >
+            margin: 10px;"
+            @row-click = "handleRowClick">
           <el-table-column label="商品编号" prop="number"> </el-table-column>
           <el-table-column label="商品名" prop="name"> </el-table-column>
           <el-table-column label="商品图片">
@@ -114,8 +103,7 @@
               :on-preview="handlePreview"
               :on-remove="handleRemove"
               :file-list="fileList"
-              list-type="picture"
-            >
+              list-type="picture">
               <el-button size="small" type="primary">点击上传</el-button>
               <div slot="tip" class="el-upload__tip">
                 只能上传jpg/png文件，且不超过500kb
@@ -138,7 +126,6 @@ export default {
   components: {},
   data() {
     return {
-      message: "商品分类",
       lab_list: [
         {
           value: "实验室A",
@@ -165,20 +152,6 @@ export default {
         {
           value: "Ⅲ类",
           label: "Ⅲ类",
-        },
-      ],
-      goods_options2: [
-        {
-          value: "A类",
-          label: "A类",
-        },
-        {
-          value: "B类",
-          label: "B类",
-        },
-        {
-          value: "C类",
-          label: "C类",
         },
       ],
       value_lab: "实验室A",
@@ -217,6 +190,16 @@ export default {
         gpic: "",
         gdesc: "",
       },
+      fileList: [
+        {
+          name: 'cat1.jpeg', 
+          url: 'https://c-ssl.duitang.com/uploads/blog/202104/21/20210421202949_f7e14.jpeg'
+        }, 
+        {
+          name: 'cat2.jpeg', 
+          url: 'https://c-ssl.duitang.com/uploads/blog/202104/21/20210421202951_301cf.jpeg'
+        }
+      ]
     };
   },
   methods: {
@@ -226,6 +209,10 @@ export default {
     handlePreview(file) {
       console.log(file);
     },
+    handleRowClick(row) {
+      //console.log('点击了第',row.number);
+      this.$router.push({path:`/goods/${row.number}`});
+    }
   },
 };
 </script>
