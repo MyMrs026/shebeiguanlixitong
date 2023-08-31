@@ -2,7 +2,7 @@
   <div>
     <p class="text-title">{{ message }}</p>
     <div class="table-equcraft-use">
-      <el-table 
+      <!-- <el-table 
         :data="craftParams"
         class="table-equcraft"
         border
@@ -17,14 +17,34 @@
         </el-table-column>
         <el-table-column prop="time" label="生产日期" width="120">
         </el-table-column>
-      </el-table>
+      </el-table> -->
+      <el-carousel :interval="4000" type="card" height="400px">
+        <el-carousel-item v-for="(item,index) in urls" :key="index">
+          <img v-bind:src="item.url" style="width:70%;height:100%;float:left;">
+            <ul class="medium" style="width:30%;height:100%;float:left;margin-top:5px;">
+              <li>设备名称</li>
+              <li>{{craftParams[index].deviceName }}</li>
+              <li>设备温度</li>
+              <li>{{craftParams[index].temperature}}</li>
+              <li>设备压力</li>
+              <li>{{craftParams[index].pressure}}</li>
+              <li>设备速度</li>
+              <li>{{craftParams[index].speed}}</li>
+              <li>生产日期</li>
+              <li>{{craftParams[index].time}}</li>
+            </ul>
+        </el-carousel-item>
+      </el-carousel>
     </div>
     <hr style="border: 1px solid white; margin-left: 10px; margin-right: 10px"/>
-    <p class="text-title" v-if="this.$store.state.cu_role === 'admin'">设置设备工艺</p>
+    <div class="p-device">
+      <img src="../../assets/img/p-device.png">
+    </div>
     <div class="form-equcraft-use" v-if="this.$store.state.cu_role === 'admin'">
+      <p class="text-title">设置设备工艺</p>
       <el-form class="form-equcraft" label-width="80px" :model="equCraftForm">
         <el-form-item label="设备名称">
-          <el-select v-model="value" placeholder="请选择">
+          <el-select v-model="value" placeholder="请选择" style="width: 400px">
             <el-option
               v-for="item in device_options"
               :key="item.value"
@@ -37,22 +57,22 @@
         <el-form-item label="设备温度">
           <el-input
             v-model="equCraftForm.temperature"
-            style="width: 300px"
+            style="width: 400px"
           ></el-input>
         </el-form-item>
         <el-form-item label="设备压力">
-          <el-input v-model="equCraftForm.pressure" style="width: 300px"></el-input>
+          <el-input v-model="equCraftForm.pressure" style="width: 400px"></el-input>
         </el-form-item>
         <el-form-item label="设备速度">
           <el-input
             v-model="equCraftForm.speed"
-            style="width: 300px"
+            style="width: 400px"
           ></el-input>
         </el-form-item>
         <el-form-item label="生产时间">
           <el-input
             v-model="equCraftForm.time"
-            style="width: 300px"
+            style="width: 400px"
           ></el-input>
         </el-form-item>
         <el-form-item>
@@ -100,6 +120,13 @@ export default {
         },
       ],
       value: "",
+      urls:[
+        {url:require('../../assets/img/device2.jpg')},
+        {url:require('../../assets/img/device3.jpg')},
+        {url:require('../../assets/img/device1.jpg')},
+        {url:require('../../assets/img/device4.jpg')},
+        
+      ]
     };
   },
   methods: {
@@ -119,18 +146,13 @@ export default {
 <style scope>
 .text-title {
   margin-top: 0px;
-  margin-left: 30px;
+  margin-left: 50px;
   line-height: 55px;
   font-size: 20px;
-  color: aliceblue;
-  background-image: url("../../assets/img/s-titlebg.png");
-  background-repeat: no-repeat;
 }
 .table-equcraft-use {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-content: center;
+  margin-left:50px;
+  margin-right:50px;
 }
 .table-equcraft {
   width: auto;
@@ -141,23 +163,43 @@ export default {
   font-size: 1rem;
   font-family: w95fa;
 }
+
+.p-device{
+  width:40%;
+  float:left;
+  height:400px;
+  margin-left:50px;
+  margin-right:50px;
+}
+
 .form-equcraft-use {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-content: center;
+  margin-left:50px;
+  width:40%;
+  float:left;
 }
 .form-equcraft{
-  width: auto;
-  height: auto;
-  border: 0px solid #000000;
-  box-shadow: 0 2px 4px rgba(246, 245, 245, 0.2);
-  margin: 0 auto;
+  margin-left:50px;
   
 }
 .form-equcraft label {
   font-size: 1rem;
   font-family: w95fa;
-  color:rgb(255, 255, 255);
+  color:rgb(50, 49, 49);
+}
+
+.el-carousel__item h3 {
+  color: #475669;
+  font-size: 14px;
+  opacity: 0.75;
+  line-height: 200px;
+  margin: 0;
+}
+
+.el-carousel__item:nth-child(2n) {
+  background-color: #99a9bf;
+}
+
+.el-carousel__item:nth-child(2n+1) {
+  background-color: #d3dce6;
 }
 </style>

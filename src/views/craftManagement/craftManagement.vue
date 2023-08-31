@@ -40,6 +40,6 @@ export default {};
 }
 .button-area {
   margin-top: 20px;
-  margin-left: 30px;
+  margin-left: 50px;
 }
 </style>

@@ -123,11 +123,12 @@ b { /* used for event dates/times */
   min-height: 100%;
   font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
   font-size: 6px !important;
+  height:400px;
 }
 
 .demo-app-sidebar {
   width: 300px;
-  line-height: 1.5;
+  line-height: 3;
   background: #eaf9ff;
   border-right: 1px solid #d3e2e8;
 }

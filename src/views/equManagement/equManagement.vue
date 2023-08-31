@@ -1,21 +1,19 @@
 <template>
+<div class="bg-eq">
   <div class="equpM">
-    <div style="height=30px">
-      <br />
-    </div>
   <div class="equp-container">
     <!-- 由五个部分组成，对应网页中五个带边框的div -->
     <!-- 第一部分：使用设备，通过搜索框对已有的设备进行检索，点击即可进行使用 -->
     <div class="centered-div" id="part1">
       <div class="text-home">
-        <p style="color:white">使用的设备</p>
+        <p>使用的设备</p>
       </div>
       <div class="equp-container2">
         <el-row>
           <el-col >
-            <div style="margin-top:10px;margin-left:10px;">
+            <div style="margin-top:10px;margin-left:20px;">
               <el-input style="width:300px;margin-top:10px;" placeholder="请输入设备名" v-model="searchKeyword"></el-input>
-              <el-button type="info" style="margin-left:12px;"  @click="handleSearch" :disabled="isButtonDisabled" >搜索</el-button>
+              <el-button type="info" style="margin-left:20px;"  @click="handleSearch" :disabled="isButtonDisabled" >搜索</el-button>
             </div>
             <br>
             <div ref="tab1" class="table-equ1">
@@ -48,8 +46,8 @@
           </el-col>
         </el-row>
       </div>
-      <div style="float:left;width:30%;height:250px;">
-        <img src="../../assets/img/city.png"  style="width:250px;height:250px;text-align:center;margin-left:20px;">
+      <div style="float:left;width:30%;height:300px;">
+        <img src="../../assets/img/computer.png"  style="width:350px;height:300px;text-align:center;margin-left:5px;">
       </div>
     </div>
     <!-- 第二部分：所有被使用的设备的情况，目前是写死的，后期数据从数据库进行读取 -->
@@ -80,7 +78,7 @@
     <!-- 第三部分：所有设备的状态表 -->
     <div class="centered-div" id="part3">
       <div class="text-home">
-        <p style="color:white">设备使用状态</p>
+        <p>设备使用状态</p>
       </div>
       <div class="table-dch-use">
         <template>
@@ -105,6 +103,7 @@
     <div class="centered-div" id="part5">
       <equMaintain></equMaintain>
     </div>
+  </div>
   </div>
   </div>
 </template>
@@ -184,11 +183,19 @@ export default {
 }
 </script>
 <style scoped>
-.equpM{
+.bg-eq{
+  left:0;
+  z-index:-1;
+  overflow:hidden;
   background-image: url("../../assets/img/qqq6.png");
+  background-repeat: no-repeat;
   width: 100%;
   height: 100%;
   background-size: 100% 100%;
+}
+.equpM{
+  height:100%;
+  overflow-y: auto;
 }
 .equp-container {
   display: flex;
@@ -199,32 +206,32 @@ export default {
 
 .centered-div {
   width: 100%;
-  margin: 10px;
 }
 
 .equp-container2 {
-  width: 65%;
+  width: 60%;
   margin-left: 30px;
   margin-bottom: 10px;
   float:left;
 }
 
 .table-equ-use {
-  margin-left: 30px;
+  display:block;
+  margin-left:50px;
+  width:101%
 }
 .table-equ1 {
-  width: 93.5%;
+  width: 92%;
   font-size: 14px;
   margin-bottom: 10px;
-  margin-left:10px;
+  margin-left:20px;
 }
 .table-equ2 {
-  width: 93.5%;
+  width: 90%;
   border: 1px solid #ffffff;
   border-radius: 8px;
   font-size: 14px;
   margin-bottom: 10px;
-  margin-left:10px;
 }
 
 .el-table .warning-row {
@@ -239,7 +246,8 @@ export default {
   display: none;
 }
 .table-dch-use {
-  margin: 20px;
+  margin-left: 30px;
+  width:96.5%;
 }
 
 .table-dch {
@@ -249,13 +257,10 @@ export default {
   margin-left:20px;
 }
 .text-home {
-  margin-top: 0px;
-  margin-left: 40px;
+  margin-top: 10px;
+  margin-left: 50px;
   line-height: 55px;
   font-size: 20px;
-  color:aliceblue;
-  background-image: url("../../assets/img/s-titlebg.png");
-  background-repeat: no-repeat;
 }
 div /deep/ .el-button.el-button--info.is-disabled {
   background-color:rgb(134, 167, 224);

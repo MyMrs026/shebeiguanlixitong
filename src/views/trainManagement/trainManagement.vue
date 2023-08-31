@@ -267,7 +267,7 @@ export default {
 }
 .button-area {
   margin-top: 20px;
-  margin-left: 30px;
+  margin-left: 50px;
 }
 .bottom-div {
   width: 90%;
@@ -282,9 +282,9 @@ export default {
   overflow: hidden;
 }
 div /deep/ .el-form-item__label {
-  color: #fff;
+  color: #4e4e4e;
 }
 .white-label {
-  color: #fff;
+  color: #575757;
 }
 </style>

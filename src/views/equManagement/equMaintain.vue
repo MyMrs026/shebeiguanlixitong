@@ -9,7 +9,7 @@
         height="250"
         border
         style="width: 96%;border: 1px solid rgb(255, 255, 255);
-  border-radius: 8px;margin:30px;"
+  border-radius: 8px;margin-left:40px;"
       >
         <el-table-column
           prop="deviceMaintenanceId"
@@ -206,7 +206,7 @@ export default {
 }
 .equMaintainModify {
   margin: 10px;
-  margin-left:40px;
+  margin-left:50px;
   /* border: 1px solid rgb(255, 255, 255);
   border-radius: 8px; */
   width: 45%;
@@ -215,15 +215,12 @@ export default {
 }
 .text-home {
   margin-top: 0px;
-  margin-left: 30px;
+  margin-left: 40px;
   line-height: 55px;
   font-size: 20px;
-  color:aliceblue;
-  background-image: url("../../assets/img/s-titlebg.png");
-  background-repeat: no-repeat;
 }
 div /deep/ .el-form-item__label{
-  color:white;
+  color:rgb(96, 96, 96);
 }
 div /deep/ .el-button.el-button--primary{
   background-color:rgb(134, 167, 224);

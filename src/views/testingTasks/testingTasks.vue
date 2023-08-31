@@ -1,10 +1,7 @@
 <template>
 <div class="bg-test">
-  
   <div class="test">
-    
     <div class="container">
-      
       <div class="text-home">
         <p>创建测试任务</p>
       </div>
@@ -78,14 +75,14 @@
             placeholder="请输入检索内容"
             prefix-icon="el-icon-search"
             v-model="searchTerm"
-            style="width:300px;margin-left:30px;">
+            style="width:300px;margin-left:20px;">
           </el-input>
           <el-button type="info" style="margin-left:12px;" 
           :disabled="isButtonDisabled" >搜索
           </el-button>
           <el-table
             :data="tableData"
-            style="width: 100%;margin-top:20px;margin-left:30px;border: 1px solid rgb(255, 255, 255);
+            style="width: 100%;margin-top:20px;margin-left:20px;border: 1px solid rgb(255, 255, 255);
   border-radius: 6px;margin-bottom:100px;"
             >
             <el-table-column
@@ -348,8 +345,8 @@ export default {
 
 <style scoped>
 .bg-test{
-  position:fixed;
-  top:110px;
+  /* position:fixed;
+  top:110px; */
   left:0;
   z-index:-1;
   overflow:hidden;
@@ -369,12 +366,10 @@ export default {
 }
 .text-home {
   margin-top: 0px;
-  margin-left: 30px;
+  margin-left: 20px;
   line-height: 55px;
   font-size: 20px;
-  color:aliceblue;
-  background-image: url("../../assets/img/s-titlebg.png");
-  background-repeat: no-repeat;
+  color:rgb(86, 86, 86);
 }
 .container {
   width: 90%;
@@ -443,23 +438,23 @@ export default {
   background: #a3d587;
 }
 div /deep/ .el-step__title.is-process{
-  color:rgb(255, 255, 255);
+  color:rgb(48, 48, 48);
 }
 div /deep/ .el-step__title.is-success{
-  color:rgb(167, 97, 220);
+  color:rgb(97, 150, 220);
 }
 div /deep/ .el-step__line{
-  color:rgb(167, 97, 220);
+  color:rgb(97, 150, 220);
 }
 div /deep/ .el-step__head.is-success{
-  color:rgb(167, 97, 220);
-  border-color:rgb(167, 97, 220);
+  color:rgb(97, 150, 220);
+  border-color:rgb(97, 150, 220);
 }
 div /deep/ .el-form-item__label{
-  color:white;
+  color:rgb(80, 80, 80);
 }
 div /deep/ .el-button.el-button--primary{
-  background-color: rgb(190, 147, 222);
-  border-color: rgb(190, 147, 222);
+  background-color: rgb(97, 150, 220);
+  border-color: rgb(97, 150, 220);
 }
 </style>

@@ -1,8 +1,6 @@
 <template>
+<div class="bg-pro">
   <div class="project">
-    <div style="height=30px">
-      <br />
-    </div>
     <!-- 上半区域 -->
     <div class="top_part">
       <div class="pro_font">
@@ -68,7 +66,7 @@
       <form>
         <tr >
           <!-- <td style="width: 45%;"> -->
-           <div style="width: 50%;
+           <div style="width: 55%;
   display:fixed;margin:10px;top:0px;float:left">
            <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
           <el-form-item label="项目id" prop="id" style="margin-top: 10px;">
@@ -113,16 +111,16 @@
           </el-form-item>
         </el-form>
         </div>
-          <!-- </td>
-          <td style="width: 45%;"> -->
-           <div style="width:45%;
+         
+           <div style="width:40%;
   float:right;">
-           <img src="../../assets/img/contact-img.svg" style="width:100%;margin-top:100px;text-align:center">
+           <img src="../../assets/img/device.png" style="width:500px;margin-top:100px;text-align:center;margin-left:70px;">
            </div>
-          <!-- </td> -->
+     
         </tr>
       </form>
     </div>
+  </div>
   </div>
 </template>
 
@@ -225,11 +223,19 @@ export default {
 
 </script>
 <style scoped>
-.project {
+.bg-pro {
+  left:0;
+  z-index:-1;
+  overflow:hidden;
   background-image: url("../../assets/img/qqq6.png");
+  background-repeat: no-repeat;
   width: 100%;
   height: 100%;
   background-size: 100% 100%;
+}
+.project {
+  height:100%;
+  overflow-y: auto;
 }
 .demo-table-expand {
   margin-left: 70px;
@@ -250,14 +256,13 @@ export default {
 .top_part {
   width: 91%;
   height: auto;
-  
-  margin-left: 10px;
+  margin-left: 20px;
 }
 
 .bottom_part {
   width: 90%;
   height: 850px;
-  margin: 10px;
+  margin: 20px;
 }
 
 .pro_font {
@@ -266,9 +271,7 @@ export default {
   margin-left: 30px;
   line-height: 55px;
   font-size: 20px;
-  color: #ffffff;
-  background-image: url("../../assets/img/s-titlebg.png");
-  background-repeat: no-repeat;
+  
 }
 
 .pro_selector {
@@ -276,11 +279,11 @@ export default {
 }
 
 div /deep/ .el-form-item__label{
-  color:white;
+  color:rgb(108, 108, 108);
 } 
 div /deep/ .el-button.el-button--primary{
-  background-color:rgb(171, 87, 235);
-  border-color:rgb(171, 87, 235);
+  background-color:rgb(116, 149, 234);
+  border-color:rgb(116, 149, 234);
 } 
 
 </style>
