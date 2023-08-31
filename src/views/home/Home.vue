@@ -93,7 +93,7 @@
       style="border: 1px solid white; margin-left: 10px; margin-right: 10px"
     />
     <!-- 设备故障处理 -->
-    <div class="text-home">
+    <div class="text-home" v-if="this.$store.state.cu_role === 'admin'">
       <p>设备维修记录</p>
     </div>
     <div class="table-dch-use" v-if="this.$store.state.cu_role === 'admin'">

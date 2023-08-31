@@ -23,7 +23,7 @@
     </div>
     <hr style="border: 1px solid white; margin-left: 10px; margin-right: 10px"/>
     <!-- 设备工艺设置，只在登录用户为管理员时显示 -->
-    <p class="text-title">设置设备工艺</p>
+    <p class="text-title" v-if="this.$store.state.cu_role === 'admin'">设置设备工艺</p>
     <div class="form-equcraft-use" v-if="this.$store.state.cu_role === 'admin'">
       <el-form class="form-equcraft" label-width="80px" :model="equCraftForm">
         <el-form-item label="设备名称">
