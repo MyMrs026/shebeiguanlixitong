@@ -3,6 +3,33 @@
     <!-- 分割线 -->
     <div style="height=30px">
       <br />
+    </div class="first">
+    <!-- 标题+图标 -->
+    <div>
+    <div class="left">
+    <div class="title1">实验室设备预约管理系统</div>
+    <div style="font-size:1.5rem;margin-top:20px;">Laboratory Equipment Appointment Management System</div>
+    <div style="margin-top:30px;"><hr style="color:white;height:10px;"/></div>
+    <div class="menu-icon" style="margin-top:20px;height:350px;">
+      <a  href="#equ-use" @click="display1">
+      <div class="box" ><img src="../../assets/img/usage.png" style="width:190px;height:190px;">
+      <div class="boxtitle-c" >设备使用情况</div>
+      <div class="boxtitle-e">Equipment usage</div>
+      </div>
+      </a>
+      <a href="#book-use" @click="display2">
+      <div class="box"><img src="../../assets/img/reservation.png" style="width:190px;height:190px;">
+      <div class="boxtitle-c">我的预约</div>
+      <div class="boxtitle-e">My reservation</div>
+      </div>
+      </a>
+      <a href="#dch-use" @click="display3">
+      <div class="box"><img src="../../assets/img/state.png" style="width:190px;height:190px;">
+      <div class="boxtitle-c">设备使用状态</div>
+      <div class="boxtitle-e">Equipment usage status</div>
+      </div>
+      </a>
+    </div>
     </div>
     <!-- 公告部分 -->
     <div class="text-area">
@@ -16,11 +43,15 @@
         </router-link>
       </div>
     </div>
-    <div class="text-home">
-      <p>设备使用情况</p>
+    </div>
+    <hr
+      style="border: 1px solid white; margin-left: 10px; margin-right: 10px;margin-top:35px;margin-bottom:35px;"
+    />
+    <div class="text-home" v-show="isUsage">
+      <p id="equ-use">设备使用情况</p>
     </div>
     <!-- 设备使用表(目前：写死的) -->
-    <div class="table-equ-use">
+    <div class="table-equ-use"  v-show="isUsage">
       <el-table
         border
         :data="equpsUse"
@@ -41,14 +72,11 @@
         </el-table-column>
       </el-table>
     </div>
-    <hr
-      style="border: 1px solid white; margin-left: 10px; margin-right: 10px"
-    />
-    <div class="text-home">
-      <p>我的预约</p>
+    <div class="text-home"  v-show="isBook">
+      <p id="book-use">我的预约</p>
     </div>
     <!-- 用户个人的预约表(目前：写死的) -->
-    <div class="table-book-use">
+    <div class="table-book-use" v-show="isBook">
       <el-table :data="myBooks" class="table-book">
         <el-table-column prop="equp" label="设备" width="170">
         </el-table-column>
@@ -65,14 +93,11 @@
         </el-table-column>
       </el-table>
     </div>
-    <hr
-      style="border: 1px solid white; margin-left: 10px; margin-right: 10px"
-    />
-    <div class="text-home">
-      <p>设备使用状态</p>
+    <div class="text-home"  v-show="isStatus">
+      <p id="dch-use">设备使用状态</p>
     </div>
     <!-- 所有的设备使用状态表格(目前：写死的) -->
-    <div class="table-dch-use">
+    <div class="table-dch-use"  v-show="isStatus">
       <el-table
         border
         :data="equpsStatus"
@@ -89,9 +114,6 @@
         </el-table-column>
       </el-table>
     </div>
-    <hr
-      style="border: 1px solid white; margin-left: 10px; margin-right: 10px"
-    />
     <!-- 设备故障处理 -->
     <div class="text-home" v-if="this.$store.state.cu_role === 'admin'">
       <p>设备维修记录</p>
@@ -121,7 +143,7 @@
         </el-table-column>
         <el-table-column prop="remark" label="评价"> </el-table-column>
       </el-table>
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -137,6 +159,9 @@ export default {
       equpsStatus: [],
       notice: {}, //公告信息，用来接收从axios传过来的公告信息
       MaintainData: [], //设备维保记录
+      isUsage:false,
+      isBook:false,
+      isStatus:false,
     };
   },
   methods: {
@@ -159,6 +184,22 @@ export default {
         return "gray-row";
       }
       return "";
+    },
+    //控制图标对应表格的显示
+    display1(){
+    this.isUsage = true;
+    this.isBook = false;
+    this.isStatus = false;
+    },
+    display2(){
+    this.isUsage = false;
+    this.isBook = true;
+    this.isStatus = false;
+    },
+    display3(){
+    this.isUsage = false;
+    this.isBook = false;
+    this.isStatus = true;
     },
   },
   created() {
@@ -194,11 +235,54 @@ export default {
   display: flex;
   flex-direction: column;
 }
+.first{
+  height:300px;
+}
+.left{
+  float:left;
+  width:58%;
+  height:300px;
+  padding-left:50px;
+}
+.title1 {
+  font-size: 3.5rem;
+  margin-top: 15px;
+  height: 70px;
+  color: rgb(103, 112, 147);
+  font-weight:bolder;
+}
+.box{
+  margin-top:20px;
+  margin-right:10px;
+  border: 1px solid white;
+  border-radius: 8px;
+  height:320px;
+  width:30%;
+  float:left;
+  background-color:white;
+  opacity: 0.7;
+}
+
+.boxtitle-c{
+  height:40px;
+  text-align:center;
+  font-size:1.35rem;
+  margin-top:10px;
+}
+
+.boxtitle-e{
+  height:50px;
+  text-align:center;
+  font-size:1.35rem;
+}
 
 .text-area {
+  border: 1px solid white;
+  border-radius: 8px;
   opacity: 0.8;
-  width: 96%;
-  margin: 0 auto;
+  width: 35%;
+  margin-right:20px;
+  float:left;
   padding: 10px;
   background-color: rgb(255, 253, 253);
 }
@@ -216,6 +300,9 @@ export default {
   line-height: 200%;
   font-size: 1rem;
   font-family: Microsoft YaHei;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  height:300px;
 }
 
 .text-more {
@@ -228,10 +315,10 @@ export default {
 
 .text-home {
   margin-top: 0px;
-  margin-left: 30px;
+  margin-left: 50px;
   line-height: 55px;
-  font-size: 20px;
-  color:rgb(79, 79, 79);
+  font-size: 1.5rem;
+  color:rgb(103, 102, 102);
 }
 
 .table-equ-use {
@@ -260,15 +347,15 @@ export default {
 }
 
 .el-table .red-row {
-  background: rgb(230, 171, 171);
+  background: rgb(255, 201, 201);
 }
 
 .el-table .yellow-row {
-  background: rgb(223, 220, 166);
+  background: rgb(255, 253, 209);
 }
 
 .el-table .gray-row {
-  background: rgb(206, 204, 204);
+  background: rgb(196, 196, 196);
 }
 
 .table-book-use {

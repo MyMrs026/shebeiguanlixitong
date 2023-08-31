@@ -1,31 +1,28 @@
 <template>
 <div class="bg">
   <div class="lab-bg">
-    <div style="height=30px">
-      <br />
-    </div>
     <!-- 实验室信息管理，后续实验室的名字应该做成下拉列表，这样可以改变指定的实验室 -->
     <div class="lab">
       <div class="text-home">实验室信息管理</div>
       <el-form :label-position="labelPosition" label-width="200px" :model="formLabelAlign">
         <el-form-item label="实验室名称">
-          <el-input v-model="formLabelAlign.name" style="width: 300px;"></el-input>
+          <el-input v-model="formLabelAlign.name" style="width: 350px;"></el-input>
         </el-form-item>
         <el-form-item label="实验室管理员">
-          <el-input v-model="formLabelAlign.region" style="width: 300px;"></el-input>
+          <el-input v-model="formLabelAlign.region" style="width: 350px;"></el-input>
         </el-form-item>
         <el-form-item label="实验室联系电话">
-          <el-input v-model="formLabelAlign.type" style="width: 300px;"></el-input>
+          <el-input v-model="formLabelAlign.type" style="width: 350px;"></el-input>
         </el-form-item>
         <el-form-item label="实验室布局">
-          <el-input v-model="formLabelAlign.layout" style="width: 300px;"></el-input>
+          <el-input v-model="formLabelAlign.layout" style="width: 350px;"></el-input>
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="onSubmit">提交信息</el-button>
         </el-form-item>
       </el-form>
     </div>
-    <div class="twosheep"><img src="../../assets/img/city.png" style="height:300px;margin-top:30px"></div>
+    <div class="twosheep"><img src="../../assets/img/computer.png" style="height:350px;width:470px;margin-top:30px"></div>
     <!-- 用户权限管理模块 -->
     <hr style="border: 1px solid white; margin-left: 10px; margin-right: 10px;margin-top:400px;" />
     <div class="text-home" ><p>&nbsp;&nbsp;权限管理</p></div>
@@ -152,8 +149,8 @@ export default {
 </script>
 <style scoped>
 .bg{
-  position:fixed;
-  top:110px;
+  /* position:fixed;
+  top:110px; */
   left:0;
   z-index:-1;
   overflow:hidden;
@@ -169,7 +166,7 @@ export default {
 }
 .lab {
   margin-left: 8px;
-  width: 45%;
+  width: 50%;
   /* border: 1px solid rgb(255, 255, 255);
   border-radius: 6px; */
   float:left;
@@ -194,28 +191,26 @@ export default {
 }
 
 .text-home {
-  margin-top: 0px;
-  margin-left: 30px;
+  margin-top: 10px;
+  margin-left: 40px;
   line-height: 55px;
   font-size: 20px;
-  color:aliceblue;
-  background-image: url("../../assets/img/s-titlebg.png");
-  background-repeat: no-repeat;
+  color:rgb(96, 96, 96);
 }
 
 .twosheep{
   float:left;
-  width:50%;
+  width:40%;
   height:370px;
   /* border: 1px solid rgb(255, 255, 255);
   border-radius: 6px; */
 }
 div /deep/ .el-form-item__label{
-  color:white;
+  color:rgb(80, 80, 80);
 } 
 div /deep/ .el-button.el-button--primary{
-  background-color:rgb(186, 137, 223);
-  border-color:rgb(186, 137, 223);
+  background-color:rgb(123, 178, 230);
+  border-color:rgb(123, 178, 230);
 } 
 div /deep/ .el-button.el-button--default.is-plain{
   text-align: center;

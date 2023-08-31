@@ -47,6 +47,7 @@ export default {
 };
 </script>
 <style scoped>
+
 .el-icon-back{
   display: flex;
   font-size: 30px;
@@ -66,7 +67,14 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: center;
-
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0; /* 将背景容器放置在最底层 */
+  overflow: hidden; /* 隐藏溢出的内容 */
+  background-image: url("../../assets/img/qqq6.png");
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 .noticeTitle {
   margin-top: 20px;

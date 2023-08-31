@@ -7,7 +7,7 @@
       <div class="text-home">
       <p>设备列表</p>
       </div>
-      <el-table :data="eqpinform" style="width: 98%;margin-left:30px;border: 1px solid #ffffff;
+      <el-table :data="eqpinform" style="width: 98%;margin-left:40px;border: 1px solid #ffffff;
   border-radius: 8px;" height="250">
         <el-table-column fixed prop="deviceName" label="设备名" width="150">
         </el-table-column>
@@ -141,15 +141,12 @@ export default {
 
 .text-home {
   margin-top: 0px;
-  margin-left: 30px;
+  margin-left: 40px;
   line-height: 55px;
   font-size: 20px;
-  color:aliceblue;
-  background-image: url("../../assets/img/s-titlebg.png");
-  background-repeat: no-repeat;
 }
 div /deep/ .el-form-item__label{
-  color:white;
+  color:rgb(93, 90, 90);
 } 
 div /deep/ .el-button.el-button--primary{
   background-color:rgb(134, 167, 224);

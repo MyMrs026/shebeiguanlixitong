@@ -2,9 +2,8 @@
   <div class="navbar-container">
     <!-- 导航栏部分 -->
     <div class="tabbar">
-      <!-- 上导航栏内容 -->
       <el-row>
-        <el-col :span="3">
+        <el-col :span="4">
           <el-col class="institution">
             <img
               src="../../../assets/img/logo.jpg"
@@ -15,60 +14,8 @@
             </div>
           </el-col>
         </el-col>
-        <el-col :span="18">
-          <el-col class="title">实验室设备预约管理系统</el-col>
-        </el-col>
-        <el-col :span="1">
-          <div class="help-box">
-            <router-link to="/help">
-              <el-tooltip
-                class="item"
-                effect="light"
-                content="帮助"
-                placement="bottom"
-              >
-                <i class="el-icon-question"></i>
-              </el-tooltip>
-            </router-link>
-          </div>
-        </el-col>
-        <el-col :span="1">
-          <el-tooltip
-            class="item"
-            effect="light"
-            content="我的"
-            placement="bottom"
-          >
-            <i
-              class="el-icon-s-custom"
-              @click="showDrawer"
-              type="primary"
-              style="margin-left: 16px"
-            ></i>
-          </el-tooltip>
-        </el-col>
-        <el-col :span="1">
-          <el-tooltip
-            class="item"
-            effect="light"
-            content="退出登录"
-            placement="bottom"
-          >
-            <i
-              class="el-icon-back"
-              @click="logOut"
-              type="primary"
-              style="margin-left: 16px"
-            ></i>
-          </el-tooltip>
-        </el-col>
-      </el-row>
-      <!-- 下导航栏内容 -->
-      <el-row style="margin-top: 20px">
-        <el-col :span="3">
-          <div style="color: transparent">"你好"</div>
-        </el-col>
-        <el-col
+        <el-col :span="17">
+          <el-col
           :span="12"
           style="
             display: flex;
@@ -127,8 +74,50 @@
             >
           </router-link>
         </el-col>
-        <el-col :span="9">
-          <div style="color: transparent">"你好"</div>
+        </el-col>
+        <el-col :span="1">
+          <div class="help-box">
+            <router-link to="/help">
+              <el-tooltip
+                class="item"
+                effect="light"
+                content="帮助"
+                placement="bottom"
+              >
+                <i class="el-icon-question"></i>
+              </el-tooltip>
+            </router-link>
+          </div>
+        </el-col>
+        <el-col :span="1">
+          <el-tooltip
+            class="item"
+            effect="light"
+            content="我的"
+            placement="bottom"
+          >
+            <i
+              class="el-icon-s-custom"
+              @click="showDrawer"
+              type="primary"
+              style="margin-left: 16px"
+            ></i>
+          </el-tooltip>
+        </el-col>
+        <el-col :span="1">
+          <el-tooltip
+            class="item"
+            effect="light"
+            content="退出登录"
+            placement="bottom"
+          >
+            <i
+              class="el-icon-back"
+              @click="logOut"
+              type="primary"
+              style="margin-left: 16px"
+            ></i>
+          </el-tooltip>
         </el-col>
       </el-row>
     </div>
@@ -310,28 +299,22 @@ export default {
 
 <style scoped>
 .navbar-container {
-  height: auto;
+  height: 65px;
 }
 
 .tabbar {
-  background-image: url("../../../assets/img/tabbar.jpg"); 
+  position:fixed;
+  z-index:10;
+  background-color:rgb(122, 157, 214);
   width: 100%;
-  height: 100%;
+  height: 65px;
   background-size: 100% 100%;
-}
-
-.title {
-  font-size: 30px;
-  text-align: center;
-  margin-top: 15px;
-  height: 40px;
-  color: white;
 }
 
 .custom-button {
   margin-right: 0px;
-  margin-left: 15px;
-  margin-bottom: 10px;
+  margin-left: 3px;
+  margin-top: 15px;
   border-color: white;
   background-color: rgb(151, 184, 216, 0.5);
   font-size: 100%;

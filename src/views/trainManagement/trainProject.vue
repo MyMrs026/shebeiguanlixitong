@@ -306,9 +306,13 @@ export default {
 </script>
 <style scope>
 .book-title {
-  color: #fff;
+  color: #595959;
 }
 .schedular-area {
-  color: #fff;
+  color: #5e5e5e;
 }
+.left-div{
+  margin-left:50px;
+}
+
 </style>
