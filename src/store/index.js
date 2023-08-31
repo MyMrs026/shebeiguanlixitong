@@ -1987,6 +1987,50 @@ const state = {
       speed: '999 转/秒',
       time: '2016-03-04',
     }
+  ],
+
+  //商品参数
+  goodsItems: [
+    {
+      number:'1',
+      name:'商品1',
+      pic:'good1.jpg',
+      cate:'Ⅰ类',
+      sku:'台',
+      storage:'1000',
+      price:'100￥',
+      desc:'商品1相关描述'
+    },
+    {
+      number:'2',
+      name:'商品2',
+      pic:'good2.jpg',
+      cate:'Ⅰ类',
+      sku:'台',
+      storage:'2000',
+      price:'120￥',
+      desc:'商品2相关描述'
+    },
+    {
+      number:'3',
+      name:'商品3',
+      pic:'good3.jpg',
+      cate:'Ⅱ类',
+      sku:'台',
+      storage:'1500',
+      price:'150￥',
+      desc:'商品3相关描述'
+    },
+    {
+      number:'4',
+      name:'商品4',
+      pic:'good4.jpg',
+      cate:'Ⅲ类',
+      sku:'台',
+      storage:'2000',
+      price:'160￥',
+      desc:'商品4相关描述'
+    },
   ]
 }
 

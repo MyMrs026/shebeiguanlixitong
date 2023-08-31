@@ -229,9 +229,15 @@
                 >商品分类</el-menu-item
               >
             </router-link>
-            <el-menu-item @click="closeDrawer" index="6-2" class="secondly"
+            <router-link to="/goods/details">
+            <el-menu-item 
+              @click="closeDrawer" 
+              index="6-2" 
+              class="secondly"
+              v-if="this.$store.state.cu_role === 'admin'"
               >商品详情</el-menu-item
             >
+            </router-link>
           </el-submenu>
           <!-- 进程信息 -->
           <el-submenu index="7">
