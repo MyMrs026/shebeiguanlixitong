@@ -4,30 +4,35 @@
     <!-- 页面有两个部分组成 -->
     <!-- 设备工艺表格 -->
     <div class="table-equcraft-use">
-      <el-table
-        :data="equCrafts"
-        class="table-equcraft"
-        border
-      >
-        <el-table-column fixed prop="deviceName" label="设备名称" width="150">
-        </el-table-column>
-        <el-table-column prop="deviceType" label="设备型号" width="120">
-        </el-table-column>
-        <el-table-column prop="size" label="设备尺寸" width="120">
-        </el-table-column>
-        <el-table-column prop="weight" label="设备重量" width="120">
-        </el-table-column>
-        <el-table-column prop="power" label="设备功率" width="120">
-        </el-table-column>
-      </el-table>
+      <el-carousel :interval="4000" type="card" height="400px">
+        <el-carousel-item v-for="(item,index) in urls" :key="index">
+          <img v-bind:src="item.url" style="width:70%;height:100%;float:left;">
+            <ul class="medium" style="width:30%;height:100%;float:left;margin-top:5px;">
+              <li>设备名称</li>
+              <li>{{ equCrafts[index].deviceName }}</li>
+              <li>设备型号</li>
+              <li>{{equCrafts[index].deviceType}}</li>
+              <li>设备尺寸</li>
+              <li>{{equCrafts[index].size}}</li>
+              <li>设备重量</li>
+              <li>{{equCrafts[index].weight}}</li>
+              <li>设备功率</li>
+              <li>{{equCrafts[index].power}}</li>
+            </ul>
+        </el-carousel-item>
+      </el-carousel>
     </div>
     <hr style="border: 1px solid white; margin-left: 10px; margin-right: 10px"/>
     <!-- 设备工艺设置，只在登录用户为管理员时显示 -->
-    <p class="text-title">设置设备工艺</p>
+    <div style="width:100%;">
+    <div class="p-device">
+      <img src="../../assets/img/p-device.png">
+    </div>
     <div class="form-equcraft-use" v-if="this.$store.state.cu_role === 'admin'">
+      <p class="text-title">设置设备工艺</p>
       <el-form class="form-equcraft" label-width="80px" :model="equCraftForm">
         <el-form-item label="设备名称">
-          <el-select v-model="value" placeholder="请选择">
+          <el-select v-model="value" placeholder="请选择" style="width: 400px">
             <el-option
               v-for="item in device_options"
               :key="item.value"
@@ -40,22 +45,22 @@
         <el-form-item label="设备型号">
           <el-input
             v-model="equCraftForm.deviceType"
-            style="width: 300px"
+            style="width: 400px"
           ></el-input>
         </el-form-item>
         <el-form-item label="设备尺寸">
-          <el-input v-model="equCraftForm.size" style="width: 300px"></el-input>
+          <el-input v-model="equCraftForm.size" style="width: 400px"></el-input>
         </el-form-item>
         <el-form-item label="设备重量">
           <el-input
             v-model="equCraftForm.weight"
-            style="width: 300px"
+            style="width: 400px"
           ></el-input>
         </el-form-item>
         <el-form-item label="设备功率">
           <el-input
             v-model="equCraftForm.power"
-            style="width: 300px"
+            style="width: 400px"
           ></el-input>
         </el-form-item>
         <el-form-item>
@@ -66,6 +71,7 @@
         </el-form-item>
       </el-form>
     </div>
+  </div>
   </div>
 </template>
 <script>
@@ -110,6 +116,13 @@ export default {
         },
       ],
       value: "", //绑定设备的名称
+      urls:[
+        {url:require('../../assets/img/device2.jpg')},
+        {url:require('../../assets/img/device3.jpg')},
+        {url:require('../../assets/img/device1.jpg')},
+        {url:require('../../assets/img/device4.jpg')},
+        
+      ]
     };
   },
   methods: {
@@ -130,45 +143,62 @@ export default {
 <style scope>
 .text-title {
   margin-top: 0px;
-  margin-left: 30px;
+  margin-left: 50px;
   line-height: 55px;
   font-size: 20px;
-  color: aliceblue;
-  background-image: url("../../assets/img/s-titlebg.png");
-  background-repeat: no-repeat;
+  width:100%;
 }
 .table-equcraft-use {
-  display: flex;
-  flex-direction: column;
+  /* display: flex;*/
+  /* flex-direction: column; 
   justify-content: center;
-  align-content: center;
+  align-content: center; */
+  margin-left:50px;
+  margin-right:50px;
 }
 .table-equcraft {
   width: auto;
   height: auto;
-  border: 1px solid #fff;
-  box-shadow: 1px 1px 1px #fff;
+  /* border: 1px solid #fff; */
+  /* box-shadow: 1px 1px 1px #fff; */
   margin: 0 auto;
   font-size: 1rem;
   font-family: w95fa;
+}
+.p-device{
+  width:40%;
+  float:left;
+  height:400px;
+  margin-left:50px;
+  margin-right:50px;
 }
 .form-equcraft-use {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-content: center;
+  width:40%;
+  float:left;
+  margin-left:50px;
 }
 .form-equcraft{
-  width: auto;
-  height: auto;
-  border: 1px solid #fff;
-  box-shadow: 1px 1px 1px #fff;
-  margin: 0 auto;
-  
+  margin-left:50px;
 }
-.form-equcraft label {
+.form-equcraft label{
   font-size: 1rem;
   font-family: w95fa;
-  color:rgb(255, 255, 255);
+  color:rgb(50, 49, 49);
+}
+
+.el-carousel__item h3 {
+  color: #475669;
+  font-size: 14px;
+  opacity: 0.75;
+  line-height: 200px;
+  margin: 0;
+}
+
+.el-carousel__item:nth-child(2n) {
+  background-color: #99a9bf;
+}
+
+.el-carousel__item:nth-child(2n+1) {
+  background-color: #d3dce6;
 }
 </style>

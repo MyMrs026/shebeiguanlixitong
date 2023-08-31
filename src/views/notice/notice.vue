@@ -6,9 +6,9 @@
       <div class="box-main">
         <div class="right-box-main" frag="面板6">
           <div frag="窗口6" portletmode="simpleColumnAttri">
-            <h3 class="catalog_title">公&nbsp;告&nbsp;列&nbsp;表</h3>
+            <h3 class="catalog_title">公告列表</h3>
           </div>
-          <div frag="窗口8"></div>
+          <div frag="窗口8" class="frog">
           <div class="right_content" frag="窗口7" portletmode="simpleList">
             <!-- 此处是公告信息列表的展示，此时数据来源vuex中，后续要使用数据库中的数据 -->
             <div id="wp_news_w7" v-if="this.$store.state.cu_role === 'admin'">
@@ -87,6 +87,7 @@
               </span>
             </div>
           </div>
+          </div>
         </div>
       </div>
     </div>
@@ -102,7 +103,7 @@
               placeholder="在此输入公告标题" 
               v-model="notice_title" 
               clearable
-              style="width: 400px;"
+              style="width: 50%;"
               >
             </el-input>
           </div>
@@ -113,7 +114,8 @@
                 align="right"
                 type="date"
                 placeholder="选择日期"
-                :picker-options="pickerOptions">
+                :picker-options="pickerOptions"
+                style="width: 50%;">
               </el-date-picker>
             </div>
           </div>
@@ -123,7 +125,7 @@
               :rows="10"
               placeholder="在此输入公告内容"
               v-model="notice_content"
-              style="width: 400px;"
+              style="width: 100%;"
             >
             </el-input>
           </div>
@@ -269,16 +271,16 @@ export default {
   height: 100%;
   z-index: -1; /* 将背景容器放置在最底层 */
   overflow: hidden; /* 隐藏溢出的内容 */
-  background-image: url("../../assets/img/qqq2.jpg");
+  background-image: url("../../assets/img/qqq6.png");
   background-repeat: no-repeat;
   background-size: cover;
 }
 
 .container {
-  display: flex;
-  flex-direction: column;
+  display:block;
   height: 100%;
-  overflow-y: auto;
+  margin-left:35px;
+  /* overflow-y: auto; */
 }
 
 .box-wrap {
@@ -288,35 +290,33 @@ export default {
   padding-bottom: 4px;
   background: 0px bottom no-repeat;
   overflow: hidden;
-  border: 1px solid black;
-  border-radius: 8px;
+  /* border: 1px solid rgb(0, 0, 0);
+  border-radius: 8px; */
 }
 
 .box-main {
-  display: flex;
-  flex-direction: column;
   font-size: 16px;
   font-family: "Microsoft Yahei", Arial, "Simsun";
   background: repeat-y;
   padding-top: 4px;
   overflow: auto;
-  align-content: center;
+  
 }
 
 .right-box-main {
   font-size: 16px;
   font-family: "Microsoft Yahei", Arial, "Simsun";
-  padding: 24px;
-  color: #fff;
+  
+  color: #444444;
 }
 
 .catalog_title {
-  font-family: "Microsoft Yahei", Arial, "Simsun";
-  margin: 0px;
+  /* font-family: "Microsoft Yahei", Arial, "Simsun"; */
+  margin-top: 15px;
   padding: 0px;
   list-style-type: none;
   line-height: 30px;
-  color: rgb(255, 255, 255);
+  color: rgb(62, 62, 62);
   font-size: 20px;
 }
 
@@ -326,12 +326,17 @@ export default {
   color: #262626;
   clear: both;
   overflow: hidden;
+  border:1px solid rgb(255, 252, 252);
+  border-radius: 8px;
+  background-color: white;
+  z-index: 0;
+  padding:20px;
 }
 
 .news {
   font-size: 16px;
   font-family: "Microsoft Yahei", Arial, "Simsun";
-  color: #fff;
+  color: #4d4d4d;
   padding: 0px;
   list-style-type: none;
   margin: 10px 0;
@@ -369,7 +374,7 @@ export default {
   flex-direction: row;
   margin-top: 10px;
   font-size: 16px;
-  color: #fff;
+  color: #4f4f4f;
 }
 
 .pagination span{
@@ -395,10 +400,24 @@ export default {
 .publish_notice_content {
   margin-top: 10px;
   margin-bottom: 10px;
+  text-align: center;
 }
 
 .publish_button {
   margin-top: 10px;
   margin-bottom: 10px;
+}
+div /deep/ .el-button--danger {
+  background-color: #969696;
+  border-color: #969696;
+}
+div /deep/ .el-button--success{
+  background-color: #7498db;
+  border-color: #7498db;
+}
+div /deep/ .el-button--success.is-plain{
+  background-color: #7498db;
+  border-color: #7498db;
+  color:rgb(255, 255, 255);
 }
 </style>

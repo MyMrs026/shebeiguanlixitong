@@ -13,6 +13,7 @@
           type="date"
           placeholder="选择日期"
           :picker-options="pickerOptions"
+          style="width:265px;"
         >
         </el-date-picker>
       </div>
@@ -23,6 +24,7 @@
       </div>
     </div>
     <div class="bottom-div">
+      <hr style="border: 1px solid white; margin-left: 10px; margin-right: 10px;margin-top:10px;" />
       <!-- 第二个 div 的内容 -->
       <el-row style="height: auto">
         <el-col :span="8" style="height: auto">
@@ -42,7 +44,7 @@
           <div class="schedular-area" v-if="isShow2">
             <p class="font-class">设备名</p>
             <!-- 后期在这里默认选择下拉设备，设备列表从数据库传出 -->
-            <Schedular2 style="color: #fff;"/>
+            <Schedular2 class="schedular"/>
           </div>
         </el-col>
         <el-col :span="8" style="height: auto">
@@ -59,7 +61,7 @@
                 :value="item.value">
               </el-option>
             </el-select>
-            <Schedular3 style="color: #fff;"/>
+            <Schedular3 class="schedular"/>
           </div>
         </el-col>
       </el-row>
@@ -171,7 +173,7 @@ export default {
 
 <style scoped>
 .book-container {
-  background-image: url("../../assets/img/qqq2.jpg");
+  background-image: url("../../assets/img/qqq6.png");
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -182,13 +184,11 @@ export default {
   margin-left: 10px
 }
 .font-class {
+  color:#656565;
   margin-top: 0px;
   margin-left: 20px;
   line-height: 55px;
   font-size: 20px;
-  color: aliceblue;
-  background-image: url("../../assets/img/s-titlebg.png");
-  background-repeat: no-repeat;
 }
 .select-newequ {
   margin-left: 20px;
@@ -199,26 +199,33 @@ export default {
 .top-div {
   display: flex;
   flex-direction: row;
-  justify-content: space-evenly;
-  width: 90%;
+  /* justify-content: space-evenly; */
+  width: 95%;
   height: auto;
-  border: 1px solid #fff;
-  border-radius: 8px;
-  margin-top: 10px;
+  /* border: 1px solid #fff;
+  border-radius: 8px; */
+  margin-top: 20px;
   margin-bottom: 25px;
-  color: #fff;
+  color: #656565;
   /* 可以根据需要进行其他样式设置 */
 }
 .book-title {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  /* display: flex; */
+  /* justify-content: center; */
+  /* align-items: center; */
+  margin-left: 20px;
+  font-size: 20px;
+  color:#6d6c6c
+}
+.block{
+  float:left;
+  margin-left:200px;
 }
 .bottom-div {
-  width: 90%;
-  height: auto;
-  border: 1px solid #fff;
-  border-radius: 8px;
+  width: 95%;
+  height: 550px;
+  /* border: 1px solid #fff;
+  border-radius: 8px; */
 }
 
 .schedular-area {
@@ -226,14 +233,15 @@ export default {
   height: 100%;
 }
 .schedular{
-  color: #fff;
+  color: #393939;
   font-size: 15px;
 }
 .button-area {
   margin: 10px;
 }
 .button-group {
-  display: flex;
+  float:left;
+  margin-left:100px;
   align-content: center;
 }
 .button-group .button {

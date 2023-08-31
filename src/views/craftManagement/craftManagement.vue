@@ -29,7 +29,7 @@ export default {};
   height: 100%;
   z-index: 0; /* 将背景容器放置在最底层 */
   overflow: hidden; /* 隐藏溢出的内容 */
-  background-image: url("../../assets/img/qqq2.jpg");
+  background-image: url("../../assets/img/qqq6.png");
   background-repeat: no-repeat;
   background-size: cover;
 }
@@ -40,6 +40,6 @@ export default {};
 }
 .button-area {
   margin-top: 20px;
-  margin-left: 30px;
+  margin-left: 50px;
 }
 </style>

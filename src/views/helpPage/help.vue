@@ -1,5 +1,6 @@
 <template>
-  <div> 
+<div class="bg-help">
+  <div class="help"> 
     <h3>帮助页面</h3>
     <div class="common-questuon">
       <h3>常见问题及解答</h3>
@@ -13,6 +14,7 @@
       <h3>没有找到我想知道的问题？</h3>
       <h3>联系管理员：{{ email }}</h3>
     </div>
+  </div>
   </div>
 </template>
 <script>
@@ -31,6 +33,20 @@ export default {
 }
 </script>
 <style scope>
+.bg-help{
+  left:0;
+  z-index:-1;
+  overflow:hidden;
+  background-image: url("../../assets/img/qqq6.png");
+  background-repeat: no-repeat;
+  width: 100%;
+  height: 100%;
+  background-size: 100% 100%;
+}
+.help{
+  height:700px;
+  overflow-y: auto;
+}
 .common-questuon{
   margin: 10px;
   width: 60%;
