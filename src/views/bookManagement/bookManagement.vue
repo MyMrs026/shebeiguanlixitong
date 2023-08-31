@@ -171,7 +171,7 @@ export default {
 
 <style scoped>
 .book-container {
-  background-image: url("../../assets/img/qqq2.jpg");
+  background-image: url("../../assets/img/qqq6.png");
   display: flex;
   flex-direction: column;
   align-items: center;
