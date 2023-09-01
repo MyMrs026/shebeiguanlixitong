@@ -3,7 +3,7 @@
     <div class="noticeTitle">
       <el-row>
         <el-col :span="1"><i class="el-icon-back" @click="backClick"></i></el-col>
-        <el-col :span="23"><p>{{ notice.title }}<br>日期:{{this.notice.date | formatDate}}</p></el-col>
+        <el-col :span="23"><p>{{ notice.title }}<br>日期:{{this.notice.publishDate | formatDate}}</p></el-col>
       </el-row>
     </div>
     <div class="contentContainer">
@@ -15,6 +15,7 @@
 </template>
 
 <script>
+import { getNoticeList } from "../../network/notice";
 export default {
   data() {
     return {
@@ -30,9 +31,17 @@ export default {
   mounted() {
     // 通过传递的路由参数与公告信息的id相匹配
     const notice_id = this.$route.params.id;
-    // console.log(notice_id);
+    console.log(notice_id);
     // 根据公告ID获取公告详情的代码逻辑...
-    this.notice = this.$store.state.notices[notice_id - 1]
+    // this.notice = this.$store.state.notices[notice_id - 1]
+    getNoticeList().then(res=>{
+      const data = res.data;
+      const sortedData = data.sort((a,b)=>a.noticeId - b.noticeId);
+      // console.log(sortedData);
+      this.notice = sortedData[ notice_id - 1];
+      this.notice.publishDate = new Date((this.notice.publishDate).substring(0,10));
+      console.log(this.notice);
+    })
   },
   filters: {
     //处理日期的显示格式问题，使日期以xxxx年xx月xx日的形式显示

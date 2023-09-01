@@ -41,7 +41,7 @@
 /**
  * 登录逻辑在这里写 
  */
-import { getUserList } from '../../network/user'; //获取所有用户信息
+import { getUserList,login } from '../../network/user'; //获取所有用户信息
 export default {
   data() {
     return {
