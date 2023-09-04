@@ -1,67 +1,52 @@
 <template>
   <div>
-    <el-collapse v-model="activeNames" @change="handleChange">
-      <el-collapse-item title="培训内容" name="1">
-        <div>
-          <h2>文档:</h2>
-          <ul>
-            <li v-for="file in files" :key="file.name">
-              <a :href="file.url" :download="file.name">{{ file.name }}</a>
-            </li>
-          </ul>
-        </div>
-        <div>
-          <h2>视频列表：</h2>
-          <ul>
-            <li v-for="video in videos" :key="video.id">
-              <a :href="video.url" target="_blank" rel="noopener">{{
-                video.name
-              }}</a>
-            </li>
-          </ul>
-        </div>
-      </el-collapse-item>
-      <el-collapse-item title="考核指标" name="2">
-        <div>活着就好【双手合十】</div>
-      </el-collapse-item>
-    </el-collapse>
+    <h3>培训列表</h3>
+    <el-table :data="trainData" style="width: 100%">
+      <el-table-column prop="trainName" label="培训名称" width="180"> </el-table-column>
+      <el-table-column prop="trainIntroduction" label="培训介绍" width="180"> </el-table-column>
+      <el-table-column prop="docUrl" label="培训内容" width="180"> </el-table-column>
+      <el-table-column prop="trainDuration" label="持续时间" width="180"> </el-table-column>
+    </el-table>
   </div>
 </template>
 <script>
+import { getTrainList } from '../../network/train'
 export default {
   components: {},
   data() {
     return {
-      activeNames: ["1"],
-      files: [
-        { name: "File 1", url: "https://example.com/file1.pdf" },
-        { name: "File 2", url: "https://example.com/file2.doc" },
-        { name: "File 3", url: "https://example.com/file3.txt" },
-      ],
-      videos: [
-        { id: 1, name: "Video 1", url: "https://example.com/video1.mp4" },
-        { id: 2, name: "Video 2", url: "https://example.com/video2.mp4" },
-        { id: 3, name: "Video 3", url: "https://example.com/video3.mp4" },
-      ],
-      fileList: [
+      trainData: [],
+      tableData: [
         {
-          name: "food.jpeg",
-          url: "https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100",
+          date: "2016-05-02",
+          name: "王小虎",
+          address: "上海市普陀区金沙江路 1518 弄",
         },
         {
-          name: "food2.jpeg",
-          url: "https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100",
+          date: "2016-05-04",
+          name: "王小虎",
+          address: "上海市普陀区金沙江路 1517 弄",
+        },
+        {
+          date: "2016-05-01",
+          name: "王小虎",
+          address: "上海市普陀区金沙江路 1519 弄",
+        },
+        {
+          date: "2016-05-03",
+          name: "王小虎",
+          address: "上海市普陀区金沙江路 1516 弄",
         },
       ],
     };
   },
-  computed:{
-
-  },
-  methods: {
-    handleChange(val) {
-      console.log(val);
-    },
+  methods: {},
+  mounted(){
+    getTrainList().then(res=>{
+      this.trainData = res.data
+      // console.log(res.data);
+      console.log(this.trainData);
+    })
   },
 };
 </script>

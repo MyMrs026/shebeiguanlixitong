@@ -30,8 +30,8 @@
       <el-col :span="12">
         <div class="right-div">
           <div class="form-area" v-if="this.$store.state.cu_role === 'admin'">
-            <el-form class="train-form" label-width="80px" :model="trainForm">
-              <el-form-item
+            <el-form class="train-form" label-width="80px" :model="trainForm" ref="trainForm"  :rules="rules">
+              <!-- <el-form-item
                 label="设备名称"
                 prop="devicename"
                 label-class-name="white-label"
@@ -45,48 +45,49 @@
                   >
                   </el-option>
                 </el-select>
-              </el-form-item>
-              <el-form-item label="编号" prop="iid" class="form-item">
+              </el-form-item> -->
+              <!-- <el-form-item label="编号" prop="iid" class="form-item">
                 <el-input v-model="trainForm.iid" style="width: 300px">
                 </el-input>
-              </el-form-item>
-              <el-form-item label="培训名称" prop="name">
-                <el-input v-model="trainForm.name" style="width: 300px">
+              </el-form-item> -->
+              <el-form-item label="培训名称" prop="trainName">
+                <el-input v-model="trainForm.trainName" style="width: 300px">
                 </el-input>
               </el-form-item>
-              <el-form-item label="培训介绍" prop="intro">
-                <el-input v-model="trainForm.intro" style="width: 300px">
+              <el-form-item label="培训介绍" prop="trainIntroduction">
+                <el-input
+                  v-model="trainForm.trainIntroduction"
+                  style="width: 300px"
+                >
                 </el-input>
               </el-form-item>
 
-              <el-form-item label="培训内容" prop="content">
-                <el-input v-model="trainForm.content" style="width: 300px">
-                </el-input>
-                <el-upload
-                  class="upload-demo"
-                  action="https://jsonplaceholder.typicode.com/posts/"
-                  :on-preview="handlePreview"
-                  :on-remove="handleRemove"
-                  :before-remove="beforeRemove"
-                  multiple
-                  :limit="3"
-                  :on-exceed="handleExceed"
-                  :file-list="fileList"
+              <el-form-item label="培训内容" prop="docUrl">
+                <el-input
+                  v-model="trainForm.docUrl"
+                  style="width: 300px"
                 >
-                  <el-button size="small" type="primary">点击上传</el-button>
-                  <div slot="tip" class="el-upload__tip">
-                    只能上传jpg/png文件，且不超过500kb
-                  </div>
-                </el-upload>
+                </el-input>
+                <!-- <el-upload
+                  class="avatar-uploader"
+                  action="#"
+                  :show-file-list="false"
+                  :on-success="handleAvatarSuccess"
+                  :before-upload="beforeAvatarUpload"
+                >
+                  <img v-if="imageUrl" :src="imageUrl" class="avatar" />
+                  <i v-else class="el-icon-plus avatar-uploader-icon" />
+                </el-upload> -->
               </el-form-item>
-              <el-form-item label="培训指标" prop="target">
-                <el-input v-model="trainForm.target" style="width: 300px">
+              <el-form-item label="持续时间" prop="trainDuration">
+                <el-input
+                  v-model="trainForm.trainDuration"
+                  style="width: 300px"
+                >
                 </el-input>
               </el-form-item>
               <el-form-item>
-                <el-button type="primary" plain @click="submitForm"
-                  >提交</el-button
-                >
+                <el-button type="primary" plain @click="submitForm('trainForm')">提交</el-button>
                 <el-button @click="resetForm('trainForm')">重置</el-button>
               </el-form-item>
             </el-form>
@@ -98,10 +99,10 @@
               placeholder="请选择培训名称"
             >
               <el-option
-                v-for="item in trainProject"
-                :key="item.value"
-                :label="item.label"
-                :trainProject_value="item.value"
+                v-for="item in trainProName"
+                :key="item.trainId"
+                :label="item.trainName"
+                :value="item.trainId"
               >
               </el-option>
             </el-select>
@@ -114,6 +115,7 @@
 </template>
 <script>
 import Schedular4 from "../../components/common/schedular/Schedular4.vue";
+import { getTrainList, addProjectTrain } from '../../network/train'
 export default {
   components: {
     Schedular4,
@@ -164,12 +166,12 @@ export default {
       isShow3: true,
       equp_value: "",
       trainForm: {
-        devicename: "",
-        iid: "",
-        name: "",
-        intro: "",
-        content: "",
-        target: "",
+        // devicename: "",
+        // iid: "",
+        trainName: "",
+        trainIntroduction: "",
+        docUrl: "",
+        trainDuration: "",
       },
       device_options: [
         {
@@ -189,36 +191,26 @@ export default {
           label: "ASP",
         },
       ],
-      trainProject: [
-        {
-          value: "培训一",
-          label: "培训一",
-        },
-        {
-          value: "培训二",
-          label: "培训二",
-        },
-        {
-          value: "培训二",
-          label: "培训二",
-        },
-        {
-          value: "培训三",
-          label: "培训三",
-        },
-      ],
-      fileList: [
-        {
-          name: "food.jpeg",
-          url: "https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100",
-        },
-        {
-          name: "food2.jpeg",
-          url: "https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100",
-        },
-      ],
+      trainProName: [],
+      trainData: [],
+      fileList: [],
+      imageUrl: "", // 用于保存上传文件的地址
       devicename: "",
       trainProject_value: "",
+      rules: {
+        trainName: [
+          { required: true, message: '请填写培训的名称', trigger: 'blur' }
+        ],
+        trainIntroduction: [
+          { required: true, message: '请填写培训的介绍', trigger: 'blur' }
+        ],
+        docUrl: [
+          { required: true, message: '请填写培训的内容', trigger: 'blur' }
+        ],
+        trainDuration: [
+          { required: true, message: '请填写培训的持续时间', trigger: 'blur' }
+        ]
+      }
     };
   },
   computed: {
@@ -249,6 +241,23 @@ export default {
       const property = column["property"];
       return row[property] === value;
     },
+    beforeAvatarUpload(file) {
+      const isJPG = file.type === "image/jpeg";
+      const isLt2M = file.size / 1024 / 1024 < 2;
+
+      if (!isJPG) {
+        this.$message.error("上传头像图片只能是 JPG 格式!");
+      }
+      if (!isLt2M) {
+        this.$message.error("上传头像图片大小不能超过 2MB!");
+      }
+      return isJPG && isLt2M;
+    },
+    // 文件上传成功时的钩子
+    handleAvatarSuccess(res, file) {
+      this.imageUrl = URL.createObjectURL(file.raw);
+      console.log(file);
+    },
     handleChange(val) {
       console.log(val);
     },
@@ -265,13 +274,31 @@ export default {
         })
         .catch((_) => {});
     },
-    submitForm() {
-      console.log("提交");
+    submitForm(formName) {
+      this.$refs[formName].validate((valid) => {
+        if(valid) {
+          //成功提交
+          console.log("提交成功");
+          console.log(this.trainForm);
+          addProjectTrain(this.trainForm.docUrl,this.trainForm.trainDuration,this.trainForm.trainIntroduction,this.trainForm.trainName)
+          .then(res=> {
+            //处理返回的响应数据
+            const data = res.data
+            console.log(data);
+          }).catch(error => {
+            console.error(error);
+          })
+        } else {
+          alert("请填写完整")
+          // console.log(this.trainForm);
+          return false;
+        }
+      })
+      
     },
     resetForm(formName) {
       this.$refs[formName].resetFields();
     },
-
     handleRemove(file, fileList) {
       console.log(file, fileList);
     },
@@ -302,6 +329,17 @@ export default {
       }
     },
   },
+  mounted() {
+    getTrainList().then(res =>{
+      this.trainData = res.data;
+      // console.log(res.data);
+      this.trainData.forEach(obj => {
+        const { trainName,trainId } = obj;
+        this.trainProName.push({trainName,trainId});
+      });
+      console.log(this.trainProName);
+    })
+  },
 };
 </script>
 <style scope>
@@ -311,8 +349,7 @@ export default {
 .schedular-area {
   color: #5e5e5e;
 }
-.left-div{
-  margin-left:50px;
+.left-div {
+  margin-left: 50px;
 }
-
 </style>

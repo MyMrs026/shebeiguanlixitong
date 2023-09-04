@@ -1,5 +1,5 @@
 <template>
-  <div class="lab_inform">
+  <div class="lab_inform" v-if="labinform.length">
     <el-descriptions class="margin-top" title="实验室信息详情" direction="vertical" :column="4" border style="margin: 10px;">
       <el-descriptions-item label="实验室名称">{{labinform[0].labName}}</el-descriptions-item>
       <el-descriptions-item label="实验室管理员">{{labinform[0].linkman}}</el-descriptions-item>
@@ -14,6 +14,9 @@
       </el-descriptions-item>
     </el-descriptions>
 
+  </div>
+  <div v-else>
+    <el-skeleton :rows="6" animated />
   </div>
 </template>
 
