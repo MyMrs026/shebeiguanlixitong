@@ -9,3 +9,16 @@ export function getLabList() {
     url:'/lab/getLabList'
   })
 }
+
+export function addLab( labName,layout,linkman,tel ) {
+  return request({
+    url:'/system/addLab',
+    method:'post',
+    data:{
+      labName:labName,
+      layout:layout,
+      linkman:linkman,
+      tel:tel
+    }
+  })
+}

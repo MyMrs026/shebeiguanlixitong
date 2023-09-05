@@ -21,16 +21,16 @@ export function getEquCate() {
 }
 
 //添加设备
-export function addEqument(param1,param2,param3,param4,param5) {
+export function addEqument(deviceFunc,deviceName,deviceTypeId,labId,uuid) {
   return request({
     url:'/device/addDevice',
     method: 'post',
     data:{
-      param1,
-      param2,
-      param3,
-      param4,
-      param5
+      deviceFunc:deviceFunc,
+      deviceName:deviceName,
+      deviceTypeId:deviceTypeId,
+      labId:labId,
+      uuid:uuid
     }
   })
 }

@@ -5,61 +5,114 @@
     </div>
     <div class="equList">
       <div class="text-home">
-      <p>设备列表</p>
+        <p>设备列表</p>
       </div>
-      <el-table :data="eqpinform" style="width: 98%;margin-left:40px;border: 1px solid #ffffff;
-  border-radius: 8px;" height="250">
+      <el-table
+        :data="eqpinform"
+        style="
+          width: 98%;
+          margin-left: 40px;
+          border: 1px solid #ffffff;
+          border-radius: 8px;
+        "
+        height="250"
+      >
         <el-table-column fixed prop="deviceName" label="设备名" width="150">
         </el-table-column>
         <el-table-column prop="deviceFunc" label="设备功能" width="120">
         </el-table-column>
-        <el-table-column prop="deviceType.typeName" label="设备类别" width="120">
+        <el-table-column
+          prop="deviceType.typeName"
+          label="设备类别"
+          width="120"
+        >
         </el-table-column>
-        <el-table-column prop="operationInstructionUrl" label="使用说明书" width="120">
+        <el-table-column
+          prop="operationInstructionUrl"
+          label="使用说明书"
+          width="120"
+        >
         </el-table-column>
         <el-table-column prop="lab.labName" label="隶属实验室" width="120">
         </el-table-column>
         <el-table-column prop="isInUse" label="是否被使用" width="120">
         </el-table-column>
-        <el-table-column prop="isUnderMaintenance" label="是否处于维护中" width="300">
+        <el-table-column
+          prop="isUnderMaintenance"
+          label="是否处于维护中"
+          width="300"
+        >
         </el-table-column>
       </el-table>
     </div>
-    <div class="equAdd" v-if="this.$store.state.cu_role==='admin'">
+    <div class="equAdd" v-if="this.$store.state.cu_role === 'admin'">
       <div class="text-home">
-      <p>添加设备信息</p>
+        <p>添加设备信息</p>
       </div>
-      <el-form label-width="120px">
-        <el-form-item label="设备名">
-          <el-input v-model="newDeviceName" style="width: 400px;"></el-input>
+      <el-form
+        :model="equForm"
+        :rules="rules"
+        ref="equForm"
+        label-width="120px"
+        class="demo-ruleForm"
+      >
+        <el-form-item label="设备名" prop="newDeviceName">
+          <el-input
+            v-model="equForm.newDeviceName"
+            style="width: 400px"
+          ></el-input>
         </el-form-item>
-        <el-form-item label="设备功能">
-          <el-input v-model="newDeviceFunc" style="width: 400px;"></el-input>
+        <el-form-item label="设备功能" prop="newDeviceFunc">
+          <el-input
+            v-model="equForm.newDeviceFunc"
+            style="width: 400px"
+          ></el-input>
         </el-form-item>
-        <el-form-item label="设备类型">
-          <el-select v-model="newDeviceTypeId" placeholder="选择设备类型" style="width: 400px;">
-            <el-option v-for="item in equcategory" :key="item.deviceTypeId" :label="item.typeName"
-              :value="item.deviceTypeId">
+        <el-form-item label="设备类型" prop="newDeviceTypeId">
+          <el-select
+            v-model="equForm.newDeviceTypeId"
+            placeholder="选择设备类型"
+            style="width: 400px"
+          >
+            <el-option
+              v-for="item in equcategory"
+              :key="item.deviceTypeId"
+              :label="item.typeName"
+              :value="item.deviceTypeId"
+            >
             </el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="实验室">
-          <el-select v-model="newLabId" placeholder="选择实验室" style="width: 400px;">
-            <el-option v-for="item in labinform" :key="item.labId" :label="item.labName" :value="item.labId">
+        <el-form-item label="实验室" prop="newLabId">
+          <el-select
+            v-model="equForm.newLabId"
+            placeholder="选择实验室"
+            style="width: 400px"
+          >
+            <el-option
+              v-for="item in labinform"
+              :key="item.labId"
+              :label="item.labName"
+              :value="item.labId"
+            >
             </el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="设备说明书">
-          <el-input v-model="newUuid" style="width: 400px;"></el-input>
+        <el-form-item label="设备说明书" prop="newUuid">
+          <el-input v-model="equForm.newUuid" style="width: 400px"></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="submitForm">添加</el-button>
+          <el-button type="primary" @click="submitForm('equForm')"
+            >添加</el-button
+          >
         </el-form-item>
       </el-form>
-      
     </div>
-    <div style="width:40%;height:450px;float:left;margin-top:10px">
-    <img src="../../assets/img/椰子树.png" style="width:400px;height:400px;margin-top:35px">
+    <div style="width: 40%; height: 450px; float: left; margin-top: 10px">
+      <img
+        src="../../assets/img/椰子树.png"
+        style="width: 400px; height: 400px; margin-top: 35px"
+      />
     </div>
     <div class="clear"></div>
   </div>
@@ -67,56 +120,90 @@
 
 <script>
 // import axios from 'axios';
-import { getEquList, getEquCate, addEqument } from '../../network/equpment';
-import { getLabList } from '../../network/labtory';
+import { getEquList, getEquCate, addEqument } from "../../network/equpment";
+import { getLabList } from "../../network/labtory";
 export default {
   data() {
     return {
       eqpinform: [],
       equcategory: [],
       labinform: [],
-      newDeviceName: '',
-      newDeviceFunc: '',
-      newDeviceTypeId: 1,
-      newLabId: 1,
-      newUuid: '',
-    }
+      equForm: {
+        newDeviceName: "",
+        newDeviceFunc: "",
+        newDeviceTypeId: 1,
+        newLabId: 1,
+        newUuid: "",
+      },
+      rules: {
+        newDeviceName: [
+          { required: true, message: "请填写设备名称", trigger: "blur" },
+        ],
+        newDeviceFunc: [
+          { required: true, message: "请填写设备功能", trigger: "blur" },
+        ],
+        newDeviceTypeId: [
+          { required: true, message: "请选择设备类别", trigger: "change" },
+        ],
+        newLabId: [
+          {
+            required: true,
+            message: "请选择设备隶属实验室",
+            trigger: "change",
+          },
+        ],
+      },
+    };
   },
   methods: {
-    submitForm() {
-      addEqument(this.newDeviceName, this.newDeviceFunc, this.newDeviceTypeId, this.newLabId, this.newUuid).then(res => {
-        console.log(res);
-      }).catch(error => {
-        console.error(error);
-      })
+    submitForm(formName) {
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          addEqument(
+            this.equForm.newDeviceFunc,
+            this.equForm.newDeviceName,
+            this.equForm.newDeviceTypeId,
+            this.equForm.newLabId,
+            this.equForm.newUuid,
+          )
+            .then((res) => {
+              console.log(res);
+            })
+            .catch((error) => {
+              console.error(error);
+            });
+          alert("提交成功!");
+          location.reload();
+        } else {
+          alert("请填写完整");
+        }
+      });
     },
   },
-  created() {
-    getEquList().then(res => {
-      this.eqpinform = res.data
-    })
+  mounted() {
+    getEquList().then((res) => {
+      this.eqpinform = res.data;
+      console.log(this.eqpinform);
+    });
 
-    getEquCate().then(res => {
-      this.equcategory = res.data
+    getEquCate().then((res) => {
+      this.equcategory = res.data;
       // console.log(this.equcategory);
-    })
+    });
 
-    getLabList().then(res => {
-      this.labinform = res.data
+    getLabList().then((res) => {
+      this.labinform = res.data;
       // console.log(this.labinform);
-    })
-
-
+    });
   },
-}
-
+};
 </script>
 <style scoped>
-.clear{
-  clear:both;
-  height:0px;
+.clear {
+  clear: both;
+  height: 0px;
 }
-.equbg{
+.equbg {
   background-image: url("../../assets/img/qqq6.png");
   width: 100%;
   height: 100%;
@@ -136,7 +223,7 @@ export default {
   border-radius: 8px; */
   width: 50%;
   /* height: auto; */
-  float:left;
+  float: left;
 }
 
 .text-home {
@@ -145,11 +232,11 @@ export default {
   line-height: 55px;
   font-size: 20px;
 }
-div /deep/ .el-form-item__label{
-  color:rgb(93, 90, 90);
-} 
-div /deep/ .el-button.el-button--primary{
-  background-color:rgb(134, 167, 224);
-  border-color:rgb(134, 167, 224);
-} 
+div /deep/ .el-form-item__label {
+  color: rgb(93, 90, 90);
+}
+div /deep/ .el-button.el-button--primary {
+  background-color: rgb(134, 167, 224);
+  border-color: rgb(134, 167, 224);
+}
 </style>
