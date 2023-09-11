@@ -169,13 +169,13 @@
               >
             </router-link>
             <router-link to="/equlist">
-              <el-menu-item @click="closeDrawer" index="2-3" class="secondly"
+              <el-menu-item @click="closeDrawer" index="2-2" class="secondly"
                 >设备列表</el-menu-item
               >
             </router-link>
-            <router-link to="/equp">
-              <el-menu-item @click="closeDrawer" index="2-4" class="secondly"
-                >日志</el-menu-item
+            <router-link to="/equcategory">
+              <el-menu-item @click="closeDrawer" index="2-3" class="secondly"
+                >设备分类</el-menu-item
               >
             </router-link>
           </el-submenu>
@@ -225,7 +225,10 @@
           <el-submenu index="6">
             <div slot="title" class="firstly">商品</div>
             <router-link to="/goods">
-              <el-menu-item @click="closeDrawer" index="6-1" class="secondly"
+              <el-menu-item 
+                @click="closeDrawer" 
+                index="6-1" 
+                class="secondly"
                 >商品分类</el-menu-item
               >
             </router-link>
@@ -236,6 +239,15 @@
               class="secondly"
               v-if="this.$store.state.cu_role === 'admin'"
               >商品详情</el-menu-item
+            >
+            </router-link>
+            <router-link to="/goods/category">
+              <el-menu-item 
+              @click="closeDrawer" 
+              index="6-3" 
+              class="secondly"
+              v-if="this.$store.state.cu_role === 'admin'"
+              >商品分类</el-menu-item
             >
             </router-link>
           </el-submenu>

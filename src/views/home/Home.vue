@@ -1,9 +1,9 @@
 <template>
   <div class="total">
     <!-- 分割线 -->
-    <div style="height=30px">
+    <div style="height=30px" class="first">
       <br />
-    </div class="first">
+    </div>
     <!-- 标题+图标 -->
     <div>
     <div class="left">
@@ -34,7 +34,7 @@
     <!-- 公告部分 -->
     <div class="text-area">
       <p class="title">
-        {{ this.notice.title }}<br />日期:{{ this.notice.date | formatDate }}
+        {{ this.notice.title }}<br />日期:{{ this.notice.publishDate | formatDate }}
       </p>
       <p class="content-area">{{ this.notice.content }}</p>
       <div class="text-more">
@@ -148,6 +148,7 @@
 </template>
 
 <script>
+import { getNoticeList } from "../../network/notice";
 export default {
   data() {
     return {
@@ -222,6 +223,12 @@ export default {
   mounted() {
     this.MaintainData = this.$store.state.MaintainData;
     this.proData = this.$store.state.proData;
+    getNoticeList().then(res=>{
+      const data = res.data;
+      const sortedData = data.sort((a,b)=>a.noticeId - b.noticeId);
+      this.notice = sortedData[ 0 ];
+      this.notice.publishDate = new Date((this.notice.publishDate).substring(0,10));
+    })
   },
 };
 </script>

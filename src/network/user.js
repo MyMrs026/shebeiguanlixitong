@@ -10,3 +10,13 @@ export function getUserList() {
     method:'post'
   })
 }
+export function login(email,password){
+  return request({
+    url:'/user/login',
+    method: 'post',
+    data:{
+      email:email,
+      password:password  
+    }
+  })
+}

@@ -18,10 +18,10 @@
                   :key="item.notice_id"
                   style="cursor: pointer">
                   <div style="display: flex; flex-direction: row;">
-                    <div class="notice_content" @click="gotoNoticeDetail(item.notice_id)">
+                    <div class="notice_content" @click="gotoNoticeDetail(item.noticeId)">
                       <font>{{ item.title }}</font>
                       <!-- 日期的显示格式:xxxx年xx月xx日 -->
-                      <font>{{ item.date | formatDate }}</font>
+                      <font>{{ item.publishDate | formatDate }}</font>
                     </div>
                     <div class="notice_delete">
                       <el-button @click="noticeDel" size="mini" type="danger" icon="el-icon-delete" circle></el-button>
@@ -40,7 +40,7 @@
                     <div class="notice_content" @click="gotoNoticeDetail(item.notice_id)">
                       <font>{{ item.title }}</font>
                       <!-- 日期的显示格式:xxxx年xx月xx日 -->
-                      <font>{{ item.date | formatDate }}</font>
+                      <font>{{ item.publishDate | formatDate }}</font>
                     </div>
                   </div>
                 </li>
@@ -93,11 +93,18 @@
     </div>
     <!-- 下半部分为编辑公告内容，只有用户为管理员时才能显示 -->
     <div class="box-wrap" v-if="this.$store.state.cu_role === 'admin'">
+      
       <div class="box-main">
         <div class="right-box-main">
           <div class="catalog_title">
             <p>编辑公告内容</p>
           </div>
+          <!-- <el-form :rules="rules" class="demo-ruleForm">
+            <el-form-item ></el-form-item>
+            <el-form-item></el-form-item>
+            <el-form-item></el-form-item>
+            <el-form-item></el-form-item>
+          </el-form> -->
           <div class="publish_notice_title">
             <el-input 
               placeholder="在此输入公告标题" 
@@ -111,6 +118,8 @@
             <div class="block">
               <el-date-picker
                 v-model="publish_date"
+                value-format="yyyy-MM-dd"
+                @input = "handleInput"
                 align="right"
                 type="date"
                 placeholder="选择日期"
@@ -130,7 +139,7 @@
             </el-input>
           </div>
           <div class="publish_button">
-            <el-button plain type="success">发布公告</el-button>
+            <el-button plain type="success" @click="publishButton">发布公告</el-button>
           </div>
         </div>
       </div>
@@ -140,10 +149,11 @@
 </template>
 
 <script>
-import { getNoticeList } from "../../network/notice";
+import { getNoticeList,publishNotice } from "../../network/notice";
 export default {
   data() {
     return {
+      noticesCount: 0,
       notice_title: "",
       notice_content: "",
       notices: [],
@@ -179,18 +189,33 @@ export default {
           },
         ],
       },
-      publish_date:'',
+      publish_date:"",
     };
   },
-  // created() {
-  //   getNoticeList().then(res=>{
-  //     console.log(res.data);
-  //     this.notices = res.data;
-  //     console.log(this.notices);
-  //   })
-  // },
+  created() {
+  
+  },
   mounted() {
-    this.notices = this.$store.state.notices;
+    getNoticeList().then(res=>{
+      const data = res.data;
+      const sortedData = data.sort((a,b)=>a.noticeId - b.noticeId);
+      this.notices = sortedData;
+      console.log(this.notices);
+      this.notices = this.notices.map(obj => {
+        const { noticeId,title,content,publishDate } = obj;
+        const publish_date = new Date(publishDate);
+
+        return {
+          noticeId,
+          title,
+          content,
+          publishDate:publish_date
+        }
+      });
+      console.log(this.notices);
+      // this.notices.publishDate = new Date((this.notice.publishDate).substring(0,10));
+      // console.log(this.notice);
+    })
   },
   computed: {
     paginatedData() {
@@ -218,6 +243,15 @@ export default {
     gotoNoticeDetail(id) {
       // console.log(id)
       this.$router.push({ path: `/notice/${id}` });
+    },
+    handleInput(value){
+      const inputDate = new Date(value);
+      if(isNaN(inputDate.getTime())){
+        // 输入的不是有效日期，进行处理，例如重置日期选择器的值
+      this.date = null;
+      // 或者给出相应的提示
+      // this.$message.error('请输入有效的日期');
+      }
     },
     updatePagination() {
       this.currentPage = 1;
@@ -258,6 +292,33 @@ export default {
             message: '已取消删除'
           });          
         });
+    },
+    //发布公告的逻辑请求
+    publishButton() {
+      if(this.notice_content == '' || this.publish_date == '' || this.notice_title== ''){
+        this.$alert('请输入完整', '填写不全', {
+          confirmButtonText: '确定',
+          callback: action => {
+            this.$message({
+              type: 'info',
+              message: `信息填写完整才能上传公告: ${ action }`
+            });
+          }
+        })
+      }else{
+      // console.log(this.noticesCount);
+      this.noticesCount = this.notices.length + 1;
+      // console.log(this.noticesCount);
+      publishNotice(this.notice_content,this.noticesCount,this.publish_date,this.notice_title)
+        .then(res => {
+        //处理返回的响应数据
+        const data = res.data
+        console.log(data);
+      }).catch(error=> {
+        console.error(error);
+      })
+      this.noticesCount ++;
+      }
     }
   },
 };

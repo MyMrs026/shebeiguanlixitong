@@ -16,7 +16,9 @@
           <el-descriptions-item label="地区">
             苏州市
           </el-descriptions-item>
-          <el-descriptions-item label="邮箱">12345@163.com</el-descriptions-item></el-descriptions-item>
+          <el-descriptions-item label="邮箱">
+            12345@163.com
+          </el-descriptions-item>
         </el-descriptions>
       </el-tab-pane>
 
