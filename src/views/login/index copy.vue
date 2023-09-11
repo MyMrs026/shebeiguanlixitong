@@ -9,7 +9,7 @@
       <form @submit="login">
         <div style="text-align: center;">
           <img src="../../assets/img/my.png" title="user icon" style="width:40px;height:40px"/>    
-          <input id="username"  placeholder="请输入邮箱" type="text" v-model="username" required >
+          <input id="username"  placeholder="请输入用户名" type="text" v-model="username" required >
         </div>
         <br>
         <div style="text-align: center;">
