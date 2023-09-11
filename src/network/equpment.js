@@ -12,14 +12,6 @@ export function getEquList() {
   })
 }
 
-//获取设备分类，注意方法是'post',看接口文档
-export function getEquCate() {
-  return request({
-    url:'/device/getDeviceTypeList',
-    method: 'post'
-  })
-}
-
 //添加设备
 export function addEqument(deviceFunc,deviceName,deviceTypeId,labId,uuid) {
   return request({
@@ -31,6 +23,101 @@ export function addEqument(deviceFunc,deviceName,deviceTypeId,labId,uuid) {
       deviceTypeId:deviceTypeId,
       labId:labId,
       uuid:uuid
+    }
+  })
+}
+
+//更新设备信息
+export function updateDevice(deviceFunc,deviceName,deviceTypeId,labId,uuid){
+  return request({
+    url:'/device/addDevice',
+    method: 'post',
+    data:{
+      deviceFunc:deviceFunc,
+      deviceName:deviceName,
+      deviceTypeId:deviceTypeId,
+      labId:labId,
+      uuid:uuid
+    }
+  })
+}
+
+//获取设备分类，注意方法是'post',看接口文档
+export function getEquCate() {
+  return request({
+    url:'/device/getDeviceTypeList',
+    method: 'post'
+  })
+}
+
+//更新设备分类，通过设备id更改
+export function updateSingleDeviceType(deviceTypeId,typeName) {
+  return request({
+    url:'/device/updateSingleDeviceType',
+    method: 'post',
+    data:{
+      deviceTypeId:deviceTypeId,
+      typeName:typeName
+    }
+  })
+}
+
+//获取设备维修记录列表
+export function getDeviceMaintenanceList(){
+  return request({
+    url:'/device/getDeviceMaintenanceList',
+    method:'get'
+  })
+}
+
+//设备维修登记
+export function addDeviceMaintenance(
+  actualEndTime,
+  content,
+  deviceId,
+  deviceMaintenanceId,
+  expectedEndTime,
+  maintenanceStaff,
+  remark,
+  startTime){
+  return request({
+    url:'/device/addDeviceMaintenance',
+    method:'post',
+    data:{
+      actualEndTime:actualEndTime,
+      content:content,
+      deviceId:deviceId,
+      deviceMaintenanceId:deviceMaintenanceId,
+      expectedEndTime:expectedEndTime,
+      maintenanceStaff:maintenanceStaff,
+      remark:remark,
+      startTime:startTime
+    }
+  })
+}
+
+//设备维修修改
+export function updateDeviceMaintenance(
+  actualEndTime,
+  content,
+  deviceId,
+  deviceMaintenanceId,
+  expectedEndTime,
+  maintenanceStaff,
+  remark,
+  startTime){
+  return request({
+    url:'/device/updateDeviceMaintenance',
+    method:'post',
+    data:{
+      actualEndTime:actualEndTime,
+      content:content,
+      deviceId:deviceId,
+      deviceMaintenanceId:deviceMaintenanceId,
+      expectedEndTime:expectedEndTime,
+      maintenanceStaff:maintenanceStaff,
+      remark:remark,
+      startTime:startTime
     }
   })
 }

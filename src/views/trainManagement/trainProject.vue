@@ -30,7 +30,7 @@
       <el-col :span="12">
         <div class="right-div">
           <div class="form-area" v-if="this.$store.state.cu_role === 'admin'">
-            <el-form class="train-form" label-width="80px" :model="trainForm" ref="trainForm"  :rules="rules">
+            <el-form class="train-form" label-width="80px" :model="trainForm" ref="trainForm" :rules="rules">
               <!-- <el-form-item
                 label="设备名称"
                 prop="devicename"

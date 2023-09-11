@@ -69,9 +69,9 @@
            <div style="width: 55%;
   display:fixed;margin:10px;top:0px;float:left">
            <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
-          <el-form-item label="项目id" prop="id" style="margin-top: 10px;">
+          <!-- <el-form-item label="项目id" prop="id" style="margin-top: 10px;">
             <el-input v-model="ruleForm.id" style="width: 100%;"></el-input>
-          </el-form-item>
+          </el-form-item> -->
           <el-form-item label="项目名称" prop="name" style="margin-top: 10px;">
             <el-input v-model="ruleForm.name" style="width: 100%;"></el-input>
           </el-form-item>
@@ -106,7 +106,7 @@
             <el-input v-model="ruleForm.leader" style="width: 100%;"></el-input>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" @click="submitForm">立即创建</el-button>
+            <el-button type="primary" @click="submitForm('ruleForm')">立即创建</el-button>
             <el-button @click="resetForm('ruleForm')">重置</el-button>
           </el-form-item>
         </el-form>
@@ -142,10 +142,10 @@ export default {
       }],
       value: 'Ⅰ类', // 默认的项目的类别
       // 所有项目的信息，也是写死的
-      proData: [],
+      proData: [], //项目信息
       pro_equps:[], //实验设备选择器绑定的设备列表
       ruleForm: { //表单绑定的数据信息，写完后传到这里
-        id:'',
+        // id:'',
         name: '',
         category: '',
         desc: '',
@@ -155,9 +155,9 @@ export default {
         leader: '',
       },
       rules: { //这里是表单的一些规则，比如必填项，字符长度等
-        id: [
-          { required: true, message: '请填写项目的id', trigger: 'blur' }
-        ],
+        // id: [
+        //   { required: true, message: '请填写项目的id', trigger: 'blur' }
+        // ],
         name: [
           { required: true, message: '请输入项目名字', trigger: 'blur' },
           { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
@@ -186,13 +186,15 @@ export default {
     }
   },
   created() {
+    
+  },
+  mounted() {
     //获取所有的设备信息
     getEquList().then(res => {
       this.pro_equps = res.data
     })
-  },
-  mounted() {
-   
+   //获取所有项目的信息
+   this.proData = this.$store.state.proData;
   },
   computed: {
     //这里是上半部分通过选择项目类别筛选出所显示的项目
@@ -201,19 +203,28 @@ export default {
     },
   },
   methods: {
-    submitForm() {
-      this.proData.push({...this.ruleForm});
-      console.log(this.proData);
-      this.ruleForm = {
-        id:'',
-        name: '',
-        category: '',
-        desc: '',
-        equ_value: '',
-        purpose: '',
-        member: '',
-        leader: ''
-      }
+    submitForm(formName) {
+      this.$refs[formName].validate((valid) => {
+        if(valid) {
+          //成功提交
+          console.log("成功提交");
+          console.log(this.ruleForm);
+          this.$store.state.proData.push({...this.ruleForm});
+          console.log(this.proData);
+          this.ruleForm = {
+            name: '',
+            category: '',
+            desc: '',
+            equ_value: '',
+            purpose: '',
+            member: '',
+            leader: ''
+          }
+        } else {
+          alert("请填写完整")
+          return false;
+        }
+      })
     },
     resetForm(formName) {
       this.$refs[formName].resetFields();

@@ -108,6 +108,72 @@
         </el-form-item>
       </el-form>
     </div>
+    <div class="equUpdate" v-if="this.$store.state.cu_role === 'admin'">
+      <div class="text-home">
+        <p>更新设备信息</p>
+      </div>
+      <el-form
+        :model="eqpUpdateForm"
+        :rules="rules1"
+        ref="eqpUpdateForm"
+        label-width="120px"
+        class="demo-ruleForm"
+      >
+        <el-form-item label="设备名" prop="newDeviceName">
+          <el-input
+            v-model="eqpUpdateForm.newDeviceName"
+            style="width: 400px"
+          ></el-input>
+        </el-form-item>
+        <el-form-item label="设备功能" prop="newDeviceFunc">
+          <el-input
+            v-model="eqpUpdateForm.newDeviceFunc"
+            style="width: 400px"
+          ></el-input>
+        </el-form-item>
+        <el-form-item label="设备类型" prop="newDeviceTypeId">
+          <el-select
+            v-model="eqpUpdateForm.newDeviceTypeId"
+            placeholder="选择设备类型"
+            style="width: 400px"
+          >
+            <el-option
+              v-for="item in equcategory"
+              :key="item.deviceTypeId"
+              :label="item.typeName"
+              :value="item.deviceTypeId"
+            >
+            </el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="实验室" prop="newLabId">
+          <el-select
+            v-model="eqpUpdateForm.newLabId"
+            placeholder="选择实验室"
+            style="width: 400px"
+          >
+            <el-option
+              v-for="item in labinform"
+              :key="item.labId"
+              :label="item.labName"
+              :value="item.labId"
+            >
+            </el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="设备说明书" prop="newUuid">
+          <el-input
+            v-model="eqpUpdateForm.newUuid"
+            style="width: 400px"
+          ></el-input>
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary" @click="updateForm('eqpUpdateForm')"
+            >更新</el-button
+          >
+        </el-form-item>
+      </el-form>
+    </div>
     <div style="width: 40%; height: 450px; float: left; margin-top: 10px">
       <img
         src="../../assets/img/椰子树.png"
@@ -120,7 +186,7 @@
 
 <script>
 // import axios from 'axios';
-import { getEquList, getEquCate, addEqument } from "../../network/equpment";
+import { getEquList, getEquCate, addEqument, updateDevice } from "../../network/equpment";
 import { getLabList } from "../../network/labtory";
 export default {
   data() {
@@ -135,7 +201,32 @@ export default {
         newLabId: 1,
         newUuid: "",
       },
+      eqpUpdateForm: {
+        newDeviceName: "",
+        newDeviceFunc: "",
+        newDeviceTypeId: 1,
+        newLabId: 1,
+        newUuid: "",
+      },
       rules: {
+        newDeviceName: [
+          { required: true, message: "请填写设备名称", trigger: "blur" },
+        ],
+        newDeviceFunc: [
+          { required: true, message: "请填写设备功能", trigger: "blur" },
+        ],
+        newDeviceTypeId: [
+          { required: true, message: "请选择设备类别", trigger: "change" },
+        ],
+        newLabId: [
+          {
+            required: true,
+            message: "请选择设备隶属实验室",
+            trigger: "change",
+          },
+        ],
+      },
+      rules1: {
         newDeviceName: [
           { required: true, message: "请填写设备名称", trigger: "blur" },
         ],
@@ -164,7 +255,30 @@ export default {
             this.equForm.newDeviceName,
             this.equForm.newDeviceTypeId,
             this.equForm.newLabId,
-            this.equForm.newUuid,
+            this.equForm.newUuid
+          )
+            .then((res) => {
+              console.log(res);
+            })
+            .catch((error) => {
+              console.error(error);
+            });
+          alert("提交成功!");
+          location.reload();
+        } else {
+          alert("请填写完整");
+        }
+      });
+    },
+    updateForm(formName) {
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          updateDevice(
+            this.eqpUpdateForm.newDeviceFunc,
+            this.eqpUpdateForm.newDeviceName,
+            this.eqpUpdateForm.newDeviceTypeId,
+            this.eqpUpdateForm.newLabId,
+            this.eqpUpdateForm.newUuid
           )
             .then((res) => {
               console.log(res);
@@ -188,7 +302,7 @@ export default {
 
     getEquCate().then((res) => {
       this.equcategory = res.data;
-      // console.log(this.equcategory);
+      console.log(this.equcategory);
     });
 
     getLabList().then((res) => {
@@ -218,12 +332,12 @@ export default {
 }
 
 .equAdd {
-  margin: 10px;
+  /* margin: 10px; */
   /* border: 1px solid rgb(255, 255, 255);
   border-radius: 8px; */
   width: 50%;
   /* height: auto; */
-  float: left;
+  /* float: left; */
 }
 
 .text-home {

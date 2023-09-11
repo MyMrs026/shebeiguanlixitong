@@ -25,6 +25,8 @@ const Craft = () => import('@/views/craftManagement/craftManagement')
 const Equcraft = () => import('../views/craftManagement/equpCraft.vue')
 const Craftparams = () => import('../views/craftManagement/craftParams.vue')
 const Help = () =>import('../views/helpPage/help.vue')
+const EquCategory = () =>import('../views/equList/equCategory.vue')
+
 
 const Goods = () => import('../views/goods/goodsPage.vue')
 const Goodscategory = () => import('../views/goods/goodsCategory.vue')
@@ -142,6 +144,11 @@ const routes = [
     path: '/equlist',
     name: 'EquList',
     component: EquList
+  },
+  {
+    path: '/equcategory',
+    name: 'EquCategory',
+    component: EquCategory
   },
   {
     path: '/personalInfo',
