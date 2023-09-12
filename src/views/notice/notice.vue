@@ -314,6 +314,8 @@ export default {
         //处理返回的响应数据
         const data = res.data
         console.log(data);
+        alert("发布成功");
+        location.reload();
       }).catch(error=> {
         console.error(error);
       })

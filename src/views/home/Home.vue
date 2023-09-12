@@ -1,7 +1,7 @@
 <template>
   <div class="total">
     <!-- 分割线 -->
-    <div style="height=30px" class="first">
+    <div class="first">
       <br />
     </div>
     <!-- 标题+图标 -->
@@ -243,7 +243,7 @@ export default {
   flex-direction: column;
 }
 .first{
-  height:300px;
+  height:50px;
 }
 .left{
   float:left;
@@ -284,6 +284,8 @@ export default {
 }
 
 .text-area {
+  overflow: auto;
+  height: auto;
   border: 1px solid white;
   border-radius: 8px;
   opacity: 0.8;
@@ -292,6 +294,7 @@ export default {
   float:left;
   padding: 10px;
   background-color: rgb(255, 253, 253);
+  
 }
 
 .title {

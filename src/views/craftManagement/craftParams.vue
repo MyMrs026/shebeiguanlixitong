@@ -42,9 +42,15 @@
     </div>
     <div class="form-equcraft-use" v-if="this.$store.state.cu_role === 'admin'">
       <p class="text-title">设置设备工艺</p>
-      <el-form class="form-equcraft" label-width="80px" :model="equCraftForm">
-        <el-form-item label="设备名称">
-          <el-select v-model="value" placeholder="请选择" style="width: 400px">
+      <el-form 
+        class="form-equcraft" 
+        label-width="100px" 
+        :model="equCraftForm"
+        ref="equCraftForm"
+        :rules="rules"
+      >
+        <el-form-item label="设备名称" prop="deviceName">
+          <el-select v-model="value" placeholder="请选择" style="width: 300px">
             <el-option
               v-for="item in device_options"
               :key="item.value"
@@ -54,29 +60,29 @@
             </el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="设备温度">
+        <el-form-item label="设备温度" prop="temperature">
           <el-input
             v-model="equCraftForm.temperature"
-            style="width: 400px"
+            style="width: 300px"
           ></el-input>
         </el-form-item>
-        <el-form-item label="设备压力">
-          <el-input v-model="equCraftForm.pressure" style="width: 400px"></el-input>
+        <el-form-item label="设备压力" prop="pressure">
+          <el-input v-model="equCraftForm.pressure" style="width: 300px"></el-input>
         </el-form-item>
-        <el-form-item label="设备速度">
+        <el-form-item label="设备速度" prop="speed">
           <el-input
             v-model="equCraftForm.speed"
-            style="width: 400px"
+            style="width: 300px"
           ></el-input>
         </el-form-item>
-        <el-form-item label="生产时间">
+        <el-form-item label="生产时间" prop="time">
           <el-input
             v-model="equCraftForm.time"
-            style="width: 400px"
+            style="width: 300px"
           ></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" plain @click="submitForm"
+          <el-button type="primary" plain @click="submitForm('equCraftForm')"
             >提交</el-button
           >
           <el-button @click="resetForm('equCraftForm')">重置</el-button>
@@ -126,12 +132,39 @@ export default {
         {url:require('../../assets/img/device1.jpg')},
         {url:require('../../assets/img/device4.jpg')},
         
-      ]
+      ],
+      rules: {
+        deviceName:[
+          { required:true,message:'请选择设备',trigger:'blur' }
+        ],
+        temperature: [
+          { required:true,message:'请填写温度',trigger:'blur' }
+        ],
+        pressure: [
+          { required:true,message:'请填写压力',trigger:'blur' }
+        ],
+        speed: [
+          { required:true,message:'请填写速度',trigger:'blur' }
+        ],
+        time: [
+          { required:true,message:'请填写时间',trigger:'blur' }
+        ]
+      }
     };
   },
   methods: {
-    submitForm() {
-      console.log("提交");
+    submitForm(formName) {
+      this.$refs[formName].validate((valid) => {
+        if(valid) {
+          //成功提交
+          console.log("提交成功");
+          location.reload();
+        } else {
+          alert("请填写完整")
+          location.reload();
+          return false;
+        }
+      })
     },
     resetForm(equCraftForm) {
       this.$refs[equCraftForm].resetFields();
