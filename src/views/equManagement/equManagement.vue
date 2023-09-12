@@ -123,7 +123,7 @@ export default {
       equpsUse: [],
       equps: [],
       currentPage: 1,//part1分页功能中当前的页码
-      pageSize: 5,
+      pageSize: 3,
       searchKeyword: '',//part1输入框中的内容
       searchResult: [],//part1搜索结果存放的数组
       equpsStatus: [],
