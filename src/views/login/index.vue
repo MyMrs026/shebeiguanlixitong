@@ -61,7 +61,7 @@ export default {
       value:'', //与身份信息下拉框进行v-model双向绑定,也是下面用户登录身份的信息。
     };
   },
-  methods: {
+  methods: {  
     login(event) {
       // 方法是 JavaScript 中一个常用的事件方法，它用于阻止事件的默认行为或默认操作发生。当事件发生时，通常会触发一些默认行为，例如点击链接时会跳转到链接的URL，提交表单时会发送表单数据到服务器，按下键盘的 Enter 键时可能会触发表单的提交等。
       event.preventDefault();
