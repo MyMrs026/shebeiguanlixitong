@@ -54,6 +54,9 @@ export default {
       }, {
         value: 'admin',
         label: '管理人员'
+      }, {
+        value: 'engineer',
+        label: '工程师'
       }],
       value:'', //与身份信息下拉框进行v-model双向绑定,也是下面用户登录身份的信息。
     };
@@ -67,6 +70,8 @@ export default {
       const validPassword = 'admin';
       const validUsername1 = 'staff';
       const validPassword1 = 'staff';
+      const validUsername2 = 'engineer';
+      const validPassword2 = 'engineer';
       if (this.username === validUsername && this.password === validPassword && (this.value == 'admin')) {
         const token = this.generateToken();
         //生成令牌,为了防止用户没登陆通过输入路由地址就能访问其他页面
