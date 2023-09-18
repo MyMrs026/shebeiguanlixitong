@@ -14,7 +14,7 @@ export const INITIAL_EVENTS = [
     id: createEventId(),
     title: '设备ASE的使用',
     start: todayStr + 'T09:00:00',
-    end: todayStr + 'T11:00:00'
+    end: todayStr + 'T11:00:00',
   }
 ]
 
