@@ -72,72 +72,102 @@
             </el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="设备温度" prop="temperature">
+        <el-form-item label="设备温度" prop="temperature_middle">
           <el-input
-            placeholder="中位数"
-            v-model="equCraftForm.temperature.middle"
-            style="width: 200px"
-          ></el-input>
-          <el-input
-            placeholder="枚举值"
-            v-model="equCraftForm.temperature.enum"
-            style="width: 200px"
-          ></el-input>
-          <el-input
-            placeholder="数值范围"
-            v-model="equCraftForm.temperature.range"
-            style="width: 200px"
-          ></el-input>
-          <el-input
-            placeholder="精度"
-            v-model="equCraftForm.temperature.accuracy"
+            v-model="equCraftForm.temperature_middle"
+            placeholder="温度中位数"
             style="width: 200px"
           ></el-input>
         </el-form-item>
-        <el-form-item label="设备压力" prop="pressure">
+
+        <el-form-item prop="temperature_enum">
           <el-input
-            placeholder="中位数"
-            v-model="equCraftForm.pressure.middle"
-            style="width: 200px"
-          ></el-input>
-          <el-input
-            placeholder="枚举值"
-            v-model="equCraftForm.pressure.enum"
-            style="width: 200px"
-          ></el-input>
-          <el-input
-            placeholder="数值范围"
-            v-model="equCraftForm.pressure.range"
-            style="width: 200px"
-          ></el-input>
-          <el-input
-            placeholder="精度"
-            v-model="equCraftForm.pressure.accuracy"
+            v-model="equCraftForm.temperature_enum"
+            placeholder="温度枚举值"
             style="width: 200px"
           ></el-input>
         </el-form-item>
-        <el-form-item label="设备速度" prop="speed">
+
+        <el-form-item prop="temperature_range">
           <el-input
-            placeholder="中位数"
-            v-model="equCraftForm.speed.middle"
-            style="width: 200px"
-          ></el-input>
-          <el-input
-            placeholder="枚举值"
-            v-model="equCraftForm.speed.enum"
-            style="width: 200px"
-          ></el-input>
-          <el-input
-            placeholder="数值范围"
-            v-model="equCraftForm.speed.range"
-            style="width: 200px"
-          ></el-input>
-          <el-input
-            placeholder="精度"
-            v-model="equCraftForm.speed.accuracy"
+            v-model="equCraftForm.temperature_range"
+            placeholder="温度数值范围"
             style="width: 200px"
           ></el-input>
         </el-form-item>
+
+        <el-form-item prop="temperature_accuracy">
+          <el-input
+            v-model="equCraftForm.temperature_accuracy"
+            placeholder="温度精度"
+            style="width: 200px"
+          ></el-input>
+        </el-form-item>
+
+        <el-form-item label="设备压力" prop="pressure_middle">
+          <el-input
+            v-model="equCraftForm.pressure_middle"
+            placeholder="压力中位数"
+            style="width: 200px"
+          ></el-input>
+        </el-form-item>
+
+        <el-form-item prop="pressure_enum">
+          <el-input
+            v-model="equCraftForm.pressure_enum"
+            placeholder="压力枚举值"
+            style="width: 200px"
+          ></el-input>
+        </el-form-item>
+
+        <el-form-item prop="pressure_range">
+          <el-input
+            v-model="equCraftForm.pressure_range"
+            placeholder="压力数值范围"
+            style="width: 200px"
+          ></el-input>
+        </el-form-item>
+
+        <el-form-item prop="pressure_accuracy">
+          <el-input
+            v-model="equCraftForm.pressure_accuracy"
+            placeholder="压力精度"
+            style="width: 200px"
+          ></el-input>
+        </el-form-item>
+
+        <el-form-item label="设备速度" prop="speed_middle">
+          <el-input
+            v-model="equCraftForm.speed_middle"
+            placeholder="速度中位数"
+            style="width: 200px"
+          ></el-input>
+        </el-form-item>
+
+        <el-form-item prop="speed_enum">
+          <el-input
+            v-model="equCraftForm.speed_enum"
+            placeholder="速度枚举值"
+            style="width: 200px"
+          ></el-input>
+        </el-form-item>
+
+        <el-form-item prop="speed_range">
+          <el-input
+            v-model="equCraftForm.speed_range"
+            placeholder="速度数值范围"
+            style="width: 200px"
+          ></el-input>
+        </el-form-item>
+
+        <el-form-item prop="speed_accuracy">
+          <el-input
+            v-model="equCraftForm.speed_accuracy"
+            placeholder="速度精度"
+            style="width: 200px"
+          ></el-input>
+        </el-form-item>
+
         <el-form-item label="生产时间" prop="time">
           <el-input v-model="equCraftForm.time" style="width: 300px"></el-input>
         </el-form-item>
@@ -162,24 +192,21 @@ export default {
       message: "工艺参数",
       craftParams: [],
       equCraftForm: {
-        temperature: {
-          middle: "", //中位数
-          enum: "", //枚举值
-          range: "", //范围
-          accuracy: "", //精度
-        },
-        pressure: {
-          middle: "",
-          enum: "",
-          range: "",
-          accuracy: "",
-        },
-        speed: {
-          middle: "",
-          enum: "",
-          range: "",
-          accuracy: "",
-        },
+        temperature_middle: "", //温度中位数
+        temperature_enum: "", //温度枚举值
+        temperature_range: "", //温度范围
+        temperature_accuracy: "", //温度精度
+
+        pressure_middle: "", //压力中位数
+        pressure_enum: "", //压力枚举值
+        pressure_range: "", //压力范围
+        pressure_accuracy: "", //压力精确度
+
+        speed_middle: "", //速度中位数
+        speed_enum: "", //速度枚举值
+        speed_range: "", //速度范围
+        speed_accuracy: "", //速度精确值
+
         time: "",
       },
       device_options: [
@@ -208,11 +235,42 @@ export default {
         { url: require("../../assets/img/device4.jpg") },
       ],
       rules: {
-        temperature: [
-          { required: true, message: "请填写温度", trigger: "blur" },
+        temperature_middle: [
+          { required: true, message: "请填写温度中位数", trigger: "blur" },
         ],
-        pressure: [{ required: true, message: "请填写压力", trigger: "blur" }],
-        speed: [{ required: true, message: "请填写速度", trigger: "blur" }],
+        temperature_enum: [
+          { required: true, message: "请填写温度枚举值", trigger: "blur" },
+        ],
+        temperature_range: [
+          { required: true, message: "请填写数值温度范围", trigger: "blur" },
+        ],
+        temperature_accuracy: [
+          { required: true, message: "请填写温度精度", trigger: "blur" },
+        ],
+        pressure_middle: [
+          { required: true, message: "请填写压力中位数", trigger: "blur" },
+        ],
+        pressure_enum: [
+          { required: true, message: "请填写压力枚举值", trigger: "blur" },
+        ],
+        pressure_range: [
+          { required: true, message: "请填写数值压力范围", trigger: "blur" },
+        ],
+        pressure_accuracy: [
+          { required: true, message: "请填写温度精度", trigger: "blur" },
+        ],
+        speed_middle: [
+          { required: true, message: "请填写速度中位数", trigger: "blur" },
+        ],
+        speed_enum: [
+          { required: true, message: "请填写速度枚举值", trigger: "blur" },
+        ],
+        speed_range: [
+          { required: true, message: "请填写速度范围", trigger: "blur" },
+        ],
+        speed_accuracy: [
+          { required: true, message: "请填写速度精度", trigger: "blur" },
+        ],
         time: [{ required: true, message: "请填写时间", trigger: "blur" }],
       },
     };
@@ -222,8 +280,8 @@ export default {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           //成功提交
-          console.log("提交成功");
-          location.reload();
+          alert("提交成功");
+          // location.reload();
         } else {
           alert("请填写完整");
           return false;
@@ -240,9 +298,7 @@ export default {
     this.craftParams = this.$store.state.craftParams;
     // console.log(this.craftParams);
   },
-  mounted() {
-    
-  },  
+  mounted() {},
 };
 </script>
 <style scope>

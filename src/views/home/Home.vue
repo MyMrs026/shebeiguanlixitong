@@ -158,7 +158,7 @@ export default {
       myBooks: [],
       //设备使用状态表数据
       equpsStatus: [],
-      notice: {}, //公告信息，用来接收从axios传过来的公告信息
+      notice: [], //公告信息，用来接收从axios传过来的公告信息
       MaintainData: [], //设备维保记录
       isUsage:false,
       isBook:false,
@@ -205,7 +205,7 @@ export default {
   },
   created() {
     //目前是从vuex中读取数据，后期可以从axios中读取数据
-    this.notice = this.$store.state.notices[0];
+    
     this.equpsUse = this.$store.state.equpsUse;
     this.myBooks = this.$store.state.myBooks;
     this.equpsStatus = this.$store.state.equpsStatus;
@@ -221,6 +221,7 @@ export default {
     },
   },
   mounted() {
+    this.notice = this.$store.state.notices;
     this.MaintainData = this.$store.state.MaintainData;
     this.proData = this.$store.state.proData;
     getNoticeList().then(res=>{

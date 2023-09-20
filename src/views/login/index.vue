@@ -18,12 +18,12 @@
         </div>
         <br>
       <div style="text-align: center;">
-        <img src="../../assets/img/rights.png" title="rights icon" style="width:40px;height:40px"/>
-        <select id="select" v-model="value">
+        <!-- <img src="../../assets/img/rights.png" title="rights icon" style="width:40px;height:40px"/> -->
+        <!-- <select id="select" v-model="value">
           <option disabled selected>请选择您的身份</option>
           <option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
           </option>
-        </select>
+        </select> -->
       </div>
       <br><br>
       <div style="text-align: center;" > 
@@ -54,11 +54,8 @@ export default {
       }, {
         value: 'admin',
         label: '管理人员'
-      }, {
-        value: 'engineer',
-        label: '工程师'
       }],
-      value:'', //与身份信息下拉框进行v-model双向绑定,也是下面用户登录身份的信息。
+      // value:'', //与身份信息下拉框进行v-model双向绑定,也是下面用户登录身份的信息。
     };
   },
   methods: {  
@@ -72,7 +69,7 @@ export default {
       const validPassword1 = 'staff';
       const validUsername2 = 'engineer';
       const validPassword2 = 'engineer';
-      if (this.username === validUsername && this.password === validPassword && (this.value == 'admin')) {
+      if (this.username === validUsername && this.password === validPassword ) {
         const token = this.generateToken();
         //生成令牌,为了防止用户没登陆通过输入路由地址就能访问其他页面
         localStorage.setItem('token',token)
@@ -82,14 +79,14 @@ export default {
         this.updateCurole(this.value);
         console.log(this.value);
         console.log(this.$store.state.cu_role);
-      } else if (this.username === validUsername1 && this.password === validPassword1 && (this.value == 'staff')) {
+      } else if (this.username === validUsername1 && this.password === validPassword1 ) {
         const token = this.generateToken();
         localStorage.setItem('token',token);
         this.updateCurole(this.value)
         this.$router.push('/home');
         console.log(this.value);
         console.log(this.$store.state.cu_role);
-      } else if (this.username == '' || this.password == '' || this.value == '') {
+      } else if (this.username == '' || this.password == '' ) {
         alert('请输入完整。');
       } else {
         alert('账户或密码错误，验证失败请重新尝试。');
