@@ -4,23 +4,21 @@
     <!-- 页面有两个部分组成 -->
     <!-- 设备工艺表格 -->
     <div class="table-equcraft-use">
-      <el-carousel :interval="4000" type="card" height="400px">
-        <el-carousel-item v-for="(item,index) in urls" :key="index">
-          <img v-bind:src="item.url" style="width:70%;height:100%;float:left;">
-            <ul class="medium" style="width:30%;height:100%;float:left;margin-top:5px;">
-              <li>设备名称</li>
-              <li>{{ equCrafts[index].deviceName }}</li>
-              <li>设备型号</li>
-              <li>{{equCrafts[index].deviceType}}</li>
-              <li>设备尺寸</li>
-              <li>{{equCrafts[index].size}}</li>
-              <li>设备重量</li>
-              <li>{{equCrafts[index].weight}}</li>
-              <li>设备功率</li>
-              <li>{{equCrafts[index].power}}</li>
-            </ul>
-        </el-carousel-item>
-      </el-carousel>
+      <div class="equ-item" v-for="(item,index) in urls" :key="index">
+        <img v-bind:src="item.url" style="width:20%;height:20%;float:left;">
+          <ul class="medium" style="width:10%;height:20%;float:left;margin-top:5px;">
+            <li>设备名称</li>
+            <li>{{equCrafts[index].deviceName }}</li>
+            <li>设备型号</li>
+            <li>{{equCrafts[index].deviceType}}</li>
+            <li>设备尺寸</li>
+            <li>{{equCrafts[index].size}}</li>
+            <li>设备重量</li>
+            <li>{{equCrafts[index].weight}}</li>
+            <li>功率信息</li>
+            <li>{{equCrafts[index].power}}</li>
+          </ul>
+      </div>
     </div>
     <hr style="border: 1px solid white; margin-left: 10px; margin-right: 10px"/>
     <!-- 设备工艺设置，只在登录用户为管理员时显示 -->
@@ -88,6 +86,7 @@ export default {
   components: {},
   data() {
     return {
+      currentDate: new Date(),
       message: "设备工艺展示",
       equCrafts: [], //目前从vuex中写死，后续从axios中导入
       equCraftForm: {
@@ -233,5 +232,38 @@ export default {
 
 .el-carousel__item:nth-child(2n+1) {
   background-color: #d3dce6;
+}
+
+.time {
+  font-size: 13px;
+  color: #999;
+}
+
+.bottom {
+  margin-top: 13px;
+  line-height: 12px;
+}
+
+.button {
+  padding: 0;
+  float: right;
+}
+
+div /deep/ .el-card.is-always-shadow{
+  width:50%;
+}
+.image {
+  width: 50%;
+  display: block;
+}
+
+.clearfix:before,
+.clearfix:after {
+    display: table;
+    content: "";
+}
+
+.clearfix:after {
+    clear: both
 }
 </style>
