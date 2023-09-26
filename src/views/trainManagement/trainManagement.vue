@@ -21,10 +21,8 @@
 </template>
 
 <script>
-import Schedular4 from "../../components/common/schedular/Schedular4.vue";
 export default {
   components: {
-    Schedular4,
   },
   data() {
     return {

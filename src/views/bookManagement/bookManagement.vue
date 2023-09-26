@@ -14,7 +14,7 @@
           type="date"
           placeholder="选择日期"
           :picker-options="pickerOptions"
-          style="width:265px;"
+          style="width: 265px"
         >
         </el-date-picker>
       </div>
@@ -23,49 +23,66 @@
         <el-button>日期</el-button>
         <el-button>创建新的预约</el-button>
       </div>
+      <hr
+        style="
+          border: 1px solid white;
+          margin-left: 10px;
+          margin-right: 10px;
+          margin-top: 10px;
+        "/>
     </div>
-    <div class="bottom-div">
-      <hr style="border: 1px solid white; margin-left: 10px; margin-right: 10px;margin-top:10px;" />
-      <!-- 第二个 div 的内容 -->
-      <el-row style="height: auto">
-        <el-col :span="8" style="height: auto">
-          <div class="button-area">
-            <el-button class="button-hide" @click="hideClick1">{{ buttonText1 }}</el-button>
-          </div>
-          <div class="schedular-area" v-if="isShow1">
-            <p class="font-class">当前用户:{{ this.$store.state.cu_role }}</p>
-            <!-- 调用日程表在这里 -->
-            <Schedular class="schedular"/>
-          </div>
-        </el-col>
-        <el-col :span="8" style="height: auto">
-          <div class="button-area">
-            <el-button class="button-hide" @click="hideClick2">{{ buttonText2 }}</el-button>
-          </div>
-          <div class="schedular-area" v-if="isShow2">
-            <p class="font-class">设备名</p>
-            <!-- 后期在这里默认选择下拉设备，设备列表从数据库传出 -->
-            <Schedular2 class="schedular"/>
-          </div>
-        </el-col>
-        <el-col :span="8" style="height: auto">
-          <div class="button-area">
-            <el-button class="button-hide" @click="hideClick3">{{ buttonText3 }}</el-button>
-          </div>
-          <div class="schedular-area" v-if="isShow3">
-            <!-- 同样道理 -->
-            <el-select v-model="newEqup" placeholder="请选择新设备" class="select-newequ">
-              <el-option
-                v-for="item in device_options"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value">
-              </el-option>
-            </el-select>
-            <Schedular3 class="schedular"/>
-          </div>
-        </el-col>
-      </el-row>
+
+    <!-- 第二个 div 的内容 -->
+    <div class="fullcalendar-area">
+      <div class="content-area">
+        <div class="button-area">
+          <el-button class="button-hide" @click="hideClick1">{{
+            buttonText1
+          }}</el-button>
+        </div>
+        <div class="schedular-area" v-if="isShow1">
+          <p class="font-class">当前用户:{{ this.$store.state.cu_role }}</p>
+          <!-- 调用日程表在这里 -->
+          <Schedular :events="events" class="schedular" />
+        </div>
+      </div>
+      <div class="content-area">
+        <div class="button-area">
+          <el-button class="button-hide" @click="hideClick2">{{
+            buttonText2
+          }}</el-button>
+        </div>
+        <div class="schedular-area" v-if="isShow2">
+          <p class="font-class">设备名</p>
+          <!-- 后期在这里默认选择下拉设备，设备列表从数据库传出 -->
+          <Schedular :events="events2" class="schedular" />
+        </div>
+      </div>
+      <div class="content-area">
+        <div class="button-area">
+          <el-button class="button-hide" @click="hideClick3">{{
+            buttonText3
+          }}</el-button>
+        </div>
+        <div class="schedular-area" v-if="isShow3">
+          <!-- 同样道理 -->
+          <el-select
+            v-model="newEqup"
+            placeholder="请选择新设备"
+            class="select-newequ"
+            @change="handleSelectChange"
+          >
+            <el-option
+              v-for="item in device_options"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+            >
+            </el-option>
+          </el-select>
+          <Schedular :events="events3" class="schedular" />
+        </div>
+      </div>
     </div>
     <div class="clear"></div>
     </div>
@@ -73,26 +90,19 @@
 </template>
 
 <script>
-import Schedular from "../../components/common/schedular/Schedular.vue";
-import Schedular2 from "../../components/common/schedular/Schedular2.vue";
-import Schedular3 from "../../components/common/schedular/Schedular3.vue";
-// 分辨率大于等于1680，大部分为1920的范围情况下，调用此css
-	if(window.screen.width >= 1680){
-		document.write('<link rel="stylesheet" href="css/index_1920.css">');
-	}
-	// 分辨率在1600-1680这个范围的情况下，调用此css
-	else if(window.screen.width >= 1600){
-		document.write('<link rel="stylesheet" href="css/index_1600.css">');
-	}
-	// 分辨率小于1600的范围情况下，调用此css
-	else{
-		document.write('<link rel="stylesheet" href="css/index.css">');
-	}
+
+import Schedular from "../../components/common/schedular/Schedular";
+
+import {
+  INITIAL_EVENTS,
+  INITIAL_EVENTS2,
+  INITIAL_EVENTS3,
+  createEventId,
+} from "../../common/event-utils";
+
 export default {
   components: {
     Schedular,
-    Schedular2,
-    Schedular3,
   },
   data() {
     return {
@@ -131,8 +141,9 @@ export default {
       isShow1: true,
       isShow2: true,
       isShow3: true,
-      newEqup:"",
-      device_options: [ //目前写死，后期也是从数据库中导入
+      newEqup: "",
+      device_options: [
+        //目前写死，后期也是从数据库中导入
         {
           value: "选项1",
           label: "ASE",
@@ -154,6 +165,9 @@ export default {
           label: "OSD",
         },
       ],
+      events: INITIAL_EVENTS,
+      events2: INITIAL_EVENTS2,
+      events3: INITIAL_EVENTS3,
     };
   },
   computed: {
@@ -182,6 +196,9 @@ export default {
       console.log("hideClick3");
       this.isShow3 = !this.isShow3;
     },
+    handleSelectChange() {
+      console.log("该添加一个fullcalendar了");
+    },
   },
 };
 </script>
@@ -207,10 +224,10 @@ export default {
 }
 .button-hide {
   font-size: 1rem;
-  margin-left: 10px
+  margin-left: 10px;
 }
 .font-class {
-  color:#656565;
+  color: #656565;
   margin-top: 0px;
   margin-left: 20px;
   line-height: 55px;
@@ -241,11 +258,11 @@ export default {
   /* align-items: center; */
   margin-left: 20px;
   font-size: 20px;
-  color:#6d6c6c
+  color: #6d6c6c;
 }
-.block{
-  float:left;
-  margin-left:200px;
+.block {
+  float: left;
+  margin-left: 200px;
 }
 .bottom-div {
   width: 95%;
@@ -254,11 +271,24 @@ export default {
   border-radius: 8px; */
 }
 
+.fullcalendar-area {
+  display: flex;
+  flex-direction: row;
+  /* overflow-x: auto; */
+  width: 100%;
+  height: auto;
+}
+
+.content-area {
+  width: 30%;
+  height: auto;
+}
+
 .schedular-area {
   width: 90%;
   height: 100%;
 }
-.schedular{
+.schedular {
   color: #393939;
   font-size: 15px;
 }
@@ -266,8 +296,8 @@ export default {
   margin: 10px;
 }
 .button-group {
-  float:left;
-  margin-left:100px;
+  float: left;
+  margin-left: 100px;
   align-content: center;
 }
 .button-group .button {

@@ -20,6 +20,7 @@
     "amfe-flexible": "^2.2.1",
     "axios": "^0.18.1",
     "bootstrap": "^5.0.0-alpha1",
+    "bootstrap-icons": "^1.11.0",
     "bootstrap-vue": "^2.23.1",
     "core-js": "^3.8.3",
     "element-ui": "^2.15.13",

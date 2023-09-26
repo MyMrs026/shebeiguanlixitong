@@ -22,7 +22,7 @@
           </div>
           <div class="schedular-area" v-if="isShow1">
             <p style="margin: 10px">当前用户:{{ this.$store.state.cu_role }}</p>
-            <Schedular4 />
+            <Schedular :events="events"/>
           </div>
         </div>
       </el-col>
@@ -114,11 +114,12 @@
   </div>
 </template>
 <script>
-import Schedular4 from "../../components/common/schedular/Schedular4.vue";
+import Schedular from "../../components/common/schedular/Schedular";
 import { getTrainList, addProjectTrain } from '../../network/train'
+import { INITIAL_EVENTS5 } from  '../../common/event-utils'
 export default {
   components: {
-    Schedular4,
+    Schedular,
   },
   data() {
     return {
@@ -151,6 +152,7 @@ export default {
           },
         ],
       },
+      events: INITIAL_EVENTS5,
       value1: "",
       value2: "new Date(2016, 9, 10, 18, 40)",
       value3: "new Date(2016, 9, 10, 18, 40)",

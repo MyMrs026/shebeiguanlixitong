@@ -28,9 +28,15 @@
     </div>
     <div class="form-equcraft-use" v-if="this.$store.state.cu_role === 'admin'">
       <p class="text-title">设置设备工艺</p>
-      <el-form class="form-equcraft" label-width="80px" :model="equCraftForm">
-        <el-form-item label="设备名称">
-          <el-select v-model="value" placeholder="请选择" style="width: 400px">
+      <el-form 
+        class="form-equcraft" 
+        label-width="100px" 
+        :model="equCraftForm"
+        ref="equCraftForm"
+        :rules="rules"
+        >
+        <el-form-item label="设备名称" prop="deviceName">
+          <el-select v-model="value" placeholder="请选择" style="width: 300px">
             <el-option
               v-for="item in device_options"
               :key="item.value"
@@ -40,29 +46,29 @@
             </el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="设备型号">
+        <el-form-item label="设备型号" prop="deviceType">
           <el-input
             v-model="equCraftForm.deviceType"
-            style="width: 400px"
+            style="width: 300px"
           ></el-input>
         </el-form-item>
-        <el-form-item label="设备尺寸">
-          <el-input v-model="equCraftForm.size" style="width: 400px"></el-input>
+        <el-form-item label="设备尺寸" prop="size">
+          <el-input v-model="equCraftForm.size" style="width: 300px"></el-input>
         </el-form-item>
-        <el-form-item label="设备重量">
+        <el-form-item label="设备重量" prop="weight">
           <el-input
             v-model="equCraftForm.weight"
-            style="width: 400px"
+            style="width: 300px"
           ></el-input>
         </el-form-item>
-        <el-form-item label="设备功率">
+        <el-form-item label="设备功率" prop="power">
           <el-input
             v-model="equCraftForm.power"
-            style="width: 400px"
+            style="width: 300px"
           ></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" plain @click="submitForm('device_options')"
+          <el-button type="primary" plain @click="submitForm('equCraftForm')"
             >提交</el-button
           >
           <el-button @click="resetForm('equCraftForm')">重置</el-button>
@@ -121,12 +127,39 @@ export default {
         {url:require('../../assets/img/device1.jpg')},
         {url:require('../../assets/img/device4.jpg')},
         
-      ]
+      ],
+      rules:{
+        deviceName:[
+          {required:true,message:'请输入设备名称',trigger:'blur'}
+        ],
+        deviceType:[
+          {required:true,message:'请输入设备型号',trigger:'blur'}
+        ],
+        size:[
+          {required:true,message:'请输入设备尺寸',trigger:'blur'}
+        ],
+        weight:[
+          {required:true,message:'请输入设备重量',trigger:'blur'}
+        ],
+        power:[
+          {required:true,message:'请输入设备功率',trigger:'blur'}
+        ],
+      }
     };
   },
   methods: {
-    submitForm(equCraftForm) {
-      console.log("提交");
+    submitForm(formName) {
+      this.$refs[formName].validate((valid) => {
+        if(valid) {
+          //成功提交
+          console.log("提交成功");
+          location.reload();
+        } else {
+          alert("请填写完整")
+          location.reload();
+          return false;
+        }
+      })
     },
     resetForm(equCraftForm) {
       this.$refs[equCraftForm].resetFields();
