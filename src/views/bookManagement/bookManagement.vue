@@ -1,5 +1,6 @@
 <template>
   <div class="book-container">
+    <div class="insdide">
     <!-- 预约管理部分分为两个部分，上半部分为子导航条，下半部分包括当前用户预约设备的日程表、设备被预约的日程表等 -->
     <div class="top-div">
       <!-- 第一个 div 的内容 -->
@@ -83,10 +84,13 @@
         </div>
       </div>
     </div>
+    <div class="clear"></div>
+    </div>
   </div>
 </template>
 
 <script>
+
 import Schedular from "../../components/common/schedular/Schedular";
 
 import {
@@ -201,11 +205,22 @@ export default {
 
 <style scoped>
 .book-container {
+  left:0;
+  z-index:-1;
+  overflow:hidden;
   background-image: url("../../assets/img/qqq6.png");
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  height: 100vh;
+  background-repeat: no-repeat;
+  width: 100%;
+  height: 100%;
+  background-size: 100% 100%;
+}
+.inside {
+  height: 100%;
+  overflow-y: auto;
+}
+.clear { 
+  clear:both;
+  height:0px;
 }
 .button-hide {
   font-size: 1rem;

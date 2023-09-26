@@ -13,7 +13,7 @@ import 'popper.js'
 import store from './store'
 import axios from 'axios'
 import "@/assets/text/text.css"
-
+//import "lib-flexible/flexible.js"
 Vue.config.productionTip = false
 Vue.use(ElementUI)
 Vue.use(BootstrapVue)
