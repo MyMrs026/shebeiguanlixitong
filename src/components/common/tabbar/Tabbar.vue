@@ -28,6 +28,11 @@
               >首页</el-button
             >
           </router-link>
+          <router-link to="/labinform">
+            <el-button class="custom-button" type="info" round size="small"
+              >实验室信息</el-button
+            >
+          </router-link>
           <router-link to="/project">
             <el-button class="custom-button" type="info" round size="small"
               >项目管理</el-button
@@ -317,7 +322,7 @@ export default {
 .tabbar {
   position:fixed;
   z-index:10;
-  background-color:rgb(122, 157, 214);
+  background-color:rgb(141, 186, 221);
   width: 100%;
   height: 65px;
   background-size: 100% 100%;

@@ -1,27 +1,10 @@
 <template>
   <div>
     <p class="text-title">{{ message }}</p>
-    <div class="table-equcraft-use">
-      <!-- <el-table 
-        :data="craftParams"
-        class="table-equcraft"
-        border
-      >
-        <el-table-column fixed prop="deviceName" label="设备名称" width="150">
-        </el-table-column>
-        <el-table-column fixed prop="temperature" label="设备温度" width="150">
-        </el-table-column>
-        <el-table-column prop="pressure" label="设备压力" width="120">
-        </el-table-column>
-        <el-table-column prop="speed" label="设备速度" width="120">
-        </el-table-column>
-        <el-table-column prop="time" label="生产日期" width="120">
-        </el-table-column>
-      </el-table> -->
-      <el-carousel :interval="4000" type="card" height="400px">
-        <el-carousel-item v-for="(item,index) in urls" :key="index">
-          <img v-bind:src="item.url" style="width:70%;height:100%;float:left;">
-            <ul class="medium" style="width:30%;height:100%;float:left;margin-top:5px;">
+    <div class="table-equcraft-use">   
+        <div v-for="(item,index) in urls" :key="index" >
+          <img v-bind:src="item.url" style="width:20%;height:20%;float:left;">
+            <ul class="medium" style="width:10%;height:20%;float:left;margin-top:5px;">
               <li>设备名称</li>
               <li>{{craftParams[index].deviceName }}</li>
               <li>设备温度</li>
@@ -33,8 +16,7 @@
               <li>生产日期</li>
               <li>{{craftParams[index].time}}</li>
             </ul>
-        </el-carousel-item>
-      </el-carousel>
+        </div>
     </div>
     <hr style="border: 1px solid white; margin-left: 10px; margin-right: 10px"/>
     <div class="p-device">
@@ -93,6 +75,8 @@ export default {
   components: {},
   data() {
     return {
+      fits: ['fill', 'contain', 'cover', 'none', 'scale-down'],
+      url: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg',
       message: "工艺参数",
       craftParams: [],
       equCraftForm: {

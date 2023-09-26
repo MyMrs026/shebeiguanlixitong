@@ -1,5 +1,6 @@
 <template>
   <div class="book-container">
+    <div class="insdide">
     <!-- 预约管理部分分为两个部分，上半部分为子导航条，下半部分包括当前用户预约设备的日程表、设备被预约的日程表等 -->
     <div class="top-div">
       <!-- 第一个 div 的内容 -->
@@ -66,6 +67,8 @@
         </el-col>
       </el-row>
     </div>
+    <div class="clear"></div>
+    </div>
   </div>
 </template>
 
@@ -73,6 +76,18 @@
 import Schedular from "../../components/common/schedular/Schedular.vue";
 import Schedular2 from "../../components/common/schedular/Schedular2.vue";
 import Schedular3 from "../../components/common/schedular/Schedular3.vue";
+// 分辨率大于等于1680，大部分为1920的范围情况下，调用此css
+	if(window.screen.width >= 1680){
+		document.write('<link rel="stylesheet" href="css/index_1920.css">');
+	}
+	// 分辨率在1600-1680这个范围的情况下，调用此css
+	else if(window.screen.width >= 1600){
+		document.write('<link rel="stylesheet" href="css/index_1600.css">');
+	}
+	// 分辨率小于1600的范围情况下，调用此css
+	else{
+		document.write('<link rel="stylesheet" href="css/index.css">');
+	}
 export default {
   components: {
     Schedular,
@@ -173,11 +188,22 @@ export default {
 
 <style scoped>
 .book-container {
+  left:0;
+  z-index:-1;
+  overflow:hidden;
   background-image: url("../../assets/img/qqq6.png");
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  height: 100vh;
+  background-repeat: no-repeat;
+  width: 100%;
+  height: 100%;
+  background-size: 100% 100%;
+}
+.inside {
+  height: 100%;
+  overflow-y: auto;
+}
+.clear { 
+  clear:both;
+  height:0px;
 }
 .button-hide {
   font-size: 1rem;
