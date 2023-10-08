@@ -11,54 +11,15 @@
     <div class="left">
     <div class="title1">微纳公共平台管理网站</div>
     <div style="font-size:1.75rem;margin-top:1.25rem;">WeiNa Public Platform Management Website</div>
-    <div style="margin-top:1.25rem;"><hr style="color:white;height:0.625rem;"/></div>
-    <div class="menu-icon" style="margin-top:1.25rem;height:18.75rem;margin-right:3.125rem;background-color:white;">
-
-      <el-descriptions class="margin-top" :column="3" :size="size" border >
-    <el-descriptions-item>
-      <template slot="label" style="width:5rem;" >
-        <i class="el-icon-user"></i>
-        实验室名称
-      </template>
-      洪合实验室
-    </el-descriptions-item>
-    <el-descriptions-item>
-      <template slot="label">
-        <i class="el-icon-mobile-phone"></i>
-        联系方式
-      </template>
-      18100000000
-    </el-descriptions-item>
-    <el-descriptions-item>
-      <template slot="label">
-        <i class="el-icon-location-outline"></i>
-        地址
-      </template>
-      浙江省嘉兴市秀洲区洪福路1108号
-    </el-descriptions-item>
-    <el-descriptions-item>
-      <template slot="label">
-        <i class="el-icon-tickets"></i>
-        简介
-      </template>
-      <!-- <el-tag size="small">学校</el-tag> -->
-      国家实验室，属于科学与工程研究类国家科技创新基地，体现国家意志、实现国家使命、代表国家水平的战略科技力量，是面向国际科技竞争的创新基础平台，是保障国家安全的核心支撑，是突破型、引领型、平台型一体化的大型综合性研究基地。
-      国家同步辐射实验室等5个首批国家实验室至2000年底，全部通过验收。2000年-2003年，科学技术部陆续批准了5个国家实验室的试点。随后，又于2006年启动10个第二批国家实验室试点建设。截止到2016年底，除青岛海洋科学与技术国家实验室正式获批成立外，其余14个试点的国家实验室仍处于筹建状态。 截至2021年1月，北京已成立挂牌成立中关村国家实验室、怀柔国家实验室、昌平国家实验室。
-      2023年3月，根据国务院关于提请审议国务院机构改革方案的议案，重新组建科学技术部，保留国家实验室建设职责。
-    </el-descriptions-item>
-    <!-- <el-descriptions-item>
-      <template slot="label">
-        <i class="el-icon-office-building"></i>
-        联系地址
-      </template>
-      江苏省苏州市吴中区吴中大道 1188 号
-    </el-descriptions-item> -->
-  </el-descriptions>
-
+    <div style="margin-top:2.5rem;text-align:center;"><hr style="color:white;height:0.625rem;text-align:center;"/></div>
+    <div class="menu-icon" style="margin-top:2.5rem;margin-bottom:3rem;height:20rem;font-size:1.5rem;letter-spacing:0.3125rem;">
+    国家实验室，属于科学与工程研究类国家科技创新基地，体现国家意志、实现国家使命、代表国家水平的战略科技力量，是面向国际科技竞争的创新基础平台，是保障国家安全的核心支撑，是突破型、引领型、平台型一体化的大型综合性研究基地。
+    国家同步辐射实验室等5个首批国家实验室至2000年底，全部通过验收。2000年-2003年，科学技术部陆续批准了5个国家实验室的试点。随后，又于2006年启动10个第二批国家实验室试点建设。截止到2016年底，除青岛海洋科学与技术国家实验室正式获批成立外，其余14个试点的国家实验室仍处于筹建状态。 截至2021年1月，北京已成立挂牌成立中关村国家实验室、怀柔国家实验室、昌平国家实验室。
+    2023年3月，根据国务院关于提请审议国务院机构改革方案的议案，重新组建科学技术部，保留国家实验室建设职责。
     </div>
     </div>
     <!-- 公告部分 -->
-    <div class="text-area">
+    <!-- <div class="text-area">
       <div>公告信息</div>
       <ul class="news">
         <li
@@ -69,7 +30,7 @@
             <div class="notice_content" @click="gotoNoticeDetail(item.notice_id)">
               <font>{{ item.title }}</font>
               <!-- 日期的显示格式:xxxx年xx月xx日 -->
-              <font>{{ item.publishDate | formatDate }}</font>
+              <!-- <font>{{ item.publishDate | formatDate }}</font>
             </div>
           </div>
         </li>
@@ -80,7 +41,7 @@
           <p>更多>>></p>
         </router-link>
       </div>
-    </div>
+    </div> --> 
     </div>
     <hr
       style="border: 0.0625rem solid white; margin-left: 0.625rem; margin-right: 0.625rem;margin-top:1.875rem;margin-bottom:2.1875rem;"
@@ -308,10 +269,10 @@ export default {
   height:1.875rem;
 }
 .left{
-  float:left;
-  width:60%;
-  height:31.25rem;
-  padding-left:3.125rem;
+  text-align: center;
+  height:45rem;
+  padding-left:10rem;
+  padding-right:10rem;
 }
 .title1 {
   font-size: 3.5rem;
@@ -319,6 +280,7 @@ export default {
   height: 4.375rem;
   color: rgb(103, 112, 147);
   font-weight:bolder;
+  text-align: center;
 }
 .box{
   margin-top:1.25rem;
