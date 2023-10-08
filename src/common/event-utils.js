@@ -40,7 +40,7 @@ export const INITIAL_EVENTS2 = [
     id:createEventId(),
     title:'竞赛使用',
     start: new Date().toISOString().replace(/T.*$/, '') + 'T15:30:00',
-    end: new Date().toISOString().replace(/T.*$/, '') + 'T18:00:00'
+    end: new Date().toISOString().replace(/T.*$/, '') + 'T17:00:00'
   },
 ]
 

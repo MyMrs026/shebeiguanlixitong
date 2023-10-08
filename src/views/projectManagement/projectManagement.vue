@@ -97,33 +97,6 @@
               </el-option>
             </el-select>
           </el-form-item>
-          
-
-
-
-          <!-- <el-form-item
-            v-for="(equ_value, index) in ruleForm.equ_value"
-            :label="'实验设备' + index"
-            :key="index"
-            :prop="'equ_value.' + index"
-            :rules="{
-              required: true, message: '设备名不能为空', trigger: 'blur'
-            }"
-          >
-          <el-select v-model="ruleForm.equ_value" placeholder="请选择实验所需的设备" style="width: 100%;">
-              <el-option
-                v-for="item in pro_equps"
-                :key="item.deviceName"
-                :label="item.deviceName"
-                :value="item.deviceName">
-              </el-option>
-            </el-select>
-            </el-input><el-button @click.prevent="removeDomain(domain)">删除</el-button>
-          </el-form-item> -->
-
-
-
-
           <el-form-item label="实验目的" prop="purpose">
             <el-input v-model="ruleForm.purpose" style="width: 100%;"></el-input>
           </el-form-item>
@@ -196,9 +169,9 @@ export default {
         desc: [
           { required: true, message: '请填写项目的描述', trigger: 'blur' }
         ],
-        equ_value: [
-          { required: true, message: '请选择实验所需设备', trigger: 'change' }
-        ],
+        // equ_value: [
+        //   { required: true, message: '请选择实验所需设备', trigger: 'change' }
+        // ],
         purpose: [
           { required: true, message: '请填写实验目的', trigger: 'blur' }
         ],

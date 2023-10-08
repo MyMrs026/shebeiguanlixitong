@@ -76,15 +76,13 @@ export default {
         // 登录成功，跳转到 home 页面
         this.$router.push('/home');
         //将vuex中用于用户登录状态保存的变量进行改变
-        this.updateCurole(this.value);
-        console.log(this.value);
+        this.updateCurole('admin');   
         console.log(this.$store.state.cu_role);
       } else if (this.username === validUsername1 && this.password === validPassword1 ) {
         const token = this.generateToken();
         localStorage.setItem('token',token);
-        this.updateCurole(this.value)
+        this.updateCurole('staff')
         this.$router.push('/home');
-        console.log(this.value);
         console.log(this.$store.state.cu_role);
       } else if (this.username == '' || this.password == '' ) {
         alert('请输入完整。');

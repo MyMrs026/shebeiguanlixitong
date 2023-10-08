@@ -14,7 +14,7 @@
             </div>
           </el-col>
         </el-col>
-        <el-col :span="17">
+        <el-col :span="16">
           <el-col
           :span="12"
           style="
@@ -103,6 +103,21 @@
           >
             <i
               class="el-icon-s-custom"
+              @click="showDrawer"
+              type="primary"
+              style="margin-left: 16px"
+            ></i>
+          </el-tooltip>
+        </el-col>
+        <el-col :span="1">
+          <el-tooltip
+            class="item"
+            effect="light"
+            content="邮件"
+            placement="bottom"
+          >
+            <i
+              class="el-icon-message"
               @click="showDrawer"
               type="primary"
               style="margin-left: 16px"
@@ -375,6 +390,18 @@ export default {
 
 /* 搜索icon */
 .el-icon-search {
+  float: right;
+  display: flex;
+  font-size: 35px;
+  color: white;
+  justify-content: center;
+  align-items: center;
+  margin-top: 15px;
+  margin-left: 15px;
+  margin-right: 15px;
+}
+
+.el-icon-message{
   float: right;
   display: flex;
   font-size: 35px;
