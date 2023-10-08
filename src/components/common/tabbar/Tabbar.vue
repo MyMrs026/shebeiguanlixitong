@@ -10,7 +10,7 @@
               style="width: 25px; height: 25px; float: left"
             />
             <div class="lab" style="float: left; font-size: 20px">
-              XXX研究机构
+              浙江大学嘉兴研究院
             </div>
           </el-col>
         </el-col>
@@ -26,11 +26,6 @@
           <router-link to="/home">
             <el-button class="custom-button" type="info" round size="small"
               >首页</el-button
-            >
-          </router-link>
-          <router-link to="/labinform">
-            <el-button class="custom-button" type="info" round size="small"
-              >实验室信息</el-button
             >
           </router-link>
           <router-link to="/project">
