@@ -83,7 +83,6 @@ export default {
         localStorage.setItem('token',token);
         this.updateCurole('staff')
         this.$router.push('/home');
-        console.log(this.value);
         console.log(this.$store.state.cu_role);
       } else if (this.username == '' || this.password == '' ) {
         alert('请输入完整。');

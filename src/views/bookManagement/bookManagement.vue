@@ -207,7 +207,7 @@ export default {
 .book-container {
   left:0;
   z-index:-1;
-  overflow:hidden;
+  overflow:auto;
   background-image: url("../../assets/img/qqq6.png");
   background-repeat: no-repeat;
   width: 100%;
@@ -286,11 +286,14 @@ export default {
 
 .schedular-area {
   width: 90%;
-  height: 100%;
+  height: fit-content;
+  /* overflow: scroll; */
 }
 .schedular {
+  height: 100vh;
   color: #393939;
   font-size: 15px;
+  overflow: auto;
 }
 .button-area {
   margin: 10px;
