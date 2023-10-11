@@ -24,7 +24,7 @@
           <div class="tab1" v-if="currentStep === 0">
             <el-form :model="buildForm" ref="buildForm" :rules="rules">
               <el-form-item label="项目选择" :label-width="formLabelWidth">
-                <el-select v-model="value" placeholder="选择项目">
+                <el-select v-model="value" placeholder="选择项目" style="width:34.5rem;">
                   <el-option
                     v-for="item in prolist"
                     :key="item.name"

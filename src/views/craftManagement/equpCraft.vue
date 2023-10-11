@@ -5,8 +5,8 @@
     <!-- 设备工艺表格 -->
     <div class="table-equcraft-use">
       <div class="equ-item" v-for="(item,index) in urls" :key="index">
-        <img v-bind:src="item.url" style="width:20%;height:20%;float:left;">
-          <ul class="medium" style="width:10%;height:20%;float:left;margin-top:5px;">
+        <img v-bind:src="item.url" style="width:100%;height:100%;float:left;max-height:300px;">
+          <ul class="medium" style="width:50%;height:50%;float:left;margin-top:5px;">
             <li>设备名称</li>
             <li>{{equCrafts[index].deviceName }}</li>
             <li>设备型号</li>
@@ -20,7 +20,7 @@
           </ul>
       </div>
     </div>
-    <hr style="border: 1px solid white; margin-left: 10px; margin-right: 10px"/>
+    <hr style="display:flex;border: 5px solid white; margin-left: 10px; margin-right: 10px"/>
     <!-- 设备工艺设置，只在登录用户为管理员时显示 -->
     <div style="width:100%;">
     <div class="p-device">
@@ -181,12 +181,28 @@ export default {
   width:100%;
 }
 .table-equcraft-use {
-  /* display: flex;*/
-  /* flex-direction: column; 
-  justify-content: center;
-  align-content: center; */
+  display: flex;
+  /* align-items: center;
+  justify-content: flex-start; */
+  flex-wrap:wrap;
   margin-left:50px;
   margin-right:50px;
+  /* gap:40px; */
+}
+.equ-item {
+  flex: 0 0 calc(33.33% - 40px); /* 让每个元素占据1/3的宽度，减去一些间距 */
+  margin-right: 40px; /* 可以根据需要添加间距 */
+  margin-bottom: 40px; /* 用于在垂直方向上添加间距 */
+  box-sizing: border-box; /* 确保元素的边框和内边距不会使它们超出指定的宽度 */
+  background-color: white; /* 设置背景颜色为白色 */
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2); /* 添加阴影效果 */
+  padding: 10px; /* 可以根据需要调整内边距 */
+  border-radius: 10px; /* 添加圆角效果，可以根据需要调整 */
+  /* 添加其他样式，例如边框 */
+  border: 1px solid #ccc; /* 添加边框 */
+}
+.equ-item + .equ-item {
+  border-color: transparent; /* 隐藏相邻部分之间的边框 */
 }
 .table-equcraft {
   width: auto;
