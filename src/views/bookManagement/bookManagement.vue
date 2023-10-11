@@ -1,90 +1,90 @@
 <template>
   <div class="book-container">
     <div class="insdide">
-    <!-- 预约管理部分分为两个部分，上半部分为子导航条，下半部分包括当前用户预约设备的日程表、设备被预约的日程表等 -->
-    <div class="top-div">
-      <!-- 第一个 div 的内容 -->
-      <div class="book-title">
-        <p>设备预约日视图</p>
-      </div>
-      <div class="block">
-        <el-date-picker
-          v-model="value1"
-          align="right"
-          type="date"
-          placeholder="选择日期"
-          :picker-options="pickerOptions"
-          style="width: 265px"
-        >
-        </el-date-picker>
-      </div>
-      <div class="button-group">
-        <el-button>更新</el-button>
-        <el-button>日期</el-button>
-        <el-button>创建新的预约</el-button>
-      </div>
-      <hr
-        style="
-          border: 1px solid white;
-          margin-left: 10px;
-          margin-right: 10px;
-          margin-top: 10px;
-        "/>
-    </div>
-
-    <!-- 第二个 div 的内容 -->
-    <div class="fullcalendar-area">
-      <div class="content-area">
-        <div class="button-area">
-          <el-button class="button-hide" @click="hideClick1">{{
-            buttonText1
-          }}</el-button>
+      <!-- 预约管理部分分为两个部分，上半部分为子导航条，下半部分包括当前用户预约设备的日程表、设备被预约的日程表等 -->
+      <div class="top-div">
+        <!-- 第一个 div 的内容 -->
+        <div class="book-title">
+          <p>设备预约日视图</p>
         </div>
-        <div class="schedular-area" v-if="isShow1">
-          <p class="font-class">当前用户:{{ this.$store.state.cu_role }}</p>
-          <!-- 调用日程表在这里 -->
-          <Schedular :events="events" class="schedular" />
-        </div>
-      </div>
-      <div class="content-area">
-        <div class="button-area">
-          <el-button class="button-hide" @click="hideClick2">{{
-            buttonText2
-          }}</el-button>
-        </div>
-        <div class="schedular-area" v-if="isShow2">
-          <p class="font-class">设备名</p>
-          <!-- 后期在这里默认选择下拉设备，设备列表从数据库传出 -->
-          <Schedular :events="events2" class="schedular" />
-        </div>
-      </div>
-      <div class="content-area">
-        <div class="button-area">
-          <el-button class="button-hide" @click="hideClick3">{{
-            buttonText3
-          }}</el-button>
-        </div>
-        <div class="schedular-area" v-if="isShow3">
-          <!-- 同样道理 -->
-          <el-select
-            v-model="newEqup"
-            placeholder="请选择新设备"
-            class="select-newequ"
-            @change="handleSelectChange"
+        <div class="block">
+          <el-date-picker
+            v-model="value1"
+            align="right"
+            type="date"
+            placeholder="选择日期"
+            :picker-options="pickerOptions"
+            style="width: 265px"
           >
-            <el-option
-              v-for="item in device_options"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
+          </el-date-picker>
+        </div>
+        <div class="button-group">
+          <el-button>更新</el-button>
+          <el-button>日期</el-button>
+          <el-button>创建新的预约</el-button>
+        </div>
+        <hr
+          style="
+            border: 1px solid white;
+            margin-left: 10px;
+            margin-right: 10px;
+            margin-top: 10px;
+          "
+        />
+      </div>
+
+      <!-- 第二个 div 的内容 -->
+      <div class="fullcalendar-area">
+        <div class="content-area">
+          <div class="button-area">
+            <el-button class="button-hide" @click="hideClick1">{{
+              buttonText1
+            }}</el-button>
+          </div>
+          <div class="schedular-area" v-if="isShow1">
+            <p class="font-class">当前用户:{{ this.$store.state.cu_role }}</p>
+            <!-- 调用日程表在这里 -->
+            <Schedular :events="events" class="schedular" />
+          </div>
+        </div>
+        <!-- <div class="content-area">
+          <div class="button-area">
+            <el-button class="button-hide" @click="hideClick2">{{
+              buttonText2
+            }}</el-button>
+          </div>
+          <div class="schedular-area" v-if="isShow2">
+            <p class="font-class">开始预约</p>
+            <Schedular :events="events2" class="schedular" />
+          </div>
+        </div> -->
+        <div class="content-area">
+          <div class="button-area">
+            <el-button class="button-hide" @click="hideClick3">{{
+              buttonText3
+            }}</el-button>
+          </div>
+          <div class="schedular-area" v-if="isShow3">
+            <!-- 同样道理 -->
+            <el-select
+              v-model="newEqup"
+              placeholder="请选择设备"
+              class="select-newequ"
+              @change="handleSelectChange"
             >
-            </el-option>
-          </el-select>
-          <Schedular :events="events3" class="schedular" />
+              <el-option
+                v-for="item in device_options"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+              >
+              </el-option>
+            </el-select>
+            <Schedular :events="events3" class="schedular" />
+          </div>
         </div>
       </div>
-    </div>
-    <div class="clear"></div>
+      <div class="clear"></div>
     </div>
   </div>
 </template>
@@ -92,7 +92,7 @@
 <script>
 
 import Schedular from "../../components/common/schedular/Schedular";
-
+import { getEquList } from '../../network/equpment'
 import {
   INITIAL_EVENTS,
   INITIAL_EVENTS2,
@@ -109,7 +109,7 @@ export default {
       //elementui中的日期选择器
       pickerOptions: {
         disabledDate(time) {
-          return time.getTime() > Date.now();
+          return time.getTime() < Date.now();
         },
         shortcuts: [
           {
@@ -199,15 +199,23 @@ export default {
     handleSelectChange() {
       console.log("该添加一个fullcalendar了");
     },
+    
+  },
+  mounted(){
+  //获取设备列表，第一个日程表选中时需要，第三个日程表选择时需要
+    getEquList().then(res => {
+      this.equlist = res.data;
+      console.log(res.data);
+    })
   },
 };
 </script>
 
 <style scoped>
 .book-container {
-  left:0;
-  z-index:-1;
-  overflow:auto;
+  left: 0;
+  z-index: -1;
+  overflow: auto;
   background-image: url("../../assets/img/qqq6.png");
   background-repeat: no-repeat;
   width: 100%;
@@ -218,9 +226,9 @@ export default {
   height: 100%;
   overflow-y: auto;
 }
-.clear { 
-  clear:both;
-  height:0px;
+.clear {
+  clear: both;
+  height: 0px;
 }
 .button-hide {
   font-size: 1rem;

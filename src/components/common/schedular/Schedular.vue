@@ -1,10 +1,11 @@
 <template>
   <div class="demo-app">
     <div class="demo-app-main">
-      <FullCalendar 
+      <FullCalendar
         ref="calendar"
-        class="demo-app-calendar" 
-        :options="calendarOptions">
+        class="demo-app-calendar"
+        :options="calendarOptions"
+      >
         <template v-slot:eventContent="arg">
           <b>{{ arg.timeText }}</b>
           <i>{{ arg.event.title }}</i>
@@ -17,34 +18,69 @@
         @close="closeDialog"
       >
         <el-form :model="EventForm" ref="EventForm" :rules="rules">
-          <el-form-item label="标题" label-width="120px" prop="title">
-            <el-input 
-              v-model="EventForm.title" 
-              autocomplete="off"
-              style="width: 250px;"></el-input>
+          <el-form-item label="日期" label-width="120px" prop="date">
+            <el-date-picker
+              v-model="EventForm.date"
+              :picker-options="pickerOptions"
+              type="date"
+              placeholder="选择日期"
+            >
+            </el-date-picker>
           </el-form-item>
-          <el-form-item label="开始时间" label-width="120px" prop="startTime">
+          <el-form-item label="设备" label-width="120px" prop="device">
+            <el-select v-model="EventForm.devicename" placeholder="请选择设备">
+              <el-option
+                v-for="item in device_options"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value">
+              </el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="标题" label-width="120px" prop="title">
             <el-input
-              v-model="EventForm.startTime"
+              v-model="EventForm.title"
               autocomplete="off"
-              style="width: 250px;"
+              style="width: 250px"
             ></el-input>
           </el-form-item>
+          <el-form-item label="开始时间" label-width="120px" prop="startTime">
+            <el-time-select
+              placeholder="起始时间"
+              v-model="EventForm.startTime"
+              :picker-options="{
+                start: '08:30',
+                step: '00:15',
+                end: '17:00',
+              }"
+            >
+            </el-time-select>
+          </el-form-item>
           <el-form-item label="结束时间" label-width="120px" prop="endTime">
-            <el-input 
-              v-model="EventForm.endTime" 
-              autocomplete="off"
-              style="width: 250px;"></el-input>
+            <el-time-select
+              placeholder="结束时间"
+              v-model="EventForm.endTime"
+              :picker-options="{
+                start: '08:30',
+                step: '00:15',
+                end: '17:00',
+                minTime: EventForm.startTime,
+              }"
+            >
+            </el-time-select>
           </el-form-item>
           <el-form-item label="使用者" label-width="120px" prop="user">
-            <el-input 
-              v-model="EventForm.user" 
+            <el-input
+              v-model="EventForm.user"
               autocomplete="off"
-              style="width: 250px;"></el-input>
+              style="width: 250px"
+            ></el-input>
           </el-form-item>
           <el-form-item>
             <div class="button-area">
-              <el-button type="primary" @click="submitClick('EventForm')">提交</el-button>
+              <el-button type="primary" @click="submitClick('EventForm')"
+                >提交</el-button
+              >
               <el-button type="danger" @click="delClick()">删除</el-button>
             </div>
           </el-form-item>
@@ -58,48 +94,72 @@
         @close="closeDialog"
       >
         <el-form :model="EventForm2" ref="EventForm2" :rules="rules2">
-          <el-form-item label="标题" label-width="120px" prop="title">
-<<<<<<< HEAD
-            <el-input v-model="EventForm2.title" autocomplete="off" style="width:350px;"></el-input>
-=======
-            <el-input v-model="EventForm2.title" style="width: 250px;" autocomplete="off"></el-input>
->>>>>>> 890267133f8222141e803658bc1dd45e04307939
+          <el-form-item label="日期" label-width="120px" prop="date">
+            <el-date-picker
+              v-model="EventForm2.date"
+              :picker-options="pickerOptions"
+              type="date"
+              placeholder="选择预约日期"
+            >
+            </el-date-picker>
           </el-form-item>
-          <el-form-item label="开始时间" label-width="120px" prop="startTime">
+
+          <el-form-item label="设备" label-width="120px" prop="device">
+            <el-select v-model="EventForm.devicename" placeholder="请选择设备">
+              <el-option
+                v-for="item in device_options"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value">
+              </el-option>
+            </el-select>
+          </el-form-item>
+
+          <el-form-item label="标题" label-width="120px" prop="title">
             <el-input
-              v-model="EventForm2.startTime"
+              v-model="EventForm2.title"
+              style="width: 250px"
               autocomplete="off"
-<<<<<<< HEAD
-              style="width:350px;"
-=======
-              style="width: 250px;"
->>>>>>> 890267133f8222141e803658bc1dd45e04307939
             ></el-input>
+          </el-form-item>
+
+          <el-form-item label="开始时间" label-width="120px" prop="startTime">
+            <el-time-select
+              placeholder="起始时间"
+              v-model="EventForm2.startTime"
+              :picker-options="{
+                start: '08:30',
+                step: '00:15',
+                end: '17:00',
+              }"
+            >
+            </el-time-select>
           </el-form-item>
           <el-form-item label="结束时间" label-width="120px" prop="endTime">
-            <el-input
+            <el-time-select
+              placeholder="结束时间"
               v-model="EventForm2.endTime"
-              autocomplete="off"
-<<<<<<< HEAD
-              style="width:350px;"
-            ></el-input>
+              :picker-options="{
+                start: '08:30',
+                step: '00:15',
+                end: '17:00',
+                minTime: EventForm2.startTime,
+              }"
+            >
+            </el-time-select>
           </el-form-item>
           <el-form-item label="使用者" label-width="120px" prop="user">
-            <el-input v-model="EventForm2.user" autocomplete="off"  style="width:350px;"></el-input>
-=======
-              style="width: 250px;"
-            ></el-input>
-          </el-form-item>
-          <el-form-item label="使用者" label-width="120px" prop="user">
-            <el-input 
-              v-model="EventForm2.user" 
+            <el-input
+              v-model="EventForm2.user"
               autocomplete="off"
-              style="width: 250px;"></el-input>
->>>>>>> 890267133f8222141e803658bc1dd45e04307939
+              style="width: 250px"
+            ></el-input>
           </el-form-item>
           <el-form-item>
             <div class="button-area">
-              <el-button type="primary" @click="submitClick2('EventForm2')">提交</el-button>
+              <el-button type="primary" @click="submitClick2('EventForm2')"
+                >提交</el-button
+              >
               <el-button type="danger" @click="cancelClick">取消</el-button>
             </div>
           </el-form-item>
@@ -119,6 +179,7 @@ import FullCalendar, { formatDate } from "@fullcalendar/vue";
 import dayGridPlugin from "@fullcalendar/daygrid"; //日程图
 import timeGridPlugin from "@fullcalendar/timegrid"; //里面的时间显示
 import interactionPlugin from "@fullcalendar/interaction"; //日程图的一些交互事件，比如说拖拽选择时间
+import zhLocale from "@fullcalendar/core/locales/zh-cn"
 import { createEventId } from "../../../common/event-utils.js"; //导入日程图的一些事件
 
 export default {
@@ -133,28 +194,38 @@ export default {
     },
   },
 
-  data: function () {
+  data() {
     return {
       calendarOptions: {
         plugins: [dayGridPlugin, timeGridPlugin, interactionPlugin],
         headerToolbar: {
-          left: "prev,next today", //进行前后日子选择，以及跳到今天
+          left: "prev next today", //进行前后日子选择，以及跳到今天
           center: "title",
-          right: "",
+          right: "timeGridWeek,timeGridDay",
         },
+        // height: auto,
+        // contentHeight:auto,
         initialView: "timeGridDay", //以日程图的方式初始化fullcalendar
+        validRange: {
+          start:new Date(),
+          end:new Date(new Date().setDate(new Date().getDate() + 10)),
+        },
+        hiddenDays:[0, 6],
         events: this.events, // 初始化事件
         editable: true, //事件可以编辑
-        eventStartEditable:false,//禁止使用拖动的方式修改事件的开始时间
-        eventDurationEditable:false,
+        eventStartEditable: false, //禁止使用拖动的方式修改事件的开始时间
+        eventDurationEditable: false,
         selectable: true,
         selectMirror: true,
         dayMaxEvents: true,
         weekends: true,
+        slotEventOverlap:false,// TimeGrid视图中的定时事件不能重叠
+        allDaySlot:false,//全天时间不会显示
+        nowIndicator:true,//显示当前时间提示
         select: this.handleDateSelect,
         eventClick: this.handleEventClick,
         eventsSet: this.handleEvents,
-        locale: "zh-cn", //使整个日程图以中文的形式输出
+        locale: zhLocale, //使整个日程图以中文的形式输出
         slotMinTime: "08:30:00", //日程图从几点开始
         slotMaxTime: "17:00:00", //到几点结束
         slotDuration: "00:15:00", //时间间隔为15分钟
@@ -163,19 +234,58 @@ export default {
         eventDrop: this.handleEventDrop, //定义当拖拽事件结束时出发的事件，看看吧，不行的话把可拖拽禁掉
       },
       currentEvents: [],
+      device_options: [
+        //目前写死，后期也是从数据库中导入
+        {
+          value: "选项1",
+          label: "ASE",
+        },
+        {
+          value: "选项2",
+          label: "OEA",
+        },
+        {
+          value: "选项3",
+          label: "DTP",
+        },
+        {
+          value: "选项4",
+          label: "MKI",
+        },
+        {
+          value: "选项5",
+          label: "OSD",
+        },
+      ],
       EventForm: {
         title: "",
+        devicename:"",
+        date: "",
         startTime: "",
         endTime: "",
         user: "",
       },
       EventForm2: {
         title: "",
+        date: "",
         startTime: "",
         endTime: "",
         user: "",
       },
+
+      pickerOptions: {
+        
+        // 设置日期范围
+        disabledDate(time) {
+          const today = new Date();
+          const oneWeekLater = new Date(today);
+          oneWeekLater.setDate(today.getDate() + 7);
+          return time.getTime() < Date.now() || time.getTime() > oneWeekLater.getTime();
+        }
+      },
+
       rules: {
+        date: [{ required: true, message: "请选择日期", trigger: "blur" }],
         title: [
           { required: true, message: "请填写事件的标题", trigger: "blur" },
         ],
@@ -188,6 +298,7 @@ export default {
         user: [{ required: true, message: "请填写使用者", trigger: "blur" }],
       },
       rules2: {
+        date: [{ required: true, message: "请选择日期", trigger: "blur" }],
         title: [
           { required: true, message: "请填写事件的标题", trigger: "blur" },
         ],
@@ -201,7 +312,7 @@ export default {
       },
       dialogFormVisible: false,
       dialogFormVisible2: false,
-      editEvent:{},
+      editEvent: {},
     };
   },
 
@@ -215,7 +326,7 @@ export default {
       const start = selectInfo.startStr;
       const end = selectInfo.endStr;
 
-      // 检查拖选的时间范围是否与已有事件冲突  
+      // 检查拖选的时间范围是否与已有事件冲突
       const isConflict = this.events.some((event) => {
         const eventStart = event.start;
         const eventEnd = event.end;
@@ -223,14 +334,14 @@ export default {
       });
       // 如果存在冲突，则提示报错
       if (isConflict) {
-        alert('该时间段冲突了');
+        alert("该时间段冲突了");
         //清除拖选区域
         this.$refs.calendar.getApi().unselect();
-      }else{
+      } else {
         //否则，添加拖选事件
         this.dialogFormVisible2 = true;
       }
-      this.$refs.calendar.getApi().unselect();     
+      this.$refs.calendar.getApi().unselect();
     },
 
     handleEventClick(clickInfo) {
@@ -244,7 +355,7 @@ export default {
     openEditModal(event) {
       // console.log(event.title,event.start,event.end);
       this.dialogFormVisible = true;
-      console.log(typeof(event));
+      console.log(typeof event);
       this.editEvent = event;
     },
 
@@ -253,43 +364,43 @@ export default {
       this.dialogFormVisible2 = false;
     },
 
-    submitClick(formName) {  
+    submitClick(formName) {
       //编辑事件信息的提交按钮
-      this.$refs[formName].validate((valid)=>{
-        if(valid) {
-          console.log('已提交申请');
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          console.log("已提交申请");
           location.reload();
         } else {
           alert("请填写完整");
         }
-      })
+      });
     },
 
     delClick() {
       //编辑信息中的删除事件
       if (confirm(`你确定要删除这个事件吗？ '${this.editEvent.title}'`)) {
-        this.editEvent.remove()
+        this.editEvent.remove();
       }
-      console.log('删除成功');
-      this.dialogFormVisible = false
+      console.log("删除成功");
+      this.dialogFormVisible = false;
     },
 
     submitClick2(formName) {
       //新建事件中的申请提交
-      this.$refs[formName].validate((valid)=>{
-        if(valid) {
-          console.log('已提交申请');
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          console.log("已提交申请");
           location.reload();
         } else {
           alert("请填写完整");
         }
-      })
+      });
     },
 
     cancelClick() {
       //新建事件中的取消
-      this.dialogFormVisible2 = false
-      console.log('取消申请');
+      this.dialogFormVisible2 = false;
+      console.log("取消申请");
     },
 
     handleEvents(events) {

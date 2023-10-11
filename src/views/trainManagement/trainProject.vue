@@ -22,7 +22,7 @@
           </div>
           <div class="schedular-area" v-if="isShow1">
             <p style="margin: 10px">当前用户:{{ this.$store.state.cu_role }}</p>
-            <Schedular :events="events"/>
+            <Schedular class="Schedular" :events="events"/>
           </div>
         </div>
       </el-col>
@@ -31,25 +31,6 @@
         <div class="right-div">
           <div class="form-area" v-if="this.$store.state.cu_role === 'admin'">
             <el-form class="train-form" label-width="80px" :model="trainForm" ref="trainForm" :rules="rules">
-              <!-- <el-form-item
-                label="设备名称"
-                prop="devicename"
-                label-class-name="white-label"
-              >
-                <el-select v-model="devicename" placeholder="请选择">
-                  <el-option
-                    v-for="item in device_options"
-                    :key="item.value"
-                    :label="item.label"
-                    :value="item.value"
-                  >
-                  </el-option>
-                </el-select>
-              </el-form-item> -->
-              <!-- <el-form-item label="编号" prop="iid" class="form-item">
-                <el-input v-model="trainForm.iid" style="width: 300px">
-                </el-input>
-              </el-form-item> -->
               <el-form-item label="培训名称" prop="trainName">
                 <el-input v-model="trainForm.trainName" style="width: 300px">
                 </el-input>
@@ -68,16 +49,6 @@
                   style="width: 300px"
                 >
                 </el-input>
-                <!-- <el-upload
-                  class="avatar-uploader"
-                  action="#"
-                  :show-file-list="false"
-                  :on-success="handleAvatarSuccess"
-                  :before-upload="beforeAvatarUpload"
-                >
-                  <img v-if="imageUrl" :src="imageUrl" class="avatar" />
-                  <i v-else class="el-icon-plus avatar-uploader-icon" />
-                </el-upload> -->
               </el-form-item>
               <el-form-item label="持续时间" prop="trainDuration">
                 <el-input
@@ -116,7 +87,8 @@
 <script>
 import Schedular from "../../components/common/schedular/Schedular";
 import { getTrainList, addProjectTrain } from '../../network/train'
-import { INITIAL_EVENTS5 } from  '../../common/event-utils'
+import { getEquList } from '../../network/equpment'
+import { INITIAL_EVENTS4 } from  '../../common/event-utils'
 export default {
   components: {
     Schedular,
@@ -152,7 +124,7 @@ export default {
           },
         ],
       },
-      events: INITIAL_EVENTS5,
+      events: INITIAL_EVENTS4,
       value1: "",
       value2: "new Date(2016, 9, 10, 18, 40)",
       value3: "new Date(2016, 9, 10, 18, 40)",
@@ -196,6 +168,7 @@ export default {
       trainProName: [],
       trainData: [],
       fileList: [],
+      equlist: [],
       imageUrl: "", // 用于保存上传文件的地址
       devicename: "",
       trainProject_value: "",
@@ -341,6 +314,7 @@ export default {
       });
       console.log(this.trainProName);
     })
+    
   },
 };
 </script>
@@ -348,10 +322,17 @@ export default {
 .book-title {
   color: #595959;
 }
+.Schedular {
+  height: 100vh;
+  color: #393939;
+  font-size: 15px;
+  overflow: auto;  
+}
 .schedular-area {
   color: #5e5e5e;
 }
 .left-div {
   margin-left: 50px;
 }
+
 </style>
