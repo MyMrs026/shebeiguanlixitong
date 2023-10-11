@@ -3,18 +3,18 @@
     <!-- 导航栏部分 -->
     <div class="tabbar">
       <el-row>
-        <el-col :span="4">
+        <el-col :span="5">
           <el-col class="institution">
             <img
-              src="../../../assets/img/logo.jpg"
-              style="width: 25px; height: 25px; float: left"
+              src="../../../assets/img/weinalogo.png"
+              style="width: 200px; height: 50px; float: left"
             />
-            <div class="lab" style="float: left; font-size: 20px">
+            <!-- <div class="lab" style="float: left; font-size: 20px">
               浙江大学嘉兴研究院
-            </div>
+            </div> -->
           </el-col>
         </el-col>
-        <el-col :span="17">
+        <el-col :span="16">
           <el-col
           :span="12"
           style="
@@ -329,7 +329,7 @@ export default {
   margin-top: 15px;
   border-color: white;
   background-color: rgb(151, 184, 216, 0.5);
-  font-size: 100%;
+  font-size: 80%;
 }
 
 .font-help {
@@ -420,7 +420,7 @@ export default {
 
 .institution {
   float: left;
-  margin-top: 15px;
+  margin-top: 7px;
   margin-left: 15px;
   margin-right: 15px;
 }

@@ -46,22 +46,24 @@
       >
         <el-form :model="EventForm2" ref="EventForm2" :rules="rules2">
           <el-form-item label="标题" label-width="120px" prop="title">
-            <el-input v-model="EventForm2.title" autocomplete="off"></el-input>
+            <el-input v-model="EventForm2.title" autocomplete="off" style="width:350px;"></el-input>
           </el-form-item>
           <el-form-item label="开始时间" label-width="120px" prop="startTime">
             <el-input
               v-model="EventForm2.startTime"
               autocomplete="off"
+              style="width:350px;"
             ></el-input>
           </el-form-item>
           <el-form-item label="结束时间" label-width="120px" prop="endTime">
             <el-input
               v-model="EventForm2.endTime"
               autocomplete="off"
+              style="width:350px;"
             ></el-input>
           </el-form-item>
           <el-form-item label="使用者" label-width="120px" prop="user">
-            <el-input v-model="EventForm2.user" autocomplete="off"></el-input>
+            <el-input v-model="EventForm2.user" autocomplete="off"  style="width:350px;"></el-input>
           </el-form-item>
           <el-form-item>
             <div class="button-area">

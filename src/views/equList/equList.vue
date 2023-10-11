@@ -43,6 +43,18 @@
           width="300"
         >
         </el-table-column>
+        <el-table-column
+          prop="contacts"
+          label="联系人"
+          width="300"
+        >
+        </el-table-column>
+        <el-table-column
+          prop="contactsInfo"
+          label="联系方式"
+          width="300"
+        >
+        </el-table-column>
       </el-table>
     </div>
     <div class="equAdd" v-if="this.$store.state.cu_role === 'admin'">
