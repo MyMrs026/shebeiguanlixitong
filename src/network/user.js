@@ -10,12 +10,12 @@ export function getUserList() {
     method:'post'
   })
 }
-export function login(email,password){
+export function login( tel,password ){
   return request({
     url:'/user/login',
     method: 'post',
     data:{
-      email:email,
+      tel:tel,
       password:password  
     }
   })

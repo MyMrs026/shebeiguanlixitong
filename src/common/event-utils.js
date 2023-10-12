@@ -71,7 +71,7 @@ export const INITIAL_EVENTS4 = [
   {
     id: createEventId(),
     title: '实验室相关知识培训',
-    start: todayStr + 'T08:00:00',
+    start: todayStr + 'T08:30:00',
     end: todayStr + 'T11:30:00'
   },
   {
@@ -86,8 +86,14 @@ export const INITIAL_EVENTS5 = [
   {
     id: createEventId(),
     title: '实验室相关知识培训',
-    start: todayStr + 'T08:00:00',
+    start: todayStr + 'T08:30:00',
     end: todayStr + 'T11:30:00'
+  },
+  {
+    id: createEventId(),
+    title: '实验室安全知识培训',
+    start: tomorrowStr + 'T14:00:00',
+    end: tomorrowStr + 'T16:00:00'
   }
 ]
 
