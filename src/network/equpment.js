@@ -7,7 +7,7 @@ import { request } from "./request";
 //获取所有设备列表
 export function getEquList() {
   return request({
-    url:'/device/getDeviceList',
+    url:'/api/equipment/list',
     method:'get'
   })
 }

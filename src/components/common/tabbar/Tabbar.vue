@@ -16,64 +16,64 @@
         </el-col>
         <el-col :span="15">
           <el-col
-          :span="12"
-          style="
-            display: flex;
-            flex-direction: row;
-            justify-content: space-between;
-          "
-        >
-          <router-link to="/home">
-            <el-button class="custom-button" type="info" round size="small"
-              >首页</el-button
-            >
-          </router-link>
-          <router-link to="/project">
-            <el-button class="custom-button" type="info" round size="small"
-              >项目管理</el-button
-            >
-          </router-link>
-          <router-link to="/equp">
-            <el-button class="custom-button" type="info" round size="small"
-              >设备管理</el-button
-            >
-          </router-link>
-          <router-link to="/craft">
-            <el-button class="custom-button" type="info" round size="small"
-              >工艺管理</el-button
-            >
-          </router-link>
-          <router-link to="/book">
-            <el-button class="custom-button" type="info" round size="small"
-              >预约管理</el-button
-            >
-          </router-link>
-          <router-link to="/train">
-            <el-button class="custom-button" type="info" round size="small"
-              >培训管理</el-button
-            >
-          </router-link>
-          <router-link to="/notice">
-            <el-button class="custom-button" type="info" round size="small"
-              >公告信息</el-button
-            >
-          </router-link>
-          <router-link to="/system">
-            <el-button
-              class="custom-button"
-              type="info"
-              round
-              size="small"
-              v-if="this.$store.state.cu_role === 'admin'"
-              >系统管理</el-button
-            >
-          </router-link>
-          <router-link to="/test">
-            <el-button class="custom-button" type="info" round size="small"
-              >测试任务</el-button
-            >
-          </router-link>
-        </el-col>
+            :span="12"
+            style="
+              display: flex;
+              flex-direction: row;
+              justify-content: space-between;
+            "
+          >
+            <router-link to="/home">
+              <el-button class="custom-button" type="info" round size="small"
+                >首页</el-button
+              >
+            </router-link>
+            <router-link to="/project">
+              <el-button class="custom-button" type="info" round size="small"
+                >项目管理</el-button
+              >
+            </router-link>
+            <router-link to="/equp">
+              <el-button class="custom-button" type="info" round size="small"
+                >设备管理</el-button
+              >
+            </router-link>
+            <router-link to="/craft">
+              <el-button class="custom-button" type="info" round size="small"
+                >工艺管理</el-button
+              >
+            </router-link>
+            <router-link to="/book">
+              <el-button class="custom-button" type="info" round size="small"
+                >预约管理</el-button
+              >
+            </router-link>
+            <router-link to="/train">
+              <el-button class="custom-button" type="info" round size="small"
+                >培训管理</el-button
+              >
+            </router-link>
+            <router-link to="/notice">
+              <el-button class="custom-button" type="info" round size="small"
+                >公告信息</el-button
+              >
+            </router-link>
+            <router-link to="/system">
+              <el-button
+                class="custom-button"
+                type="info"
+                round
+                size="small"
+                v-if="this.$store.state.cu_role === 'admin'"
+                >系统管理</el-button
+              >
+            </router-link>
+            <router-link to="/test">
+              <el-button class="custom-button" type="info" round size="small"
+                >测试任务</el-button
+              >
+            </router-link>
+          </el-col>
         </el-col>
         <el-col :span="1">
           <div class="help-box">
@@ -104,20 +104,25 @@
             ></i>
           </el-tooltip>
         </el-col>
-        <el-col :span="1">
-          <el-tooltip
-            class="item"
-            effect="light"
-            content="邮件"
-            placement="bottom"
-          >
-            <i
-              class="el-icon-message"
-              type="primary"
-              style="margin-left: 16px"
-            ></i>
-          </el-tooltip>
+        <el-col :span="1"
+          ><router-link to="/message">
+            <el-tooltip
+              class="item"
+              effect="light"
+              content="邮件"
+              placement="bottom"
+            >
+              <el-badge value="new">
+                <i
+                  class="el-icon-message"
+                  type="primary"
+                  style="margin-left: 16px"
+                ></i>
+              </el-badge>
+            </el-tooltip>
+          </router-link>
         </el-col>
+
         <el-col :span="1">
           <el-tooltip
             class="item"
@@ -227,6 +232,9 @@
             <router-link to="/message">
               <el-menu-item index="4-3" class="secondly">信息通知</el-menu-item>
             </router-link>
+            <router-link to="/bill">
+              <el-menu-item index="4-5" class="secondly">用户账单</el-menu-item>
+            </router-link>
           </el-submenu>
           <!-- 订单 -->
           <el-submenu index="5">
@@ -239,30 +247,27 @@
           <el-submenu index="6">
             <div slot="title" class="firstly">商品</div>
             <router-link to="/goods">
-              <el-menu-item 
-                @click="closeDrawer" 
-                index="6-1" 
-                class="secondly"
+              <el-menu-item @click="closeDrawer" index="6-1" class="secondly"
                 >商品分类</el-menu-item
               >
             </router-link>
             <router-link to="/goods/details">
-            <el-menu-item 
-              @click="closeDrawer" 
-              index="6-2" 
-              class="secondly"
-              v-if="this.$store.state.cu_role === 'admin'"
-              >商品详情</el-menu-item
-            >
+              <el-menu-item
+                @click="closeDrawer"
+                index="6-2"
+                class="secondly"
+                v-if="this.$store.state.cu_role === 'admin'"
+                >商品详情</el-menu-item
+              >
             </router-link>
             <router-link to="/goods/category">
-              <el-menu-item 
-              @click="closeDrawer" 
-              index="6-3" 
-              class="secondly"
-              v-if="this.$store.state.cu_role === 'admin'"
-              >商品分类</el-menu-item
-            >
+              <el-menu-item
+                @click="closeDrawer"
+                index="6-3"
+                class="secondly"
+                v-if="this.$store.state.cu_role === 'admin'"
+                >商品分类</el-menu-item
+              >
             </router-link>
           </el-submenu>
           <!-- 进程信息 -->
@@ -297,6 +302,7 @@ export default {
       Drawer: false,
       proData: [], //项目列表
       getProject: "",
+      notificationCount: 0, //数据库更新数据情况
     };
   },
   methods: {
@@ -333,9 +339,9 @@ export default {
 }
 
 .tabbar {
-  position:fixed;
-  z-index:10;
-  background-color:rgb(141, 186, 221);
+  position: fixed;
+  z-index: 10;
+  background-color: rgb(141, 186, 221);
   width: 100%;
   height: 65px;
   background-size: 100% 100%;
@@ -399,7 +405,7 @@ export default {
   margin-right: 15px;
 }
 
-.el-icon-message{
+.el-icon-message {
   float: right;
   display: flex;
   font-size: 35px;
