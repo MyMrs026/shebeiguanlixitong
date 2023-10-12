@@ -40,19 +40,19 @@
         <el-table-column
           prop="isUnderMaintenance"
           label="是否处于维护中"
-          width="300"
+          width="150"
         >
         </el-table-column>
         <el-table-column
           prop="contacts"
           label="联系人"
-          width="300"
+          width="120"
         >
         </el-table-column>
         <el-table-column
           prop="contactsInfo"
           label="联系方式"
-          width="300"
+          width="120"
         >
         </el-table-column>
       </el-table>

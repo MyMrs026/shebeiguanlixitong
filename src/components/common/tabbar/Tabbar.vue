@@ -14,7 +14,7 @@
             </div> -->
           </el-col>
         </el-col>
-        <el-col :span="16">
+        <el-col :span="15">
           <el-col
             :span="12"
             style="
@@ -104,7 +104,6 @@
             ></i>
           </el-tooltip>
         </el-col>
-
         <el-col :span="1"
           ><router-link to="/message">
             <el-tooltip
@@ -158,8 +157,8 @@
           accordion
           class="drawer-menu"
           :unique-opened="true"
-          text-color="#fff"
-          active-text-color="#27195e"
+          text-color="#000"
+          active-text-color="#4737ec"
         >
           <!-- 信息 -->
           <el-submenu index="1">
@@ -326,6 +325,10 @@ export default {
   mounted() {
     this.proData = this.$store.state.proData;
     this.projects = this.proData.map((item) => item.name);
+    const meta = document.createElement('meta');
+    meta.name = 'viewport';
+    meta.content = 'width=device-width, initial-scale=1.0, user-scalable';
+    document.head.appendChild(meta);
   },
 };
 </script>
@@ -507,24 +510,24 @@ export default {
 }
 
 div /deep/ .el-drawer__body .el-menu {
-  background-color: #48425b;
+  background-color: #ffffff;
 }
 
 div /deep/ .el-drawer__body {
-  background-color: #48425b;
+  background-color: #d6e0f5;
 }
 
 .drawer-menu {
   height: 100%;
-  background-image: url("../../../assets/img/tabbar2.jpg");
+  background-color: #ffffff;
   opacity: 0.8;
 }
 
 .secondly {
-  background-color: #48425b;
+  background-color: #ffffff;
 }
 
 div /deep/ .el-submenu__title:hover {
-  background-color: rgb(0, 0, 0);
+  background-color: rgb(184, 188, 218);
 }
 </style>

@@ -5,8 +5,16 @@
     <!-- 设备工艺表格 -->
     <div class="table-equcraft-use">
       <div class="equ-item" v-for="(item,index) in urls" :key="index">
-        <img v-bind:src="item.url" style="width:100%;height:100%;float:left;max-height:300px;">
-          <ul class="medium" style="width:50%;height:50%;float:left;margin-top:5px;">
+        <img v-bind:src="item.url" style="width:100%;height:100%;float:left;max-height:200px;">
+        设备名称：{{equCrafts[index].deviceName }}
+        <br/>
+        <router-link to="/book">
+        <el-button>立即预约</el-button>
+        </router-link>
+        <router-link to="/test">
+        <el-button>立即测试</el-button>
+        </router-link>
+          <!-- <ul class="medium" style="width:50%;height:50%;float:left;margin-top:5px;">
             <li>设备名称</li>
             <li>{{equCrafts[index].deviceName }}</li>
             <li>设备型号</li>
@@ -17,7 +25,7 @@
             <li>{{equCrafts[index].weight}}</li>
             <li>功率信息</li>
             <li>{{equCrafts[index].power}}</li>
-          </ul>
+          </ul> -->
       </div>
     </div>
     <hr style="display:flex;border: 5px solid white; margin-left: 10px; margin-right: 10px"/>
@@ -190,7 +198,7 @@ export default {
   /* gap:40px; */
 }
 .equ-item {
-  flex: 0 0 calc(33.33% - 40px); /* 让每个元素占据1/3的宽度，减去一些间距 */
+  flex: 0 0 calc(25% - 40px); /* 让每个元素占据1/3的宽度，减去一些间距 */
   margin-right: 40px; /* 可以根据需要添加间距 */
   margin-bottom: 40px; /* 用于在垂直方向上添加间距 */
   box-sizing: border-box; /* 确保元素的边框和内边距不会使它们超出指定的宽度 */
