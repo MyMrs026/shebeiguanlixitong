@@ -1,4 +1,5 @@
 <template>
+<div class="outer-container">
   <div class="total">
     <!-- 分割线 -->
 
@@ -10,28 +11,33 @@
     <div style="height:35rem;">
     <div class="left">
     <div class="title1">微纳加工平台</div>
-    <div style="font-size:1.75rem;margin-top:1.25rem;">WeiNa Public Platform Management Website</div>
-      <div><i class="el-icon-message-solid"></i>
-      <ul class="news">
-        <li
-          v-for="item in paginatedData"
-          :key="item.notice_id"
-          style="cursor: pointer">
-          <div style="display: flex; flex-direction: row;">
-            <div class="notice_content" @click="gotoNoticeDetail(item.notice_id)">
-              <font>{{ item.title }}</font>
-               <!-- 日期的显示格式:xxxx年xx月xx日 --> 
-               <font>{{ item.publishDate | formatDate }}</font>
+      <div style="margin-top:50px;height:20px;">
+        <i class="el-icon-message-solid" style="float:left;"></i>
+        <ul class="news">
+          <li
+            v-for="item in paginatedData"
+            :key="item.notice_id"
+            style="cursor: pointer">
+            <div style="display: flex; flex-direction: row;">
+              <div class="notice_content" @click="gotoNoticeDetail(item.notice_id)">
+                <font>{{ item.title }}</font>
+                <!-- 日期的显示格式:xxxx年xx月xx日 --> 
+                <font>{{ item.publishDate | formatDate }}</font>
+              </div>
             </div>
-          </div>
-        </li>
-      </ul>
+          </li>
+        </ul>
       </div>
-    <div style="margin-top:2.5rem;text-align:center;"><div style="background-color:white;height:0.625rem;text-align:center;">  
-      </div></div>
-    <div class="menu-icon" style="margin-top:2.5rem;margin-bottom:3rem;height:20rem;font-size:1.2rem;letter-spacing:0.3125rem;">
-    微纳加工平台总面积641.78m²，其中百级区182.42m²，千级区368.67m²，湿法工作区26.48m²，灰区36.5 m²。微纳加工平台主攻光/电芯片的异质异构集成以及多材料体系的超精细加工。
-加工平台管理网站旨在为您提供正确的设备建议，并为您的微纳米制造工艺以及芯片检测工作提供一个良好的起点。如果您需要有关某些仪器或流程的更多信息，请联系相关人员。欢迎您对微纳加工平台管理网站提供任何反馈或意见。
+    <div style="margin-top:2.5rem;text-align:center;background-color:white;height:0.225rem;text-align:center;">
+      </div>
+    <div class="menu-icon" style="margin-top:2.5rem;margin-bottom:3rem;height:20rem;font-size:1.2rem;letter-spacing:0.3125rem;text-align:left;">
+    
+    微纳加工平台主攻光/电芯片的异质异构集成以及多材料体系的超精细加工。<br/>
+    <br/>
+    微纳加工平台总面积641.78m²，其中百级区182.42m²，千级区368.67m²，湿法工作区26.48m²，灰区36.5 m²。<br/>
+    <br/>
+    加工平台管理网站旨在为您提供正确的设备建议，并为您的微纳米制造工艺以及芯片检测工作提供一个良好的起点。<br/>
+    如果您需要有关某些仪器或流程的更多信息，请联系相关人员。欢迎您对微纳加工平台管理网站提供任何反馈或意见。
     </div>
     </div>
     <!-- 公告部分 -->
@@ -59,20 +65,21 @@
       </div>
     </div> --> 
     </div>
-    <hr
-      style="border: 0.0625rem solid white; margin-left: 0.625rem; margin-right: 0.625rem;margin-top:1.875rem;margin-bottom:2.1875rem;"
-    />
+    <!-- <hr
+      style="border: 0.0625rem solid white; margin-left: 0.625rem; margin-right: 0.625rem;margin-top:4.5rem;margin-bottom:2.1875rem;"
+    /> -->
     <div class="text-home" >
-      <p id="lab-map">超净室平面图</p>
+      <p id="lab-map" style="margin-top:8rem;">超净室平面图</p>
     </div>
-    <div style="height:100%;width:80%;text-align:center">
+    <div style="display:flex;height:100%;justify-content: center;
+  align-items: center;">
       <img src="../../assets/img/超净室.jpg" style="height:100%;width:80%;text-align:center">
     </div>
-    <div class="text-home" >
+    <div class="text-home" style="background-color:rgb(222, 230, 244);">
       <p id="equ-use">设备使用情况</p>
     </div>
     <!-- 设备使用表(目前：写死的) -->
-    <div class="table-equ-use"  >
+    <div class="table-equ-use"  style="background-color:rgb(222, 230, 244);">
       <el-table
         border
         :data="equpsUse"
@@ -93,25 +100,25 @@
         </el-table-column>
       </el-table>
     </div>
-    <div class="text-home"  >
+    <div class="text-home" style="background-color:rgb(222, 230, 244);" >
       <p id="book-use">我的预约</p>
     </div>
     <!-- 用户个人的预约表(目前：写死的) -->
-    <div class="table-book-use">
+    <div class="table-book-use" style="background-color:rgb(222, 230, 244);">
       <el-table :data="myBooks" class="table-book">
-        <el-table-column prop="equp" label="设备" width="170">
+        <el-table-column prop="equp" label="设备" width="140">
         </el-table-column>
-        <el-table-column prop="status" label="状态" width="120">
+        <el-table-column prop="status" label="状态" width="110">
         </el-table-column>
-        <el-table-column prop="user" label="用户/操作人员" width="150">
+        <el-table-column prop="user" label="用户/操作人员" width="140">
         </el-table-column>
-        <el-table-column prop="start" label="开始" width="150">
+        <el-table-column prop="start" label="开始" width="140">
         </el-table-column>
-        <el-table-column prop="end" label="结束" width="150"> 
+        <el-table-column prop="end" label="结束" width="140"> 
         </el-table-column>
         <el-table-column prop="cal" label="规划方式" width="125">
         </el-table-column>
-        <el-table-column prop="action" label="动作" width="125">
+        <el-table-column prop="action" label="动作" width="115">
         </el-table-column>
         <el-table-column prop="operate" label="快捷操作" width="125">
           <router-link to="/test">
@@ -150,28 +157,29 @@
         <el-table-column
           prop="deviceMaintenanceId"
           label="设备维修ID"
-          width="180"
+          width="100"
         >
         </el-table-column>
-        <el-table-column prop="deviceId" label="设备ID" width="180">
+        <el-table-column prop="deviceId" label="设备ID" width="100">
         </el-table-column>
-        <el-table-column prop="content" label="内容"> </el-table-column>
+        <el-table-column prop="content" label="内容" width="150"> </el-table-column>
         <el-table-column
           prop="expectedEndTime"
           label="预期结束时间"
-          width="180"
+          width="120"
         >
         </el-table-column>
-        <el-table-column prop="startTime" label="开始时间" width="180">
+        <el-table-column prop="startTime" label="开始时间" width="170">
         </el-table-column>
-        <el-table-column prop="actualEndTime" label="实际结束时间">
+        <el-table-column prop="actualEndTime" label="实际结束时间"width="125">
         </el-table-column>
-        <el-table-column prop="maintenanceStaff" label="维修人员" width="180">
+        <el-table-column prop="maintenanceStaff" label="维修人员" width="170">
         </el-table-column>
-        <el-table-column prop="remark" label="评价"> </el-table-column>
+        <el-table-column prop="remark" label="评价" width="100"> </el-table-column>
       </el-table>
     </div> -->
   </div>
+</div>
 </template>
 
 <script>
@@ -270,6 +278,7 @@ export default {
     },
   },
   mounted() {
+
     this.notice = this.$store.state.notices;
     this.MaintainData = this.$store.state.MaintainData;
     this.proData = this.$store.state.proData;
@@ -285,9 +294,19 @@ export default {
 </script>
 
 <style>
+.outer-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* 100%视口高度，垂直居中 */
+  max-width: 1500px; /* 设置最大宽度 */
+  margin: 0 auto; /* 居中 */
+  /* padding: 20px; 左右下留白 */
+}
 .total {
   background-image: url("../../assets/img/qqq6.png");
   width: 100%;
+  margin-bottom: 2rem;
   height: 100%;
   background-size: 100% 100%;
   display: flex;
@@ -305,6 +324,7 @@ export default {
 .title1 {
   font-size: 3.5rem;
   margin-top: 0.9375rem;
+  margin-bottom:3rem;
   height: 4.375rem;
   color: rgb(103, 112, 147);
   font-weight:bolder;
@@ -375,7 +395,7 @@ export default {
 
 .text-home {
   margin-top: 0rem;
-  margin-left: 3.125rem;
+  padding-left: 3.125rem;
   line-height: 3.4375rem;
   font-size: 1.5rem;
   color:rgb(103, 102, 102);
@@ -423,12 +443,14 @@ export default {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  padding-left:5px;
+  padding-bottom:30px;
 }
 
 .table-book {
   width: auto;
   height: auto;
-  border: 0rem solid #000000;
+  border: 0rem solid #e9eefe;
   border-radius: 0rem;
   margin: 0 auto;
   font-size: 1rem;
@@ -440,12 +462,13 @@ export default {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+
 }
 
 .table-dch {
   width: auto;
   height: auto;
-  border: 0rem solid #000000;
+  border: 0rem solid ccc;
   border-radius: 0rem;
   margin: 0 auto;
   font-size: 1rem;
