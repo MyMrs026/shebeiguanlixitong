@@ -1,4 +1,5 @@
 <template>
+<div class="outer-container">
   <div class="total">
     <!-- 分割线 -->
 
@@ -9,13 +10,34 @@
     <!-- 标题+图标 -->
     <div style="height:35rem;">
     <div class="left">
-    <div class="title1">微纳公共平台管理网站</div>
-    <div style="font-size:1.75rem;margin-top:1.25rem;">WeiNa Public Platform Management Website</div>
-    <div style="margin-top:2.5rem;text-align:center;"><hr style="color:white;height:0.625rem;text-align:center;"/></div>
-    <div class="menu-icon" style="margin-top:2.5rem;margin-bottom:3rem;height:20rem;font-size:1.5rem;letter-spacing:0.3125rem;">
-    国家实验室，属于科学与工程研究类国家科技创新基地，体现国家意志、实现国家使命、代表国家水平的战略科技力量，是面向国际科技竞争的创新基础平台，是保障国家安全的核心支撑，是突破型、引领型、平台型一体化的大型综合性研究基地。
-    国家同步辐射实验室等5个首批国家实验室至2000年底，全部通过验收。2000年-2003年，科学技术部陆续批准了5个国家实验室的试点。随后，又于2006年启动10个第二批国家实验室试点建设。截止到2016年底，除青岛海洋科学与技术国家实验室正式获批成立外，其余14个试点的国家实验室仍处于筹建状态。 截至2021年1月，北京已成立挂牌成立中关村国家实验室、怀柔国家实验室、昌平国家实验室。
-    2023年3月，根据国务院关于提请审议国务院机构改革方案的议案，重新组建科学技术部，保留国家实验室建设职责。
+    <div class="title1">微纳加工平台</div>
+      <div style="margin-top:50px;height:20px;">
+        <i class="el-icon-message-solid" style="float:left;"></i>
+        <ul class="news">
+          <li
+            v-for="item in paginatedData"
+            :key="item.notice_id"
+            style="cursor: pointer">
+            <div style="display: flex; flex-direction: row;">
+              <div class="notice_content" @click="gotoNoticeDetail(item.notice_id)">
+                <font>{{ item.title }}</font>
+                <!-- 日期的显示格式:xxxx年xx月xx日 --> 
+                <font>{{ item.publishDate | formatDate }}</font>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    <div style="margin-top:2.5rem;text-align:center;background-color:white;height:0.225rem;text-align:center;">
+      </div>
+    <div class="menu-icon" style="margin-top:2.5rem;margin-bottom:3rem;height:20rem;font-size:1.2rem;letter-spacing:0.3125rem;text-align:left;">
+    
+    微纳加工平台主攻光/电芯片的异质异构集成以及多材料体系的超精细加工。<br/>
+    <br/>
+    微纳加工平台总面积641.78m²，其中百级区182.42m²，千级区368.67m²，湿法工作区26.48m²，灰区36.5 m²。<br/>
+    <br/>
+    加工平台管理网站旨在为您提供正确的设备建议，并为您的微纳米制造工艺以及芯片检测工作提供一个良好的起点。<br/>
+    如果您需要有关某些仪器或流程的更多信息，请联系相关人员。欢迎您对微纳加工平台管理网站提供任何反馈或意见。
     </div>
     </div>
     <!-- 公告部分 -->
@@ -43,14 +65,21 @@
       </div>
     </div> --> 
     </div>
-    <hr
-      style="border: 0.0625rem solid white; margin-left: 0.625rem; margin-right: 0.625rem;margin-top:1.875rem;margin-bottom:2.1875rem;"
-    />
+    <!-- <hr
+      style="border: 0.0625rem solid white; margin-left: 0.625rem; margin-right: 0.625rem;margin-top:4.5rem;margin-bottom:2.1875rem;"
+    /> -->
     <div class="text-home" >
+      <p id="lab-map" style="margin-top:8rem;">超净室平面图</p>
+    </div>
+    <div style="display:flex;height:100%;justify-content: center;
+  align-items: center;">
+      <img src="../../assets/img/超净室.jpg" style="height:100%;width:80%;text-align:center">
+    </div>
+    <div class="text-home" style="background-color:rgb(222, 230, 244);">
       <p id="equ-use">设备使用情况</p>
     </div>
     <!-- 设备使用表(目前：写死的) -->
-    <div class="table-equ-use"  >
+    <div class="table-equ-use"  style="background-color:rgb(222, 230, 244);">
       <el-table
         border
         :data="equpsUse"
@@ -71,24 +100,30 @@
         </el-table-column>
       </el-table>
     </div>
-    <div class="text-home"  >
+    <div class="text-home" style="background-color:rgb(222, 230, 244);" >
       <p id="book-use">我的预约</p>
     </div>
     <!-- 用户个人的预约表(目前：写死的) -->
-    <div class="table-book-use">
+    <div class="table-book-use" style="background-color:rgb(222, 230, 244);">
       <el-table :data="myBooks" class="table-book">
-        <el-table-column prop="equp" label="设备" width="170">
+        <el-table-column prop="equp" label="设备" width="140">
         </el-table-column>
-        <el-table-column prop="status" label="状态" width="120">
+        <el-table-column prop="status" label="状态" width="110">
         </el-table-column>
-        <el-table-column prop="user" label="用户/操作人员" width="150">
+        <el-table-column prop="user" label="用户/操作人员" width="140">
         </el-table-column>
-        <el-table-column prop="start" label="开始" width="150">
+        <el-table-column prop="start" label="开始" width="140">
         </el-table-column>
-        <el-table-column prop="end" label="结束" width="150"> </el-table-column>
+        <el-table-column prop="end" label="结束" width="140"> 
+        </el-table-column>
         <el-table-column prop="cal" label="规划方式" width="125">
         </el-table-column>
-        <el-table-column prop="action" label="动作" width="165">
+        <el-table-column prop="action" label="动作" width="115">
+        </el-table-column>
+        <el-table-column prop="operate" label="快捷操作" width="125">
+          <router-link to="/test">
+            <el-button type="info">立即测试</el-button>
+          </router-link>
         </el-table-column>
       </el-table>
     </div>
@@ -122,28 +157,29 @@
         <el-table-column
           prop="deviceMaintenanceId"
           label="设备维修ID"
-          width="180"
+          width="100"
         >
         </el-table-column>
-        <el-table-column prop="deviceId" label="设备ID" width="180">
+        <el-table-column prop="deviceId" label="设备ID" width="100">
         </el-table-column>
-        <el-table-column prop="content" label="内容"> </el-table-column>
+        <el-table-column prop="content" label="内容" width="150"> </el-table-column>
         <el-table-column
           prop="expectedEndTime"
           label="预期结束时间"
-          width="180"
+          width="120"
         >
         </el-table-column>
-        <el-table-column prop="startTime" label="开始时间" width="180">
+        <el-table-column prop="startTime" label="开始时间" width="170">
         </el-table-column>
-        <el-table-column prop="actualEndTime" label="实际结束时间">
+        <el-table-column prop="actualEndTime" label="实际结束时间"width="125">
         </el-table-column>
-        <el-table-column prop="maintenanceStaff" label="维修人员" width="180">
+        <el-table-column prop="maintenanceStaff" label="维修人员" width="170">
         </el-table-column>
-        <el-table-column prop="remark" label="评价"> </el-table-column>
+        <el-table-column prop="remark" label="评价" width="100"> </el-table-column>
       </el-table>
     </div> -->
   </div>
+</div>
 </template>
 
 <script>
@@ -242,6 +278,7 @@ export default {
     },
   },
   mounted() {
+
     this.notice = this.$store.state.notices;
     this.MaintainData = this.$store.state.MaintainData;
     this.proData = this.$store.state.proData;
@@ -257,9 +294,19 @@ export default {
 </script>
 
 <style>
+.outer-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* 100%视口高度，垂直居中 */
+  max-width: 1500px; /* 设置最大宽度 */
+  margin: 0 auto; /* 居中 */
+  /* padding: 20px; 左右下留白 */
+}
 .total {
   background-image: url("../../assets/img/qqq6.png");
   width: 100%;
+  margin-bottom: 2rem;
   height: 100%;
   background-size: 100% 100%;
   display: flex;
@@ -277,6 +324,7 @@ export default {
 .title1 {
   font-size: 3.5rem;
   margin-top: 0.9375rem;
+  margin-bottom:3rem;
   height: 4.375rem;
   color: rgb(103, 112, 147);
   font-weight:bolder;
@@ -347,7 +395,7 @@ export default {
 
 .text-home {
   margin-top: 0rem;
-  margin-left: 3.125rem;
+  padding-left: 3.125rem;
   line-height: 3.4375rem;
   font-size: 1.5rem;
   color:rgb(103, 102, 102);
@@ -395,12 +443,14 @@ export default {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  padding-left:5px;
+  padding-bottom:30px;
 }
 
 .table-book {
   width: auto;
   height: auto;
-  border: 0rem solid #000000;
+  border: 0rem solid #e9eefe;
   border-radius: 0rem;
   margin: 0 auto;
   font-size: 1rem;
@@ -412,12 +462,13 @@ export default {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+
 }
 
 .table-dch {
   width: auto;
   height: auto;
-  border: 0rem solid #000000;
+  border: 0rem solid ccc;
   border-radius: 0rem;
   margin: 0 auto;
   font-size: 1rem;
@@ -429,8 +480,5 @@ div /deep/ .margin-top.el-descriptions .el-descriptions__table.is-bordered{
 div /deep/ .margin-top.el-descriptions .el-descriptions.is-bordered{
   height:17.5rem;
 }
-/* div /deep/ .el-descriptions-item__cell.el-descriptions-item__label.is-bordered-label{
-  width:6.25rem;
-} */
 
 </style>
