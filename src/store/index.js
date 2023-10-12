@@ -14,7 +14,7 @@ Vue.use(Vuex)
 
 const state = {
   // 用户登录状态
-  cu_role:'',
+  cu_role:'admin',
   
   // 公告信息
   notices:[

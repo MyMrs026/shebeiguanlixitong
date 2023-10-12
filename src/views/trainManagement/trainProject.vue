@@ -7,7 +7,7 @@
           <div class="book-title">
             <p>设备预约日视图</p>
           </div>
-          <div>
+          <!-- <div>
             <el-date-picker
               v-model="value1"
               align="right"
@@ -16,13 +16,13 @@
               :picker-options="pickerOptions"
             >
             </el-date-picker>
-          </div>
+          </div> -->
           <div class="button-area">
             <el-button plain @click="hideClick1">{{ buttonText1 }}</el-button>
           </div>
           <div class="schedular-area" v-if="isShow1">
             <p style="margin: 10px">当前用户:{{ this.$store.state.cu_role }}</p>
-            <Schedular class="Schedular" :events="events"/>
+            <Schedular class="Schedular" :events="events" />
           </div>
         </div>
       </el-col>
@@ -30,20 +30,35 @@
       <el-col :span="12">
         <div class="right-div">
           <div class="form-area" v-if="this.$store.state.cu_role === 'admin'">
-            <el-form class="train-form" label-width="80px" :model="trainForm" ref="trainForm" :rules="rules">
+            <el-form
+              class="train-form"
+              label-width="80px"
+              :model="trainForm"
+              ref="trainForm"
+              :rules="rules"
+            >
               <el-form-item label="培训名称" prop="trainName">
-                <el-input v-model="trainForm.trainName" style="width: 300px">
-                </el-input>
-              </el-form-item>
-              <el-form-item label="培训介绍" prop="trainIntroduction">
-                <el-input
-                  v-model="trainForm.trainIntroduction"
-                  style="width: 300px"
+                <!-- <el-input v-model="trainForm.trainName" style="width: 300px">
+                </el-input> -->
+                <el-select
+                  v-model="trainForm.trainName"
+                  placeholder="请选择培训名称"
                 >
+                  <el-option
+                    v-for="item in trainProName"
+                    :key="item.key"
+                    :label="item.label"
+                    :value="item.key"
+                  >
+                  </el-option>
+                </el-select>
+              </el-form-item>
+              <el-form-item label="培训费用" prop="cost">
+                <el-input v-model="trainForm.cost" style="width: 80px">
                 </el-input>
               </el-form-item>
 
-              <el-form-item label="培训内容" prop="docUrl">
+              <!-- <el-form-item label="培训内容" prop="docUrl">
                 <el-input
                   v-model="trainForm.docUrl"
                   style="width: 300px"
@@ -56,9 +71,11 @@
                   style="width: 300px"
                 >
                 </el-input>
-              </el-form-item>
+              </el-form-item> -->
               <el-form-item>
-                <el-button type="primary" plain @click="submitForm('trainForm')">提交</el-button>
+                <el-button type="primary" plain @click="submitForm('trainForm')"
+                  >提交</el-button
+                >
                 <el-button @click="resetForm('trainForm')">重置</el-button>
               </el-form-item>
             </el-form>
@@ -71,13 +88,19 @@
             >
               <el-option
                 v-for="item in trainProName"
-                :key="item.trainId"
-                :label="item.trainName"
-                :value="item.trainId"
+                :key="item.key"
+                :label="item.label"
+                :value="item.key"
               >
               </el-option>
             </el-select>
+            <el-input
+              v-model="trainNumber"
+              type="number"
+              style="width: 100px"
+            ></el-input>
             <el-button plain @click="buttonApply">申请</el-button>
+            <div>培训费用共计:{{ this.trainCost }}元</div>
           </div>
         </div>
       </el-col>
@@ -86,9 +109,9 @@
 </template>
 <script>
 import Schedular from "../../components/common/schedular/Schedular";
-import { getTrainList, addProjectTrain } from '../../network/train'
-import { getEquList } from '../../network/equpment'
-import { INITIAL_EVENTS4 } from  '../../common/event-utils'
+import { getTrainList, addProjectTrain } from "../../network/train";
+import { getEquList } from "../../network/equpment";
+import { INITIAL_EVENTS5 } from "../../common/event-utils";
 export default {
   components: {
     Schedular,
@@ -124,7 +147,7 @@ export default {
           },
         ],
       },
-      events: INITIAL_EVENTS4,
+      events: INITIAL_EVENTS5,
       value1: "",
       value2: "new Date(2016, 9, 10, 18, 40)",
       value3: "new Date(2016, 9, 10, 18, 40)",
@@ -143,9 +166,7 @@ export default {
         // devicename: "",
         // iid: "",
         trainName: "",
-        trainIntroduction: "",
-        docUrl: "",
-        trainDuration: "",
+        cost: 0,
       },
       device_options: [
         {
@@ -165,7 +186,7 @@ export default {
           label: "ASP",
         },
       ],
-      trainProName: [],
+      // trainProName: [],
       trainData: [],
       fileList: [],
       equlist: [],
@@ -174,18 +195,28 @@ export default {
       trainProject_value: "",
       rules: {
         trainName: [
-          { required: true, message: '请填写培训的名称', trigger: 'blur' }
+          { required: true, message: "请填写培训的名称", trigger: "blur" },
         ],
-        trainIntroduction: [
-          { required: true, message: '请填写培训的介绍', trigger: 'blur' }
+        cost: [
+          { required: true, message: "请填写培训的费用", trigger: "blur" },
+          {
+            validator: this.validateNumber,
+            trigger:'blur',
+          },
         ],
-        docUrl: [
-          { required: true, message: '请填写培训的内容', trigger: 'blur' }
-        ],
-        trainDuration: [
-          { required: true, message: '请填写培训的持续时间', trigger: 'blur' }
-        ]
-      }
+        // docUrl: [
+        //   { required: true, message: "请填写培训的内容", trigger: "blur" },
+        // ],
+        // trainDuration: [
+        //   { required: true, message: "请填写培训的持续时间", trigger: "blur" },
+        // ],
+      },
+      trainProName: [
+        { key: 0, label: "安全培训(120元/人)", cost: 120 },
+        { key: 1, label: "设备培训(120元/人)", cost: 120 },
+      ],
+      trainNumber: 1,
+      trainCost: 0,
     };
   },
   computed: {
@@ -251,28 +282,42 @@ export default {
     },
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
-        if(valid) {
+        if (valid) {
           //成功提交
           console.log("提交成功");
           console.log(this.trainForm);
-          addProjectTrain(this.trainForm.docUrl,this.trainForm.trainDuration,this.trainForm.trainIntroduction,this.trainForm.trainName)
-          .then(res=> {
-            //处理返回的响应数据
-            const data = res.data
-            console.log(data);
-          }).catch(error => {
-            console.error(error);
-          })
+          addProjectTrain(
+            this.trainForm.docUrl,
+            this.trainForm.trainDuration,
+            this.trainForm.trainIntroduction,
+            this.trainForm.trainName
+          )
+            .then((res) => {
+              //处理返回的响应数据
+              const data = res.data;
+              console.log(data);
+            })
+            .catch((error) => {
+              console.error(error);
+            });
         } else {
-          alert("请填写完整")
+          alert("请填写完整");
           // console.log(this.trainForm);
           return false;
         }
-      })
-      
+      });
     },
     resetForm(formName) {
       this.$refs[formName].resetFields();
+    },
+    validateNumber(rule,value,callback){
+      if(value === null || value === ''){
+        callback(new Error('请输入数字'));
+      } else if (isNaN(value) || value<= 0) {
+        callback(new Error('必须为大于零的数字'));
+      } else {
+        callback();
+      }
     },
     handleRemove(file, fileList) {
       console.log(file, fileList);
@@ -291,8 +336,8 @@ export default {
       return this.$confirm(`确定移除 ${file.name}？`);
     },
     buttonApply() {
-      if (this.trainProject_value === "") {
-        this.$alert("请选择培训的项目名", "提示", {
+      if (this.trainProject_value === "" || this.trainNumber === "") {
+        this.$alert("请填写完整", "提示", {
           confirmButtonText: "确定",
           callback: (action) => {
             this.$message({
@@ -301,21 +346,36 @@ export default {
             });
           },
         });
+      } else if (this.trainNumber < 1) {
+        this.$alert("人数不能少于1个人", "提示", {
+          confirmButtonText: "确定",
+          callback: (action) => {
+            this.$message({
+              type: "info",
+              message: `action: ${action}`,
+            });
+          },
+        });
+      } else {
+        // console.log(this.trainProName[this.trainProject_value].cost);
+        this.trainCost =
+          this.trainNumber * this.trainProName[this.trainProject_value].cost;
+        console.log(this.trainCost);
       }
     },
   },
-  mounted() {
-    getTrainList().then(res =>{
-      this.trainData = res.data;
-      // console.log(res.data);
-      this.trainData.forEach(obj => {
-        const { trainName,trainId } = obj;
-        this.trainProName.push({trainName,trainId});
-      });
-      console.log(this.trainProName);
-    })
-    
-  },
+  // mounted() {
+  //   getTrainList().then(res =>{
+  //     this.trainData = res.data;
+  //     // console.log(res.data);
+  //     this.trainData.forEach(obj => {
+  //       const { trainName,trainId } = obj;
+  //       this.trainProName.push({trainName,trainId});
+  //     });
+  //     console.log(this.trainProName);
+  //   })
+
+  // },
 };
 </script>
 <style scope>
@@ -326,7 +386,7 @@ export default {
   height: 100vh;
   color: #393939;
   font-size: 15px;
-  overflow: auto;  
+  overflow: auto;
 }
 .schedular-area {
   color: #5e5e5e;
@@ -334,5 +394,4 @@ export default {
 .left-div {
   margin-left: 50px;
 }
-
 </style>
