@@ -1,8 +1,5 @@
 <template>
   <div id="app">
-    <head>
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    </head>
     <div class="logo"></div>
     <tabbar v-if="isShowTabbar"/>
     <router-view/>
@@ -24,9 +21,6 @@ export default {
       return this.$route.path !== '/login' && this.$route.path !== '/register';
     }
   },
-  mounted() {
-    
-  }
 }
 </script>
 

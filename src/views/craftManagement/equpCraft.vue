@@ -1,19 +1,50 @@
 <template>
-  <div>
-    <p class="text-title">{{ message }}</p>
-    <!-- 页面有两个部分组成 -->
-    <!-- 设备工艺表格 -->
-    <div class="table-equcraft-use">
-      <div class="equ-item" v-for="(item,index) in urls" :key="index">
-        <img v-bind:src="item.url" style="width:100%;height:100%;float:left;max-height:200px;">
-        设备名称：{{equCrafts[index].deviceName }}
-        <br/>
-        <router-link to="/book">
-        <el-button>立即预约</el-button>
+  <div class="outer-container">
+    
+    <div class="container">
+      
+      <p class="text-title">{{ message }}</p>
+      <div
+        class="button-area"
+        style="display:flex;flex-direction: column;height: 50px;
+  overflow-y: auto;margin-top: 20px;
+  margin-left: 50px;"
+      >
+        <router-link to="/equp">
+          <el-button plain>设备管理</el-button>
         </router-link>
-        <router-link to="/test">
-        <el-button>立即测试</el-button>
+        <router-link to="/craft/equcraft">
+          <el-button plain>设备列表</el-button>
         </router-link>
+      </div>
+      <!-- 页面有两个部分组成 -->
+      <!-- 设备工艺表格 -->
+      <div class="table-equcraft-use">
+        <div
+          class="equ-item"
+          v-for="(item,index) in urls"
+          :key="index"
+        >
+          <img
+            v-bind:src="item.url"
+            style="width:100%;height:100%;float:left;max-height:200px;"
+          >
+          设备名称：{{equCrafts[index].deviceName }}
+          <br />
+          <router-link to="/book">
+            <el-button
+              type="primary"
+              plain
+              size="small"
+            >立即预约</el-button>
+          </router-link>
+          <router-link to="/test">
+            <el-button
+              type="primary"
+              plain
+              size="small"
+            >立即测试</el-button>
+          </router-link>
           <!-- <ul class="medium" style="width:50%;height:50%;float:left;margin-top:5px;">
             <li>设备名称</li>
             <li>{{equCrafts[index].deviceName }}</li>
@@ -26,64 +57,92 @@
             <li>功率信息</li>
             <li>{{equCrafts[index].power}}</li>
           </ul> -->
+        </div>
+      </div>
+      <hr style="display:flex;border: 5px solid white; margin-left: 10px; margin-right: 10px" />
+      <!-- 设备工艺设置，只在登录用户为管理员时显示 -->
+      <div style="width:100%;">
+        <div class="p-device">
+          <img src="../../assets/img/p-device.png">
+        </div>
+        <div
+          class="form-equcraft-use"
+          v-if="this.$store.state.cu_role === 'admin'"
+        >
+          <p class="text-title">设置设备工艺</p>
+          <el-form
+            class="form-equcraft"
+            label-width="100px"
+            :model="equCraftForm"
+            ref="equCraftForm"
+            :rules="rules"
+          >
+            <el-form-item
+              label="设备名称"
+              prop="deviceName"
+            >
+              <el-select
+                v-model="value"
+                placeholder="请选择"
+                style="width: 300px"
+              >
+                <el-option
+                  v-for="item in device_options"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value"
+                >
+                </el-option>
+              </el-select>
+            </el-form-item>
+            <el-form-item
+              label="设备型号"
+              prop="deviceType"
+            >
+              <el-input
+                v-model="equCraftForm.deviceType"
+                style="width: 300px"
+              ></el-input>
+            </el-form-item>
+            <el-form-item
+              label="设备尺寸"
+              prop="size"
+            >
+              <el-input
+                v-model="equCraftForm.size"
+                style="width: 300px"
+              ></el-input>
+            </el-form-item>
+            <el-form-item
+              label="设备重量"
+              prop="weight"
+            >
+              <el-input
+                v-model="equCraftForm.weight"
+                style="width: 300px"
+              ></el-input>
+            </el-form-item>
+            <el-form-item
+              label="设备功率"
+              prop="power"
+            >
+              <el-input
+                v-model="equCraftForm.power"
+                style="width: 300px"
+              ></el-input>
+            </el-form-item>
+            <el-form-item>
+              <el-button
+                type="primary"
+                plain
+                @click="submitForm('equCraftForm')"
+              >提交</el-button>
+              <el-button @click="resetForm('equCraftForm')">重置</el-button>
+            </el-form-item>
+          </el-form>
+        </div>
       </div>
     </div>
-    <hr style="display:flex;border: 5px solid white; margin-left: 10px; margin-right: 10px"/>
-    <!-- 设备工艺设置，只在登录用户为管理员时显示 -->
-    <div style="width:100%;">
-    <div class="p-device">
-      <img src="../../assets/img/p-device.png">
-    </div>
-    <div class="form-equcraft-use" v-if="this.$store.state.cu_role === 'admin'">
-      <p class="text-title">设置设备工艺</p>
-      <el-form 
-        class="form-equcraft" 
-        label-width="100px" 
-        :model="equCraftForm"
-        ref="equCraftForm"
-        :rules="rules"
-        >
-        <el-form-item label="设备名称" prop="deviceName">
-          <el-select v-model="value" placeholder="请选择" style="width: 300px">
-            <el-option
-              v-for="item in device_options"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
-            >
-            </el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="设备型号" prop="deviceType">
-          <el-input
-            v-model="equCraftForm.deviceType"
-            style="width: 300px"
-          ></el-input>
-        </el-form-item>
-        <el-form-item label="设备尺寸" prop="size">
-          <el-input v-model="equCraftForm.size" style="width: 300px"></el-input>
-        </el-form-item>
-        <el-form-item label="设备重量" prop="weight">
-          <el-input
-            v-model="equCraftForm.weight"
-            style="width: 300px"
-          ></el-input>
-        </el-form-item>
-        <el-form-item label="设备功率" prop="power">
-          <el-input
-            v-model="equCraftForm.power"
-            style="width: 300px"
-          ></el-input>
-        </el-form-item>
-        <el-form-item>
-          <el-button type="primary" plain @click="submitForm('equCraftForm')"
-            >提交</el-button
-          >
-          <el-button @click="resetForm('equCraftForm')">重置</el-button>
-        </el-form-item>
-      </el-form>
-    </div>
-  </div>
   </div>
 </template>
 <script>
@@ -129,45 +188,40 @@ export default {
         },
       ],
       value: "", //绑定设备的名称
-      urls:[
-        {url:require('../../assets/img/device2.jpg')},
-        {url:require('../../assets/img/device3.jpg')},
-        {url:require('../../assets/img/device1.jpg')},
-        {url:require('../../assets/img/device4.jpg')},
-        
+      urls: [
+        { url: require("../../assets/img/device2.jpg") },
+        { url: require("../../assets/img/device3.jpg") },
+        { url: require("../../assets/img/device1.jpg") },
+        { url: require("../../assets/img/device4.jpg") },
       ],
-      rules:{
-        deviceName:[
-          {required:true,message:'请输入设备名称',trigger:'blur'}
+      rules: {
+        deviceName: [
+          { required: true, message: "请输入设备名称", trigger: "blur" },
         ],
-        deviceType:[
-          {required:true,message:'请输入设备型号',trigger:'blur'}
+        deviceType: [
+          { required: true, message: "请输入设备型号", trigger: "blur" },
         ],
-        size:[
-          {required:true,message:'请输入设备尺寸',trigger:'blur'}
+        size: [{ required: true, message: "请输入设备尺寸", trigger: "blur" }],
+        weight: [
+          { required: true, message: "请输入设备重量", trigger: "blur" },
         ],
-        weight:[
-          {required:true,message:'请输入设备重量',trigger:'blur'}
-        ],
-        power:[
-          {required:true,message:'请输入设备功率',trigger:'blur'}
-        ],
-      }
+        power: [{ required: true, message: "请输入设备功率", trigger: "blur" }],
+      },
     };
   },
   methods: {
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
-        if(valid) {
+        if (valid) {
           //成功提交
           console.log("提交成功");
           location.reload();
         } else {
-          alert("请填写完整")
+          alert("请填写完整");
           location.reload();
           return false;
         }
-      })
+      });
     },
     resetForm(equCraftForm) {
       this.$refs[equCraftForm].resetFields();
@@ -181,26 +235,48 @@ export default {
 };
 </script>
 <style scope>
+.outer-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* 100%视口高度，垂直居中 */
+  max-width: 1500px; /* 设置最大宽度 */
+  margin: 0 auto; /* 居中 */
+  padding-left: 220px;
+  /* padding: 20px; 左右下留白 */
+}
+.container {
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+  background-image: url("../../assets/img/qqq6.png");
+  background-repeat: no-repeat;
+  width: 100%;
+  height: 100%;
+  background-size: 100% 100%;
+}
 .text-title {
+  display: flex;
+  flex-direction: column;
   margin-top: 0px;
   margin-left: 50px;
   line-height: 55px;
   font-size: 20px;
-  width:100%;
+  width: 30%;
 }
 .table-equcraft-use {
   display: flex;
   /* align-items: center;
   justify-content: flex-start; */
-  flex-wrap:wrap;
-  margin-left:50px;
-  margin-right:50px;
+  flex-wrap: wrap;
+  margin-left: 50px;
+  /* margin-right:50px; */
   /* gap:40px; */
 }
 .equ-item {
-  flex: 0 0 calc(25% - 40px); /* 让每个元素占据1/3的宽度，减去一些间距 */
-  margin-right: 40px; /* 可以根据需要添加间距 */
-  margin-bottom: 40px; /* 用于在垂直方向上添加间距 */
+  flex: 0 0 calc(25% - 20px); /* 让每个元素占据1/3的宽度，减去一些间距 */
+  margin-right: 20px; /* 可以根据需要添加间距 */
+  margin-bottom: 20px; /* 用于在垂直方向上添加间距 */
   box-sizing: border-box; /* 确保元素的边框和内边距不会使它们超出指定的宽度 */
   background-color: white; /* 设置背景颜色为白色 */
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.2); /* 添加阴影效果 */
@@ -208,6 +284,7 @@ export default {
   border-radius: 10px; /* 添加圆角效果，可以根据需要调整 */
   /* 添加其他样式，例如边框 */
   border: 1px solid #ccc; /* 添加边框 */
+  padding-bottom: 30px;
 }
 .equ-item + .equ-item {
   border-color: transparent; /* 隐藏相邻部分之间的边框 */
@@ -221,25 +298,25 @@ export default {
   font-size: 1rem;
   font-family: w95fa;
 }
-.p-device{
-  width:40%;
-  float:left;
-  height:400px;
-  margin-left:50px;
-  margin-right:50px;
+.p-device {
+  width: 40%;
+  float: left;
+  height: 400px;
+  margin-left: 50px;
+  margin-right: 50px;
 }
 .form-equcraft-use {
-  width:40%;
-  float:left;
-  margin-left:50px;
+  width: 40%;
+  float: left;
+  margin-left: 50px;
 }
-.form-equcraft{
-  margin-left:50px;
+.form-equcraft {
+  margin-left: 50px;
 }
-.form-equcraft label{
+.form-equcraft label {
   font-size: 1rem;
   font-family: w95fa;
-  color:rgb(50, 49, 49);
+  color: rgb(50, 49, 49);
 }
 
 .el-carousel__item h3 {
@@ -254,7 +331,7 @@ export default {
   background-color: #99a9bf;
 }
 
-.el-carousel__item:nth-child(2n+1) {
+.el-carousel__item:nth-child(2n + 1) {
   background-color: #d3dce6;
 }
 
@@ -273,8 +350,8 @@ export default {
   float: right;
 }
 
-div /deep/ .el-card.is-always-shadow{
-  width:50%;
+div /deep/ .el-card.is-always-shadow {
+  width: 50%;
 }
 .image {
   width: 50%;
@@ -283,11 +360,11 @@ div /deep/ .el-card.is-always-shadow{
 
 .clearfix:before,
 .clearfix:after {
-    display: table;
-    content: "";
+  display: table;
+  content: "";
 }
 
 .clearfix:after {
-    clear: both
+  clear: both;
 }
 </style>

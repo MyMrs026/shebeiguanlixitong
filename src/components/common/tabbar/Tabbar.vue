@@ -38,7 +38,7 @@
                 >设备管理</el-button
               >
             </router-link>
-            <router-link to="/craft">
+            <router-link to="/craft/craftparams">
               <el-button class="custom-button" type="info" round size="small"
                 >工艺管理</el-button
               >
@@ -142,7 +142,10 @@
     </div>
     <!-- 侧边栏部分 -->
     <div>
-      <el-drawer
+      
+
+    
+      <!-- <el-drawer
         v-show="isShowDrawer"
         title="我是标题"
         class="drawer"
@@ -152,7 +155,7 @@
         :visible.sync="Drawer"
         :with-header="false"
         opacity:0.8
-      >
+      > -->
         <el-menu
           accordion
           class="drawer-menu"
@@ -164,7 +167,7 @@
           <el-submenu index="1">
             <div slot="title" class="firstly">信息</div>
             <router-link to="/home">
-              <el-menu-item @click="closeDrawer" index="1-1" class="secondly"
+              <el-menu-item @click="closeDrawer" index="1-1" class="secondly" 
                 >首页信息</el-menu-item
               >
             </router-link>
@@ -281,7 +284,7 @@
             >
           </el-submenu>
         </el-menu>
-      </el-drawer>
+      <!-- </el-drawer> -->
     </div>
   </div>
 </template>
@@ -515,16 +518,24 @@ div /deep/ .el-drawer__body .el-menu {
 
 div /deep/ .el-drawer__body {
   background-color: #d6e0f5;
+  width:10%;
 }
 
 .drawer-menu {
   height: 100%;
   background-color: #ffffff;
   opacity: 0.8;
+  width:17vw;
+  position: fixed; /* 固定侧边栏在页面左侧 */
+  top: 65px; /* 保证侧边栏在导航栏下面 */
+  bottom: 0; /* 让侧边栏底部贴着屏幕底部 */
+  left: 0; /* 保证侧边栏在左侧 */
+  z-index: 10;
 }
 
-.secondly {
-  background-color: #ffffff;
+div /deep/ .drawer-menu-item.secondly {
+  background-color: #6565a1;
+  width:10%;
 }
 
 div /deep/ .el-submenu__title:hover {

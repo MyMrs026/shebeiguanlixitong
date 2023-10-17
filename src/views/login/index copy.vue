@@ -3,7 +3,7 @@
     <div class="animate__animated animate__backInDown">
       <div class="login">
         <div class="title">
-          <h3>***研究机构</h3>
+          <h3>微纳加工平台</h3>
         </div>
         <br>
       <form @submit="login">
