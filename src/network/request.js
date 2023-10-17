@@ -6,12 +6,18 @@
 import axios from "axios";
 
 export function request(config){
+
+  const token = localStorage.getItem('token')
+
   const instance = axios.create({
     baseURL: 'http://172.16.17.83:8080/api', //接口的地址，如果更改了接口地址只改这里就行
+    headers: {
+      'Authorization':`${token}`
+    },
     timeout: 5000,
-  })
+  });
   instance.interceptors.request.use(config => {
-    return config
+    return config;
   }),err =>{
     console.log(err);
   }

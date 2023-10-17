@@ -3,7 +3,7 @@
     <div class="noticeTitle">
       <el-row>
         <el-col :span="1"><i class="el-icon-back" @click="backClick"></i></el-col>
-        <el-col :span="23"><p>{{ notice.title }}<br>日期:{{this.notice.publishDate | formatDate}}</p></el-col>
+        <el-col :span="23"><p>{{ notice.title }}<br>日期:{{this.notice.createTime | formatDate}}</p></el-col>
       </el-row>
     </div>
     <div class="contentContainer">
@@ -46,11 +46,12 @@ export default {
   filters: {
     //处理日期的显示格式问题，使日期以xxxx年xx月xx日的形式显示
     formatDate: function (value) {
-      if (!value) return "";
-      const year = value.getFullYear();
-      const month = String(value.getMonth() + 1).padStart(2, "0");
-      const day = String(value.getDate()).padStart(2, "0");
-      return `${year}年${month}月${day}日`;
+      // if (!value) return "";
+      // const year = value.getFullYear();
+      // const month = String(value.getMonth() + 1).padStart(2, "0");
+      // const day = String(value.getDate()).padStart(2, "0");
+      // return `${year}年${month}月${day}日`;
+      return new Date(value).toLocaleDateString();
     },
   },
 };
