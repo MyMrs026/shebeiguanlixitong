@@ -36,11 +36,11 @@
       <!-- 第二个 div 的内容 -->
       <div class="fullcalendar-area">
         <div class="content-area">
-          <div class="button-area">
+          <!-- <div class="button-area">
             <el-button class="button-hide" @click="hideClick1">{{
               buttonText1
             }}</el-button>
-          </div>
+          </div> -->
           <div class="schedular-area" v-if="isShow1">
             <p class="font-class">当前用户:{{ this.$store.state.cu_role }}</p>
             <!-- 调用日程表在这里 -->
@@ -59,11 +59,11 @@
           </div>
         </div> -->
         <div class="content-area">
-          <div class="button-area">
+          <!-- <div class="button-area">
             <el-button class="button-hide" @click="hideClick3">{{
               buttonText3
             }}</el-button>
-          </div>
+          </div> -->
           <div class="schedular-area" v-if="isShow3">
             <!-- 同样道理 -->
             <el-select
@@ -93,6 +93,7 @@
 
 import Schedular from "../../components/common/schedular/Schedular";
 import { getEquList } from '../../network/equpment'
+import { getOrders } from '../../network/book'
 import {
   INITIAL_EVENTS,
   INITIAL_EVENTS2,
@@ -165,9 +166,11 @@ export default {
           label: "OSD",
         },
       ],
-      events: INITIAL_EVENTS,
-      events2: INITIAL_EVENTS2,
-      events3: INITIAL_EVENTS3,
+      // events: INITIAL_EVENTS,
+      // events2: INITIAL_EVENTS2,
+      // events3: INITIAL_EVENTS3,
+      events:[],
+      events2:[],
     };
   },
   computed: {
@@ -205,6 +208,10 @@ export default {
   //获取设备列表，第一个日程表选中时需要，第三个日程表选择时需要
     getEquList().then(res => {
       this.equlist = res.data;
+      console.log(res.data);
+    }),
+
+    getOrders().then(res => {
       console.log(res.data);
     })
   },
@@ -293,7 +300,7 @@ export default {
 }
 
 .schedular-area {
-  width: 90%;
+  width: 100%;
   height: fit-content;
   /* overflow: scroll; */
 }

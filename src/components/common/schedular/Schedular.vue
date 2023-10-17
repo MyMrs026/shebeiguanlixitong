@@ -205,15 +205,17 @@ export default {
         },
         // height: auto,
         // contentHeight:auto,
+        
         initialView: "timeGridDay", //以日程图的方式初始化fullcalendar
-        validRange: {
-          start:new Date(),
-          end:new Date(new Date().setDate(new Date().getDate() + 10)),
-        },
+        // validRange: {
+        //   start:new Date(),
+        //   end:new Date(new Date().setDate(new Date().getDate() + 10)),
+        // },
         hiddenDays:[0, 6],
         events: this.events, // 初始化事件
         editable: true, //事件可以编辑
         eventStartEditable: false, //禁止使用拖动的方式修改事件的开始时间
+        expandRows: true,
         eventDurationEditable: false,
         selectable: true,
         selectMirror: true,
@@ -472,5 +474,21 @@ b {
   display: flex;
   /* justify-content: center; */
   justify-content: space-around;
+}
+
+.fc {
+  font-size: 1rem;
+}
+/* .fc-header-toolbar h2{
+  font-size: 14px;
+}
+.fc-day-header {
+  font-size: 14px;
+} */
+.fc-toolbar-title {
+  font-size: 1rem !important;
+}
+div > .fc {
+  width: 100%;
 }
 </style>

@@ -17,10 +17,7 @@
             >
             </el-date-picker>
           </div> -->
-          <div class="button-area">
-            <el-button plain @click="hideClick1">{{ buttonText1 }}</el-button>
-          </div>
-          <div class="schedular-area" v-if="isShow1">
+          <div class="schedular-area">
             <p style="margin: 10px">当前用户:{{ this.$store.state.cu_role }}</p>
             <Schedular class="Schedular" :events="events" />
           </div>
@@ -57,21 +54,6 @@
                 <el-input v-model="trainForm.cost" style="width: 80px">
                 </el-input>
               </el-form-item>
-
-              <!-- <el-form-item label="培训内容" prop="docUrl">
-                <el-input
-                  v-model="trainForm.docUrl"
-                  style="width: 300px"
-                >
-                </el-input>
-              </el-form-item>
-              <el-form-item label="持续时间" prop="trainDuration">
-                <el-input
-                  v-model="trainForm.trainDuration"
-                  style="width: 300px"
-                >
-                </el-input>
-              </el-form-item> -->
               <el-form-item>
                 <el-button type="primary" plain @click="submitForm('trainForm')"
                   >提交</el-button
@@ -99,6 +81,41 @@
               type="number"
               style="width: 100px"
             ></el-input>
+
+            <div class="eqp-select">
+              <el-table
+                ref="multipleTable"
+                :data="pageData"
+                tooltip-effect="dark"
+                style="width: 500px"
+                @row-click="handleRowClick"
+                @selection-change="handleSelectionChange"
+              >
+                <el-table-column type="selection" width="55"> </el-table-column>
+                <el-table-column prop="equipmentName" label="设备名" width="200">
+                </el-table-column>
+                <el-table-column prop="placementLocation" label="设备地点" width="120">
+                </el-table-column>
+                <el-table-column prop="labName" label="实验室名字" width="120">
+                </el-table-column>
+              </el-table>
+
+              <el-pagination style="margin-left:320px;margin-top:10px"
+                @size-change="handlePageSizeChange"
+                @current-change="handleCurrentPageChange"
+                :current-page="currentPage"
+                :page-sizes="[5]"
+                :page-size="pageSize"
+                layout="pager"
+                :total="equlist.length"
+              >
+              </el-pagination> 
+
+              <div style="margin-top: 20px">
+                <el-button @click="toggleSelection()">取消选择</el-button>
+              </div>
+            </div>
+
             <el-button plain @click="buttonApply">申请</el-button>
             <div>培训费用共计:{{ this.trainCost }}元</div>
           </div>
@@ -201,7 +218,7 @@ export default {
           { required: true, message: "请填写培训的费用", trigger: "blur" },
           {
             validator: this.validateNumber,
-            trigger:'blur',
+            trigger: "blur",
           },
         ],
         // docUrl: [
@@ -217,6 +234,8 @@ export default {
       ],
       trainNumber: 1,
       trainCost: 0,
+      currentPage:1,
+      pageSize:3,
     };
   },
   computed: {
@@ -229,17 +248,13 @@ export default {
     buttonText3() {
       return this.isShow3 ? "隐藏" : "显示";
     },
+    pageData() { //搜索得到的数据
+      const startIndex = (this.currentPage - 1) * this.pageSize
+      const endIndex = startIndex + this.pageSize
+      return this.equlist.slice(startIndex, endIndex)
+    },
   },
   methods: {
-    hideClick1() {
-      this.isShow1 = !this.isShow1;
-    },
-    hideClick2() {
-      this.isShow2 = !this.isShow2;
-    },
-    hideClick3() {
-      this.isShow3 = !this.isShow3;
-    },
     filterTag(value, row) {
       return row.tag === value;
     },
@@ -310,11 +325,11 @@ export default {
     resetForm(formName) {
       this.$refs[formName].resetFields();
     },
-    validateNumber(rule,value,callback){
-      if(value === null || value === ''){
-        callback(new Error('请输入数字'));
-      } else if (isNaN(value) || value<= 0) {
-        callback(new Error('必须为大于零的数字'));
+    validateNumber(rule, value, callback) {
+      if (value === null || value === "") {
+        callback(new Error("请输入数字"));
+      } else if (isNaN(value) || value <= 0) {
+        callback(new Error("必须为大于零的数字"));
       } else {
         callback();
       }
@@ -363,19 +378,45 @@ export default {
         console.log(this.trainCost);
       }
     },
-  },
-  // mounted() {
-  //   getTrainList().then(res =>{
-  //     this.trainData = res.data;
-  //     // console.log(res.data);
-  //     this.trainData.forEach(obj => {
-  //       const { trainName,trainId } = obj;
-  //       this.trainProName.push({trainName,trainId});
-  //     });
-  //     console.log(this.trainProName);
-  //   })
 
-  // },
+    toggleSelection(rows) {
+      if (rows) {
+        rows.forEach((row) => {
+          this.$refs.multipleTable.toggleRowSelection(row);
+        });
+      } else {
+        this.$refs.multipleTable.clearSelection();
+      }
+    },
+
+    handleRowClick(row) {
+      this.$refs.multipleTable.toggleRowSelection(row);
+    },
+    handleSelectionChange(val) {
+      this.multipleSelection = val;
+    },
+    handlePageSizeChange(pageSize) { //part1翻页功能
+      this.pageSize = pageSize
+    },
+    handleCurrentPageChange(currentPage) { //part1当前页码显示切换
+      this.currentPage = currentPage
+    },
+  },
+  created() {
+    // getTrainList().then(res =>{
+    //   this.trainData = res.data;
+    //   // console.log(res.data);
+    //   this.trainData.forEach(obj => {
+    //     const { trainName,trainId } = obj;
+    //     this.trainProName.push({trainName,trainId});
+    //   });
+    //   console.log(this.trainProName);
+    // })
+    getEquList().then(res => {
+      this.equlist = res.data;
+      // console.log(this.equlist);
+    });
+  },
 };
 </script>
 <style scope>

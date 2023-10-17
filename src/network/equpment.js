@@ -7,7 +7,7 @@ import { request } from "./request";
 //获取所有设备列表
 export function getEquList() {
   return request({
-    url:'/api/equipment/list',
+    url:'/equipment/list',
     method:'get'
   })
 }
@@ -15,7 +15,7 @@ export function getEquList() {
 //添加设备
 export function addEqument(deviceFunc,deviceName,deviceTypeId,labId,uuid) {
   return request({
-    url:'/device/addDevice',
+    url:'/equipment/add',
     method: 'post',
     data:{
       deviceFunc:deviceFunc,
@@ -30,7 +30,7 @@ export function addEqument(deviceFunc,deviceName,deviceTypeId,labId,uuid) {
 //更新设备信息
 export function updateDevice(deviceFunc,deviceName,deviceTypeId,labId,uuid){
   return request({
-    url:'/device/addDevice',
+    url:'/equipment/update',
     method: 'post',
     data:{
       deviceFunc:deviceFunc,
@@ -42,10 +42,18 @@ export function updateDevice(deviceFunc,deviceName,deviceTypeId,labId,uuid){
   })
 }
 
+//根据设备id获取设备信息
+export function getEquInform(){
+ return request({
+  url:'/equipment/{id}',
+  method: 'get',
+ })
+}
+
 //获取设备分类，注意方法是'post',看接口文档
 export function getEquCate() {
   return request({
-    url:'/device/getDeviceTypeList',
+    url:'/equipment/types2',
     method: 'post'
   })
 }
