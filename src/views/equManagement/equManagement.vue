@@ -1,7 +1,21 @@
 <template>
+<div class="outer-container">
 <div class="bg-eq">
   <div class="equpM">
   <div class="equp-container">
+    <div class="button-area" style="height: 82%;
+  overflow-y: auto;margin-top: 20px;
+  margin-left: 50px;">
+    <router-link to="/equp">
+      <el-button plain>设备管理</el-button>
+    </router-link>
+    <router-link to="/craft/equcraft">
+      <el-button plain>设备列表</el-button>
+    </router-link>
+    </div>
+     <hr
+        style="border: 1px solid white; margin-left: 10px; margin-right: 10px"
+      />
     <!-- 由五个部分组成，对应网页中五个带边框的div -->
     <!-- 第一部分：使用设备，通过搜索框对已有的设备进行检索，点击即可进行使用 -->
     <div class="centered-div" id="part1">
@@ -62,15 +76,15 @@
           <el-table border :data="equpsUse" class="table-equ2" :row-class-name="tableRowClassName">
             <el-table-column prop="equp" label="设备名" width="180">
             </el-table-column>
-            <el-table-column prop="status" label="使用情况" width="100">
+            <el-table-column prop="status" label="使用情况" width="180">
             </el-table-column>
-            <el-table-column prop="user" label="使用用户" width="100">
+            <el-table-column prop="user" label="使用用户" width="180">
             </el-table-column>
             <el-table-column prop="org" label="使用组织" width="180">
             </el-table-column>
             <el-table-column prop="starttime" label="开始时间" width="180">
             </el-table-column>
-            <el-table-column prop="endtime" label="结束时间" width="193">
+            <el-table-column prop="endtime" label="结束时间" width="200">
             </el-table-column>
           </el-table>
         </template>
@@ -84,13 +98,13 @@
       <div class="table-dch-use">
         <template>
           <el-table border :data="equpsStatus" class="table-dch" :row-class-name="getRowClassName">
-            <el-table-column prop="equp" label="设备名" width="300">
+            <el-table-column prop="equp" label="设备名" width="270">
             </el-table-column>
-            <el-table-column prop="status" label="状态" width="200">
+            <el-table-column prop="status" label="状态" width="260">
             </el-table-column>
-            <el-table-column prop="expected" label="预期就绪" width="200">
+            <el-table-column prop="expected" label="预期就绪" width="260">
             </el-table-column>
-            <el-table-column prop="statuslog" label="状态日志" width="330">
+            <el-table-column prop="statuslog" label="状态日志" width="310">
             </el-table-column>
           </el-table>
         </template>
@@ -104,6 +118,7 @@
     <div class="centered-div" id="part5">
       <equMaintain></equMaintain>
     </div>
+  </div>
   </div>
   </div>
   </div>
@@ -185,10 +200,19 @@ export default {
 }
 </script>
 <style scoped>
+.outer-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* 100%视口高度，垂直居中 */
+  max-width: 1500px; /* 设置最大宽度 */
+  margin: 0 auto; /* 居中 */
+  padding-left: 220px;
+  /* padding: 20px; 左右下留白 */
+}
 .bg-eq{
-  left:0;
-  z-index:-1;
-  overflow:hidden;
+  display: flex;
+  flex-direction: column;
   background-image: url("../../assets/img/qqq6.png");
   background-repeat: no-repeat;
   width: 100%;
@@ -218,9 +242,10 @@ export default {
 }
 
 .table-equ-use {
-  display:block;
-  margin-left:50px;
-  width:101%
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 .table-equ1 {
   width: 92%;
@@ -248,15 +273,18 @@ export default {
   display: none;
 }
 .table-dch-use {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   margin-left: 30px;
-  width:96.5%;
 }
 
 .table-dch {
-  width: 94%;
+  width: 92.5%;
   border: 1px solid rgb(255, 255, 255);
   border-radius: 8px;
-  margin-left:20px;
+  margin-left:30px;
 }
 .text-home {
   margin-top: 10px;
