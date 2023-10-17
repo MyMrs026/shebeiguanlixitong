@@ -50,7 +50,7 @@ border-radius: 6px;">
                                     </el-form>
                                 </template>
                             </el-table-column>
-                            <el-table-column label="编号" type="index">
+                            <el-table-column label="编号1" type="index">
                             </el-table-column>
                             <el-table-column label="项目名称" prop="projectName">
                             </el-table-column>
