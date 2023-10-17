@@ -1,4 +1,5 @@
 <template>
+<div class="outer-container">
   <div class="background-train">
     <div class="train">
       <div class="button-area">
@@ -17,6 +18,7 @@
       />
       <router-view></router-view>
     </div>
+  </div>
   </div>
 </template>
 
@@ -242,6 +244,11 @@ export default {
 };
 </script>
 <style scoped>
+.outer-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 .background-train {
   /* position: fixed;
   top: 110px; */
@@ -253,6 +260,8 @@ export default {
   background-image: url("../../assets/img/qqq6.png");
   background-repeat: no-repeat;
   background-size: cover;
+  display: flex;
+  flex-direction: column;
 }
 .train{
   height: 82%;

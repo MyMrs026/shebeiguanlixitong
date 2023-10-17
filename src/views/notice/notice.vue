@@ -1,4 +1,5 @@
 <template>
+<div class="outer-container">
   <div class="background-container">
     <div class="container">
     <!-- 上半部分为所有公告信息 -->
@@ -139,6 +140,7 @@
       </div>
     </div>
     </div>
+  </div>
   </div>
 </template>
 
@@ -305,25 +307,25 @@ export default {
 };
 </script>
 <style scoped>
+.outer-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto; /* 居中 */
+  height: 100%;
+}
 .background-container{
-  /* position: fixed; */
-  /* top: 120px; */
+  display: flex;
+  flex-direction: column;
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: -1; /* 将背景容器放置在最底层 */
-  overflow: hidden; /* 隐藏溢出的内容 */
+  /* overflow: hidden; 隐藏溢出的内容 */
   background-image: url("../../assets/img/qqq6.png");
   background-repeat: no-repeat;
   background-size: cover;
 }
 
-.container {
-  display:block;
-  height: 100%;
-  margin-left:35px;
-  /* overflow-y: auto; */
-}
 
 .box-wrap {
   font-size: 16px;

@@ -1,4 +1,5 @@
 <template>
+<div class="outer-container">
   <div class="book-container">
     <div class="insdide">
       <!-- 预约管理部分分为两个部分，上半部分为子导航条，下半部分包括当前用户预约设备的日程表、设备被预约的日程表等 -->
@@ -86,6 +87,7 @@
       </div>
       <div class="clear"></div>
     </div>
+  </div>
   </div>
 </template>
 
@@ -219,9 +221,16 @@ export default {
 </script>
 
 <style scoped>
+.outer-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto; /* 居中 */
+  height: 100%;
+}
 .book-container {
-  left: 0;
-  z-index: -1;
+  display: flex;
+  flex-direction: column;
   overflow: auto;
   background-image: url("../../assets/img/qqq6.png");
   background-repeat: no-repeat;
@@ -295,7 +304,7 @@ export default {
 }
 
 .content-area {
-  width: 30%;
+  width: 50%;
   height: auto;
 }
 

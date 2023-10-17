@@ -1,4 +1,5 @@
 <template>
+<div class="outer-container">
   <div class="bg">
     <div class="lab-bg">
       <!-- 实验室信息管理，后续实验室的名字应该做成下拉列表，这样可以改变指定的实验室 -->
@@ -131,6 +132,7 @@
       </div>
     </div>
   </div>
+  </div>
 </template>
 
 <script>
@@ -230,7 +232,14 @@ export default {
 
 </script>
 <style scoped>
+.outer-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 .bg {
+  display: flex;
+  flex-direction: column;
   /* position:fixed;
   top:110px; */
   left: 0;

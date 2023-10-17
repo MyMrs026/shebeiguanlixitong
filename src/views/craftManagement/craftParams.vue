@@ -1,5 +1,6 @@
 <template>
-  <div>
+  <div class="outer-container">
+    <div class="container">
     <p class="text-title">{{ message }}</p>
     <div class="table-equcraft-use">
       <!-- <el-table 
@@ -179,6 +180,7 @@
         </el-form-item>
       </el-form>
     </div>
+    </div>
   </div>
 </template>
 <script>
@@ -304,6 +306,20 @@ export default {
 };
 </script>
 <style scope>
+.outer-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.container{
+  display: flex;
+  flex-direction: column;
+  background-image: url("../../assets/img/qqq6.png");
+  background-repeat: no-repeat;
+  width: 100%;
+  height: 100%;
+  background-size: 100% 100%;
+}
 .text-title {
   margin-top: 0px;
   margin-left: 50px;

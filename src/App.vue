@@ -1,32 +1,19 @@
 <template>
   <div id="app">
-    <head>
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    </head>
-    <div class="logo"></div>
-    <tabbar v-if="isShowTabbar"/>
-    <router-view/>
+    <Layout/>
   </div>
 </template>
 <script>
 /**
  * App.vue里面尽量不写或少写东西，代码规范
  */
-import tabbar from "@/components/common/tabbar/Tabbar"
+import Layout from "./layout/index.vue"
 export default {
   name: 'App',
   components: {
-    tabbar,
+    Layout
   },
-  computed: {
-    // 当路由路径为登录或注册时不显示tabbar
-    isShowTabbar(){
-      return this.$route.path !== '/login' && this.$route.path !== '/register';
-    }
-  },
-  mounted() {
-    
-  }
+  
 }
 </script>
 
@@ -41,4 +28,9 @@ export default {
   .logo { 
     background-image: url("./assets/img/logo.jpg");
   }
+  #app {
+    width: 100%;
+    height: 100%;
+  }
+
 </style>

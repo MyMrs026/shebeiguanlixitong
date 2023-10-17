@@ -1,10 +1,12 @@
 <template>
+<div class="outer-container">
   <div class="bg-test">
     <div class="test">
       <div class="container">
         <div class="text-home">
           <p>创建测试任务</p>
         </div>
+        <div class="path">
         <!-- 步骤条部分 -->
         <div class="menu">
           <el-steps
@@ -24,7 +26,7 @@
           <div class="tab1" v-if="currentStep === 0">
             <el-form :model="buildForm" ref="buildForm" :rules="rules">
               <el-form-item label="项目选择" :label-width="formLabelWidth">
-                <el-select v-model="value" placeholder="选择项目" style="width:34.5rem;">
+                <el-select v-model="value" placeholder="选择项目" style="width:100%;">
                   <el-option
                     v-for="item in prolist"
                     :key="item.name"
@@ -139,6 +141,7 @@
             >下一步</el-button
           >
         </div>
+        </div>
         <!-- 历史测试任务记录模块 -->
         <div class="footer">
           <hr
@@ -242,6 +245,7 @@
       <div class="clear"></div>
     </div>
   </div>
+</div>
 </template>
 
 <script>
@@ -509,17 +513,26 @@ export default {
 </script>
 
 <style scoped>
+.outer-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 .bg-test {
+  display: flex;
+  flex-direction: column;
   /* position:fixed;
   top:110px; */
-  left: 0;
-  z-index: -1;
   overflow: hidden;
   background-image: url("../../assets/img/qqq6.png");
   background-repeat: no-repeat;
   width: 100%;
   height: 100%;
   background-size: 100% 100%;
+}
+.path{
+  display:flex;
+  align-items: flex-start;
 }
 .clear {
   clear: both;
@@ -536,15 +549,12 @@ export default {
   font-size: 20px;
   color: rgb(86, 86, 86);
 }
-.container {
-  width: 90%;
-  margin: 15px;
-}
 
 .menu {
   height: 350px;
   width: 20%;
   float: left;
+  /* flex: 1; */
 }
 
 .step {
@@ -557,6 +567,7 @@ export default {
   height: 350px;
   width: 70%;
   float: left;
+  flex: 1;
 }
 
 .tab1 {
@@ -574,6 +585,8 @@ export default {
   height: 350px;
   width: 10%;
   float: right;
+  display:flex;
+  flex-direction: column;
 }
 
 .backbtn {
