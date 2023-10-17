@@ -22,7 +22,7 @@
                     <div class="notice_content" @click="gotoNoticeDetail(item.noticeId)">
                       <font>{{ item.title }}</font>
                       <!-- 日期的显示格式:xxxx年xx月xx日 -->
-                      <font>{{ item.publishDate | formatDate }}</font>
+                      <font>{{ item.createTime | formatDate }}</font>
                     </div>
                     <div class="notice_delete">
                       <el-button @click="noticeDel" size="mini" type="danger" icon="el-icon-delete" circle></el-button>
@@ -38,10 +38,10 @@
                   :key="item.notice_id"
                   style="cursor: pointer">
                   <div style="display: flex; flex-direction: row;">
-                    <div class="notice_content" @click="gotoNoticeDetail(item.notice_id)">
+                    <div class="notice_content" @click="gotoNoticeDetail(item.noticeId)">
                       <font>{{ item.title }}</font>
                       <!-- 日期的显示格式:xxxx年xx月xx日 -->
-                      <font>{{ item.publishDate | formatDate }}</font>
+                      <font>{{ item.createTime | formatDate }}</font>
                     </div>
                   </div>
                 </li>
@@ -100,12 +100,6 @@
           <div class="catalog_title">
             <p>编辑公告内容</p>
           </div>
-          <!-- <el-form :rules="rules" class="demo-ruleForm">
-            <el-form-item ></el-form-item>
-            <el-form-item></el-form-item>
-            <el-form-item></el-form-item>
-            <el-form-item></el-form-item>
-          </el-form> -->
           <div class="publish_notice_title">
             <el-input 
               placeholder="在此输入公告标题" 
@@ -199,24 +193,8 @@ export default {
   },
   mounted() {
     getNoticeList().then(res=>{
-      const data = res.data;
-      const sortedData = data.sort((a,b)=>a.noticeId - b.noticeId);
-      this.notices = sortedData;
+      this.notices = res.data;
       console.log(this.notices);
-      this.notices = this.notices.map(obj => {
-        const { noticeId,title,content,publishDate } = obj;
-        const publish_date = new Date(publishDate);
-
-        return {
-          noticeId,
-          title,
-          content,
-          publishDate:publish_date
-        }
-      });
-      console.log(this.notices);
-      // this.notices.publishDate = new Date((this.notice.publishDate).substring(0,10));
-      // console.log(this.notice);
     })
   },
   computed: {
@@ -233,11 +211,12 @@ export default {
   },
   filters: {
     formatDate: function (value) {
-      if (!value) return "";
-      const year = value.getFullYear();
-      const month = String(value.getMonth() + 1).padStart(2, "0");
-      const day = String(value.getDate()).padStart(2, "0");
-      return `${year}年${month}月${day}日`;
+      // if (!value) return "";
+      // const year = value.getFullYear();
+      // const month = String(value.getMonth() + 1).padStart(2, "0");
+      // const day = String(value.getDate()).padStart(2, "0");
+      // return `${year}年${month}月${day}日`;
+      return new Date(value).toLocaleDateString();
     },
   },
   methods: {

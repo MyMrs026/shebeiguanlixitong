@@ -33,9 +33,9 @@
             <div ref="tab1" class="table-equ1">
               <el-table :data="pageData" style="width: 100%;border: 1px solid rgb(255, 255, 255);
   border-radius: 8px;">
-                <el-table-column prop="deviceName" label="姓名"></el-table-column>
-                <el-table-column prop="deviceFunc" label="功能"></el-table-column>
-                <el-table-column prop="lab.labName" label="实验室"></el-table-column>
+                <el-table-column prop="equipmentName" label="设备名"></el-table-column>
+                <el-table-column prop="equipmentFunction" label="功能"></el-table-column>
+                <el-table-column prop="labName" label="实验室"></el-table-column>
               </el-table>
               <!-- 分页显示，为了应对庞大数据量的情况 -->
               <el-pagination style="margin-left:320px;margin-top:10px"
@@ -46,14 +46,15 @@
                 :page-size="pageSize"
                 layout="pager"
                 :total="equps.length"
-              ></el-pagination> 
+              >
+              </el-pagination> 
             </div>
             <!-- 搜索结果也已一个表格的形式进行显示，把上面的表格进行隐藏即可 -->
             <div ref="tab2" class="search-area">
               <el-table v-if="searchResult.length > 0" :data="searchResult" style="width: 100%">
-                <el-table-column prop="deviceName" label="姓名"></el-table-column>
-                <el-table-column prop="deviceFunc" label="功能"></el-table-column>
-                <el-table-column prop="lab.labName" label="实验室"></el-table-column>
+                <el-table-column prop="equipmentName" label="设备名"></el-table-column>
+                <el-table-column prop="equipmentFunction" label="功能"></el-table-column>
+                <el-table-column prop="labName" label="实验室"></el-table-column>
               </el-table>
               <p v-else> 未找到匹配的记录</p>
             </div>
@@ -158,6 +159,7 @@ export default {
     getEquList().then(res => {
       // console.log(res.data);
       this.equps = res.data
+      console.log(this.equps);
     }),
     this.equpsUse = this.$store.state.equpsUse
     this.equpsStatus = this.$store.state.equpsStatus

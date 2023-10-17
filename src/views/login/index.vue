@@ -19,6 +19,7 @@
               type="text"
               v-model="username"
               required
+              autocomplete="username"
             />
           </div>
           <br />
@@ -34,6 +35,7 @@
               type="password"
               v-model="password"
               required
+              autocomplete="password"
             />
           </div>
           <br />
@@ -85,33 +87,6 @@ export default {
     login(event) {
       // 方法是 JavaScript 中一个常用的事件方法，它用于阻止事件的默认行为或默认操作发生。当事件发生时，通常会触发一些默认行为，例如点击链接时会跳转到链接的URL，提交表单时会发送表单数据到服务器，按下键盘的 Enter 键时可能会触发表单的提交等。
       event.preventDefault();
-      // 在这里进行账号密码验证，这里是写死的，后面应该与后端数据进行绑定
-      // const validUsername = 'admin';
-      // const validPassword = 'admin';
-      // const validUsername1 = 'staff';
-      // const validPassword1 = 'staff';
-      // const validUsername2 = 'engineer';
-      // const validPassword2 = 'engineer';
-      // if (this.username === validUsername && this.password === validPassword ) {
-      //   const token = this.generateToken();
-      //生成令牌,为了防止用户没登陆通过输入路由地址就能访问其他页面
-      // localStorage.setItem('token',token)
-      // 登录成功，跳转到 home 页面
-      // this.$router.push('/home');
-      //将vuex中用于用户登录状态保存的变量进行改变
-      // this.updateCurole('admin');
-      // console.log(this.$store.state.cu_role);
-      // } else if (this.username === validUsername1 && this.password === validPassword1 ) {
-      // const token = this.generateToken();
-      // localStorage.setItem('token',token);
-      // this.updateCurole('staff')
-      // this.$router.push('/home');
-      // console.log(this.$store.state.cu_role);
-      // } else if (this.username == '' || this.password == '' ) {
-      // alert('请输入完整。');
-      // } else {
-      // alert('账户或密码错误，验证失败请重新尝试。');
-      // }
       if (this.username == "" || this.password == "") {
         alert("请输入完整！");
       } else {
@@ -123,19 +98,20 @@ export default {
               alert("账号密码错误，验证失败请重新尝试");
             } else if (res.code === 2002) {
               alert("登录成功");
-              const token = this.generateToken();
-              localStorage.setItem('token',token)
-              this.$router.push('/home')
-              this.updateCurole('admin');
-
-
-              
-
+              const token = res.data;
+              localStorage.setItem('token', token);
+              console.log('token', token);
+              this.$router.push('/home');
             }
           })
           .catch((error) => {
             console.error(error);
           });
+      }
+      if (this.username === "123456") {
+        this.updateCurole("admin");
+      } else {
+        this.updateCurole("staff");
       }
 
       this.username = "";
