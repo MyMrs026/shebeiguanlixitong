@@ -1,4 +1,5 @@
 <template>
+<div class="outer-container">
 <div class="bg-pro">
   <div class="project">
     <!-- 上半区域 -->
@@ -123,6 +124,7 @@
     </div>
   </div>
   </div>
+</div>
 </template>
 
 <script>
@@ -236,10 +238,20 @@ export default {
 
 </script>
 <style scoped>
+.outer-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* 100%视口高度，垂直居中 */
+  max-width: 1500px; /* 设置最大宽度 */
+  margin: 0 auto; /* 居中 */
+  padding-left: 220px;
+  /* padding: 20px; 左右下留白 */
+}
+
 .bg-pro {
-  left:0;
-  z-index:-1;
-  overflow:hidden;
+  display: flex;
+  flex-direction: column;
   background-image: url("../../assets/img/qqq6.png");
   background-repeat: no-repeat;
   width: 100%;

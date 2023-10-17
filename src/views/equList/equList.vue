@@ -120,7 +120,13 @@
         </el-form-item>
       </el-form>
     </div>
-    <div class="equUpdate" v-if="this.$store.state.cu_role === 'admin'">
+    
+    <div style="width: 40%; height: 450px; float: left; margin-top: 10px">
+      <!-- <img
+        src="../../assets/img/椰子树.png"
+        style="width: 400px; height: 400px; margin-top: 35px"
+      /> -->
+      <div class="equUpdate" v-if="this.$store.state.cu_role === 'admin'">
       <div class="text-home">
         <p>更新设备信息</p>
       </div>
@@ -186,11 +192,6 @@
         </el-form-item>
       </el-form>
     </div>
-    <div style="width: 40%; height: 450px; float: left; margin-top: 10px">
-      <img
-        src="../../assets/img/椰子树.png"
-        style="width: 400px; height: 400px; margin-top: 35px"
-      />
     </div>
     <div class="clear"></div>
   </div>
@@ -349,7 +350,7 @@ export default {
   border-radius: 8px; */
   width: 50%;
   /* height: auto; */
-  /* float: left; */
+  float: left;
 }
 
 .text-home {
