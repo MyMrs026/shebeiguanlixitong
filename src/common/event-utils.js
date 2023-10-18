@@ -9,7 +9,6 @@ tomorrow.setDate(CurrentDate.getDate() + 1);
 let todayStr = new Date().toISOString().replace(/T.*$/, '') // YYYY-MM-DD of today
 let tomorrowStr = tomorrow.toISOString().replace(/T.*$/,'') //YYYY-MM-DD of tomorrow
 
-
 export const INITIAL_EVENTS = [
   {
     id: createEventId(),
