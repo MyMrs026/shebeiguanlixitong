@@ -207,6 +207,7 @@ export default {
         // contentHeight:auto,
         
         initialView: "timeGridDay", //以日程图的方式初始化fullcalendar
+        // rerenderDelay:500,
         // validRange: {
         //   start:new Date(),
         //   end:new Date(new Date().setDate(new Date().getDate() + 10)),
@@ -412,6 +413,9 @@ export default {
       alert("不准拖！");
     },
   },
+  create() {
+    calendar.render();
+  }
 };
 </script>
 
