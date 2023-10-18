@@ -175,17 +175,17 @@
 
 <script>
 // 分辨率大于等于1680，大部分为1920的范围情况下，调用此css
-if (window.screen.width >= 1680) {
-  document.write('<link rel="stylesheet" href="css/index_1920.css">');
-}
-// 分辨率在1600-1680这个范围的情况下，调用此css
-else if (window.screen.width >= 1600) {
-  document.write('<link rel="stylesheet" href="css/index_1600.css">');
-}
-// 分辨率小于1600的范围情况下，调用此css
-else {
-  document.write('<link rel="stylesheet" href="css/index.css">');
-}
+// if (window.screen.width >= 1680) {
+//   document.write('<link rel="stylesheet" href="css/index_1920.css">');
+// }
+// // 分辨率在1600-1680这个范围的情况下，调用此css
+// else if (window.screen.width >= 1600) {
+//   document.write('<link rel="stylesheet" href="css/index_1600.css">');
+// }
+// // 分辨率小于1600的范围情况下，调用此css
+// else {
+//   document.write('<link rel="stylesheet" href="css/index.css">');
+// }
 import { getNoticeList, getLatest } from "../../network/notice";
 export default {
   data() {
