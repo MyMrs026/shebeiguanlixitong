@@ -19,10 +19,10 @@
                     <div class="table_inform">
                         <el-table :data="projectList" style="width: 100%;margin:30px;border: 1px solid rgb(255, 255, 255);
 border-radius: 6px;">
-                            <el-table-column type="expand">
-                                <template slot-scope="props">
+                            <!-- <el-table-column type="expand">
+                                <template slot-scope="props"> -->
                                     <!-- 表格中数据的详细信息在这展示 -->
-                                    <el-form label-position="left" inline class="demo-table-expand">
+                                    <!-- <el-form label-position="left" inline class="demo-table-expand">
                                         <el-form-item label="项目名称:">
                                             <span>{{ props.row.name }}</span>
                                         </el-form-item>
@@ -49,7 +49,7 @@ border-radius: 6px;">
                                         </el-form-item>
                                     </el-form>
                                 </template>
-                            </el-table-column>
+                            </el-table-column> -->
                             <el-table-column label="编号1" type="index">
                             </el-table-column>
                             <el-table-column label="项目名称" prop="projectName">
