@@ -65,22 +65,14 @@
 /**
  * 登录逻辑在这里写
  */
-import { login } from "../../network/user"; //获取所有用户信息
+import { login, getLoginUserRole } from "../../network/user"; //获取所有用户信息
 export default {
   data() {
     return {
       username: "", //与用户名输入框进行v-model绑定
       password: "", //与密码输入框进行v-model绑定
       loginFlag: false,
-      // userList: [], //从axios请求得到的用户列表放到这里
-      // options: [{   //登录身份选择,这里后期要绑定axios传来的身份数据
-      //   value: 'staff',
-      //   label: '普通人员'
-      // }, {
-      //   value: 'admin',
-      //   label: '管理人员'
-      // }],
-      // value:'', //与身份信息下拉框进行v-model双向绑定,也是下面用户登录身份的信息。
+      userrole: "",
     };
   },
   methods: {
@@ -99,21 +91,27 @@ export default {
             } else if (res.code === 2002) {
               alert("登录成功");
               const token = res.data;
-              localStorage.setItem('token', token);
-              console.log('token', token);
-              this.$router.push('/home');
+              localStorage.setItem("token", token);
+              console.log("token", token);
+              this.$router.push("/home");
+
+              //获取登录用户角色
+              getLoginUserRole().then((res) => {
+                // console.log(res.data);
+                this.userrole = res.data;
+                console.log(this.userrole);
+                if (this.userrole === "1") {
+                this.updateCurole("admin");
+              } else {
+                this.updateCurole("staff");
+              }
+              });
             }
           })
           .catch((error) => {
             console.error(error);
           });
       }
-      if (this.username === "123456") {
-        this.updateCurole("admin");
-      } else {
-        this.updateCurole("staff");
-      }
-
       this.username = "";
       this.password = "";
     },

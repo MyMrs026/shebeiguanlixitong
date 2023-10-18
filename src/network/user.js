@@ -20,3 +20,10 @@ export function login( tel,password ){
     }
   })
 }
+
+export function getLoginUserRole(){
+  return request({
+    url:'/user/getLoginUserRole',
+    methods: 'get'
+  })
+}
