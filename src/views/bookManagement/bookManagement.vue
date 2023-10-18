@@ -233,6 +233,13 @@
             end:item.endTime,
           }
         })
+
+        console.log(this.events);
+        console.log(this.fevents);
+
+      })
+    },
+  };
   </script>
   
   <style scoped>
