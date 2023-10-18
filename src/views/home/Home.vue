@@ -174,18 +174,6 @@
 </template>
 
 <script>
-// 分辨率大于等于1680，大部分为1920的范围情况下，调用此css
-// if (window.screen.width >= 1680) {
-//   document.write('<link rel="stylesheet" href="css/index_1920.css">');
-// }
-// // 分辨率在1600-1680这个范围的情况下，调用此css
-// else if (window.screen.width >= 1600) {
-//   document.write('<link rel="stylesheet" href="css/index_1600.css">');
-// }
-// // 分辨率小于1600的范围情况下，调用此css
-// else {
-//   document.write('<link rel="stylesheet" href="css/index.css">');
-// }
 import { getNoticeList, getLatest } from "../../network/notice";
 export default {
   data() {
@@ -264,11 +252,6 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh; /* 100%视口高度，垂直居中 */
-  max-width: 1500px; /* 设置最大宽度 */
-  margin: 0 auto; /* 居中 */
-  /* margin-left: 220px; */
-  padding-left: 220px; 
 }
 .total {
   background-image: url("../../assets/img/qqq6.png");
