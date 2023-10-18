@@ -239,11 +239,7 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh; /* 100%视口高度，垂直居中 */
-  max-width: 1500px; /* 设置最大宽度 */
-  margin: 0 auto; /* 居中 */
-  padding-left: 220px;
-  /* padding: 20px; 左右下留白 */
+  height: 100%;
 }
 .container {
   display: flex;
