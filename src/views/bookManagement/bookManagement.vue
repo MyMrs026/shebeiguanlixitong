@@ -211,7 +211,6 @@ export default {
       try {
         const res = await getOrders();
         this.originEvents = res.data;
-        // console.log(this.originEvents);
         this.orderEvents = this.originEvents.map((item) => {
           return {
             id: item.equipmentOrderId.toString(),
@@ -230,11 +229,10 @@ export default {
     //获取设备列表，第一个日程表选中时需要，第三个日程表选择时需要
     getEquList().then((res) => {
       this.equlist = res.data;
-      console.log(res.data);
     }),
    
       //为什么fullcalendar没有显示，this.events变量只在create函数中被赋值了，而出去后又是空了
-      this.loadOrderData();
+    this.loadOrderData();
   },
 
   mounted() {

@@ -319,7 +319,31 @@ export default {
     };
   },
 
+  watch: {
+    events(newValue) {
+        if (newValue) {
+            this.updateCalendarOptions();
+        }
+    }
+  },
+  mounted() {
+    this.updateCalendarOptions();
+  },
+
   methods: {
+    updateCalendarOptions() {
+      this.calendarOptions = {
+        // 合并父组件传递的 options 和 events
+        ...this.calendarOptions,
+        events: this.events
+      };
+
+      if (this.$refs.calendar) {
+        this.$nextTick(() => {
+          this.$refs.calendar.$emit('optionsChanged');
+        });
+      }
+    },
     handleWeekendsToggle() {
       this.calendarOptions.weekends = !this.calendarOptions.weekends; // update a property
     },
