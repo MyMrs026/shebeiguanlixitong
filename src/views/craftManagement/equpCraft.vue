@@ -1,43 +1,37 @@
 <template>
-  <div class="outer-container">
-    <div class="container">
-      <p class="text-title">{{ message }}</p>
-      <!-- 设备列表页面有两个部分组成 -->
-      <!-- 设备工艺表格 -->
-      <div >
-        <ul class="table-equcraft-use">
-        <li
-          class="equ-item"
-          v-for="(item,index) in urls"
-          :key="index"
-        >
+  <div class="bgpic">
+    <div class="button-area">
+      <router-link to="/equp">
+        <el-button plain>设备管理</el-button>
+      </router-link>
+      <router-link to="/craft/equcraft">
+        <el-button plain>设备信息展示</el-button>
+      </router-link>
+    </div>
+    <p class="text-title">{{ message }}</p>
+    <!-- 设备列表页面有两个部分组成 -->
+    <!-- 设备工艺表格 -->
+    <div>
+      <ul class="table-equcraft-use">
+        <li class="equ-item" v-for="(item, index) in urls" :key="index">
           <img
             v-bind:src="item.url"
-            style="width:100%;height:100%;float:left;max-height:200px;"
+            style="width: 100%; height: 100%; float: left; max-height: 200px"
             @click="gotoDeviceDetail(index)"
-          >
-          设备名称：{{equCrafts[index].deviceName }}
+          />
+          设备名称：{{ equCrafts[index].deviceName }}
           <br />
           <router-link to="/book">
-            <el-button
-              type="primary"
-              plain
-              size="small"
-            >立即预约</el-button>
+            <el-button type="primary" plain size="small">立即预约</el-button>
           </router-link>
           <router-link to="/test">
-            <el-button
-              type="primary"
-              plain
-              size="small"
-            >立即测试</el-button>
+            <el-button type="primary" plain size="small">立即测试</el-button>
           </router-link>
-          </li>
-          </ul>
-          
-        </div>
-        <div class="pagination">
-              <!-- <span>
+        </li>
+      </ul>
+    </div>
+    <div class="pagination">
+      <!-- <span>
                 每页数量：
                 <el-select v-model="perPage" @change="updatePagination" style="width: 100px;">
                   <el-option value="5">5</el-option>
@@ -46,139 +40,143 @@
                 </el-select>
                 &nbsp;&nbsp;&nbsp;&nbsp;总页数: {{ totalPages }}&nbsp;&nbsp;&nbsp;&nbsp;
               </span> -->
-              <!-- <span>
+      <!-- <span>
                 &nbsp;&nbsp;&nbsp;&nbsp;总页数: {{ totalPages }}&nbsp;&nbsp;&nbsp;&nbsp;
               </span> -->
-              <span>
-                <el-button round @click="goToFirstPage" :disabled="currentPage === 1">
-                  第一页
-                </el-button>
-              </span>
-              <span>
-                <el-button round @click="previousPage" :disabled="currentPage === 1">
-                前一页
-                </el-button>
-              </span>
-              <span>
-                <el-button round @click="nextPage" :disabled="currentPage === totalPages">
-                下一页
-                </el-button>
-              </span>
-              <span>
-                <el-button round @click="goToLastPage" :disabled="currentPage === totalPages">
-                最后
-                </el-button>
-              </span>
-              <span>
-                &nbsp;&nbsp;&nbsp;&nbsp;跳转到第：
-                <el-input type="text" v-model.number="goToPageNumber" style="width: 80px;"/>
-                <el-button type="success" @click="goToPage" round style="margin-left: 10px;">确定</el-button>
-              </span>
-            </div>
-      <hr style="display:flex;border: 5px solid white; margin-left: 10px; margin-right: 10px" />
-      <!-- 设备工艺设置，只在登录用户为管理员时显示 -->
-      <div style="width:100%;">
-        <div class="p-device">
-          <img src="../../assets/img/p-device.png">
-        </div>
-        <div
-          class="form-equcraft-use"
-          v-if="this.$store.state.cu_role === 'admin'"
+      <span>
+        <el-button round @click="goToFirstPage" :disabled="currentPage === 1">
+          第一页
+        </el-button>
+      </span>
+      <span>
+        <el-button round @click="previousPage" :disabled="currentPage === 1">
+          前一页
+        </el-button>
+      </span>
+      <span>
+        <el-button
+          round
+          @click="nextPage"
+          :disabled="currentPage === totalPages"
         >
-          <p class="text-title">设置设备工艺</p>
-          <el-form
-            class="form-equcraft"
-            label-width="100px"
-            :model="equCraftForm"
-            ref="equCraftForm"
-            :rules="rules"
-          >
-            <el-form-item
-              label="设备名称"
-              prop="deviceName"
-            >
-              <el-select
-                v-model="value"
-                placeholder="请选择"
-                style="width: 300px"
-              >
-                <el-option
-                  v-for="item in device_options"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value"
-                >
-                </el-option>
-              </el-select>
-            </el-form-item>
-            <el-form-item
-              label="设备型号"
-              prop="deviceType"
-            >
-              <el-input
-                v-model="equCraftForm.deviceType"
-                style="width: 300px"
-              ></el-input>
-            </el-form-item>
-            <el-form-item
-              label="设备尺寸"
-              prop="size"
-            >
-              <el-input
-                v-model="equCraftForm.size"
-                style="width: 300px"
-              ></el-input>
-            </el-form-item>
-            <el-form-item
-              label="设备重量"
-              prop="weight"
-            >
-              <el-input
-                v-model="equCraftForm.weight"
-                style="width: 300px"
-              ></el-input>
-            </el-form-item>
-            <el-form-item
-              label="设备功率"
-              prop="power"
-            >
-              <el-input
-                v-model="equCraftForm.power"
-                style="width: 300px"
-              ></el-input>
-            </el-form-item>
-            <el-form-item>
-              <el-button
-                type="primary"
-                plain
-                @click="submitForm('equCraftForm')"
-              >提交</el-button>
-              <el-button @click="resetForm('equCraftForm')">重置</el-button>
-            </el-form-item>
-          </el-form>
-        </div>
+          下一页
+        </el-button>
+      </span>
+      <span>
+        <el-button
+          round
+          @click="goToLastPage"
+          :disabled="currentPage === totalPages"
+        >
+          最后
+        </el-button>
+      </span>
+      <span>
+        &nbsp;&nbsp;&nbsp;&nbsp;跳转到第：
+        <el-input
+          type="text"
+          v-model.number="goToPageNumber"
+          style="width: 80px"
+        />
+        <el-button
+          type="success"
+          @click="goToPage"
+          round
+          style="margin-left: 10px"
+          >确定</el-button
+        >
+      </span>
+    </div>
+    <hr
+      style="
+        display: flex;
+        border: 5px solid white;
+        margin-left: 10px;
+        margin-right: 10px;
+      "
+    />
+    <!-- 设备工艺设置，只在登录用户为管理员时显示 -->
+    <div style="width: 100%">
+      <div class="p-device">
+        <img src="../../assets/img/p-device.png" />
       </div>
+      <div
+        class="form-equcraft-use"
+        v-if="this.$store.state.cu_role === 'admin'"
+      >
+        <p class="text-title">设置设备工艺</p>
+        <el-form
+          class="form-equcraft"
+          label-width="100px"
+          :model="equCraftForm"
+          ref="equCraftForm"
+          :rules="rules"
+        >
+          <el-form-item label="设备名称" prop="deviceName">
+            <el-select
+              v-model="value"
+              placeholder="请选择"
+              style="width: 300px"
+            >
+              <el-option
+                v-for="item in device_options"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+              >
+              </el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="设备型号" prop="deviceType">
+            <el-input
+              v-model="equCraftForm.deviceType"
+              style="width: 300px"
+            ></el-input>
+          </el-form-item>
+          <el-form-item label="设备尺寸" prop="size">
+            <el-input
+              v-model="equCraftForm.size"
+              style="width: 300px"
+            ></el-input>
+          </el-form-item>
+          <el-form-item label="设备重量" prop="weight">
+            <el-input
+              v-model="equCraftForm.weight"
+              style="width: 300px"
+            ></el-input>
+          </el-form-item>
+          <el-form-item label="设备功率" prop="power">
+            <el-input
+              v-model="equCraftForm.power"
+              style="width: 300px"
+            ></el-input>
+          </el-form-item>
+          <el-form-item>
+            <el-button type="primary" plain @click="submitForm('equCraftForm')"
+              >提交</el-button
+            >
+            <el-button @click="resetForm('equCraftForm')">重置</el-button>
+          </el-form-item>
+        </el-form>
       </div>
     </div>
   </div>
 </template>
 <script>
-import Equswitch from '../../views/equManagement/equSwitch.vue'
 import { getDeviceImage } from "../../network/file";
 /**
  * 工艺管理页面中的设备工艺子页面
  */
 export default {
-  components: {Equswitch},
   data() {
     return {
       currentDate: new Date(),
       message: "设备工艺展示",
-      deviceImageURL:null,
+      deviceImageURL: null,
       equCrafts: [], //目前从vuex中写死，后续从axios中导入
       currentPage: 1, //当前页数
       perPage: 8, //每页显示的数据数量
-      goToPageNumber: "",//跳转到指定页数的输入
+      goToPageNumber: "", //跳转到指定页数的输入
       equCraftForm: {
         //表单中的内容传入到这
         deviceName: "",
@@ -235,24 +233,23 @@ export default {
   methods: {
     async fetchDeviceImage() {
       try {
-    // 替换 '{fileName}' 为实际的文件名
-    const response = await getDeviceImage({ fileName: '实际的文件名.jpg' });
+        // 替换 '{fileName}' 为实际的文件名
+        const response = await getDeviceImage({ fileName: "实际的文件名.jpg" });
 
-    if (response && response.data && response.data.url) {
-      // 在成功获取图片后，将图片的URL存储在 deviceImageURL 中
-      this.deviceImageURL = response.data.url;
-    } else {
-      console.error('获取设备图片失败: 无法提取图像 URL');
-    }
-  } catch (error) {
-    console.error('获取设备图片失败', error);
-  }
+        if (response && response.data && response.data.url) {
+          // 在成功获取图片后，将图片的URL存储在 deviceImageURL 中
+          this.deviceImageURL = response.data.url;
+        } else {
+          console.error("获取设备图片失败: 无法提取图像 URL");
+        }
+      } catch (error) {
+        console.error("获取设备图片失败", error);
+      }
     },
-  
 
     gotoDeviceDetail(index) {
       this.$router.push({ path: `/device/${index}` });
-      console.log(index)
+      console.log(index);
     },
 
     submitForm(formName) {
@@ -319,28 +316,23 @@ export default {
     // })
     // 在组件挂载后，调用 getDeviceImage 函数来获取设备图片
     this.fetchDeviceImage();
-  }
+  },
 };
 </script>
 <style scope>
-/* .outer-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  max-width: 1500px; 
-  margin: 0 auto;
-} 
- .container {
-  display: flex;
-  flex-direction: column;
+.bgpic {
   overflow: auto;
   background-image: url("../../assets/img/qqq6.png");
   background-repeat: no-repeat;
   width: 100%;
-  height: 100%;
   background-size: 100% 100%;
-} */
+}
+
+.button-area {
+  margin-top: 10px;
+  display: flex;
+  justify-content: space-evenly;
+}
 
 .text-title {
   display: flex;
