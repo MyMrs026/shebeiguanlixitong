@@ -1,205 +1,270 @@
 <template>
-  <div class="equbg">
-    <div style="height=30px">
-      <br />
-    </div>
-    <div class="equList">
-      <div class="text-home">
-        <p>设备列表</p>
+  <div class="outer-container">
+    <div class="equbg">
+      <div style="height=30px">
+        <br />
       </div>
-      <el-table
-        :data="eqpinform"
-        style="
+      <div class="equList">
+        <div class="text-home">
+          <p>设备列表</p>
+        </div>
+        <el-table
+          :data="eqpinform"
+          style="
           width: 98%;
           margin-left: 40px;
           border: 1px solid #ffffff;
           border-radius: 8px;
         "
-        height="250"
-      >
-        <el-table-column fixed prop="deviceName" label="设备名" width="150">
-        </el-table-column>
-        <el-table-column prop="deviceFunc" label="设备功能" width="120">
-        </el-table-column>
-        <el-table-column
-          prop="deviceType.typeName"
-          label="设备类别"
-          width="120"
+          height="250"
         >
-        </el-table-column>
-        <el-table-column
-          prop="operationInstructionUrl"
-          label="使用说明书"
-          width="120"
-        >
-        </el-table-column>
-        <el-table-column prop="lab.labName" label="隶属实验室" width="120">
-        </el-table-column>
-        <el-table-column prop="isInUse" label="是否被使用" width="120">
-        </el-table-column>
-        <el-table-column
-          prop="isUnderMaintenance"
-          label="是否处于维护中"
-          width="150"
-        >
-        </el-table-column>
-        <el-table-column
-          prop="contacts"
-          label="联系人"
-          width="120"
-        >
-        </el-table-column>
-        <el-table-column
-          prop="contactsInfo"
-          label="联系方式"
-          width="120"
-        >
-        </el-table-column>
-      </el-table>
-    </div>
-    <div class="equAdd" v-if="this.$store.state.cu_role === 'admin'">
-      <div class="text-home">
-        <p>添加设备信息</p>
+          <el-table-column
+            fixed
+            prop="deviceName"
+            label="设备名"
+            width="150"
+          >
+          </el-table-column>
+          <el-table-column
+            prop="deviceFunc"
+            label="设备功能"
+            width="120"
+          >
+          </el-table-column>
+          <el-table-column
+            prop="deviceType.typeName"
+            label="设备类别"
+            width="120"
+          >
+          </el-table-column>
+          <el-table-column
+            prop="operationInstructionUrl"
+            label="使用说明书"
+            width="120"
+          >
+          </el-table-column>
+          <el-table-column
+            prop="lab.labName"
+            label="隶属实验室"
+            width="120"
+          >
+          </el-table-column>
+          <el-table-column
+            prop="isInUse"
+            label="是否被使用"
+            width="120"
+          >
+          </el-table-column>
+          <el-table-column
+            prop="isUnderMaintenance"
+            label="是否处于维护中"
+            width="150"
+          >
+          </el-table-column>
+          <el-table-column
+            prop="contacts"
+            label="联系人"
+            width="120"
+          >
+          </el-table-column>
+          <el-table-column
+            prop="contactsInfo"
+            label="联系方式"
+            width="120"
+          >
+          </el-table-column>
+        </el-table>
       </div>
-      <el-form
-        :model="equForm"
-        :rules="rules"
-        ref="equForm"
-        label-width="120px"
-        class="demo-ruleForm"
+      <div
+        class="equAdd"
+        v-if="this.$store.state.cu_role === 'admin'"
       >
-        <el-form-item label="设备名" prop="newDeviceName">
-          <el-input
-            v-model="equForm.newDeviceName"
-            style="width: 400px"
-          ></el-input>
-        </el-form-item>
-        <el-form-item label="设备功能" prop="newDeviceFunc">
-          <el-input
-            v-model="equForm.newDeviceFunc"
-            style="width: 400px"
-          ></el-input>
-        </el-form-item>
-        <el-form-item label="设备类型" prop="newDeviceTypeId">
-          <el-select
-            v-model="equForm.newDeviceTypeId"
-            placeholder="选择设备类型"
-            style="width: 400px"
+        <div class="text-home">
+          <p>添加设备信息</p>
+        </div>
+        <el-form
+          :model="equForm"
+          :rules="rules"
+          ref="equForm"
+          label-width="120px"
+          class="demo-ruleForm"
+        >
+          <el-form-item
+            label="设备名"
+            prop="newDeviceName"
           >
-            <el-option
-              v-for="item in equcategory"
-              :key="item.deviceTypeId"
-              :label="item.typeName"
-              :value="item.deviceTypeId"
+            <el-input
+              v-model="equForm.newDeviceName"
+              style="width: 400px"
+            ></el-input>
+          </el-form-item>
+          <el-form-item
+            label="设备功能"
+            prop="newDeviceFunc"
+          >
+            <el-input
+              v-model="equForm.newDeviceFunc"
+              style="width: 400px"
+            ></el-input>
+          </el-form-item>
+          <el-form-item
+            label="设备类型"
+            prop="newDeviceTypeId"
+          >
+            <el-select
+              v-model="equForm.newDeviceTypeId"
+              placeholder="选择设备类型"
+              style="width: 400px"
             >
-            </el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="实验室" prop="newLabId">
-          <el-select
-            v-model="equForm.newLabId"
-            placeholder="选择实验室"
-            style="width: 400px"
+              <el-option
+                v-for="item in equcategory"
+                :key="item.deviceTypeId"
+                :label="item.typeName"
+                :value="item.deviceTypeId"
+              >
+              </el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item
+            label="实验室"
+            prop="newLabId"
           >
-            <el-option
-              v-for="item in labinform"
-              :key="item.labId"
-              :label="item.labName"
-              :value="item.labId"
+            <el-select
+              v-model="equForm.newLabId"
+              placeholder="选择实验室"
+              style="width: 400px"
             >
-            </el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="设备说明书" prop="newUuid">
-          <el-input v-model="equForm.newUuid" style="width: 400px"></el-input>
-        </el-form-item>
-        <el-form-item>
-          <el-button type="primary" @click="submitForm('equForm')"
-            >添加</el-button
+              <el-option
+                v-for="item in labinform"
+                :key="item.labId"
+                :label="item.labName"
+                :value="item.labId"
+              >
+              </el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item
+            label="设备说明书"
+            prop="newUuid"
           >
-        </el-form-item>
-      </el-form>
-    </div>
-    
-    <div style="width: 40%; height: 450px; float: left; margin-top: 10px">
-      <!-- <img
+            <el-input
+              v-model="equForm.newUuid"
+              style="width: 400px"
+            ></el-input>
+          </el-form-item>
+          <el-form-item>
+            <el-button
+              type="primary"
+              @click="submitForm('equForm')"
+            >添加</el-button>
+          </el-form-item>
+        </el-form>
+      </div>
+
+      <div style="width: 40%; height: 450px; float: left; margin-top: 10px">
+        <!-- <img
         src="../../assets/img/椰子树.png"
         style="width: 400px; height: 400px; margin-top: 35px"
       /> -->
-      <div class="equUpdate" v-if="this.$store.state.cu_role === 'admin'">
-      <div class="text-home">
-        <p>更新设备信息</p>
+        <div
+          class="equUpdate"
+          v-if="this.$store.state.cu_role === 'admin'"
+        >
+          <div class="text-home">
+            <p>更新设备信息</p>
+          </div>
+          <el-form
+            :model="eqpUpdateForm"
+            :rules="rules1"
+            ref="eqpUpdateForm"
+            label-width="120px"
+            class="demo-ruleForm"
+          >
+            <el-form-item
+              label="设备名"
+              prop="newDeviceName"
+            >
+              <el-input
+                v-model="eqpUpdateForm.newDeviceName"
+                style="width: 400px"
+              ></el-input>
+            </el-form-item>
+            <el-form-item
+              label="设备功能"
+              prop="newDeviceFunc"
+            >
+              <el-input
+                v-model="eqpUpdateForm.newDeviceFunc"
+                style="width: 400px"
+              ></el-input>
+            </el-form-item>
+            <el-form-item
+              label="设备类型"
+              prop="newDeviceTypeId"
+            >
+              <el-select
+                v-model="eqpUpdateForm.newDeviceTypeId"
+                placeholder="选择设备类型"
+                style="width: 400px"
+              >
+                <el-option
+                  v-for="item in equcategory"
+                  :key="item.deviceTypeId"
+                  :label="item.typeName"
+                  :value="item.deviceTypeId"
+                >
+                </el-option>
+              </el-select>
+            </el-form-item>
+            <el-form-item
+              label="实验室"
+              prop="newLabId"
+            >
+              <el-select
+                v-model="eqpUpdateForm.newLabId"
+                placeholder="选择实验室"
+                style="width: 400px"
+              >
+                <el-option
+                  v-for="item in labinform"
+                  :key="item.labId"
+                  :label="item.labName"
+                  :value="item.labId"
+                >
+                </el-option>
+              </el-select>
+            </el-form-item>
+            <el-form-item
+              label="设备说明书"
+              prop="newUuid"
+            >
+              <el-input
+                v-model="eqpUpdateForm.newUuid"
+                style="width: 400px"
+              ></el-input>
+            </el-form-item>
+            <el-form-item>
+              <el-button
+                type="primary"
+                @click="updateForm('eqpUpdateForm')"
+              >更新</el-button>
+            </el-form-item>
+          </el-form>
+        </div>
       </div>
-      <el-form
-        :model="eqpUpdateForm"
-        :rules="rules1"
-        ref="eqpUpdateForm"
-        label-width="120px"
-        class="demo-ruleForm"
-      >
-        <el-form-item label="设备名" prop="newDeviceName">
-          <el-input
-            v-model="eqpUpdateForm.newDeviceName"
-            style="width: 400px"
-          ></el-input>
-        </el-form-item>
-        <el-form-item label="设备功能" prop="newDeviceFunc">
-          <el-input
-            v-model="eqpUpdateForm.newDeviceFunc"
-            style="width: 400px"
-          ></el-input>
-        </el-form-item>
-        <el-form-item label="设备类型" prop="newDeviceTypeId">
-          <el-select
-            v-model="eqpUpdateForm.newDeviceTypeId"
-            placeholder="选择设备类型"
-            style="width: 400px"
-          >
-            <el-option
-              v-for="item in equcategory"
-              :key="item.deviceTypeId"
-              :label="item.typeName"
-              :value="item.deviceTypeId"
-            >
-            </el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="实验室" prop="newLabId">
-          <el-select
-            v-model="eqpUpdateForm.newLabId"
-            placeholder="选择实验室"
-            style="width: 400px"
-          >
-            <el-option
-              v-for="item in labinform"
-              :key="item.labId"
-              :label="item.labName"
-              :value="item.labId"
-            >
-            </el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="设备说明书" prop="newUuid">
-          <el-input
-            v-model="eqpUpdateForm.newUuid"
-            style="width: 400px"
-          ></el-input>
-        </el-form-item>
-        <el-form-item>
-          <el-button type="primary" @click="updateForm('eqpUpdateForm')"
-            >更新</el-button
-          >
-        </el-form-item>
-      </el-form>
+      <div class="clear"></div>
     </div>
-    </div>
-    <div class="clear"></div>
   </div>
 </template>
 
 <script>
 // import axios from 'axios';
-import { getEquList, getEquCate, addEqument, updateDevice } from "../../network/equpment";
+import {
+  getEquList,
+  getEquCate,
+  addEqument,
+  updateDevice,
+} from "../../network/equpment";
 import { getLabList } from "../../network/labtory";
 export default {
   data() {
@@ -326,11 +391,25 @@ export default {
 };
 </script>
 <style scoped>
+/* .outer-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; 
+  max-width: 1500px; 
+  margin: 0 auto; 
+  padding-left: 220px;
+  
+} */
+
 .clear {
   clear: both;
   height: 0px;
 }
 .equbg {
+    display: flex;
+  flex-direction: column;
+  background-repeat: no-repeat;
   background-image: url("../../assets/img/qqq6.png");
   width: 100%;
   height: 100%;
