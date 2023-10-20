@@ -50,7 +50,7 @@ export default {
 
 .sidebar {
     flex: 0 0 auto;
-    width: 400px;
+    width: 20vw;
     overflow: auto;
     /* 在左导航栏内容过多时出现滚动条 */
 }

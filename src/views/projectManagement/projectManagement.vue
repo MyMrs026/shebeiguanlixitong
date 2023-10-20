@@ -71,16 +71,16 @@ border-radius: 6px;">
                     <div class="pro_font">
                         <p>新建项目</p>
                     </div>
-                    <!-- <form>
+                    <form>
                         <tr>
                             <div style="width: 55%;display:fixed;margin:10px;top:0px;float:left">
-                                <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px"
+                                <el-form  ref="ruleForm" label-width="100px"
                                     class="demo-ruleForm">
                                     <el-form-item label="项目名称" prop="name" style="margin-top: 10px;">
-                                        <el-input v-model="ruleForm.name" style="width: 100%;"></el-input>
+                                        <el-input style="width: 100%;"></el-input>
                                     </el-form-item>
                                     <el-form-item label="项目类别" prop="category">
-                                        <el-select v-model="ruleForm.category" placeholder="请选择项目的类别" style="width: 100%;">
+                                        <el-select placeholder="请选择项目的类别" style="width: 100%;">
                                             <el-option label="Ⅰ类" value="Ⅰ类"></el-option>
                                             <el-option label="Ⅱ类" value="Ⅱ类"></el-option>
                                             <el-option label="Ⅲ类" value="Ⅲ类"></el-option>
@@ -88,11 +88,11 @@ border-radius: 6px;">
                                     </el-form-item>
 
                                     <el-form-item label="项目描述" prop="desc">
-                                        <el-input v-model="ruleForm.desc" style="width: 100%;"></el-input>
+                                        <el-input style="width: 100%;"></el-input>
                                     </el-form-item>
 
                                     <el-form-item label="实验设备" prop="equ_value">
-                                        <el-select v-model="ruleForm.equ_value" multiple placeholder="请选择实验所需的设备"
+                                        <el-select multiple placeholder="请选择实验所需的设备"
                                             style="width: 100%;">
                                             <el-option v-for="item in pro_equps" :key="item.deviceName"
                                                 :label="item.deviceName" :value="item.deviceName">
@@ -100,13 +100,13 @@ border-radius: 6px;">
                                         </el-select>
                                     </el-form-item>
                                     <el-form-item label="实验目的" prop="purpose">
-                                        <el-input v-model="ruleForm.purpose" style="width: 100%;"></el-input>
+                                        <el-input style="width: 100%;"></el-input>
                                     </el-form-item>
                                     <el-form-item label="成员" prop="member">
-                                        <el-input v-model="ruleForm.member" style="width: 100%;"></el-input>
+                                        <el-input style="width: 100%;"></el-input>
                                     </el-form-item>
                                     <el-form-item label="组长" prop="leader">
-                                        <el-input v-model="ruleForm.leader" style="width: 100%;"></el-input>
+                                        <el-input  style="width: 100%;"></el-input>
                                     </el-form-item>
                                     <el-form-item>
                                         <el-button type="primary" @click="submitForm('ruleForm')">立即创建</el-button>
@@ -121,7 +121,7 @@ border-radius: 6px;">
                             </div>
 
                         </tr>
-                    </form> -->
+                    </form>
                 </div>
             </div>
         </div>
