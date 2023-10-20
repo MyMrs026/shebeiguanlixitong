@@ -44,10 +44,16 @@ const NoticeDetail = () => import('../views/notice/noticeDetail.vue')
 const Message = () => import('../views/message/message')
 const MessageDetail = () => import('../views/message/messageDetail.vue')
 const TrainBooksDetail = () => import('../views/message/trainBooksDetail.vue')
+
+const MulTable = () => import('../components/common/table/MulTable.vue')
 //1.安装插件
 Vue.use(Router)
 //创建router
 const routes = [
+  {
+    path: '/table',
+    component: MulTable
+  }, 
   {
     path: '/',
     redirect: '/login', //路由重定向，就是默认跳到的路由
