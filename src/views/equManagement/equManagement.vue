@@ -3,19 +3,6 @@
 <div class="bg-eq">
   <div class="equpM">
   <div class="equp-container">
-    <div class="button-area" style="height: 82%;
-  overflow-y: auto;margin-top: 20px;
-  margin-left: 50px;">
-    <router-link to="/equp">
-      <el-button plain>设备管理</el-button>
-    </router-link>
-    <router-link to="/craft/equcraft">
-      <el-button plain>设备列表</el-button>
-    </router-link>
-    </div>
-     <hr
-        style="border: 1px solid white; margin-left: 10px; margin-right: 10px"
-      />
     <!-- 由五个部分组成，对应网页中五个带边框的div -->
     <!-- 第一部分：使用设备，通过搜索框对已有的设备进行检索，点击即可进行使用 -->
     <div class="centered-div" id="part1">
@@ -127,12 +114,13 @@
 <script>
 import equList from '../equList/equList'
 import equMaintain from '../equManagement/equMaintain.vue'
-
+import Equswitch from '../equManagement/equSwitch.vue'
 import { getEquList } from '../../network/equpment';
 export default {
   components:{
     equList,
-    equMaintain
+    equMaintain,
+    Equswitch
   },  
   data() {
     return {
@@ -200,19 +188,18 @@ export default {
 }
 </script>
 <style scoped>
-.outer-container {
+/* .outer-container {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh; /* 100%视口高度，垂直居中 */
-  max-width: 1500px; /* 设置最大宽度 */
-  margin: 0 auto; /* 居中 */
-  padding-left: 220px;
-  /* padding: 20px; 左右下留白 */
-}
+  height: 100vh; 
+  max-width: 1500px;
+  margin: 0 auto; 
+
+} */
 .bg-eq{
-  display: flex;
-  flex-direction: column;
+  /* display: flex;
+  flex-direction: column; */
   background-image: url("../../assets/img/qqq6.png");
   background-repeat: no-repeat;
   width: 100%;
