@@ -36,7 +36,7 @@
               <p class="font-class">当前用户:{{ this.$store.state.cu_role }}</p>
               <!-- 调用日程表在这里 -->
               <!-- <div>{{this.orderEvents}}</div> -->
-              <Schedular :events="orderEvents" class="schedular" />
+              <Schedular :events="orderEvents" class="schedular" @make-orders="handleMakeOrders"/>
             </div>
           </div>
 
@@ -58,7 +58,7 @@
                 >
                 </el-option>
               </el-select>
-              <Schedular :events="orderEvents2" class="schedular" />
+              <Schedular :events="orderEvents2" class="schedular" @make-orders="handleMakeOrders"/>
             </div>
           </div>
         </div>
@@ -122,6 +122,13 @@ export default {
     };
   },
   methods: {
+    //调用子组件中传递的函数
+    handleMakeOrders(func){
+      console.log("在父组件中执行从子组件接受的函数");
+      func();
+
+    },
+
     //监听选择设备的情况
     equSelectChange(value) {
       // console.log(value);
@@ -158,7 +165,7 @@ export default {
       try {
         const res = await getequOrders(id);
         this.originEvents2 = res.data;
-        console.log(this.originEvents2);
+        // console.log(this.originEvents2);
         this.orderEvents2 = await Promise.all( this.originEvents2.map(async (item)=>{
           const userName = await this.loadUserInform(item.userId)
           return {
@@ -168,7 +175,7 @@ export default {
             end: formatDateToISOString(item.endTime).slice(0, -5)
           };
         }));
-        console.log(this.orderEvents2);
+        // console.log(this.orderEvents2);
       } catch (error) {
         console.error("Error loading data:", error);
       }
@@ -191,7 +198,7 @@ export default {
             end: formatDateToISOString(item.endTime).slice(0, -5),
           };
         }));
-        console.log(this.orderEvents);
+        // console.log(this.orderEvents);
       } catch (error) {
         console.error("Error loading data:", error);
       }
@@ -208,7 +215,7 @@ export default {
           label:item.equipmentName
         }
       })
-      console.log(this.device_options);
+      // console.log(this.device_options);
     }),
     this.loadOrderData();
   },
