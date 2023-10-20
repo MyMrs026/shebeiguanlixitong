@@ -21,8 +21,8 @@
 border-radius: 6px;">
                             <!-- <el-table-column type="expand">
                                 <template slot-scope="props"> -->
-                                    <!-- 表格中数据的详细信息在这展示 -->
-                                    <!-- <el-form label-position="left" inline class="demo-table-expand">
+                            <!-- 表格中数据的详细信息在这展示 -->
+                            <!-- <el-form label-position="left" inline class="demo-table-expand">
                                         <el-form-item label="项目名称:">
                                             <span>{{ props.row.name }}</span>
                                         </el-form-item>
@@ -50,7 +50,7 @@ border-radius: 6px;">
                                     </el-form>
                                 </template>
                             </el-table-column> -->
-                            <el-table-column label="编号1" type="index">
+                            <el-table-column label="编号" type="index">
                             </el-table-column>
                             <el-table-column label="项目名称" prop="projectName">
                             </el-table-column>
@@ -131,19 +131,65 @@ border-radius: 6px;">
 <script>
 import { getEquList } from '../../network/equpment'
 import { getProjectList, getProjectDetail, getProjectTypeList } from '../../network/project'
+import { formatDateToISOString } from '../../common/formatDateToISOString'
+import MulTable from '../../components/common/table/MulTable.vue'
 export default {
+    components: {
+        MulTable
+    },
     data() {
         return {
+            dataList: [{
+                date: '2016-05-03',
+                name: '王小虎',
+                address: '上海市普陀区金沙江路 1518 弄'
+            }, {
+                date: '2016-05-02',
+                name: '王小虎',
+                address: '上海市普陀区金沙江路 1518 弄'
+            }, {
+                date: '2016-05-04',
+                name: '王小虎',
+                address: '上海市普陀区金沙江路 1518 弄'
+            }, {
+                date: '2016-05-01',
+                name: '王小虎',
+                address: '上海市普陀区金沙江路 1518 弄'
+            }, {
+                date: '2016-05-08',
+                name: '王小虎',
+                address: '上海市普陀区金沙江路 1518 弄'
+            }, {
+                date: '2016-05-06',
+                name: '王小虎',
+                address: '上海市普陀区金沙江路 1518 弄'
+            }, {
+                date: '2016-05-07',
+                name: '王小虎',
+                address: '上海市普陀区金沙江路 1518 弄'
+            }],
             //项目列表
-            projectList: []
+            projectList: [],
+            //分页
+            curPage: 1,
+            pageSize: 2,
+            total: 0
         }
     },
     created() {
         getProjectList().then((res) => {
-            this.projectList = res.data
-        })
+            console.log(res.data);
+            const dataList = res.data.map(element => {
+                const createTime = new Date(element.createTime);
+                element.createTime = formatDateToISOString(createTime).slice(0, 10);
+                return element;
+            });
+            console.log(dataList);
+            this.projectList = dataList;
+        });
     },
     mounted() {
+
         //获取所有的设备信息
         getEquList().then(res => {
             this.pro_equps = res.data
@@ -158,6 +204,9 @@ export default {
         },
     },
     methods: {
+        handleSelectionChange(selection) {
+            console.log(selection);
+        },
         submitForm(formName) {
             this.$refs[formName].validate((valid) => {
                 if (valid) {
