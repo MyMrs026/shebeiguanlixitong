@@ -27,7 +27,8 @@ const Craftparams = () => import('../views/craftManagement/craftParams.vue')
 const Help = () =>import('../views/helpPage/help.vue')
 const EquCategory = () =>import('../views/equList/equCategory.vue')
 const Bill = () =>import('../views/bill/bill.vue')
-
+const EquSwitch = () =>import('../views/equManagement/equSwitch.vue')
+const DeviceDetail = () =>import('../views/equManagement/DeviceDetail.vue')
 
 const Goods = () => import('../views/goods/goodsPage.vue')
 const Goodscategory = () => import('../views/goods/goodsCategory.vue')
@@ -74,21 +75,33 @@ const routes = [
     component: Project
   },
   {
-    path: '/equp',
-    name: 'Equp',
-    component: Equp
+    path: '/device/:index',
+    name: 'device-detail',
+    component: DeviceDetail, // 设备详情页面
+  },
+  {
+    path: '/equswitch',
+    name: 'Equswitch',
+    component: EquSwitch,
+    children: [{
+      //子路由
+      path: '/craft/equcraft',
+      name: 'Equcraft',
+      component: Equcraft,
+    }, 
+    {
+      path: '/equp',
+      name: 'Equp',
+      component: Equp,
+    },
+    ]
   },
   {
     path: '/craft',
     name: 'Craft',
     redirect:'/craft/equcraft',
     component: Craft,
-    children: [{
-      //子路由
-      path: '/craft/equcraft',
-      name: 'Equcraft',
-      component: Equcraft
-    },
+    children: [
     {
       path: '/craft/craftparams',
       name: 'Craftparams',

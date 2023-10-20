@@ -16,3 +16,9 @@ export function uploadToServer() {
     method: 'post'
   })
 }
+
+export function getDeviceImage(){
+  return request({
+    url:`/file/image/${fileName}`
+  })
+}

@@ -1,26 +1,12 @@
 <template>
   <div class="outer-container">
-    
     <div class="container">
-      
       <p class="text-title">{{ message }}</p>
-      <div
-        class="button-area"
-        style="display:flex;flex-direction: column;height: 50px;
-  overflow-y: auto;margin-top: 20px;
-  margin-left: 50px;"
-      >
-        <router-link to="/equp">
-          <el-button plain>设备管理</el-button>
-        </router-link>
-        <router-link to="/craft/equcraft">
-          <el-button plain>设备列表</el-button>
-        </router-link>
-      </div>
-      <!-- 页面有两个部分组成 -->
+      <!-- 设备列表页面有两个部分组成 -->
       <!-- 设备工艺表格 -->
-      <div class="table-equcraft-use">
-        <div
+      <div >
+        <ul class="table-equcraft-use">
+        <li
           class="equ-item"
           v-for="(item,index) in urls"
           :key="index"
@@ -28,6 +14,7 @@
           <img
             v-bind:src="item.url"
             style="width:100%;height:100%;float:left;max-height:200px;"
+            @click="gotoDeviceDetail(index)"
           >
           设备名称：{{equCrafts[index].deviceName }}
           <br />
@@ -45,20 +32,49 @@
               size="small"
             >立即测试</el-button>
           </router-link>
-          <!-- <ul class="medium" style="width:50%;height:50%;float:left;margin-top:5px;">
-            <li>设备名称</li>
-            <li>{{equCrafts[index].deviceName }}</li>
-            <li>设备型号</li>
-            <li>{{equCrafts[index].deviceType}}</li>
-            <li>设备尺寸</li>
-            <li>{{equCrafts[index].size}}</li>
-            <li>设备重量</li>
-            <li>{{equCrafts[index].weight}}</li>
-            <li>功率信息</li>
-            <li>{{equCrafts[index].power}}</li>
-          </ul> -->
+          </li>
+          </ul>
+          
         </div>
-      </div>
+        <div class="pagination">
+              <!-- <span>
+                每页数量：
+                <el-select v-model="perPage" @change="updatePagination" style="width: 100px;">
+                  <el-option value="5">5</el-option>
+                  <el-option value="10">10</el-option>
+                  <el-option value="15">15</el-option>
+                </el-select>
+                &nbsp;&nbsp;&nbsp;&nbsp;总页数: {{ totalPages }}&nbsp;&nbsp;&nbsp;&nbsp;
+              </span> -->
+              <!-- <span>
+                &nbsp;&nbsp;&nbsp;&nbsp;总页数: {{ totalPages }}&nbsp;&nbsp;&nbsp;&nbsp;
+              </span> -->
+              <span>
+                <el-button round @click="goToFirstPage" :disabled="currentPage === 1">
+                  第一页
+                </el-button>
+              </span>
+              <span>
+                <el-button round @click="previousPage" :disabled="currentPage === 1">
+                前一页
+                </el-button>
+              </span>
+              <span>
+                <el-button round @click="nextPage" :disabled="currentPage === totalPages">
+                下一页
+                </el-button>
+              </span>
+              <span>
+                <el-button round @click="goToLastPage" :disabled="currentPage === totalPages">
+                最后
+                </el-button>
+              </span>
+              <span>
+                &nbsp;&nbsp;&nbsp;&nbsp;跳转到第：
+                <el-input type="text" v-model.number="goToPageNumber" style="width: 80px;"/>
+                <el-button type="success" @click="goToPage" round style="margin-left: 10px;">确定</el-button>
+              </span>
+            </div>
       <hr style="display:flex;border: 5px solid white; margin-left: 10px; margin-right: 10px" />
       <!-- 设备工艺设置，只在登录用户为管理员时显示 -->
       <div style="width:100%;">
@@ -142,20 +158,27 @@
           </el-form>
         </div>
       </div>
+      </div>
     </div>
   </div>
 </template>
 <script>
+import Equswitch from '../../views/equManagement/equSwitch.vue'
+import { getDeviceImage } from "../../network/file";
 /**
  * 工艺管理页面中的设备工艺子页面
  */
 export default {
-  components: {},
+  components: {Equswitch},
   data() {
     return {
       currentDate: new Date(),
       message: "设备工艺展示",
+      deviceImageURL:null,
       equCrafts: [], //目前从vuex中写死，后续从axios中导入
+      currentPage: 1, //当前页数
+      perPage: 8, //每页显示的数据数量
+      goToPageNumber: "",//跳转到指定页数的输入
       equCraftForm: {
         //表单中的内容传入到这
         deviceName: "",
@@ -210,6 +233,28 @@ export default {
     };
   },
   methods: {
+    async fetchDeviceImage() {
+      try {
+    // 替换 '{fileName}' 为实际的文件名
+    const response = await getDeviceImage({ fileName: '实际的文件名.jpg' });
+
+    if (response && response.data && response.data.url) {
+      // 在成功获取图片后，将图片的URL存储在 deviceImageURL 中
+      this.deviceImageURL = response.data.url;
+    } else {
+      console.error('获取设备图片失败: 无法提取图像 URL');
+    }
+  } catch (error) {
+    console.error('获取设备图片失败', error);
+  }
+    },
+  
+
+    gotoDeviceDetail(index) {
+      this.$router.push({ path: `/device/${index}` });
+      console.log(index)
+    },
+
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
@@ -226,22 +271,67 @@ export default {
     resetForm(equCraftForm) {
       this.$refs[equCraftForm].resetFields();
     },
+    // 分页逻辑
+    updatePagination() {
+      this.currentPage = 1;
+    },
+    goToFirstPage() {
+      this.currentPage = 1;
+    },
+    previousPage() {
+      this.currentPage--;
+    },
+    nextPage() {
+      this.currentPage++;
+    },
+    goToLastPage() {
+      this.currentPage = this.totalPages;
+    },
+    goToPage() {
+      const pageNumber = parseInt(this.goToPageNumber);
+      if (pageNumber >= 1 && pageNumber <= this.totalPages) {
+        this.currentPage = pageNumber;
+      }
+      this.goToPageNumber = "";
+    },
+  },
+  computed: {
+    paginatedData() {
+      const data = this.equCrafts;
+      const startIndex = (this.currentPage - 1) * this.perPage;
+      const endIndex = startIndex + this.perPage;
+      return data.slice(startIndex, endIndex);
+    },
+    totalPages() {
+      const data = this.equCrafts;
+      return Math.ceil(data.length / this.perPage);
+    },
   },
   created() {
     //此处写的应该是axios传出来的promise函数，参照其他文件
     this.equCrafts = this.$store.state.equCrafts;
     console.log(this.equCrafts);
   },
+  mounted() {
+    // getDeviceList().then(res=>{
+    //   this.devices = res.data;
+    //   console.log(this.devices);
+    // })
+    // 在组件挂载后，调用 getDeviceImage 函数来获取设备图片
+    this.fetchDeviceImage();
+  }
 };
 </script>
 <style scope>
-.outer-container {
+/* .outer-container {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100%;
-}
-.container {
+  height: 100vh;
+  max-width: 1500px; 
+  margin: 0 auto;
+} 
+ .container {
   display: flex;
   flex-direction: column;
   overflow: auto;
@@ -250,7 +340,8 @@ export default {
   width: 100%;
   height: 100%;
   background-size: 100% 100%;
-}
+} */
+
 .text-title {
   display: flex;
   flex-direction: column;
@@ -262,6 +353,7 @@ export default {
 }
 .table-equcraft-use {
   display: flex;
+  flex-direction: row;
   /* align-items: center;
   justify-content: flex-start; */
   flex-wrap: wrap;
