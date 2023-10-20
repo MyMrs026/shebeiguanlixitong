@@ -330,8 +330,8 @@ export default {
   height: 100vh;
   max-width: 1500px; 
   margin: 0 auto;
-} */
-/* .container {
+} 
+ .container {
   display: flex;
   flex-direction: column;
   overflow: auto;
@@ -341,6 +341,7 @@ export default {
   height: 100%;
   background-size: 100% 100%;
 } */
+
 .text-title {
   display: flex;
   flex-direction: column;

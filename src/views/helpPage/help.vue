@@ -39,9 +39,7 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh; /* 100%视口高度，垂直居中 */
-  padding-left: 220px;
-  /* padding: 20px; 左右下留白 */
+  height: 100%;
 }
 .bg-help{
   display: flex;

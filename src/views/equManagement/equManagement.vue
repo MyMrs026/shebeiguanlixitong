@@ -188,15 +188,11 @@ export default {
 }
 </script>
 <style scoped>
-/* .outer-container {
+.outer-container {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh; 
-  max-width: 1500px;
-  margin: 0 auto; 
-
-} */
+}
 .bg-eq{
   /* display: flex;
   flex-direction: column; */

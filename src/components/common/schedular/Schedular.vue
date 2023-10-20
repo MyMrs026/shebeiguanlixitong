@@ -37,13 +37,6 @@
               </el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="标题" label-width="120px" prop="title">
-            <el-input
-              v-model="EventForm.title"
-              autocomplete="off"
-              style="width: 250px"
-            ></el-input>
-          </el-form-item>
           <el-form-item label="开始时间" label-width="120px" prop="startTime">
             <el-time-select
               placeholder="起始时间"
@@ -68,13 +61,6 @@
               }"
             >
             </el-time-select>
-          </el-form-item>
-          <el-form-item label="使用者" label-width="120px" prop="user">
-            <el-input
-              v-model="EventForm.user"
-              autocomplete="off"
-              style="width: 250px"
-            ></el-input>
           </el-form-item>
           <el-form-item>
             <div class="button-area">
@@ -115,14 +101,6 @@
             </el-select>
           </el-form-item>
 
-          <el-form-item label="标题" label-width="120px" prop="title">
-            <el-input
-              v-model="EventForm2.title"
-              style="width: 250px"
-              autocomplete="off"
-            ></el-input>
-          </el-form-item>
-
           <el-form-item label="开始时间" label-width="120px" prop="startTime">
             <el-time-select
               placeholder="起始时间"
@@ -148,13 +126,7 @@
             >
             </el-time-select>
           </el-form-item>
-          <el-form-item label="使用者" label-width="120px" prop="user">
-            <el-input
-              v-model="EventForm2.user"
-              autocomplete="off"
-              style="width: 250px"
-            ></el-input>
-          </el-form-item>
+         
           <el-form-item>
             <div class="button-area">
               <el-button type="primary" @click="submitClick2('EventForm2')"
@@ -173,7 +145,6 @@
 /**
  * 这里对应的设备预订的第一个schedular
  * 具体的文档"https://fullcalendar.io/"
- * 后面的Schedular2、3、4同理，由于我没有找到合适的方法所以写了很多个Schedular组件，如果有可能请找到合适的封装方法
  */
 import FullCalendar, { formatDate } from "@fullcalendar/vue";
 import dayGridPlugin from "@fullcalendar/daygrid"; //日程图
@@ -181,6 +152,8 @@ import timeGridPlugin from "@fullcalendar/timegrid"; //里面的时间显示
 import interactionPlugin from "@fullcalendar/interaction"; //日程图的一些交互事件，比如说拖拽选择时间
 import zhLocale from "@fullcalendar/core/locales/zh-cn"
 import { createEventId } from "../../../common/event-utils.js"; //导入日程图的一些事件
+
+import { getEquList } from "../../../network/equpment";
 
 export default {
   components: {
@@ -207,6 +180,7 @@ export default {
         // contentHeight:auto,
         
         initialView: "timeGridDay", //以日程图的方式初始化fullcalendar
+        // rerenderDelay:500,
         // validRange: {
         //   start:new Date(),
         //   end:new Date(new Date().setDate(new Date().getDate() + 10)),
@@ -236,29 +210,7 @@ export default {
         eventDrop: this.handleEventDrop, //定义当拖拽事件结束时出发的事件，看看吧，不行的话把可拖拽禁掉
       },
       currentEvents: [],
-      device_options: [
-        //目前写死，后期也是从数据库中导入
-        {
-          value: "选项1",
-          label: "ASE",
-        },
-        {
-          value: "选项2",
-          label: "OEA",
-        },
-        {
-          value: "选项3",
-          label: "DTP",
-        },
-        {
-          value: "选项4",
-          label: "MKI",
-        },
-        {
-          value: "选项5",
-          label: "OSD",
-        },
-      ],
+      device_options: [],
       EventForm: {
         title: "",
         devicename:"",
@@ -318,7 +270,31 @@ export default {
     };
   },
 
+  watch: {
+    events(newValue) {
+        if (newValue) {
+            this.updateCalendarOptions();
+        }
+    }
+  },
+  mounted() {
+    this.updateCalendarOptions();
+  },
+
   methods: {
+    updateCalendarOptions() {
+      this.calendarOptions = {
+        // 合并父组件传递的 options 和 events
+        ...this.calendarOptions,
+        events: this.events
+      };
+
+      if (this.$refs.calendar) {
+        this.$nextTick(() => {
+          this.$refs.calendar.$emit('optionsChanged');
+        });
+      }
+    },
     handleWeekendsToggle() {
       this.calendarOptions.weekends = !this.calendarOptions.weekends; // update a property
     },
@@ -412,6 +388,21 @@ export default {
       alert("不准拖！");
     },
   },
+  created() {
+    // calendar.render();
+    //获取设备列表，第一个日程表选中时需要，第二个日程表选择时需要
+    getEquList().then((res) => {
+      this.equlist = res.data;
+      // console.log(this.equlist);
+      this.device_options = this.equlist.map((item) => {
+        return {
+          value:item.equipmentId,
+          label:item.equipmentName
+        }
+      })
+      console.log(this.device_options);
+    })
+  }
 };
 </script>
 

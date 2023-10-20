@@ -23,7 +23,6 @@ body {
   -webkit-tap-highlight-color: transparent; /* webkit是苹果浏览器引擎，tap点击，highlight背景高亮，color颜色，颜色用数值调节 */
   background: var(--color-background);
   color: var(--color-text);
-  width: 100vw;
 }
 
 a {
