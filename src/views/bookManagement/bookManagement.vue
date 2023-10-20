@@ -19,11 +19,6 @@
             >
             </el-date-picker>
           </div>
-          <div class="button-group">
-            <el-button>更新</el-button>
-            <el-button>日期</el-button>
-            <el-button>创建新的预约</el-button>
-          </div>
           <hr
             style="
               border: 1px solid white;
@@ -37,7 +32,7 @@
         <!-- 第二个 div 的内容 -->
         <div class="fullcalendar-area">
           <div class="content-area">
-            <div class="schedular-area" v-if="isShow1">
+            <div class="schedular-area">
               <p class="font-class">当前用户:{{ this.$store.state.cu_role }}</p>
               <!-- 调用日程表在这里 -->
               <!-- <div>{{this.orderEvents}}</div> -->
@@ -46,13 +41,14 @@
           </div>
 
           <div class="content-area">
-            <div class="schedular-area" v-if="isShow3">
+            <div class="schedular-area">
               <!-- 同样道理 -->
               <el-select
                 v-model="newEqup"
+                @change = "equSelectChange"
+                filterable
                 placeholder="请选择设备"
                 class="select-newequ"
-                @change="handleSelectChange"
               >
                 <el-option
                   v-for="item in device_options"
@@ -62,11 +58,10 @@
                 >
                 </el-option>
               </el-select>
-              <Schedular :events="events2" class="schedular" />
+              <Schedular :events="orderEvents2" class="schedular" />
             </div>
           </div>
         </div>
-        <div class="clear"></div>
       </div>
     </div>
   </div>
@@ -75,14 +70,8 @@
   <script>
 import Schedular from "../../components/common/schedular/Schedular";
 import { getEquList, getEquInform } from "../../network/equpment";
-import { getOrders } from "../../network/book";
-import {
-  INITIAL_EVENTS,
-  INITIAL_EVENTS2,
-  INITIAL_EVENTS3,
-  createEventId,
-} from "../../common/event-utils";
-
+import { getOrders, getequOrders } from "../../network/book";
+import { getUserInform } from "../../network/user"
 import { formatDateToISOString } from "../../common/formatDateToISOString";
 
 export default {
@@ -94,7 +83,7 @@ export default {
       //elementui中的日期选择器
       pickerOptions: {
         disabledDate(time) {
-          return time.getTime() < Date.now();
+          // return time.getTime() < Date.now();
         },
         shortcuts: [
           {
@@ -122,103 +111,86 @@ export default {
         ],
       },
       value1: "", //日期选择器传回来的数据
-      //日程表是否显示
-      isShow1: true,
-      isShow2: true,
-      isShow3: true,
       newEqup: "",
-      device_options: [
-        //目前写死，后期也是从数据库中导入
-        {
-          value: "选项1",
-          label: "ASE",
-        },
-        {
-          value: "选项2",
-          label: "OEA",
-        },
-        {
-          value: "选项3",
-          label: "DTP",
-        },
-        {
-          value: "选项4",
-          label: "MKI",
-        },
-        {
-          value: "选项5",
-          label: "OSD",
-        },
-      ],
-      fevents: INITIAL_EVENTS,
-      fevents2: INITIAL_EVENTS2,
-      fevents3: INITIAL_EVENTS3,
-      originEvents: [],
-      originEvents2: [],
-      orderEvents: [],
-      events2: [],
+      equlist:[], // 从数据库读入所有设备信息
+      device_options: [], //将读入的设备提取需要的字段
+      originEvents: [], //从数据库读出来的数据在这存放
+      originEvents2: [], //同上
+      orderEvents: [], //将数据库中读出来的事件调整后的格式放到这个数组下,此数组存放是当前登录用户的所有预约记录
+      orderEvents2:[], //此数组存放的是不同设备的所有预约记录
       eventGuid: 0,
-      testEvents: [
-        {
-          end: "2023-10-18T11:00:00",
-          id: "1",
-          start: "2023-10-18T09:00:00",
-          title: "3使用2",
-        },
-        {
-          end: "2023-10-19T15:30:00",
-          id: "2",
-          start: "2023-10-19T13:30:00",
-          title: "3使用3",
-        },
-      ],
     };
   },
-  computed: {
-    //按钮文字切换的实现
-    buttonText1() {
-      return this.isShow1 ? "隐藏" : "显示";
-    },
-    buttonText2() {
-      return this.isShow2 ? "隐藏" : "显示";
-    },
-    buttonText3() {
-      return this.isShow3 ? "隐藏" : "显示";
-    },
-  },
   methods: {
-    //隐藏按钮的实现
-    hideClick1() {
-      console.log("hideClick1");
-      this.isShow1 = !this.isShow1;
+    //监听选择设备的情况
+    equSelectChange(value) {
+      // console.log(value);
+      this.loadEquOrder(value)
+
     },
-    hideClick2() {
-      console.log("hideClick2");
-      this.isShow2 = !this.isShow2;
+
+    //根据id获取设备信息
+    async loadEquInform(id) {
+      try {
+        const res = await getEquInform(id);
+        const equName = res.data.equipmentName.toString();
+        // console.log(equName);
+        return equName
+      } catch (error) {
+        console.error("Error loading data:", error);
+      }
     },
-    hideClick3() {
-      console.log("hideClick3");
-      this.isShow3 = !this.isShow3;
+
+    //根据id获取用户信息
+    async loadUserInform(id) {
+      try {
+        const res = await getUserInform(id);
+        const userName = res.data.username.toString();
+        // console.log(userName);
+        return userName
+      } catch (error) {
+        console.error("Error loading data:", error);
+      }
     },
-    handleSelectChange() {
-      console.log("该添加一个fullcalendar了");
+
+    //根据设备id获取该设备的预约信息
+    async loadEquOrder(id) {
+      try {
+        const res = await getequOrders(id);
+        this.originEvents2 = res.data;
+        console.log(this.originEvents2);
+        this.orderEvents2 = await Promise.all( this.originEvents2.map(async (item)=>{
+          const userName = await this.loadUserInform(item.userId)
+          return {
+            id: item.equipmentOrderId.toString(),
+            title: "已被" + userName + "预约",
+            start: formatDateToISOString(item.startTime).slice(0, -5),
+            end: formatDateToISOString(item.endTime).slice(0, -5)
+          };
+        }));
+        console.log(this.orderEvents2);
+      } catch (error) {
+        console.error("Error loading data:", error);
+      }
     },
-    createEventId() {
-      return String(this.eventGuid++);
-    },
-    //异步获取数据库中的预约数据
+
+    // 根据目前登录用户获取预约记录
     async loadOrderData() {
       try {
         const res = await getOrders();
         this.originEvents = res.data;
-        this.orderEvents = this.originEvents.map((item) => {
+        // console.log(this.originEvents);
+        this.orderEvents = await Promise.all( this.originEvents.map(async (item) => {
+          const equName = await this.loadEquInform(item.equipmentId)
+          const userName = await this.loadUserInform(item.userId)
           return {
             id: item.equipmentOrderId.toString(),
-            title: (item.userId + "使用" + item.equipmentId).toString(),
+            // title: (item.userId + "使用" + item.equipmentId).toString(),
+            title: userName + "使用" + equName,
             start: formatDateToISOString(item.startTime).slice(0, -5),
             end: formatDateToISOString(item.endTime).slice(0, -5),
           };
-        });
+        }));
         console.log(this.orderEvents);
       } catch (error) {
         console.error("Error loading data:", error);
@@ -226,17 +198,19 @@ export default {
     },
   },
   created() {
-    //获取设备列表，第一个日程表选中时需要，第三个日程表选择时需要
+    //获取设备列表，第一个日程表选中时需要，第二个日程表选择时需要
     getEquList().then((res) => {
       this.equlist = res.data;
+      // console.log(this.equlist);
+      this.device_options = this.equlist.map((item) => {
+        return {
+          value:item.equipmentId,
+          label:item.equipmentName
+        }
+      })
+      console.log(this.device_options);
     }),
-   
-      //为什么fullcalendar没有显示，this.events变量只在create函数中被赋值了，而出去后又是空了
     this.loadOrderData();
-  },
-
-  mounted() {
-    this.$forceUpdate()
   },
 };
 </script>
