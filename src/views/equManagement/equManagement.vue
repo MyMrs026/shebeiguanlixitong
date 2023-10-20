@@ -1,8 +1,19 @@
 <template>
 <div class="outer-container">
 <div class="bg-eq">
+
+  <div class="button-area">
+      <router-link to="/equp">
+        <el-button plain>设备管理</el-button>
+      </router-link>
+      <router-link to="/craft/equcraft">
+        <el-button plain>设备信息展示</el-button>
+      </router-link>
+    </div>
+
   <div class="equpM">
   <div class="equp-container">
+   
     <!-- 由五个部分组成，对应网页中五个带边框的div -->
     <!-- 第一部分：使用设备，通过搜索框对已有的设备进行检索，点击即可进行使用 -->
     <div class="centered-div" id="part1">
@@ -114,13 +125,11 @@
 <script>
 import equList from '../equList/equList'
 import equMaintain from '../equManagement/equMaintain.vue'
-import Equswitch from '../equManagement/equSwitch.vue'
-import { getEquList } from '../../network/equpment';
+import { getEquList } from '../../network/equpment'
 export default {
   components:{
     equList,
     equMaintain,
-    Equswitch
   },  
   data() {
     return {
@@ -202,6 +211,13 @@ export default {
   height: 100%;
   background-size: 100% 100%;
 }
+
+.button-area {
+  margin-top: 10px;
+  display: flex;
+  justify-content: space-evenly;
+}
+
 .equpM{
   height:100%;
   overflow-y: auto;

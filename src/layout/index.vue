@@ -4,7 +4,8 @@ import Navbar from '../components/common/tabbar/Navbar.vue';
 
 export default {
     components: {
-        Sidebar, Navbar
+        Sidebar, 
+        Navbar
     },
     computed: {
     // 当路由路径为登录或注册时不显示tabbar
