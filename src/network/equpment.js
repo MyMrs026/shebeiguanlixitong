@@ -45,7 +45,7 @@ export function updateDevice(deviceFunc,deviceName,deviceTypeId,labId,uuid){
 //根据设备id获取设备信息
 export function getEquInform(id){
  return request({
-  url:'/equipment/{id}',
+  url: `/equipment/${id}`,
   method: 'get',
  })
 }

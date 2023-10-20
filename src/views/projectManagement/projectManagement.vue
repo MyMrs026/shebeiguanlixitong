@@ -66,33 +66,21 @@ border-radius: 6px;">
                     </div>
                 </div>
                 <!-- 下半区域 -->
-                <div class="test">
-                    <MulTable :data="dataList" :items-per-page="pageSize"
-                        @selection-change="handleSelectionChange">
-                        <template v-slot:columns>
-                            <el-table-column label="日期" width="120">
-                                <template slot-scope="scope">{{ scope.row.date }}</template>
-                            </el-table-column>
-                            <el-table-column prop="name" label="姓名" width="120"></el-table-column>
-                            <!-- 其它自定义列 -->
-                        </template>
-                    </MulTable>
-                </div>
                 <hr style="border: 1px solid white; margin-left: 10px; margin-right: 10px" />
                 <div class="bottom_part">
-                    <!-- <div class="pro_font">
+                    <div class="pro_font">
                         <p>新建项目</p>
-                    </div> -->
-                    <!-- <form>
+                    </div>
+                    <form>
                         <tr>
                             <div style="width: 55%;display:fixed;margin:10px;top:0px;float:left">
-                                <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px"
+                                <el-form  ref="ruleForm" label-width="100px"
                                     class="demo-ruleForm">
                                     <el-form-item label="项目名称" prop="name" style="margin-top: 10px;">
-                                        <el-input v-model="ruleForm.name" style="width: 100%;"></el-input>
+                                        <el-input style="width: 100%;"></el-input>
                                     </el-form-item>
                                     <el-form-item label="项目类别" prop="category">
-                                        <el-select v-model="ruleForm.category" placeholder="请选择项目的类别" style="width: 100%;">
+                                        <el-select placeholder="请选择项目的类别" style="width: 100%;">
                                             <el-option label="Ⅰ类" value="Ⅰ类"></el-option>
                                             <el-option label="Ⅱ类" value="Ⅱ类"></el-option>
                                             <el-option label="Ⅲ类" value="Ⅲ类"></el-option>
@@ -100,11 +88,11 @@ border-radius: 6px;">
                                     </el-form-item>
 
                                     <el-form-item label="项目描述" prop="desc">
-                                        <el-input v-model="ruleForm.desc" style="width: 100%;"></el-input>
+                                        <el-input style="width: 100%;"></el-input>
                                     </el-form-item>
 
                                     <el-form-item label="实验设备" prop="equ_value">
-                                        <el-select v-model="ruleForm.equ_value" multiple placeholder="请选择实验所需的设备"
+                                        <el-select multiple placeholder="请选择实验所需的设备"
                                             style="width: 100%;">
                                             <el-option v-for="item in pro_equps" :key="item.deviceName"
                                                 :label="item.deviceName" :value="item.deviceName">
@@ -112,13 +100,13 @@ border-radius: 6px;">
                                         </el-select>
                                     </el-form-item>
                                     <el-form-item label="实验目的" prop="purpose">
-                                        <el-input v-model="ruleForm.purpose" style="width: 100%;"></el-input>
+                                        <el-input style="width: 100%;"></el-input>
                                     </el-form-item>
                                     <el-form-item label="成员" prop="member">
-                                        <el-input v-model="ruleForm.member" style="width: 100%;"></el-input>
+                                        <el-input style="width: 100%;"></el-input>
                                     </el-form-item>
                                     <el-form-item label="组长" prop="leader">
-                                        <el-input v-model="ruleForm.leader" style="width: 100%;"></el-input>
+                                        <el-input  style="width: 100%;"></el-input>
                                     </el-form-item>
                                     <el-form-item>
                                         <el-button type="primary" @click="submitForm('ruleForm')">立即创建</el-button>
@@ -133,7 +121,7 @@ border-radius: 6px;">
                             </div>
 
                         </tr>
-                    </form> -->
+                    </form>
                 </div>
             </div>
         </div>

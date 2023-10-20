@@ -15,7 +15,7 @@ export function getOrders() {
 //根据设备id获取该设备所有的预约信息
 export function getequOrders(id) {
   return request ({
-    url:'/equipment/order/list/{id}',
+    url:`/equipment/order/list/${id}`,
     methods:'get'
   })
 }
