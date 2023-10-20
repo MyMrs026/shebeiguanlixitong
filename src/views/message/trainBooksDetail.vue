@@ -1,4 +1,6 @@
 <template>
+  <div class="outer-container">
+    <div class="bg-BD">
   <div class="trainBooksDetail">
     <div class="trainBookTitle">
       <p>{{ trainBook.title }}</p>
@@ -14,6 +16,8 @@
     </div>
     <button>通过</button>
     <button>驳回</button>
+  </div>
+  </div>
   </div>
 </template>
 
@@ -47,6 +51,25 @@ export default {
 };
 </script>
 <style scoped>
+.outer-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* 100%视口高度，垂直居中 */
+  max-width: 1500px; /* 设置最大宽度 */
+  margin: 0 auto; /* 居中 */
+  padding-left: 220px;
+  /* padding: 20px; 左右下留白 */
+}
+.bg-BD{
+  display: flex;
+  flex-direction: column;
+  background-image: url("../../assets/img/qqq6.png");
+  background-repeat: no-repeat;
+  width: 100%;
+  height: 100%;
+  background-size: 100% 100%;
+}
 .noticeDetail {
   margin: 10px;
   border: 1px solid #000;
