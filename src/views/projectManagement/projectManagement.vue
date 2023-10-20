@@ -21,8 +21,8 @@
 border-radius: 6px;">
                             <!-- <el-table-column type="expand">
                                 <template slot-scope="props"> -->
-                                    <!-- 表格中数据的详细信息在这展示 -->
-                                    <!-- <el-form label-position="left" inline class="demo-table-expand">
+                            <!-- 表格中数据的详细信息在这展示 -->
+                            <!-- <el-form label-position="left" inline class="demo-table-expand">
                                         <el-form-item label="项目名称:">
                                             <span>{{ props.row.name }}</span>
                                         </el-form-item>
@@ -50,7 +50,7 @@ border-radius: 6px;">
                                     </el-form>
                                 </template>
                             </el-table-column> -->
-                            <el-table-column label="编号1" type="index">
+                            <el-table-column label="编号" type="index">
                             </el-table-column>
                             <el-table-column label="项目名称" prop="projectName">
                             </el-table-column>
@@ -66,11 +66,23 @@ border-radius: 6px;">
                     </div>
                 </div>
                 <!-- 下半区域 -->
+                <div class="test">
+                    <MulTable :data="dataList" :items-per-page="pageSize"
+                        @selection-change="handleSelectionChange">
+                        <template v-slot:columns>
+                            <el-table-column label="日期" width="120">
+                                <template slot-scope="scope">{{ scope.row.date }}</template>
+                            </el-table-column>
+                            <el-table-column prop="name" label="姓名" width="120"></el-table-column>
+                            <!-- 其它自定义列 -->
+                        </template>
+                    </MulTable>
+                </div>
                 <hr style="border: 1px solid white; margin-left: 10px; margin-right: 10px" />
                 <div class="bottom_part">
-                    <div class="pro_font">
+                    <!-- <div class="pro_font">
                         <p>新建项目</p>
-                    </div>
+                    </div> -->
                     <!-- <form>
                         <tr>
                             <div style="width: 55%;display:fixed;margin:10px;top:0px;float:left">
@@ -131,19 +143,65 @@ border-radius: 6px;">
 <script>
 import { getEquList } from '../../network/equpment'
 import { getProjectList, getProjectDetail, getProjectTypeList } from '../../network/project'
+import { formatDateToISOString } from '../../common/formatDateToISOString'
+import MulTable from '../../components/common/table/MulTable.vue'
 export default {
+    components: {
+        MulTable
+    },
     data() {
         return {
+            dataList: [{
+                date: '2016-05-03',
+                name: '王小虎',
+                address: '上海市普陀区金沙江路 1518 弄'
+            }, {
+                date: '2016-05-02',
+                name: '王小虎',
+                address: '上海市普陀区金沙江路 1518 弄'
+            }, {
+                date: '2016-05-04',
+                name: '王小虎',
+                address: '上海市普陀区金沙江路 1518 弄'
+            }, {
+                date: '2016-05-01',
+                name: '王小虎',
+                address: '上海市普陀区金沙江路 1518 弄'
+            }, {
+                date: '2016-05-08',
+                name: '王小虎',
+                address: '上海市普陀区金沙江路 1518 弄'
+            }, {
+                date: '2016-05-06',
+                name: '王小虎',
+                address: '上海市普陀区金沙江路 1518 弄'
+            }, {
+                date: '2016-05-07',
+                name: '王小虎',
+                address: '上海市普陀区金沙江路 1518 弄'
+            }],
             //项目列表
-            projectList: []
+            projectList: [],
+            //分页
+            curPage: 1,
+            pageSize: 2,
+            total: 0
         }
     },
     created() {
         getProjectList().then((res) => {
-            this.projectList = res.data
-        })
+            console.log(res.data);
+            const dataList = res.data.map(element => {
+                const createTime = new Date(element.createTime);
+                element.createTime = formatDateToISOString(createTime).slice(0, 10);
+                return element;
+            });
+            console.log(dataList);
+            this.projectList = dataList;
+        });
     },
     mounted() {
+
         //获取所有的设备信息
         getEquList().then(res => {
             this.pro_equps = res.data
@@ -158,6 +216,9 @@ export default {
         },
     },
     methods: {
+        handleSelectionChange(selection) {
+            console.log(selection);
+        },
         submitForm(formName) {
             this.$refs[formName].validate((valid) => {
                 if (valid) {
