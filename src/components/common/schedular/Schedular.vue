@@ -176,15 +176,9 @@ export default {
           center: "title",
           right: "timeGridWeek,timeGridDay",
         },
-        // height: auto,
-        // contentHeight:auto,
-        
+ 
         initialView: "timeGridDay", //以日程图的方式初始化fullcalendar
-        // rerenderDelay:500,
-        // validRange: {
-        //   start:new Date(),
-        //   end:new Date(new Date().setDate(new Date().getDate() + 10)),
-        // },
+
         hiddenDays:[0, 6],
         events: this.events, // 初始化事件
         editable: true, //事件可以编辑
@@ -211,6 +205,7 @@ export default {
       },
       currentEvents: [],
       device_options: [],
+      equlist:[],
       EventForm: {
         title: "",
         devicename:"",
