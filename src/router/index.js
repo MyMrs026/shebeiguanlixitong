@@ -10,9 +10,9 @@ const Equp = () => import("@/views/equManagement/equManagement");
 const Book = () => import("@/views/bookManagement/bookManagement");
 
 const Train = () => import("@/views/trainManagement/trainManagement");
-const TrainProject = () => import("../views/trainManagement/trainProject.vue");
-const TrainLog = () => import("../views/trainManagement/trainLog.vue");
-const TrainList = () => import("../views/trainManagement/traingList.vue");
+const TrainSecurity = () => import("@/views/trainManagement/TrainSecurity.vue")
+const TrainEquipment = () => import("@/views/trainManagement/TrainEquipment.vue")
+
 
 const System = () => import("../views/systemManagement/systemManagement");
 const Test = () => import("../views/testingTasks/testingTasks.vue");
@@ -47,15 +47,11 @@ const Message = () => import("../views/message/message");
 const MessageDetail = () => import("../views/message/messageDetail.vue");
 const TrainBooksDetail = () => import("../views/message/trainBooksDetail.vue");
 
-const MulTable = () => import("../components/common/table/MulTable.vue");
+
 //1.安装插件
 Vue.use(Router);
 //创建router
 const routes = [
-  {
-    path: "/table",
-    component: MulTable
-  },
   {
     path: "/",
     redirect: "/login" //路由重定向，就是默认跳到的路由
@@ -112,23 +108,18 @@ const routes = [
   {
     path: "/train",
     name: "Train",
-    redirect: "/train/project",
+    redirect: "/train/security",
     component: Train,
     children: [
       {
-        path: "/train/project",
-        name: "TrainProject",
-        component: TrainProject
+        path: "/train/security",
+        name: "TrainSecurity",
+        component: TrainSecurity
       },
       {
-        path: "/train/log",
-        name: "TrainLog",
-        component: TrainLog
-      },
-      {
-        path: "/train/list",
-        name: "TrainList",
-        component: TrainList
+        path: "/train/equipment",
+        name: "TrainEquipment",
+        component: TrainEquipment
       }
     ]
   },

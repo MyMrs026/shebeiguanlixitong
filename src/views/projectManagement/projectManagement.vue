@@ -7,49 +7,8 @@
                     <div class="pro_font">
                         <p>所有项目</p>
                     </div>
-                    <!-- 选择器，选择列表为项目的类别 -->
-                    <!-- <div class="pro_selector">
-                        <el-select v-model="value" placeholder="请选择" style="width: 150px;">
-                            <el-option v-for="item in pro_options" :key="item.value" :label="item.label"
-                                :value="item.value">
-                            </el-option>
-                        </el-select>
-                    </div> -->
-                    <!-- 根据选择的项目类别，以表格显示该类别下所有的项目信息 -->
-                    <div class="table_inform">
-                        <el-table :data="projectList" style="width: 100%;margin:30px;border: 1px solid rgb(255, 255, 255);
-border-radius: 6px;">
-                            <!-- <el-table-column type="expand">
-                                <template slot-scope="props"> -->
-                            <!-- 表格中数据的详细信息在这展示 -->
-                            <!-- <el-form label-position="left" inline class="demo-table-expand">
-                                        <el-form-item label="项目名称:">
-                                            <span>{{ props.row.name }}</span>
-                                        </el-form-item>
-                                        <el-form-item label="项目类别:">
-                                            <span>{{ props.row.category }}</span>
-                                        </el-form-item>
-                                        <el-form-item label="项目编号:">
-                                            <span>{{ props.row.id }}</span>
-                                        </el-form-item>
-                                        <el-form-item label="项目描述:">
-                                            <span>{{ props.row.desc }}</span>
-                                        </el-form-item>
-                                        <el-form-item label="项目目的:">
-                                            <span>{{ props.row.purpose }}</span>
-                                        </el-form-item>
-                                        <el-form-item label="使用设备:">
-                                            <span>{{ props.row.equp }}</span>
-                                        </el-form-item>
-                                        <el-form-item label="项目成员:">
-                                            <span>{{ props.row.member }}</span>
-                                        </el-form-item>
-                                        <el-form-item label="项目组长:">
-                                            <span>{{ props.row.leader }}</span>
-                                        </el-form-item>
-                                    </el-form>
-                                </template>
-                            </el-table-column> -->
+                    <MulTable :data="projectList" :items-per-page="pageSize" class="project-table" @selection-change="handleSelectionChange" row-key-field="projectId">
+                        <template v-slot:columns>
                             <el-table-column label="编号" type="index">
                             </el-table-column>
                             <el-table-column label="项目名称" prop="projectName">
@@ -62,8 +21,8 @@ border-radius: 6px;">
                             </el-table-column>
                             <el-table-column label="创建时间" prop="createTime">
                             </el-table-column>
-                        </el-table>
-                    </div>
+                        </template>
+                    </MulTable>
                 </div>
                 <!-- 下半区域 -->
                 <hr style="border: 1px solid white; margin-left: 10px; margin-right: 10px" />
@@ -74,8 +33,7 @@ border-radius: 6px;">
                     <form>
                         <tr>
                             <div style="width: 55%;display:fixed;margin:10px;top:0px;float:left">
-                                <el-form  ref="ruleForm" label-width="100px"
-                                    class="demo-ruleForm">
+                                <el-form ref="ruleForm" label-width="100px" class="demo-ruleForm">
                                     <el-form-item label="项目名称" prop="name" style="margin-top: 10px;">
                                         <el-input style="width: 100%;"></el-input>
                                     </el-form-item>
@@ -92,8 +50,7 @@ border-radius: 6px;">
                                     </el-form-item>
 
                                     <el-form-item label="实验设备" prop="equ_value">
-                                        <el-select multiple placeholder="请选择实验所需的设备"
-                                            style="width: 100%;">
+                                        <el-select multiple placeholder="请选择实验所需的设备" style="width: 100%;">
                                             <el-option v-for="item in pro_equps" :key="item.deviceName"
                                                 :label="item.deviceName" :value="item.deviceName">
                                             </el-option>
@@ -106,7 +63,7 @@ border-radius: 6px;">
                                         <el-input style="width: 100%;"></el-input>
                                     </el-form-item>
                                     <el-form-item label="组长" prop="leader">
-                                        <el-input  style="width: 100%;"></el-input>
+                                        <el-input style="width: 100%;"></el-input>
                                     </el-form-item>
                                     <el-form-item>
                                         <el-button type="primary" @click="submitForm('ruleForm')">立即创建</el-button>
@@ -139,57 +96,17 @@ export default {
     },
     data() {
         return {
-            dataList: [{
-                date: '2016-05-03',
-                name: '王小虎',
-                address: '上海市普陀区金沙江路 1518 弄'
-            }, {
-                date: '2016-05-02',
-                name: '王小虎',
-                address: '上海市普陀区金沙江路 1518 弄'
-            }, {
-                date: '2016-05-04',
-                name: '王小虎',
-                address: '上海市普陀区金沙江路 1518 弄'
-            }, {
-                date: '2016-05-01',
-                name: '王小虎',
-                address: '上海市普陀区金沙江路 1518 弄'
-            }, {
-                date: '2016-05-08',
-                name: '王小虎',
-                address: '上海市普陀区金沙江路 1518 弄'
-            }, {
-                date: '2016-05-06',
-                name: '王小虎',
-                address: '上海市普陀区金沙江路 1518 弄'
-            }, {
-                date: '2016-05-07',
-                name: '王小虎',
-                address: '上海市普陀区金沙江路 1518 弄'
-            }],
             //项目列表
             projectList: [],
-            //分页
-            curPage: 1,
-            pageSize: 2,
-            total: 0
+            pageSize: 2
         }
     },
     created() {
         getProjectList().then((res) => {
-            console.log(res.data);
-            const dataList = res.data.map(element => {
-                const createTime = new Date(element.createTime);
-                element.createTime = formatDateToISOString(createTime).slice(0, 10);
-                return element;
-            });
-            console.log(dataList);
-            this.projectList = dataList;
+            this.projectList = res.data;
         });
     },
     mounted() {
-
         //获取所有的设备信息
         getEquList().then(res => {
             this.pro_equps = res.data
@@ -261,6 +178,13 @@ export default {
 .project {
     height: 100%;
     overflow-y: auto;
+}
+
+.project-table {
+    width: 100%;
+    margin: 30px;
+    border: 1px solid rgb(255, 255, 255);
+    border-radius: 6px;
 }
 
 .demo-table-expand {
