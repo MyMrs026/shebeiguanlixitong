@@ -27,13 +27,14 @@
             >
             </el-date-picker>
           </el-form-item>
-          <el-form-item label="设备" label-width="120px" prop="device">
-            <el-select v-model="EventForm.devicename" placeholder="请选择设备">
+          <el-form-item label="设备" label-width="120px" prop="equid">
+            <el-select v-model="EventForm.equid" placeholder="请选择设备">
               <el-option
                 v-for="item in device_options"
                 :key="item.value"
                 :label="item.label"
-                :value="item.value">
+                :value="item.value"
+              >
               </el-option>
             </el-select>
           </el-form-item>
@@ -67,7 +68,7 @@
               <el-button type="primary" @click="submitClick('EventForm')"
                 >提交</el-button
               >
-              <el-button type="danger" @click="delClick()">删除</el-button>
+              <el-button type="danger" @click="delClick">删除</el-button>
             </div>
           </el-form-item>
         </el-form>
@@ -90,13 +91,14 @@
             </el-date-picker>
           </el-form-item>
 
-          <el-form-item label="设备" label-width="120px" prop="device">
-            <el-select v-model="EventForm.devicename" placeholder="请选择设备">
+          <el-form-item label="设备" label-width="120px" prop="equid">
+            <el-select v-model="EventForm2.equid" placeholder="请选择设备">
               <el-option
                 v-for="item in device_options"
                 :key="item.value"
                 :label="item.label"
-                :value="item.value">
+                :value="item.value"
+              >
               </el-option>
             </el-select>
           </el-form-item>
@@ -126,7 +128,7 @@
             >
             </el-time-select>
           </el-form-item>
-         
+
           <el-form-item>
             <div class="button-area">
               <el-button type="primary" @click="submitClick2('EventForm2')"
@@ -150,10 +152,10 @@ import FullCalendar, { formatDate } from "@fullcalendar/vue";
 import dayGridPlugin from "@fullcalendar/daygrid"; //日程图
 import timeGridPlugin from "@fullcalendar/timegrid"; //里面的时间显示
 import interactionPlugin from "@fullcalendar/interaction"; //日程图的一些交互事件，比如说拖拽选择时间
-import zhLocale from "@fullcalendar/core/locales/zh-cn"
-import { createEventId } from "../../../common/event-utils.js"; //导入日程图的一些事件
+import zhLocale from "@fullcalendar/core/locales/zh-cn";
 
 import { getEquList } from "../../../network/equpment";
+import { makeOrder, removeOrder } from "../../../network/book";
 
 export default {
   components: {
@@ -164,7 +166,7 @@ export default {
     events: {
       type: Array,
       required: true,
-    },
+    }
   },
 
   data() {
@@ -176,10 +178,10 @@ export default {
           center: "title",
           right: "timeGridWeek,timeGridDay",
         },
- 
+
         initialView: "timeGridDay", //以日程图的方式初始化fullcalendar
 
-        hiddenDays:[0, 6],
+        hiddenDays: [0, 6],
         events: this.events, // 初始化事件
         editable: true, //事件可以编辑
         eventStartEditable: false, //禁止使用拖动的方式修改事件的开始时间
@@ -189,9 +191,9 @@ export default {
         selectMirror: true,
         dayMaxEvents: true,
         weekends: true,
-        slotEventOverlap:false,// TimeGrid视图中的定时事件不能重叠
-        allDaySlot:false,//全天时间不会显示
-        nowIndicator:true,//显示当前时间提示
+        slotEventOverlap: false, // TimeGrid视图中的定时事件不能重叠
+        allDaySlot: false, //全天时间不会显示
+        nowIndicator: true, //显示当前时间提示
         select: this.handleDateSelect,
         eventClick: this.handleEventClick,
         eventsSet: this.handleEvents,
@@ -205,99 +207,142 @@ export default {
       },
       currentEvents: [],
       device_options: [],
-      equlist:[],
+      equlist: [],
       EventForm: {
-        title: "",
-        devicename:"",
         date: "",
         startTime: "",
         endTime: "",
-        user: "",
+        equid: null,
       },
       EventForm2: {
-        title: "",
-        date: "",
+        date:  this.getCurrentDate(),
         startTime: "",
         endTime: "",
-        user: "",
+        equid: null,
       },
 
+      startTimeStr:'',
+      endTimeStr:'',
+
+      formatEvent: {},
+
       pickerOptions: {
-        
         // 设置日期范围
         disabledDate(time) {
           const today = new Date();
-          const oneWeekLater = new Date(today);
-          oneWeekLater.setDate(today.getDate() + 7);
-          return time.getTime() < Date.now() || time.getTime() > oneWeekLater.getTime();
-        }
+          today.setHours(0, 0, 0, 0);
+          // 禁用过去的日期
+          if (time.getTime() < today.getTime()) {
+            return true;
+          }
+          // 禁用周末日期
+          const day = time.getDay(); // 获取日期对应的星期几，0 表示星期日，1 表示星期一，依此类推
+          return day === 0 || day === 6; // 返回 true 表示禁用周末日期
+        },
       },
 
       rules: {
         date: [{ required: true, message: "请选择日期", trigger: "blur" }],
-        title: [
-          { required: true, message: "请填写事件的标题", trigger: "blur" },
-        ],
         startTime: [
           { required: true, message: "请填写事件的开始事件", trigger: "blur" },
         ],
         endTime: [
           { required: true, message: "请填写事件的结束事件", trigger: "blur" },
         ],
-        user: [{ required: true, message: "请填写使用者", trigger: "blur" }],
+        equid: [{ required: true, message: "请选择设备", trigger: "change" }],
       },
       rules2: {
         date: [{ required: true, message: "请选择日期", trigger: "blur" }],
-        title: [
-          { required: true, message: "请填写事件的标题", trigger: "blur" },
-        ],
         startTime: [
           { required: true, message: "请填写事件的开始事件", trigger: "blur" },
         ],
         endTime: [
           { required: true, message: "请填写事件的结束事件", trigger: "blur" },
         ],
-        user: [{ required: true, message: "请填写使用者", trigger: "blur" }],
+        equid: [{ required: true, message: "请选择设备", trigger: "change" }],
       },
       dialogFormVisible: false,
       dialogFormVisible2: false,
       editEvent: {},
+      selectEventId: null,
     };
   },
 
   watch: {
     events(newValue) {
-        if (newValue) {
-            this.updateCalendarOptions();
-        }
-    }
+      if (newValue) {
+        this.updateCalendarOptions();
+      }
+    },
   },
   mounted() {
     this.updateCalendarOptions();
   },
 
   methods: {
+    //获取今天的日期
+    getCurrentDate(){
+      const now = new Date();
+      const year = now.getFullYear();
+      const month = (now.getMonth() + 1).toString().padStart(2, '0');
+      const day = now.getDate().toString().padStart(2, '0');
+      return `${year}-${month}-${day}`;
+    },
+
+    //提取选中的时间，精确的时分
+    extractedTime(time){
+      const hours = time.getHours().toString().padStart(2, "0");
+      const minutes = time.getMinutes().toString().padStart(2, "0");
+      return `${hours}:${minutes}`;
+    },
+
+    //其实是日期和具体时间的拼接罢了
+    formatDateTime(date, time) {
+      const eventDate = new Date(date);
+
+      // 解析时间
+      const [hours, minutes] = time.split(":");
+      eventDate.setHours(parseInt(hours));
+      eventDate.setMinutes(parseInt(minutes));
+
+      // 格式化日期时间
+      const inputDate = eventDate;
+
+      const year = inputDate.getFullYear();
+      const month = String(inputDate.getMonth() + 1).padStart(2, "0"); // 月份从0开始，需要加1
+      const day = String(inputDate.getDate()).padStart(2, "0");
+      const hour = String(inputDate.getHours()).padStart(2, "0");
+      const minute = String(inputDate.getMinutes()).padStart(2, "0");
+      const seconds = String(inputDate.getSeconds()).padStart(2, "0");
+
+      const formattedDate = `${year}-${month}-${day} ${hour}:${minute}:${seconds}`;
+
+      return formattedDate;
+    },
+    //监听日程表读入数据
     updateCalendarOptions() {
       this.calendarOptions = {
         // 合并父组件传递的 options 和 events
         ...this.calendarOptions,
-        events: this.events
+        events: this.events,
       };
 
       if (this.$refs.calendar) {
         this.$nextTick(() => {
-          this.$refs.calendar.$emit('optionsChanged');
+          this.$refs.calendar.$emit("optionsChanged");
         });
       }
     },
-    handleWeekendsToggle() {
-      this.calendarOptions.weekends = !this.calendarOptions.weekends; // update a property
-    },
 
+    // handleWeekendsToggle() {
+    //   this.calendarOptions.weekends = !this.calendarOptions.weekends; // update a property
+    // },
+
+    //拖拽选择事件触发
     handleDateSelect(selectInfo) {
       // 获取拖选区域的开始时间和结束时间
-      const start = selectInfo.startStr;
-      const end = selectInfo.endStr;
+      const start = new Date(selectInfo.startStr);
+      const end = new Date(selectInfo.endStr);
 
       // 检查拖选的时间范围是否与已有事件冲突
       const isConflict = this.events.some((event) => {
@@ -315,89 +360,172 @@ export default {
         this.dialogFormVisible2 = true;
       }
       this.$refs.calendar.getApi().unselect();
+
+      this.EventForm2.startTime = this.extractedTime(start);
+      this.EventForm2.endTime = this.extractedTime(end);
+      console.log("拖选事件的开始时间:"+ this.EventForm2.startTime+",结束时间:"+this.EventForm2.endTime);
+
     },
 
+    //点击事件时触发的函数,直接打开一个对话框
     handleEventClick(clickInfo) {
-      //删除某个事件
-      // if (confirm(`你确定要删除这个事件吗？ '${clickInfo.event.title}'`)) {
-      //   clickInfo.event.remove()
-      // }
-      this.openEditModal(clickInfo.event);
+      const clickEvents = () => {
+        this.openEditModal(clickInfo.event);
+        this.selectEventId = clickInfo.event.id;
+        console.log(this.selectEventId);
+      };
+      this.$emit("click-events", clickEvents);
     },
 
+    //打开对话框
     openEditModal(event) {
-      // console.log(event.title,event.start,event.end);
       this.dialogFormVisible = true;
-      console.log(typeof event);
       this.editEvent = event;
     },
 
+    //关闭对话框
     closeDialog() {
       this.dialogFormVisible = false;
       this.dialogFormVisible2 = false;
     },
 
-    submitClick(formName) {
-      //编辑事件信息的提交按钮
-      this.$refs[formName].validate((valid) => {
-        if (valid) {
-          console.log("已提交申请");
-          location.reload();
-        } else {
-          alert("请填写完整");
-        }
-      });
-    },
-
-    delClick() {
-      //编辑信息中的删除事件
-      if (confirm(`你确定要删除这个事件吗？ '${this.editEvent.title}'`)) {
-        this.editEvent.remove();
+    //这个地方异步来执行是为了实现编辑事件,先删除原事件,然后进行预约
+    async makeEditOrder(endTime, equipmentId, startTime) {
+      try {
+        const res = await makeOrder(endTime, equipmentId, startTime);
+        console.log(res);
+      } catch (error) {
+        console.error(error);
       }
-      console.log("删除成功");
-      this.dialogFormVisible = false;
     },
 
-    submitClick2(formName) {
-      //新建事件中的申请提交
+    //编辑事件弹窗中的提交按钮的实现
+    submitClick(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          console.log("已提交申请");
+          const editEvents = () => {
+            console.log(this.EventForm);
+            this.formatEvent = {
+              equipmentId: this.EventForm.equid,
+              startTime: this.formatDateTime(
+                this.EventForm.date,
+                this.EventForm.startTime
+              ),
+              endTime: this.formatDateTime(
+                this.EventForm.date,
+                this.EventForm.endTime
+              ),
+            };
+            console.log(this.formatEvent);
+            removeOrder(this.selectEventId).then((res) => {
+              console.log(res);
+            });
+            this.makeEditOrder(
+              this.formatEvent.endTime,
+              this.formatEvent.equipmentId,
+              this.formatEvent.startTime
+            );
+          };
+          this.$emit("edit-orders", editEvents);
+          this.dialogFormVisible = false;
           location.reload();
+          this.$message({
+            message: "修改成功！",
+            type: "success",
+          });
         } else {
           alert("请填写完整");
         }
       });
     },
 
+    //编辑事件中删除按钮的实现
+    delClick() {
+      if (confirm(`你确定要删除这个事件吗？ '${this.editEvent.title}'`)) {
+        //撤销预约逻辑
+        removeOrder(this.selectEventId).then((res) => {
+          console.log(res);
+        });
+      }
+      this.dialogFormVisible = false;
+      location.reload();
+      this.$message({
+        message: "删除成功",
+        type: "success",
+      });
+    },
+
+    //新建事件中的申请提交
+    submitClick2(formName) {
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          const creatEvents = () => {
+            console.log(this.EventForm2);
+
+            this.formatEvent = {
+              equipmentId: this.EventForm2.equid,
+              startTime: this.formatDateTime(
+                this.EventForm2.date,
+                this.EventForm2.startTime
+              ),
+              endTime: this.formatDateTime(
+                this.EventForm2.date,
+                this.EventForm2.endTime
+              ),
+            };
+
+            console.log(this.formatEvent);
+            makeOrder(
+              this.formatEvent.endTime,
+              this.formatEvent.equipmentId,
+              this.formatEvent.startTime
+            )
+              .then((res) => {
+                console.log(res);
+              })
+              .catch((error) => {
+                console.error(error);
+              });
+          };
+          this.$emit("make-orders", creatEvents);
+        } else {
+          alert("请填写完整");
+        }
+      });
+      this.dialogFormVisible2 = false;
+      location.reload();
+      this.$message({
+        message: "预约成功！",
+        type: "success",
+      });
+    },
+
+    //弹窗中的取消按钮实现
     cancelClick() {
-      //新建事件中的取消
       this.dialogFormVisible2 = false;
       console.log("取消申请");
     },
 
+    //设置事件
     handleEvents(events) {
       this.currentEvents = events;
     },
-    handleEventDrop() {
-      alert("不准拖！");
-    },
   },
   created() {
-    // calendar.render();
-    //获取设备列表，第一个日程表选中时需要，第二个日程表选择时需要
+    //获取设备列表
     getEquList().then((res) => {
       this.equlist = res.data;
       // console.log(this.equlist);
       this.device_options = this.equlist.map((item) => {
         return {
-          value:item.equipmentId,
-          label:item.equipmentName
-        }
-      })
-      console.log(this.device_options);
-    })
-  }
+          value: item.equipmentId,
+          label: item.equipmentName,
+        };
+      });
+      // console.log(this.device_options);
+      // this.EventForm2.equid = this.device_options[0].value;
+    });
+  },
 };
 </script>
 

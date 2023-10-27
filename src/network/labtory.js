@@ -10,15 +10,33 @@ export function getLabList() {
   })
 }
 
-export function addLab( labName,layout,linkman,tel ) {
+//添加单个实验室
+export function addLab( labAddress,labLayoutUrl,labLinkman,labName,labTel ) {
   return request({
-    url:'/system/addLab',
+    url:'/lab/add',
     method:'post',
     data:{
+      labAddress:labAddress,
+      labLayoutUrl:labLayoutUrl,
+      labLinkman:labLinkman,
       labName:labName,
-      layout:layout,
-      linkman:linkman,
-      tel:tel
+      labTel:labTel
     }
+  })
+}
+
+//删除单个实验室
+export function delLab(id) {
+  return request({
+    url:`/lab/remove/${id}`,
+    method:'delete'
+  })
+}
+
+//更新单个实验室
+export function updateLab() {
+  return request({
+    url:'/lab/update',
+    method:'put'
   })
 }
