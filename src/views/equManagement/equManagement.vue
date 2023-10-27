@@ -109,13 +109,13 @@
       </div>
     </div>
     <!-- 第四部分：设备列表 -->
-    <div class="centered-div" id="part4">
+    <!-- <div class="centered-div" id="part4">
       <equList></equList>
-    </div>
+    </div> -->
     <!-- 第五部分：设备维修模块 -->
-    <div class="centered-div" id="part5">
+    <!-- <div class="centered-div" id="part5">
       <equMaintain></equMaintain>
-    </div>
+    </div> -->
   </div>
   </div>
   </div>
