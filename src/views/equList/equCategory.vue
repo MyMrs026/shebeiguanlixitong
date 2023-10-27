@@ -33,7 +33,7 @@
           </el-table-column>
         </el-table>
       </div>
-      <div
+      <!-- <div
         class="equAdd"
         v-if="this.$store.state.cu_role === 'admin'"
       >
@@ -113,13 +113,13 @@
             >更新</el-button>
           </el-form-item>
         </el-form>
-      </div>
-      <div style="width: 40%; height: 450px; float: left; margin-top: 10px">
+      </div> -->
+      <!-- <div style="width: 40%; height: 450px; float: left; margin-top: 10px">
         <img
           src="../../assets/img/椰子树.png"
           style="width: 400px; height: 400px; margin-top: 35px"
         />
-      </div>
+      </div> -->
       <div class="clear"></div>
     </div>
   </div>
@@ -210,7 +210,6 @@ export default {
   height: 100vh; /* 100%视口高度，垂直居中 */
   max-width: 1500px; /* 设置最大宽度 */
   margin: 0 auto; /* 居中 */
-  padding-left: 220px;
   /* padding: 20px; 左右下留白 */
 }
 
@@ -220,8 +219,7 @@ export default {
   background-repeat: no-repeat;
   background-image: url("../../assets/img/qqq6.png");
   width: 100%;
-  height: 100%;
-  background-size: cover; 
+  background-size: 100% 100%; 
 }
 .equList {
   margin: 10px;
