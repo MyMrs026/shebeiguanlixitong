@@ -39,7 +39,7 @@ export default {
             })
             this.dialogVisible = false
             this.toggleSelection()
-        
+
         },
         toggleSelection() {
             this.$refs.mulTable.clearSelection();
@@ -48,6 +48,12 @@ export default {
     created() {
         getTrainList().then(res => {
             this.dataList = res.data.filter(item => item.trainingType !== '设备培训')
+                .map(item => {
+                    return {
+                        ...item,
+                        trainingPrice: item.trainingPrice.toFixed(2)
+                    }
+                })
         })
     }
 }
@@ -56,7 +62,8 @@ export default {
 
 <template>
     <div class="train-security">
-        <MulTable ref="mulTable" :data="dataList" :items-per-page="2" row-key-field="trainingId" @selection-change="handleSelectionChange">
+        <MulTable ref="mulTable" :data="dataList" :items-per-page="2" row-key-field="trainingId"
+            @selection-change="handleSelectionChange">
             <template v-slot:columns>
                 <el-table-column label="编号" type="index">
                 </el-table-column>
@@ -64,7 +71,7 @@ export default {
                 </el-table-column>
                 <el-table-column label="培训类型" prop="trainingType">
                 </el-table-column>
-                <el-table-column label="单价" prop="trainingPrice">
+                <el-table-column label="单价(元)" prop="trainingPrice">
                 </el-table-column>
             </template>
         </MulTable>
@@ -86,6 +93,7 @@ export default {
     text-align: center;
     font-size: large;
 }
+
 .dialog-footer {
     display: flex;
     justify-content: space-around;

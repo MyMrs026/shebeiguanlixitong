@@ -7,7 +7,8 @@
                     <div class="pro_font">
                         <p>所有项目</p>
                     </div>
-                    <MulTable :data="projectList" :items-per-page="pageSize" class="project-table" @selection-change="handleSelectionChange" row-key-field="projectId">
+                    <MulTable :data="projectList" :items-per-page="pageSize" class="project-table"
+                        @selection-change="handleSelectionChange" row-key-field="projectId">
                         <template v-slot:columns>
                             <el-table-column label="编号" type="index">
                             </el-table-column>
