@@ -45,16 +45,16 @@ export default {
 };
 </script>
 <template>
-<!-- 导航栏部分 -->
-<div class="tabbar">
-      <el-row>
-        <el-col :span="5">
-          <el-col class="institution">
-            <img
-              src="../../../assets/img/weina.png"
-              style="width: 200px; height: 50px; float: left"
-            />
-            <!-- <div class="lab" style="float: left; font-size: 20px">
+  <!-- 导航栏部分 -->
+  <div class="tabbar">
+    <el-row>
+      <el-col :span="5">
+        <el-col class="institution">
+          <img
+            src="../../../assets/img/weinalogo.png"
+            style="width: 200px; height: 50px; float: left"
+          />
+          <!-- <div class="lab" style="float: left; font-size: 20px">
               浙江大学嘉兴研究院
             </div> -->
         </el-col>
@@ -117,26 +117,12 @@ export default {
               <el-button class="custom-button" type="info" round size="small"
                 >测试任务</el-button
               >
-            </router-link>
-          </el-col>
+            </router-link> -->
         </el-col>
-        <el-col :span="3" class="tab-icon" style="display:flex;flex-direction:row;">
-        <el-col :span="1" class="icon-question">
-          <div class="help-box">
-            <router-link to="/help">
-              <el-tooltip
-                class="item"
-                effect="light"
-                content="帮助"
-                placement="bottom"
-              >
-                <i class="el-icon-question"></i>
-              </el-tooltip>
-            </router-link>
-          </div>
-        </el-col>
-        <el-col :span="1" class="icon-message"
-          ><router-link to="/message">
+      </el-col>
+      <el-col :span="1">
+        <div class="help-box">
+          <router-link to="/help">
 
             <el-tooltip
               class="item"
@@ -149,7 +135,8 @@ export default {
           </router-link>
         </div>
       </el-col>
-        <el-col :span="1" class="icon-back">
+      <el-col :span="1" class="mail"
+        ><router-link to="/message">
           <el-tooltip
             class="item"
             effect="light"
