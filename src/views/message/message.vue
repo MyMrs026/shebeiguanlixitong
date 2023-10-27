@@ -198,16 +198,16 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 0 auto; /* 居中 */
-}
-.bg-message{
-  display: flex;
+  margin: 0 auto; 
   flex-direction: column;
   background-image: url("../../assets/img/qqq6.png");
   background-repeat: no-repeat;
   width: 100%;
-  height: 100%;
   background-size: 100% 100%;
+
+}
+.bg-message{
+ 
 }
 a {
   color: #262626;
