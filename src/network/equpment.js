@@ -12,6 +12,13 @@ export function getEquList() {
   })
 }
 
+export function getEquById(id) {
+    return request({
+      url:'/equipment/' + id,
+      method:'get'
+    })
+  }
+
 //添加设备
 export function addEqument(deviceFunc,deviceName,deviceTypeId,labId,uuid) {
   return request({
