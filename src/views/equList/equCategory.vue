@@ -33,7 +33,7 @@
           </el-table-column>
         </el-table>
       </div>
-      <div
+      <!-- <div
         class="equAdd"
         v-if="this.$store.state.cu_role === 'admin'"
       >
@@ -113,7 +113,7 @@
             >更新</el-button>
           </el-form-item>
         </el-form>
-      </div>
+      </div> -->
       <!-- <div style="width: 40%; height: 450px; float: left; margin-top: 10px">
         <img
           src="../../assets/img/椰子树.png"

@@ -103,7 +103,7 @@
     <!-- 设备工艺设置，只在登录用户为管理员时显示 -->
     <div style="width: 100%">
       <div class="p-device">
-        <el-upload
+        <!-- <el-upload
           class="avatar-uploader"
           :show-file-list="false"
           :action=apiUrl
@@ -119,10 +119,10 @@
             v-else
             class="el-icon-plus avatar-uploader-icon"
           ></i>
-        </el-upload>
+        </el-upload> -->
         <!-- <img src="../../assets/img/p-device.png" /> -->
       </div>
-      <div
+      <!-- <div
         class="form-equcraft-use"
         v-if="this.$store.state.cu_role === 'admin'"
       >
@@ -197,7 +197,7 @@
             <el-button @click="resetForm('equCraftForm')">重置</el-button>
           </el-form-item>
         </el-form>
-      </div>
+      </div> -->
     </div>
   </div>
 </template>
