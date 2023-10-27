@@ -93,6 +93,7 @@ export function getEquList() {
     method:'get'
   })
 }
+
 //16.分页
 export function getPage() {
   return request({
