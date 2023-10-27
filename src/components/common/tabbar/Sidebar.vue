@@ -56,7 +56,7 @@ export default {
                 <el-menu-item @click="closeDrawer" index="1-2" class="secondly">公告信息</el-menu-item>
             </router-link>
             <router-link to="/labinform">
-                <el-menu-item @click="closeDrawer" index="1-3" class="secondly">联系信息</el-menu-item>
+                <el-menu-item @click="closeDrawer" index="1-3" class="secondly">实验室信息</el-menu-item>
             </router-link>
         </el-submenu>
         <!-- 设备 -->

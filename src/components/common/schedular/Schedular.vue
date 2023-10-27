@@ -68,7 +68,7 @@
               <el-button type="primary" @click="submitClick('EventForm')"
                 >提交</el-button
               >
-              <el-button type="danger" @click="delClick()">删除</el-button>
+              <el-button type="danger" @click="delClick">删除</el-button>
             </div>
           </el-form-item>
         </el-form>
@@ -155,7 +155,7 @@ import interactionPlugin from "@fullcalendar/interaction"; //日程图的一些�
 import zhLocale from "@fullcalendar/core/locales/zh-cn";
 
 import { getEquList } from "../../../network/equpment";
-import { makeOrder } from "../../../network/book"
+import { makeOrder, removeOrder } from "../../../network/book";
 
 export default {
   components: {
@@ -166,7 +166,7 @@ export default {
     events: {
       type: Array,
       required: true,
-    },
+    }
   },
 
   data() {
@@ -215,11 +215,14 @@ export default {
         equid: null,
       },
       EventForm2: {
-        date: "",
+        date:  this.getCurrentDate(),
         startTime: "",
         endTime: "",
         equid: null,
       },
+
+      startTimeStr:'',
+      endTimeStr:'',
 
       formatEvent: {},
 
@@ -227,12 +230,14 @@ export default {
         // 设置日期范围
         disabledDate(time) {
           const today = new Date();
-          const oneWeekLater = new Date(today);
-          oneWeekLater.setDate(today.getDate() + 7);
-          return (
-            time.getTime() < Date.now() ||
-            time.getTime() > oneWeekLater.getTime()
-          );
+          today.setHours(0, 0, 0, 0);
+          // 禁用过去的日期
+          if (time.getTime() < today.getTime()) {
+            return true;
+          }
+          // 禁用周末日期
+          const day = time.getDay(); // 获取日期对应的星期几，0 表示星期日，1 表示星期一，依此类推
+          return day === 0 || day === 6; // 返回 true 表示禁用周末日期
         },
       },
 
@@ -259,6 +264,7 @@ export default {
       dialogFormVisible: false,
       dialogFormVisible2: false,
       editEvent: {},
+      selectEventId: null,
     };
   },
 
@@ -274,14 +280,24 @@ export default {
   },
 
   methods: {
+    //获取今天的日期
+    getCurrentDate(){
+      const now = new Date();
+      const year = now.getFullYear();
+      const month = (now.getMonth() + 1).toString().padStart(2, '0');
+      const day = now.getDate().toString().padStart(2, '0');
+      return `${year}-${month}-${day}`;
+    },
+
+    //提取选中的时间，精确的时分
+    extractedTime(time){
+      const hours = time.getHours().toString().padStart(2, "0");
+      const minutes = time.getMinutes().toString().padStart(2, "0");
+      return `${hours}:${minutes}`;
+    },
+
     //其实是日期和具体时间的拼接罢了
     formatDateTime(date, time) {
-      // const formattedDate = new Date(date);
-      // formattedDate.setHours(time.split(':')[0]);
-      // formattedDate.setMinutes(time.split(':')[1]);
-      // formattedDate.setSeconds(0);
-      // return formattedDate.toISOString().slice(0, 19).replace('T', ' ');
-      // 解析日期
       const eventDate = new Date(date);
 
       // 解析时间
@@ -295,7 +311,7 @@ export default {
       const year = inputDate.getFullYear();
       const month = String(inputDate.getMonth() + 1).padStart(2, "0"); // 月份从0开始，需要加1
       const day = String(inputDate.getDate()).padStart(2, "0");
-      const hour= String(inputDate.getHours()).padStart(2, "0");
+      const hour = String(inputDate.getHours()).padStart(2, "0");
       const minute = String(inputDate.getMinutes()).padStart(2, "0");
       const seconds = String(inputDate.getSeconds()).padStart(2, "0");
 
@@ -303,7 +319,7 @@ export default {
 
       return formattedDate;
     },
-
+    //监听日程表读入数据
     updateCalendarOptions() {
       this.calendarOptions = {
         // 合并父组件传递的 options 和 events
@@ -317,14 +333,16 @@ export default {
         });
       }
     },
-    handleWeekendsToggle() {
-      this.calendarOptions.weekends = !this.calendarOptions.weekends; // update a property
-    },
 
+    // handleWeekendsToggle() {
+    //   this.calendarOptions.weekends = !this.calendarOptions.weekends; // update a property
+    // },
+
+    //拖拽选择事件触发
     handleDateSelect(selectInfo) {
       // 获取拖选区域的开始时间和结束时间
-      const start = selectInfo.startStr;
-      const end = selectInfo.endStr;
+      const start = new Date(selectInfo.startStr);
+      const end = new Date(selectInfo.endStr);
 
       // 检查拖选的时间范围是否与已有事件冲突
       const isConflict = this.events.some((event) => {
@@ -342,54 +360,106 @@ export default {
         this.dialogFormVisible2 = true;
       }
       this.$refs.calendar.getApi().unselect();
+
+      this.EventForm2.startTime = this.extractedTime(start);
+      this.EventForm2.endTime = this.extractedTime(end);
+      console.log("拖选事件的开始时间:"+ this.EventForm2.startTime+",结束时间:"+this.EventForm2.endTime);
+
     },
 
+    //点击事件时触发的函数,直接打开一个对话框
     handleEventClick(clickInfo) {
-      //删除某个事件
-      // if (confirm(`你确定要删除这个事件吗？ '${clickInfo.event.title}'`)) {
-      //   clickInfo.event.remove()
-      // }
-      this.openEditModal(clickInfo.event);
+      const clickEvents = () => {
+        this.openEditModal(clickInfo.event);
+        this.selectEventId = clickInfo.event.id;
+        console.log(this.selectEventId);
+      };
+      this.$emit("click-events", clickEvents);
     },
 
+    //打开对话框
     openEditModal(event) {
-      // console.log(event.title,event.start,event.end);
       this.dialogFormVisible = true;
-      console.log(typeof event);
       this.editEvent = event;
     },
 
+    //关闭对话框
     closeDialog() {
       this.dialogFormVisible = false;
       this.dialogFormVisible2 = false;
     },
 
+    //这个地方异步来执行是为了实现编辑事件,先删除原事件,然后进行预约
+    async makeEditOrder(endTime, equipmentId, startTime) {
+      try {
+        const res = await makeOrder(endTime, equipmentId, startTime);
+        console.log(res);
+      } catch (error) {
+        console.error(error);
+      }
+    },
+
+    //编辑事件弹窗中的提交按钮的实现
     submitClick(formName) {
-      //编辑事件信息的提交按钮
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          console.log("已提交申请");
-          // location.reload();
+          const editEvents = () => {
+            console.log(this.EventForm);
+            this.formatEvent = {
+              equipmentId: this.EventForm.equid,
+              startTime: this.formatDateTime(
+                this.EventForm.date,
+                this.EventForm.startTime
+              ),
+              endTime: this.formatDateTime(
+                this.EventForm.date,
+                this.EventForm.endTime
+              ),
+            };
+            console.log(this.formatEvent);
+            removeOrder(this.selectEventId).then((res) => {
+              console.log(res);
+            });
+            this.makeEditOrder(
+              this.formatEvent.endTime,
+              this.formatEvent.equipmentId,
+              this.formatEvent.startTime
+            );
+          };
+          this.$emit("edit-orders", editEvents);
+          this.dialogFormVisible = false;
+          location.reload();
+          this.$message({
+            message: "修改成功！",
+            type: "success",
+          });
         } else {
           alert("请填写完整");
         }
       });
     },
 
+    //编辑事件中删除按钮的实现
     delClick() {
-      //编辑信息中的删除事件
       if (confirm(`你确定要删除这个事件吗？ '${this.editEvent.title}'`)) {
-        this.editEvent.remove();
+        //撤销预约逻辑
+        removeOrder(this.selectEventId).then((res) => {
+          console.log(res);
+        });
       }
-      console.log("删除成功");
       this.dialogFormVisible = false;
+      location.reload();
+      this.$message({
+        message: "删除成功",
+        type: "success",
+      });
     },
 
+    //新建事件中的申请提交
     submitClick2(formName) {
-      //新建事件中的申请提交
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          const print = () => {
+          const creatEvents = () => {
             console.log(this.EventForm2);
 
             this.formatEvent = {
@@ -405,36 +475,44 @@ export default {
             };
 
             console.log(this.formatEvent);
-            makeOrder(this.formatEvent.endTime,this.formatEvent.equipmentId,this.formatEvent.startTime).then(res => {
-              console.log(res);
-            }).catch( error => {
-              console.error(error);
-            })
+            makeOrder(
+              this.formatEvent.endTime,
+              this.formatEvent.equipmentId,
+              this.formatEvent.startTime
+            )
+              .then((res) => {
+                console.log(res);
+              })
+              .catch((error) => {
+                console.error(error);
+              });
           };
-          this.$emit("make-orders", print);
-          // location.reload();
+          this.$emit("make-orders", creatEvents);
         } else {
           alert("请填写完整");
         }
       });
+      this.dialogFormVisible2 = false;
+      location.reload();
+      this.$message({
+        message: "预约成功！",
+        type: "success",
+      });
     },
 
+    //弹窗中的取消按钮实现
     cancelClick() {
-      //新建事件中的取消
       this.dialogFormVisible2 = false;
       console.log("取消申请");
     },
 
+    //设置事件
     handleEvents(events) {
       this.currentEvents = events;
     },
-    handleEventDrop() {
-      alert("不准拖！");
-    },
   },
   created() {
-    // calendar.render();
-    //获取设备列表，第一个日程表选中时需要，第二个日程表选择时需要
+    //获取设备列表
     getEquList().then((res) => {
       this.equlist = res.data;
       // console.log(this.equlist);
@@ -444,7 +522,8 @@ export default {
           label: item.equipmentName,
         };
       });
-      console.log(this.device_options);
+      // console.log(this.device_options);
+      // this.EventForm2.equid = this.device_options[0].value;
     });
   },
 };

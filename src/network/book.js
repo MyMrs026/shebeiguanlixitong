@@ -8,7 +8,7 @@ import { request } from "./request";
 export function getOrders() {
   return request ({
     url:'/equipment/order/myOrders',
-    methods:'get'
+    method:'get'
   })
 }
 
@@ -16,7 +16,7 @@ export function getOrders() {
 export function getequOrders(id) {
   return request ({
     url:`/equipment/order/list/${id}`,
-    methods:'get'
+    method:'get'
   })
 }
 
@@ -24,11 +24,19 @@ export function getequOrders(id) {
 export function makeOrder(endTime,equipmentId,startTime){
   return request ({
     url:'/equipment/order',
-    methods:'post',
+    method:'post',
     data: {
       endTime:endTime,
       equipmentId:equipmentId,
       startTime:startTime
     }
+  })
+}
+
+//撤销设备预约
+export function removeOrder(id) {
+  return request({
+    url: `/equipment/order/remove/${id}`,
+    method:'delete'
   })
 }
