@@ -10,7 +10,7 @@ export function request(config){
   const token = localStorage.getItem('token')
 
   const instance = axios.create({
-    baseURL: 'http://172.16.17.83:8080/api', //接口的地址，如果更改了接口地址只改这里就行
+    baseURL: 'http://47.98.160.222:8080/api', //接口的地址，如果更改了接口地址只改这里就行
     headers: {
       'Authorization':`${token}`
     },
