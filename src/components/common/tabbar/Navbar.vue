@@ -45,16 +45,16 @@ export default {
 };
 </script>
 <template>
-  <!-- 导航栏部分 -->
-  <div class="tabbar">
-    <el-row>
-      <el-col :span="5">
-        <el-col class="institution">
-          <img
-            src="../../../assets/img/weinalogo.png"
-            style="width: 200px; height: 50px; float: left"
-          />
-          <!-- <div class="lab" style="float: left; font-size: 20px">
+<!-- 导航栏部分 -->
+<div class="tabbar">
+      <el-row>
+        <el-col :span="5">
+          <el-col class="institution">
+            <img
+              src="../../../assets/img/weina.png"
+              style="width: 200px; height: 50px; float: left"
+            />
+            <!-- <div class="lab" style="float: left; font-size: 20px">
               浙江大学嘉兴研究院
             </div> -->
         </el-col>
@@ -118,11 +118,25 @@ export default {
                 >测试任务</el-button
               >
             </router-link> -->
+          </el-col>
         </el-col>
-      </el-col>
-      <el-col :span="1">
-        <div class="help-box">
-          <router-link to="/help">
+        <el-col :span="3" class="tab-icon" style="display:flex;flex-direction:row;">
+        <el-col :span="1" class="icon-question">
+          <div class="help-box">
+            <router-link to="/help">
+              <el-tooltip
+                class="item"
+                effect="light"
+                content="帮助"
+                placement="bottom"
+              >
+                <i class="el-icon-question"></i>
+              </el-tooltip>
+            </router-link>
+          </div>
+        </el-col>
+        <el-col :span="1" class="icon-message"
+          ><router-link to="/message">
             <el-tooltip
               class="item"
               effect="light"
@@ -134,9 +148,7 @@ export default {
           </router-link>
         </div>
       </el-col>
-
-      <el-col :span="1" class="mail"
-        ><router-link to="/message">
+        <el-col :span="1" class="icon-back">
           <el-tooltip
             class="item"
             effect="light"
@@ -151,6 +163,7 @@ export default {
               ></i>
             </el-badge>
           </el-tooltip>
+
         </router-link>
       </el-col>
       <el-col :span="1">
@@ -170,6 +183,12 @@ export default {
       </el-col>
     </el-row>
   </div>
+
+        </el-col>
+        </el-col>
+      </el-row>
+    </div>
+
 </template>
 <style scoped>
 .tabbar {
@@ -200,95 +219,57 @@ div /deep/ .el-badge__content.is-fixed {
   color: white;
 }
 
-/* 搜索输入栏 */
-.search-box {
-  /* background-color: rgb(151, 184, 216,0.3); */
-  border: none;
-  border-radius: 5px;
-  border-bottom-width: 1px;
-  border-bottom-color: rgb(255, 255, 255);
-  border-bottom-style: solid;
-  margin-top: 17px;
-  margin-right: 20px;
-  float: right;
-  width: 180px;
-  height: 27px;
-  opacity: 0.4;
-  /* color: white; */
-}
-
-.el-icon-question {
+/* 帮助icon的盒子 */
+.icon-question {
   float: right;
   display: flex;
   font-size: 35px;
-  color: white;
+ 
   justify-content: center;
   align-items: center;
-  margin-top: 15px;
-  margin-left: 15px;
-  margin-right: 15px;
+  margin-top: 5px;
+  margin-left: 5px;
+  margin-right: 5px;
 }
-
-/* 搜索icon */
-.el-icon-search {
+.el-icon-question{
+   color: white;
+}
+/* 邮件icon的盒子 */
+.icon-message {
   float: right;
   display: flex;
   font-size: 35px;
-  color: white;
+  
   justify-content: center;
   align-items: center;
-  margin-top: 15px;
-  margin-left: 15px;
-  margin-right: 15px;
+  margin-top: 5px;
+  margin-left: 5px;
+  margin-right: 5px;
 }
-
-.el-icon-message {
+.el-icon-message{
+  color: white;
+}
+div /deep/ .el-badge__content.is-fixed{
+  position:absolute;
+  top:15px;
+  
+}
+/* 退出icon */
+.icon-back {
   float: right;
   display: flex;
   font-size: 35px;
-  color: white;
   justify-content: center;
   align-items: center;
-  margin-top: 15px;
-  margin-left: 15px;
-  margin-right: 15px;
+  margin-top: 5px;
+  margin-left: 5px;
+  margin-right: 5px;
 }
-
-.el-icon-back {
-  float: right;
-  display: flex;
-  font-size: 35px;
+.el-icon-back{
   color: white;
-  justify-content: center;
-  align-items: center;
-  margin-top: 15px;
-  margin-left: 15px;
-  margin-right: 15px;
 }
-
-.icon-help {
-  display: flex;
-  font-size: 35px;
-  color: white;
-  justify-content: center;
-  align-items: center;
-  margin-top: 15px;
-  margin-left: 15px;
-  margin-right: 15px;
-  float: right;
-}
-
-/* 个人icon */
-.el-icon-s-custom {
-  display: flex;
-  font-size: 35px;
-  color: white;
-  justify-content: center;
-  align-items: center;
-  margin-top: 15px;
-  margin-left: 15px;
-  margin-right: 15px;
-  float: right;
+.el-col.el-col-1{
+  width:33%;
 }
 
 .institution {

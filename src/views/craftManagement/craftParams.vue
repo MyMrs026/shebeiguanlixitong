@@ -49,7 +49,7 @@
     <div class="p-device">
       <img src="../../assets/img/p-device.png" />
     </div>
-    <div class="form-equcraft-use" v-if="this.$store.state.cu_role === 'admin'">
+    <!-- <div class="form-equcraft-use" v-if="this.$store.state.cu_role === 'admin'">
       <p class="text-title">设置设备工艺</p>
       <el-form
         class="form-equcraft"
@@ -179,7 +179,7 @@
           <el-button @click="resetForm('equCraftForm')">重置</el-button>
         </el-form-item>
       </el-form>
-    </div>
+    </div> -->
     </div>
   </div>
 </template>
