@@ -1,7 +1,7 @@
 <script>
 import MulTable from '../../components/common/table/MulTable.vue';
 import { getTrainList } from '../../network/train'
-import { getEquById } from '../../network/equpment';
+import { getEquInform } from '../../network/equpment';
 import { applyTraining } from '../../network/train';
 
 export default {
@@ -51,7 +51,7 @@ export default {
             const dataList = await Promise.all(res.data
                 .filter(item => item.trainingType !== '安全培训')
                 .map(async item => {
-                    const equipmentRes = await getEquById(item.equipmentId);
+                    const equipmentRes = await getEquInform(item.equipmentId);
                     const equipmentName = equipmentRes.data.equipmentName;
                     const trainingPrice = item.trainingPrice.toFixed(2)
                     return {

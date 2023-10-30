@@ -45,151 +45,134 @@ export default {
 };
 </script>
 <template>
-<!-- 导航栏部分 -->
-<div class="tabbar">
-      <el-row>
-        <el-col :span="5">
-          <el-col class="institution">
-            <img
-              src="../../../assets/img/weina.png"
-              style="width: 200px; height: 50px; float: left"
-            />
-            <!-- <div class="lab" style="float: left; font-size: 20px">
-              浙江大学嘉兴研究院
-            </div> -->
-        </el-col>
-      </el-col>
-      <el-col :span="16">
-        <el-col
-          :span="12"
-          style="
-            display: flex;
-            flex-direction: row;
-            justify-content: space-between;
-          "
-        >
-          <router-link to="/home">
-            <el-button class="custom-button" type="info" round size="small"
-              >首页</el-button
-            >
-          </router-link>
-          <router-link to="/project">
-            <el-button class="custom-button" type="info" round size="small"
-              >项目管理</el-button
-            >
-          </router-link>
-          <router-link to="/equp">
-            <el-button class="custom-button" type="info" round size="small"
-              >设备管理</el-button
-            >
-          </router-link>
-          <!-- <router-link to="/craft/craftparams">
-              <el-button class="custom-button" type="info" round size="small"
-                >工艺管理</el-button
-              >
-            </router-link> -->
-          <router-link to="/book">
-            <el-button class="custom-button" type="info" round size="small"
-              >预约管理</el-button
-            >
-          </router-link>
-          <router-link to="/train">
-            <el-button class="custom-button" type="info" round size="small"
-              >培训管理</el-button
-            >
-          </router-link>
-          <router-link to="/notice">
-            <el-button class="custom-button" type="info" round size="small"
-              >公告信息</el-button
-            >
-          </router-link>
-          <router-link to="/system">
-            <el-button
-              class="custom-button"
-              type="info"
-              round
-              size="small"
-              v-if="this.$store.state.cu_role === 'admin'"
-              >系统管理</el-button
-            >
-          </router-link>
-          <!-- <router-link to="/test">
-              <el-button class="custom-button" type="info" round size="small"
-                >测试任务</el-button
-              >
-            </router-link> -->
+  <!-- 导航栏部分 -->
+  <div class="tabbar">
+        <el-row>
+          <el-col :span="5">
+            <el-col class="institution">
+              <img
+                src="../../../assets/img/weina.png"
+                style="width: 200px; height: 50px; float: left"
+              />
+              <!-- <div class="lab" style="float: left; font-size: 20px">
+                浙江大学嘉兴研究院
+              </div> -->
+            </el-col>
           </el-col>
-        </el-col>
-        <el-col :span="3" class="tab-icon" style="display:flex;flex-direction:row;">
-        <el-col :span="1" class="icon-question">
-          <div class="help-box">
-            <router-link to="/help">
+          <el-col :span="15">
+            <el-col
+              :span="12"
+              style="
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
+              "
+            >
+              <router-link to="/home">
+                <el-button class="custom-button" type="info" round size="small"
+                  >首页</el-button
+                >
+              </router-link>
+              <router-link to="/project">
+                <el-button class="custom-button" type="info" round size="small"
+                  >项目管理</el-button
+                >
+              </router-link>
+              <router-link to="/equp">
+                <el-button class="custom-button" type="info" round size="small"
+                  >设备管理</el-button
+                >
+              </router-link>
+              <router-link to="/craft/craftparams">
+                <el-button class="custom-button" type="info" round size="small"
+                  >工艺管理</el-button
+                >
+              </router-link>
+              <router-link to="/book">
+                <el-button class="custom-button" type="info" round size="small"
+                  >预约管理</el-button
+                >
+              </router-link>
+              <router-link to="/train">
+                <el-button class="custom-button" type="info" round size="small"
+                  >培训管理</el-button
+                >
+              </router-link>
+              <router-link to="/notice">
+                <el-button class="custom-button" type="info" round size="small"
+                  >公告信息</el-button
+                >
+              </router-link>
+              <router-link to="/system">
+                <el-button
+                  class="custom-button"
+                  type="info"
+                  round
+                  size="small"
+                  v-if="this.$store.state.cu_role === 'admin'"
+                  >系统管理</el-button
+                >
+              </router-link>
+              <router-link to="/test">
+                <el-button class="custom-button" type="info" round size="small"
+                  >测试任务</el-button
+                >
+              </router-link>
+            </el-col>
+          </el-col>
+          <el-col :span="3" class="tab-icon" style="display:flex;flex-direction:row;">
+          <el-col :span="1" class="icon-question">
+            <div class="help-box">
+              <router-link to="/help">
+                <el-tooltip
+                  class="item"
+                  effect="light"
+                  content="帮助"
+                  placement="bottom"
+                >
+                  <i class="el-icon-question"></i>
+                </el-tooltip>
+              </router-link>
+            </div>
+          </el-col>
+          <el-col :span="1" class="icon-message"
+            ><router-link to="/message">
               <el-tooltip
                 class="item"
                 effect="light"
-                content="帮助"
+                content="邮件"
                 placement="bottom"
               >
-                <i class="el-icon-question"></i>
+                <el-badge value="new">
+                  <i
+                    class="el-icon-message"
+                    type="primary"
+                    style="margin-left: 16px"
+                  ></i>
+                </el-badge>
               </el-tooltip>
             </router-link>
-          </div>
-        </el-col>
-        <el-col :span="1" class="icon-message"
-          ><router-link to="/message">
+          </el-col>
+
+          <el-col :span="1" class="icon-back">
             <el-tooltip
               class="item"
               effect="light"
-              content="帮助"
+              content="退出登录"
               placement="bottom"
             >
-              <i class="el-icon-question"></i>
-            </el-tooltip>
-          </router-link>
-        </div>
-      </el-col>
-        <el-col :span="1" class="icon-back">
-          <el-tooltip
-            class="item"
-            effect="light"
-            content="邮件"
-            placement="bottom"
-          >
-            <el-badge value="new">
               <i
-                class="el-icon-message"
+                class="el-icon-back"
+                @click="logOut"
                 type="primary"
                 style="margin-left: 16px"
               ></i>
-            </el-badge>
-          </el-tooltip>
-
-        </router-link>
-      </el-col>
-      <el-col :span="1">
-        <el-tooltip
-          class="item"
-          effect="light"
-          content="退出登录"
-          placement="bottom"
-        >
-          <i
-            class="el-icon-back"
-            @click="logOut"
-            type="primary"
-            style="margin-left: 16px"
-          ></i>
-        </el-tooltip>
-      </el-col>
-    </el-row>
-  </div>
-
-        </el-col>
-        </el-col>
-      </el-row>
-    </div>
-
-</template>
+            </el-tooltip>
+          </el-col>
+          </el-col>
+        </el-row>
+      </div>
+  </template>
 <style scoped>
 .tabbar {
   background-color: rgb(141, 186, 221);
@@ -224,7 +207,7 @@ div /deep/ .el-badge__content.is-fixed {
   float: right;
   display: flex;
   font-size: 35px;
- 
+
   justify-content: center;
   align-items: center;
   margin-top: 5px;
@@ -239,7 +222,7 @@ div /deep/ .el-badge__content.is-fixed {
   float: right;
   display: flex;
   font-size: 35px;
-  
+
   justify-content: center;
   align-items: center;
   margin-top: 5px;
@@ -252,7 +235,7 @@ div /deep/ .el-badge__content.is-fixed {
 div /deep/ .el-badge__content.is-fixed{
   position:absolute;
   top:15px;
-  
+
 }
 /* 退出icon */
 .icon-back {
