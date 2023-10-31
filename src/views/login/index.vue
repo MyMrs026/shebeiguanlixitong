@@ -9,8 +9,8 @@
                 <form @submit="login">
                     <div style="text-align: center">
                         <img src="../../assets/img/my.png" title="user icon" style="width: 40px; height: 40px" />
-                        <input id="username" placeholder="请输入邮箱" type="text" v-model="username" required
-                            autocomplete="username" />
+                        <input id="password" placeholder="请输入邮箱" type="text" v-model="tel" required
+                            autocomplete="tel" />
                     </div>
                     <br />
                     <div style="text-align: center">
@@ -47,7 +47,7 @@ import { login, getLoginUserRole } from "../../network/user"; //获取所有用�
 export default {
     data() {
         return {
-            username: "", //与用户名输入框进行v-model绑定
+            tel: "", //与用户名输入框进行v-model绑定
             password: "", //与密码输入框进行v-model绑定
             loginFlag: false,
             userrole: "",
@@ -57,10 +57,10 @@ export default {
         login(event) {
             // 方法是 JavaScript 中一个常用的事件方法，它用于阻止事件的默认行为或默认操作发生。当事件发生时，通常会触发一些默认行为，例如点击链接时会跳转到链接的URL，提交表单时会发送表单数据到服务器，按下键盘的 Enter 键时可能会触发表单的提交等。
             event.preventDefault();
-            if (this.username == "" || this.password == "") {
+            if (this.tel == "" || this.password == "") {
                 alert("请输入完整！");
             } else {
-                login(this.username, this.password)
+                login(this.tel, this.password)
                     .then((res) => {
                         console.log(res);
                         if (res.code === 3003) {
@@ -95,7 +95,7 @@ export default {
                         console.error(error);
                     });
             }
-            this.username = "";
+            this.tel = "";
             this.password = "";
         },
         //跳转到注册界面
