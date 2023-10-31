@@ -76,7 +76,7 @@ export default {
           this.equinform = element;
         }
       });
-      console.log(this.equinform);  
+      console.log(this.equinform);
     });
   },
   mounted() {
