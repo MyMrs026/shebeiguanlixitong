@@ -10,12 +10,10 @@ const Equp = () => import("@/views/equManagement/equManagement");
 const Book = () => import("@/views/bookManagement/bookManagement");
 
 const Train = () => import("@/views/trainManagement/trainManagement");
-const TrainProject = () => import("../views/trainManagement/trainProject.vue");
-const TrainLog = () => import("../views/trainManagement/trainLog.vue");
-const TrainList = () => import("../views/trainManagement/traingList.vue");
+const TrainSecurity = () => import("@/views/trainManagement/TrainSecurity.vue");
+const TrainEquipment = () =>
+  import("@/views/trainManagement/TrainEquipment.vue");
 
-const System = () => import("../views/systemManagement/systemManagement");
-const Test = () => import("../views/testingTasks/testingTasks.vue");
 const LabInform = () => import("../views/labInformation/labInformation.vue");
 const EquList = () => import("../views/equList/equList.vue");
 const InformationDisplay = () =>
@@ -23,9 +21,8 @@ const InformationDisplay = () =>
 const PersonalInfo = () => import("../views/personalInfo/personalInfo.vue");
 const OrganizationInfo = () =>
   import("../views/organizationInfo/organizationInfo.vue");
-const Craft = () => import("@/views/craftManagement/craftManagement");
-const Equcraft = () => import("../views/craftManagement/equpCraft.vue");
-const Craftparams = () => import("../views/craftManagement/craftParams.vue");
+const Craft = () => import("@/views/craftManagement/craftManagement.vue");
+const EquCraft = () => import("@/views/craftManagement/equpCraft.vue");
 const Help = () => import("../views/helpPage/help.vue");
 const EquCategory = () => import("../views/equList/equCategory.vue");
 const Bill = () => import("../views/bill/bill.vue");
@@ -40,22 +37,14 @@ const Login = () => import("@/views/login/index.vue");
 const Register = () => import("@/views/register/register.vue");
 const Error = () => import("../components/common/error/Error.vue");
 
-const Notice = () => import("../views/notice/notice");
-const NoticeDetail = () => import("../views/notice/noticeDetail.vue");
-
 const Message = () => import("../views/message/message");
 const MessageDetail = () => import("../views/message/messageDetail.vue");
 const TrainBooksDetail = () => import("../views/message/trainBooksDetail.vue");
 
-const MulTable = () => import("../components/common/table/MulTable.vue");
 //1.安装插件
 Vue.use(Router);
 //创建router
 const routes = [
-  {
-    path: "/table",
-    component: MulTable
-  },
   {
     path: "/",
     redirect: "/login" //路由重定向，就是默认跳到的路由
@@ -86,23 +75,14 @@ const routes = [
     component: Equp
   },
   {
-    //子路由
-    path: "/craft/equcraft",
-    name: "Equcraft",
-    component: Equcraft
-  },
-  {
     path: "/craft",
     name: "Craft",
-    redirect: "/craft/equcraft",
-    component: Craft,
-    children: [
-      {
-        path: "/craft/craftparams",
-        name: "Craftparams",
-        component: Craftparams
-      }
-    ]
+    component: Craft
+  },
+  {
+    path: "/craft/equcraft",
+    name: "equcraft",
+    component: EquCraft
   },
   {
     path: "/book",
@@ -112,34 +92,20 @@ const routes = [
   {
     path: "/train",
     name: "Train",
-    redirect: "/train/project",
+    redirect: "/train/security",
     component: Train,
     children: [
       {
-        path: "/train/project",
-        name: "TrainProject",
-        component: TrainProject
+        path: "/train/security",
+        name: "TrainSecurity",
+        component: TrainSecurity
       },
       {
-        path: "/train/log",
-        name: "TrainLog",
-        component: TrainLog
-      },
-      {
-        path: "/train/list",
-        name: "TrainList",
-        component: TrainList
+        path: "/train/equipment",
+        name: "TrainEquipment",
+        component: TrainEquipment
       }
     ]
-  },
-  {
-    path: "/system",
-    name: "System",
-    component: System
-  },
-  {
-    path: "/test",
-    component: Test
   },
   {
     path: "/login",
@@ -185,16 +151,6 @@ const routes = [
     path: "/organizationInfo",
     name: "OrganizationInfo",
     component: OrganizationInfo
-  },
-  {
-    path: "/notice",
-    name: "Notice",
-    component: Notice
-  },
-  {
-    path: "/notice/:id",
-    name: "NoticeDetail",
-    component: NoticeDetail
   },
   {
     path: "/message",

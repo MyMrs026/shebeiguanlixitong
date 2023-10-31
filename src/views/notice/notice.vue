@@ -319,7 +319,6 @@ export default {
   flex-direction: column;
   left: 0;
   width: 100%;
-  height: 100%;
   /* overflow: hidden; 隐藏溢出的内容 */
   background-image: url("../../assets/img/qqq6.png");
   background-repeat: no-repeat;
