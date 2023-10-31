@@ -85,7 +85,7 @@ const routes = [
     component: EquCraft
   },
   {
-    path: "/book",
+    path: "/book/:id",
     name: "Book",
     component: Book
   },

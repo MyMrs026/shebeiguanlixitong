@@ -16,7 +16,7 @@
         <li
           class="equ-item"
           v-for="(equipment,index) in equinform"
-          :key="equipment.id"
+          :key="equipment.equipmentId"
         >
           <img
             v-bind:src="equipment.equipmentImageUrl"
@@ -25,7 +25,7 @@
           />
           设备名称：{{ equipment.equipmentName }}
           <br />
-          <router-link to="/book">
+          <router-link :to="'/book/' + equipment.equipmentId">
             <el-button
               type="primary"
               plain
@@ -94,120 +94,10 @@
         >确定</el-button>
       </span>
     </div>
-    <hr style="
-        display: flex;
-        border: 5px solid white;
-        margin-left: apiUrl10px;
-        margin-right: 10px;
-      " />
-    <!-- 设备工艺设置，只在登录用户为管理员时显示 -->
-    <div style="width: 100%">
-      <div class="p-device">
-        <!-- <el-upload
-          class="avatar-uploader"
-          :show-file-list="false"
-          :action=apiUrl
-          :headers="customHeaders"
-          :on-success="showPic"
-        >
-          <img
-            v-if="imageUrl"
-            :src="imageUrl"
-            class="avatar"
-          >
-          <i
-            v-else
-            class="el-icon-plus avatar-uploader-icon"
-          ></i>
-        </el-upload> -->
-        <!-- <img src="../../assets/img/p-device.png" /> -->
-      </div>
-      <!-- <div
-        class="form-equcraft-use"
-        v-if="this.$store.state.cu_role === 'admin'"
-      >
-        <p class="text-title">设置设备工艺</p>
-        <el-form
-          class="form-equcraft"
-          label-width="100px"
-          :model="equCraftForm"
-          ref="equCraftForm"
-          :rules="rules"
-        >
-          <el-form-item
-            label="设备名称"
-            prop="deviceName"
-          >
-            <el-select
-              v-model="value"
-              placeholder="请选择"
-              style="width: 300px"
-            >
-              <el-option
-                v-for="item in device_options"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
-              >
-              </el-option>
-            </el-select>
-          </el-form-item>
-          <el-form-item
-            label="设备型号"
-            prop="deviceType"
-          >
-            <el-input
-              v-model="equCraftForm.deviceType"
-              style="width: 300px"
-            ></el-input>
-          </el-form-item>
-          <el-form-item
-            label="设备尺寸"
-            prop="size"
-          >
-            <el-input
-              v-model="equCraftForm.size"
-              style="width: 300px"
-            ></el-input>
-          </el-form-item>
-          <el-form-item
-            label="设备重量"
-            prop="weight"
-          >
-            <el-input
-              v-model="equCraftForm.weight"
-              style="width: 300px"
-            ></el-input>
-          </el-form-item>
-          <el-form-item
-            label="设备功率"
-            prop="power"
-          >
-            <el-input
-              v-model="equCraftForm.power"
-              style="width: 300px"
-            ></el-input>
-          </el-form-item>
-          <el-form-item>
-            <el-button
-              type="primary"
-              plain
-              @click="submitForm('equCraftForm')"
-            >提交</el-button>
-            <el-button @click="resetForm('equCraftForm')">重置</el-button>
-          </el-form-item>
-        </el-form>
-      </div> -->
-    </div>
   </div>
 </template>
 <script>
-import { getDeviceImage } from "../../network/file";
 import { getEquList } from "../../network/equpment";
-import { uploadImage } from '../../network/file';
-/**
- * 工艺管理页面中的设备工艺子页面
- */
 export default {
   data() {
     return {
@@ -219,101 +109,14 @@ export default {
       customHeaders: {
         'Authorization':localStorage.getItem('token')
       },
-      //equCrafts: [], //目前从vuex中写死，后续从axios中导入
-      currentPage: 1, //当前页数
-      perPage: 8, //每页显示的数据数量
-      goToPageNumber: "", //跳转到指定页数的输入
-      equCraftForm: {
-        //表单中的内容传入到这
-        deviceName: "",
-        deviceType: "",
-        size: "",
-        weight: "",
-        power: "",
-      },
-      device_options: [
-        //目前写死，后期也是从数据库中导入
-        {
-          value: "选项1",
-          label: "ASE",
-        },
-        {
-          value: "选项2",
-          label: "OEA",
-        },
-        {
-          value: "选项3",
-          label: "DTP",
-        },
-        {
-          value: "选项4",
-          label: "MKI",
-        },
-        {
-          value: "选项5",
-          label: "OSD",
-        },
-      ],
       value: "", //绑定设备的名称
-      urls: [
-        { url: require("../../assets/img/device2.jpg") },
-        { url: require("../../assets/img/device3.jpg") },
-        { url: require("../../assets/img/device1.jpg") },
-        { url: require("../../assets/img/device4.jpg") },
-      ],
-      rules: {
-        deviceName: [
-          { required: true, message: "请输入设备名称", trigger: "blur" },
-        ],
-        deviceType: [
-          { required: true, message: "请输入设备型号", trigger: "blur" },
-        ],
-        size: [{ required: true, message: "请输入设备尺寸", trigger: "blur" }],
-        weight: [
-          { required: true, message: "请输入设备重量", trigger: "blur" },
-        ],
-        power: [{ required: true, message: "请输入设备功率", trigger: "blur" }],
-      },
     };
   },
   methods: {
-    // async uploadImage(res, file) {
-    //     this.imageUrl = URL.createObjectURL(file.raw);
-    //     try {
-    //     const result = await fetch(apiUrl, {
-    //       method: 'POST',
-    //       body: file.raw,
-    //     });
-    //     const data = await result.json();
-    //     // 根据需要处理响应数据
-    //   } catch (error) {
-    //     throw error; 
-    //   }
-    // },
-    showPic(res,file){  
-        //console.log(res.data);
-        this.imageUrl = URL.createObjectURL(file.raw)
-    },
-
-   
     gotoDeviceDetail(index) {
       this.$router.push({ path: `/device/${index}` });
-      //console.log(index);
     },
 
-    submitForm(formName) {
-      this.$refs[formName].validate((valid) => {
-        if (valid) {
-          //成功提交
-          console.log("提交成功");
-          location.reload();
-        } else {
-          alert("请填写完整");
-          location.reload();
-          return false;
-        }
-      });
-    },
     resetForm(equCraftForm) {
       this.$refs[equCraftForm].resetFields();
     },
@@ -357,19 +160,7 @@ export default {
       return Math.ceil(data.length / this.perPage);
     },
   },
-  created() {
-    //此处写的应该是axios传出来的promise函数，参照其他文件
-    // this.equCrafts = this.$store.state.equCrafts;
-    //console.log(this.equCrafts);
-    //console.log(this.customHeaders);
-  },
   mounted() {
-    // getDeviceList().then(res=>{
-    //   this.devices = res.data;
-    //   console.log(this.devices);
-    // })
-    // 在组件挂载后，调用 getDeviceImage 函数来获取设备图片
-    // this.fetchDeviceImage();
     getEquList().then((res) => {
       this.equinform = res.data;
       console.log(this.equinform);
