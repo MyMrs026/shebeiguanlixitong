@@ -23,6 +23,8 @@
     "bootstrap-icons": "^1.11.0",
     "bootstrap-vue": "^2.23.1",
     "core-js": "^3.8.3",
+    "dayjs": "^1.11.10",
+    "dayjs-ext": "^2.2.0",
     "element-ui": "^2.15.13",
     "lib-flexible": "^0.3.2",
     "normalize.css": "^8.0.1",

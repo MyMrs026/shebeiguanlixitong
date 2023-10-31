@@ -1,21 +1,19 @@
 <template>
 <div class="outer-container">
 <div class="bg-eq">
+
+  <div class="button-area">
+      <router-link to="/equp">
+        <el-button plain>设备管理</el-button>
+      </router-link>
+      <router-link to="/craft/equcraft">
+        <el-button plain>设备信息展示</el-button>
+      </router-link>
+    </div>
+
   <div class="equpM">
   <div class="equp-container">
-    <div class="button-area" style="height: 82%;
-  overflow-y: auto;margin-top: 20px;
-  margin-left: 50px;">
-    <router-link to="/equp">
-      <el-button plain>设备管理</el-button>
-    </router-link>
-    <router-link to="/craft/equcraft">
-      <el-button plain>设备列表</el-button>
-    </router-link>
-    </div>
-     <hr
-        style="border: 1px solid white; margin-left: 10px; margin-right: 10px"
-      />
+   
     <!-- 由五个部分组成，对应网页中五个带边框的div -->
     <!-- 第一部分：使用设备，通过搜索框对已有的设备进行检索，点击即可进行使用 -->
     <div class="centered-div" id="part1">
@@ -111,13 +109,13 @@
       </div>
     </div>
     <!-- 第四部分：设备列表 -->
-    <div class="centered-div" id="part4">
+    <!-- <div class="centered-div" id="part4">
       <equList></equList>
-    </div>
+    </div> -->
     <!-- 第五部分：设备维修模块 -->
-    <div class="centered-div" id="part5">
+    <!-- <div class="centered-div" id="part5">
       <equMaintain></equMaintain>
-    </div>
+    </div> -->
   </div>
   </div>
   </div>
@@ -127,12 +125,11 @@
 <script>
 import equList from '../equList/equList'
 import equMaintain from '../equManagement/equMaintain.vue'
-
-import { getEquList } from '../../network/equpment';
+import { getEquList } from '../../network/equpment'
 export default {
   components:{
     equList,
-    equMaintain
+    equMaintain,
   },  
   data() {
     return {
@@ -206,14 +203,21 @@ export default {
   align-items: center;
 }
 .bg-eq{
-  display: flex;
-  flex-direction: column;
+  /* display: flex;
+  flex-direction: column; */
   background-image: url("../../assets/img/qqq6.png");
   background-repeat: no-repeat;
   width: 100%;
   height: 100%;
   background-size: 100% 100%;
 }
+
+.button-area {
+  margin-top: 10px;
+  display: flex;
+  justify-content: space-evenly;
+}
+
 .equpM{
   height:100%;
   overflow-y: auto;

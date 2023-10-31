@@ -20,3 +20,18 @@ export function login( tel,password ){
     }
   })
 }
+
+export function getLoginUserRole(){
+  return request({
+    url:'/user/getLoginUserRole',
+    methods: 'get'
+  })
+}
+
+//根据id获取用户所有信息
+export function getUserInform(id) {
+  return request({
+    url:`/user/${id}`,
+    methods: 'get'
+  })
+}
