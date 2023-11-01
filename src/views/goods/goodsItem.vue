@@ -1,4 +1,5 @@
 <template>
+<div class="goods">
   <div class="goodsItem">
     <div class="inner-container">
       <div>商品编号：{{ goodsItem.number }}</div>
@@ -19,6 +20,7 @@
       <div><el-button type="primary" style="font-size: 2rem">购买</el-button></div>
     </div>
   </div>
+  </div>
 </template>
 <script>
 export default {
@@ -38,6 +40,15 @@ export default {
 };
 </script>
 <style scope>
+.goods {
+  display: flex;
+  flex-direction: column;
+  background-repeat: no-repeat;
+  background-image: url("../../assets/img/qqq6.png");
+  width: 100%;
+  height: 100%;
+  background-size: 100% 100%;
+}
 .goodsItem {
   display: flex;
   flex-direction: column;

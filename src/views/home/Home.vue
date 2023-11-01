@@ -174,7 +174,6 @@
 </template>
 
 <script>
-
 import { getNoticeList, getLatest } from "../../network/notice";
 export default {
   data() {

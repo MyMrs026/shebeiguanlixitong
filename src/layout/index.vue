@@ -4,7 +4,8 @@ import Navbar from '../components/common/tabbar/Navbar.vue';
 
 export default {
     components: {
-        Sidebar, Navbar
+        Sidebar,
+        Navbar
     },
     computed: {
     // 当路由路径为登录或注册时不显示tabbar
@@ -29,7 +30,7 @@ export default {
         </div>
     </div>
 </template>
-  
+
 <style>
 .layout {
     display: flex;
@@ -50,7 +51,7 @@ export default {
 
 .sidebar {
     flex: 0 0 auto;
-    width: 400px;
+    width: 20vw;
     overflow: auto;
     /* 在左导航栏内容过多时出现滚动条 */
 }
@@ -58,5 +59,8 @@ export default {
 .main {
     flex: 1 1 auto;
     overflow-y: auto;
+    background-image: url("../assets/img/qqq6.png");
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
     /* 在右侧内容过多时出现纵向滚动条 */
 }</style>

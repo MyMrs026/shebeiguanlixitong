@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div classs="goods">
     <!-- 上半区域 -->
     <div
       id="staff"
@@ -217,6 +217,14 @@ export default {
 };
 </script>
 <style scope>
+.goods {
+  display: flex;
+  flex-direction: column;
+  background-repeat: no-repeat;
+  background-image: url("../../assets/img/qqq6.png");
+  width: 100%;
+  background-size: 100% 100%;
+}
 .pro_selector {
   margin: 10px;
 }

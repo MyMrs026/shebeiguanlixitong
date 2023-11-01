@@ -4,7 +4,89 @@
  */
 import { request } from "./request";
 
-//获取所有设备列表
+
+
+//1.添加单个设备
+export function addEqument(
+  equipmentFunction,
+  equipmentCategory,
+  equipmentName,
+  equipmentImageUrl,
+  equipmentStatus,
+  labName,
+  linkman,
+  linkmanTel,
+  machineLabel,
+  placementLocation,
+  payment) {
+  return request({
+    url:'/equipment/add',
+    method: 'post',
+    data:{
+      equipmentFunction:equipmentFunction,
+      equipmentCategory:equipmentCategory,
+      equipmentName:equipmentName,
+      equipmentImageUrl:equipmentImageUrl,
+      equipmentStatus:equipmentStatus,
+      labName:labName,
+      linkman:linkman,
+      linkmanTel:linkmanTel,
+      machineLabel:machineLabel,
+      placementLocation:placementLocation,
+      payment:payment
+    }
+  })
+}
+//5.结束使用设备
+export function endEqu(equipmentOrderId){
+  return request({
+    url:`/equipment/end/${equipmentOrderId}`,
+    method: 'put'
+  })
+}
+//6.添加实验记录
+export function addExperiment(endTime,equipmentOrderId,params,result,startTime){
+  return request({
+    url:'/equipment/experiment/add',
+    method:'post',
+    data:{
+      endTime:endTime,
+      equipmentOrderId:equipmentOrderId,
+      params: {},
+      result: result,
+      startTime: startTime
+    }
+  })
+}
+//7.获取实验记录列表
+export function getExperimentList(){
+  return request({
+    url:'/equipment/experiment/list',
+    method:'get'
+  })
+}
+//8.获取我的实验记录列表
+export function getMineExperiment(){
+  return request({
+    url:'/equipment/experiment/mine',
+    method:'get'
+  })
+}
+//9.根据id删除实验记录
+export function removeExperiment(id){
+  return request({
+   url: `/equipment/experiment/remove/${id}`,
+   method: 'delete',
+  })
+}
+//10.根据id获取实验记录
+export function getExperimentById(id){
+  return request({
+   url: `/equipment/experiment/${id}`,
+   method: 'get',
+  })
+}
+//11.获取所有设备列表
 export function getEquList() {
   return request({
     url:'/equipment/list',
@@ -12,51 +94,87 @@ export function getEquList() {
   })
 }
 
-//添加设备
-export function addEqument(deviceFunc,deviceName,deviceTypeId,labId,uuid) {
+//16.分页
+export function getPage() {
   return request({
-    url:'/equipment/add',
-    method: 'post',
-    data:{
-      deviceFunc:deviceFunc,
-      deviceName:deviceName,
-      deviceTypeId:deviceTypeId,
-      labId:labId,
-      uuid:uuid
-    }
+    url:'/equipment/page',
+    method:'get'
   })
 }
-
-//更新设备信息
-export function updateDevice(deviceFunc,deviceName,deviceTypeId,labId,uuid){
+//17.删除单个设备
+export function removeEqu(id){
+  return request({
+   url: `/equipment/remove/${id}`,
+   method: 'delete',
+  })
+}
+//18.根据设备名搜索
+export function searchEqu() {
+  return request({
+    url:'/equipment/search',
+    method: 'get'
+  })
+}
+//19.开始使用设备
+export function startEqu(equipmentOrderId) {
+  return request({
+    url:`/equipment/start/${equipmentOrderId}`,
+    method: 'put'
+  })
+}
+//20.获取设备分类列表
+export function getEquCate() {
+  return request({
+    url:'/equipment/type/list',
+    method: 'get'
+  })
+}
+//21.更新设备信息
+export function updateDevice(
+  equipmentFunction,
+  equipmentCategory,
+  equipmentId,
+  equipmentName,
+  equipmentImageUrl,
+  equipmentStatus,
+  labName,
+  linkman,
+  linkmanTel,
+  machineLabel,
+  placementLocation,
+  payment,
+  uuid){
   return request({
     url:'/equipment/update',
-    method: 'post',
+    method: 'put',
     data:{
-      deviceFunc:deviceFunc,
-      deviceName:deviceName,
-      deviceTypeId:deviceTypeId,
-      labId:labId,
+      equipmentFunction:equipmentFunction,
+      equipmentCategory:equipmentCategory,
+      equipmentId:equipmentId,
+      equipmentName:equipmentName,
+      equipmentImageUrl:equipmentImageUrl,
+      equipmentStatus:equipmentStatus,
+      labName:labName,
+      linkman:linkman,
+      linkmanTel:linkmanTel,
+      machineLabel:machineLabel,
+      placementLocation:placementLocation,
+      payment:payment,
       uuid:uuid
     }
   })
 }
 
-//根据设备id获取设备信息
-export function getEquInform(){
+
+//22.根据设备id获取设备信息
+export function getEquInform(id){
  return request({
-  url:'/equipment/{id}',
+  url: `/equipment/${id}`,
   method: 'get',
  })
 }
 
-//获取设备分类，注意方法是'post',看接口文档
-export function getEquCate() {
-  return request({
-    url:'/equipment/types2',
-    method: 'post'
-  })
-}
+
 
 //更新设备分类，通过设备id更改
 export function updateSingleDeviceType(deviceTypeId,typeName) {
