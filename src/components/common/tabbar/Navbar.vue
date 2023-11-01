@@ -14,7 +14,7 @@ export default {
       Drawer: false,
       proData: [], //项目列表
       getProject: "",
-      notificationCount: 0, //数据库更新数据情况
+      notificationCount: 0 //数据库更新数据情况
     };
   },
   methods: {
@@ -32,41 +32,41 @@ export default {
     closeDrawer() {
       this.isShowDrawer = false;
       this.Drawer = false;
-    },
+    }
   },
   mounted() {
     this.proData = this.$store.state.proData;
-    this.projects = this.proData.map((item) => item.name);
+    this.projects = this.proData.map(item => item.name);
     const meta = document.createElement("meta");
     meta.name = "viewport";
     meta.content = "width=device-width, initial-scale=1.0, user-scalable";
     document.head.appendChild(meta);
-  },
+  }
 };
 </script>
 <template>
-<!-- 导航栏部分 -->
-<div class="tabbar">
-      <el-row>
-        <el-col :span="5">
-          <el-col class="institution">
-            <img
-              src="../../../assets/img/weina.png"
-              style="width: 200px; height: 50px; float: left"
-            />
-            <!-- <div class="lab" style="float: left; font-size: 20px">
-              浙江大学嘉兴研究院
-            </div> -->
+  <!-- 导航栏部分 -->
+  <div class="tabbar">
+    <el-row>
+      <el-col :span="5">
+        <el-col class="institution">
+          <img
+            src="../../../assets/img/weina.png"
+            style="width: 200px; height: 50px; float: left"
+          />
+          <!-- <div class="lab" style="float: left; font-size: 20px">
+                浙江大学嘉兴研究院
+              </div> -->
         </el-col>
       </el-col>
-      <el-col :span="16">
+      <el-col :span="15">
         <el-col
           :span="12"
           style="
-            display: flex;
-            flex-direction: row;
-            justify-content: space-between;
-          "
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
+              "
         >
           <router-link to="/home">
             <el-button class="custom-button" type="info" round size="small"
@@ -83,44 +83,23 @@ export default {
               >设备管理</el-button
             >
           </router-link>
-          <!-- <router-link to="/craft/craftparams">
-              <el-button class="custom-button" type="info" round size="small"
-                >工艺管理</el-button
-              >
-            </router-link> -->
-          <router-link to="/book">
+          <router-link to="/craft/">
             <el-button class="custom-button" type="info" round size="small"
-              >预约管理</el-button
+              >设备工艺</el-button
             >
           </router-link>
           <router-link to="/train">
             <el-button class="custom-button" type="info" round size="small"
-              >培训管理</el-button
+              >安全培训</el-button
             >
           </router-link>
-          <router-link to="/notice">
-            <el-button class="custom-button" type="info" round size="small"
-              >公告信息</el-button
-            >
-          </router-link>
-          <router-link to="/system">
-            <el-button
-              class="custom-button"
-              type="info"
-              round
-              size="small"
-              v-if="this.$store.state.cu_role === 'admin'"
-              >系统管理</el-button
-            >
-          </router-link>
-          <!-- <router-link to="/test">
-              <el-button class="custom-button" type="info" round size="small"
-                >测试任务</el-button
-              >
-            </router-link>
-          </el-col>
         </el-col>
-        <el-col :span="3" class="tab-icon" style="display:flex;flex-direction:row;">
+      </el-col>
+      <el-col
+        :span="3"
+        class="tab-icon"
+        style="display:flex;flex-direction:row;"
+      >
         <el-col :span="1" class="icon-question">
           <div class="help-box">
             <router-link to="/help">
@@ -137,49 +116,38 @@ export default {
         </el-col>
         <el-col :span="1" class="icon-message"
           ><router-link to="/message">
-
             <el-tooltip
               class="item"
               effect="light"
-              content="帮助"
+              content="邮件"
               placement="bottom"
             >
-              <i class="el-icon-question"></i>
+              <el-badge value="new">
+                <i
+                  class="el-icon-message"
+                  type="primary"
+                  style="margin-left: 16px"
+                ></i>
+              </el-badge>
             </el-tooltip>
           </router-link>
-        </div>
-      </el-col>
+        </el-col>
+
         <el-col :span="1" class="icon-back">
           <el-tooltip
             class="item"
             effect="light"
-            content="邮件"
+            content="退出登录"
             placement="bottom"
           >
-            <el-badge value="new">
-              <i
-                class="el-icon-message"
-                type="primary"
-                style="margin-left: 16px"
-              ></i>
-            </el-badge>
+            <i
+              class="el-icon-back"
+              @click="logOut"
+              type="primary"
+              style="margin-left: 16px"
+            ></i>
           </el-tooltip>
-        </router-link>
-      </el-col>
-      <el-col :span="1">
-        <el-tooltip
-          class="item"
-          effect="light"
-          content="退出登录"
-          placement="bottom"
-        >
-          <i
-            class="el-icon-back"
-            @click="logOut"
-            type="primary"
-            style="margin-left: 16px"
-          ></i>
-        </el-tooltip>
+        </el-col>
       </el-col>
     </el-row>
   </div>
@@ -192,11 +160,6 @@ export default {
   background-size: 100% 100%;
 }
 
-div /deep/ .el-badge__content.is-fixed {
-  position: absolute;
-  top: 10px !important;
-}
-
 .custom-button {
   margin-right: 0px;
   margin-left: 3px;
@@ -206,47 +169,39 @@ div /deep/ .el-badge__content.is-fixed {
   font-size: 80%;
 }
 
-.font-help {
-  align-items: center;
-  margin-top: 0;
-  margin-bottom: 0;
-  color: white;
-}
-
 /* 帮助icon的盒子 */
 .icon-question {
   float: right;
   display: flex;
   font-size: 35px;
- 
+
   justify-content: center;
   align-items: center;
   margin-top: 5px;
   margin-left: 5px;
   margin-right: 5px;
 }
-.el-icon-question{
-   color: white;
+.el-icon-question {
+  color: white;
 }
 /* 邮件icon的盒子 */
 .icon-message {
   float: right;
   display: flex;
   font-size: 35px;
-  
+
   justify-content: center;
   align-items: center;
   margin-top: 5px;
   margin-left: 5px;
   margin-right: 5px;
 }
-.el-icon-message{
+.el-icon-message {
   color: white;
 }
-div /deep/ .el-badge__content.is-fixed{
-  position:absolute;
-  top:15px;
-  
+div /deep/ .el-badge__content.is-fixed {
+  position: absolute;
+  top: 15px;
 }
 /* 退出icon */
 .icon-back {
@@ -259,11 +214,11 @@ div /deep/ .el-badge__content.is-fixed{
   margin-left: 5px;
   margin-right: 5px;
 }
-.el-icon-back{
+.el-icon-back {
   color: white;
 }
-.el-col.el-col-1{
-  width:33%;
+.el-col.el-col-1 {
+  width: 33%;
 }
 
 .institution {
@@ -271,44 +226,6 @@ div /deep/ .el-badge__content.is-fixed{
   margin-top: 7px;
   margin-left: 15px;
   margin-right: 15px;
-}
-
-.lab {
-  margin-left: 15px;
-  color: #fff;
-}
-
-.btn {
-  width: 50px;
-  height: 25px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  line-height: 20px;
-  font-size: 13px;
-  float: right;
-  text-align: center;
-  color: white;
-  margin-right: 15px;
-}
-
-.btn:hover {
-  background-color: rgb(151, 184, 216, 0.5);
-}
-
-.navbar-toggle {
-  margin: 15px;
-  margin-top: 40px;
-  float: right;
-}
-
-.navbar-menu {
-  display: none;
-  width: 100px;
-}
-
-.navbar-menu.show {
-  display: flex;
 }
 
 ::v-deep .drawer_body tr.current-row {
@@ -328,13 +245,6 @@ div /deep/ .el-drawer__body .el-menu {
 div /deep/ .el-drawer__body {
   background-color: #d6e0f5;
   width: 10%;
-}
-
-.drawer-menu {
-  height: 100%;
-  width: 100%;
-  background-color: #ffffff;
-  opacity: 0.8;
 }
 
 div /deep/ .drawer-menu-item.secondly {
