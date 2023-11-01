@@ -11,6 +11,7 @@
           <i>{{ arg.event.title }}</i>
         </template>
       </FullCalendar>
+
       <!-- 编辑事件弹出框 -->
       <el-dialog
         title="编辑事件"
@@ -45,7 +46,7 @@
               :picker-options="{
                 start: '08:30',
                 step: '00:15',
-                end: '17:00',
+                end: '17:00'
               }"
             >
             </el-time-select>
@@ -58,7 +59,7 @@
                 start: '08:30',
                 step: '00:15',
                 end: '17:00',
-                minTime: EventForm.startTime,
+                minTime: EventForm.startTime
               }"
             >
             </el-time-select>
@@ -76,7 +77,7 @@
 
       <!-- 添加事件弹出框 -->
       <el-dialog
-        title="添加事件"
+        title="添加预约"
         :visible.sync="dialogFormVisible2"
         @close="closeDialog"
       >
@@ -102,7 +103,7 @@
               </el-option>
             </el-select>
           </el-form-item>
-
+          <el-form-item> </el-form-item>
           <el-form-item label="开始时间" label-width="120px" prop="startTime">
             <el-time-select
               placeholder="起始时间"
@@ -110,7 +111,7 @@
               :picker-options="{
                 start: '08:30',
                 step: '00:15',
-                end: '17:00',
+                end: '17:00'
               }"
             >
             </el-time-select>
@@ -123,7 +124,7 @@
                 start: '08:30',
                 step: '00:15',
                 end: '17:00',
-                minTime: EventForm2.startTime,
+                minTime: EventForm2.startTime
               }"
             >
             </el-time-select>
@@ -159,14 +160,14 @@ import { makeOrder, removeOrder } from "../../../network/book";
 
 export default {
   components: {
-    FullCalendar, // make the <FullCalendar> tag available
+    FullCalendar // make the <FullCalendar> tag available
   },
 
   props: {
     events: {
       type: Array,
-      required: true,
-    }
+      required: true
+    },
   },
 
   data() {
@@ -176,7 +177,6 @@ export default {
         headerToolbar: {
           left: "prev next today", //进行前后日子选择，以及跳到今天
           center: "title",
-          // right: "timeGridWeek",
           right: "",
         },
 
@@ -204,7 +204,7 @@ export default {
         slotDuration: "00:15:00", //时间间隔为15分钟
         //  slotLabelFormat:'H:mm',//以 24 小时格式显示时间。
         dateClick: this.handleDateClick, //定义点击日历中的日期时触发的回调函数，在此打算当点击时弹出日历
-        eventDrop: this.handleEventDrop, //定义当拖拽事件结束时出发的事件，看看吧，不行的话把可拖拽禁掉
+        eventDrop: this.handleEventDrop //定义当拖拽事件结束时出发的事件，看看吧，不行的话把可拖拽禁掉
       },
       currentEvents: [],
       device_options: [],
@@ -213,17 +213,17 @@ export default {
         date: "",
         startTime: "",
         endTime: "",
-        equid: null,
+        equid: null
       },
       EventForm2: {
-        date:  this.getCurrentDate(),
+        date: this.getCurrentDate(),
         startTime: "",
         endTime: "",
-        equid: null,
+        equid: null
       },
 
-      startTimeStr:'',
-      endTimeStr:'',
+      startTimeStr: "",
+      endTimeStr: "",
 
       formatEvent: {},
 
@@ -239,33 +239,33 @@ export default {
           // 禁用周末日期
           const day = time.getDay(); // 获取日期对应的星期几，0 表示星期日，1 表示星期一，依此类推
           return day === 0 || day === 6; // 返回 true 表示禁用周末日期
-        },
+        }
       },
 
       rules: {
         date: [{ required: true, message: "请选择日期", trigger: "blur" }],
         startTime: [
-          { required: true, message: "请填写事件的开始事件", trigger: "blur" },
+          { required: true, message: "请填写事件的开始事件", trigger: "blur" }
         ],
         endTime: [
-          { required: true, message: "请填写事件的结束事件", trigger: "blur" },
+          { required: true, message: "请填写事件的结束事件", trigger: "blur" }
         ],
-        equid: [{ required: true, message: "请选择设备", trigger: "change" }],
+        equid: [{ required: true, message: "请选择设备", trigger: "change" }]
       },
       rules2: {
         date: [{ required: true, message: "请选择日期", trigger: "blur" }],
         startTime: [
-          { required: true, message: "请填写事件的开始事件", trigger: "blur" },
+          { required: true, message: "请填写事件的开始事件", trigger: "blur" }
         ],
         endTime: [
-          { required: true, message: "请填写事件的结束事件", trigger: "blur" },
+          { required: true, message: "请填写事件的结束事件", trigger: "blur" }
         ],
-        equid: [{ required: true, message: "请选择设备", trigger: "change" }],
+        equid: [{ required: true, message: "请选择设备", trigger: "change" }]
       },
       dialogFormVisible: false,
       dialogFormVisible2: false,
       editEvent: {},
-      selectEventId: null,
+      selectEventId: null
     };
   },
 
@@ -275,6 +275,7 @@ export default {
         this.updateCalendarOptions();
       }
     },
+    
   },
   mounted() {
     this.updateCalendarOptions();
@@ -282,18 +283,27 @@ export default {
 
   methods: {
     //获取今天的日期
-    getCurrentDate(){
+    getCurrentDate() {
       const now = new Date();
       const year = now.getFullYear();
-      const month = (now.getMonth() + 1).toString().padStart(2, '0');
-      const day = now.getDate().toString().padStart(2, '0');
+      const month = (now.getMonth() + 1).toString().padStart(2, "0");
+      const day = now
+        .getDate()
+        .toString()
+        .padStart(2, "0");
       return `${year}-${month}-${day}`;
     },
 
     //提取选中的时间，精确的时分
-    extractedTime(time){
-      const hours = time.getHours().toString().padStart(2, "0");
-      const minutes = time.getMinutes().toString().padStart(2, "0");
+    extractedTime(time) {
+      const hours = time
+        .getHours()
+        .toString()
+        .padStart(2, "0");
+      const minutes = time
+        .getMinutes()
+        .toString()
+        .padStart(2, "0");
       return `${hours}:${minutes}`;
     },
 
@@ -325,7 +335,7 @@ export default {
       this.calendarOptions = {
         // 合并父组件传递的 options 和 events
         ...this.calendarOptions,
-        events: this.events,
+        events: this.events
       };
 
       if (this.$refs.calendar) {
@@ -335,10 +345,6 @@ export default {
       }
     },
 
-    // handleWeekendsToggle() {
-    //   this.calendarOptions.weekends = !this.calendarOptions.weekends; // update a property
-    // },
-
     //拖拽选择事件触发
     handleDateSelect(selectInfo) {
       // 获取拖选区域的开始时间和结束时间
@@ -346,7 +352,7 @@ export default {
       const end = new Date(selectInfo.endStr);
 
       // 检查拖选的时间范围是否与已有事件冲突
-      const isConflict = this.events.some((event) => {
+      const isConflict = this.events.some(event => {
         const eventStart = event.start;
         const eventEnd = event.end;
         return eventStart < end && eventEnd > start;
@@ -364,8 +370,12 @@ export default {
 
       this.EventForm2.startTime = this.extractedTime(start);
       this.EventForm2.endTime = this.extractedTime(end);
-      console.log("拖选事件的开始时间:"+ this.EventForm2.startTime+",结束时间:"+this.EventForm2.endTime);
-
+      console.log(
+        "拖选事件的开始时间:" +
+          this.EventForm2.startTime +
+          ",结束时间:" +
+          this.EventForm2.endTime
+      );
     },
 
     //点击事件时触发的函数,直接打开一个对话框
@@ -402,7 +412,7 @@ export default {
 
     //编辑事件弹窗中的提交按钮的实现
     submitClick(formName) {
-      this.$refs[formName].validate((valid) => {
+      this.$refs[formName].validate(valid => {
         if (valid) {
           const editEvents = () => {
             console.log(this.EventForm);
@@ -415,10 +425,10 @@ export default {
               endTime: this.formatDateTime(
                 this.EventForm.date,
                 this.EventForm.endTime
-              ),
+              )
             };
             console.log(this.formatEvent);
-            removeOrder(this.selectEventId).then((res) => {
+            removeOrder(this.selectEventId).then(res => {
               console.log(res);
             });
             this.makeEditOrder(
@@ -432,7 +442,7 @@ export default {
           location.reload();
           this.$message({
             message: "修改成功！",
-            type: "success",
+            type: "success"
           });
         } else {
           alert("请填写完整");
@@ -444,7 +454,7 @@ export default {
     delClick() {
       if (confirm(`你确定要删除这个事件吗？ '${this.editEvent.title}'`)) {
         //撤销预约逻辑
-        removeOrder(this.selectEventId).then((res) => {
+        removeOrder(this.selectEventId).then(res => {
           console.log(res);
         });
       }
@@ -452,13 +462,13 @@ export default {
       location.reload();
       this.$message({
         message: "删除成功",
-        type: "success",
+        type: "success"
       });
     },
 
     //新建事件中的申请提交
     submitClick2(formName) {
-      this.$refs[formName].validate((valid) => {
+      this.$refs[formName].validate(valid => {
         if (valid) {
           const creatEvents = () => {
             console.log(this.EventForm2);
@@ -472,7 +482,7 @@ export default {
               endTime: this.formatDateTime(
                 this.EventForm2.date,
                 this.EventForm2.endTime
-              ),
+              )
             };
 
             console.log(this.formatEvent);
@@ -481,10 +491,10 @@ export default {
               this.formatEvent.equipmentId,
               this.formatEvent.startTime
             )
-              .then((res) => {
+              .then(res => {
                 console.log(res);
               })
-              .catch((error) => {
+              .catch(error => {
                 console.error(error);
               });
           };
@@ -497,7 +507,7 @@ export default {
       location.reload();
       this.$message({
         message: "预约成功！",
-        type: "success",
+        type: "success"
       });
     },
 
@@ -510,27 +520,25 @@ export default {
     //设置事件
     handleEvents(events) {
       this.currentEvents = events;
-    },
+    }
   },
   created() {
     //获取设备列表
-    getEquList().then((res) => {
+    getEquList().then(res => {
       this.equlist = res.data;
       // console.log(this.equlist);
-      this.device_options = this.equlist.map((item) => {
+      this.device_options = this.equlist.map(item => {
         return {
           value: item.equipmentId,
-          label: item.equipmentName,
+          label: item.equipmentName
         };
       });
-      // console.log(this.device_options);
-      // this.EventForm2.equid = this.device_options[0].value;
     });
-  },
+  }
 };
 </script>
 
-<style lang='css'>
+<style lang="css">
 h2 {
   margin: 0;
   font-size: 3px !important;

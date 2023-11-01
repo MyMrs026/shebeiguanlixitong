@@ -4,7 +4,7 @@ import Navbar from '../components/common/tabbar/Navbar.vue';
 
 export default {
     components: {
-        Sidebar, 
+        Sidebar,
         Navbar
     },
     computed: {
@@ -30,7 +30,7 @@ export default {
         </div>
     </div>
 </template>
-  
+
 <style>
 .layout {
     display: flex;
@@ -59,5 +59,8 @@ export default {
 .main {
     flex: 1 1 auto;
     overflow-y: auto;
+    background-image: url("../assets/img/qqq6.png");
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
     /* 在右侧内容过多时出现纵向滚动条 */
 }</style>
