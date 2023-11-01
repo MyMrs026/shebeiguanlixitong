@@ -14,7 +14,7 @@
 
       <!-- 编辑事件弹出框 -->
       <el-dialog
-        title="编辑事件"
+        title="编辑预约"
         :visible.sync="dialogFormVisible"
         @close="closeDialog"
       >
@@ -27,17 +27,6 @@
               placeholder="选择日期"
             >
             </el-date-picker>
-          </el-form-item>
-          <el-form-item label="设备" label-width="120px" prop="equid">
-            <el-select v-model="EventForm.equid" placeholder="请选择设备">
-              <el-option
-                v-for="item in device_options"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
-              >
-              </el-option>
-            </el-select>
           </el-form-item>
           <el-form-item label="开始时间" label-width="120px" prop="startTime">
             <el-time-select
@@ -91,19 +80,6 @@
             >
             </el-date-picker>
           </el-form-item>
-
-          <el-form-item label="设备" label-width="120px" prop="equid">
-            <el-select v-model="EventForm2.equid" placeholder="请选择设备">
-              <el-option
-                v-for="item in device_options"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
-              >
-              </el-option>
-            </el-select>
-          </el-form-item>
-          <el-form-item> </el-form-item>
           <el-form-item label="开始时间" label-width="120px" prop="startTime">
             <el-time-select
               placeholder="起始时间"
@@ -129,7 +105,6 @@
             >
             </el-time-select>
           </el-form-item>
-
           <el-form-item>
             <div class="button-area">
               <el-button type="primary" @click="submitClick2('EventForm2')"
@@ -154,7 +129,7 @@ import dayGridPlugin from "@fullcalendar/daygrid"; //日程图
 import timeGridPlugin from "@fullcalendar/timegrid"; //里面的时间显示
 import interactionPlugin from "@fullcalendar/interaction"; //日程图的一些交互事件，比如说拖拽选择时间
 import zhLocale from "@fullcalendar/core/locales/zh-cn";
-
+import { getProjectList } from "../../../network/project"
 import { getEquList } from "../../../network/equpment";
 import { makeOrder, removeOrder } from "../../../network/book";
 
@@ -213,13 +188,13 @@ export default {
         date: "",
         startTime: "",
         endTime: "",
-        equid: null
+        equid: this.$route.params.id
       },
       EventForm2: {
         date: this.getCurrentDate(),
         startTime: "",
         endTime: "",
-        equid: null
+        equid: this.$route.params.id
       },
 
       startTimeStr: "",
@@ -265,7 +240,8 @@ export default {
       dialogFormVisible: false,
       dialogFormVisible2: false,
       editEvent: {},
-      selectEventId: null
+      selectEventId: null,
+      projectList: []
     };
   },
 
@@ -275,7 +251,7 @@ export default {
         this.updateCalendarOptions();
       }
     },
-    
+
   },
   mounted() {
     this.updateCalendarOptions();
@@ -526,7 +502,6 @@ export default {
     //获取设备列表
     getEquList().then(res => {
       this.equlist = res.data;
-      // console.log(this.equlist);
       this.device_options = this.equlist.map(item => {
         return {
           value: item.equipmentId,
@@ -534,6 +509,16 @@ export default {
         };
       });
     });
+
+    //获取项目列表
+    getProjectList().then(res => {
+      this.projectList = res.data.map(item => {
+        return {
+          projectId: item.projectId,
+          projectName: item.projectName
+        }
+      })
+    })
   }
 };
 </script>
