@@ -1,82 +1,41 @@
 <template>
   <div class="outer-container">
     <div class="book-container">
-      <div class="insdide">
-        <!-- 预约管理部分分为两个部分，上半部分为子导航条，下半部分包括当前用户预约设备的日程表、设备被预约的日程表等 -->
-        <div class="top-div">
-          <!-- 第一个 div 的内容 -->
-          <div class="book-title">
-            <p>设备预约列表</p>
+      <!-- 预约管理部分分为两个部分，上半部分为子导航条，下半部分包括当前用户预约设备的日程表、设备被预约的日程表等 -->
+      <!-- 第一个 div 的内容 -->
+      <div class="book-title">
+        <p>当前设备 {{ curEquipment.equipmentName }}</p>
+      </div>
+      <!-- 第二个 div 的内容 -->
+      <div class="fullcalendar-area">
+        <div class="content-area">
+          <div class="schedular-area">
+            <!-- 调用日程表在这里 -->
+            <Schedular
+              :events="orderEvents"
+              :equipmentId="curEquipment.equipmentId"
+              class="schedular"
+              @make-orders="handleMakeOrders"
+              @edit-orders="handleEditOrders"
+              @click-events="handleClickEvents"
+            />
           </div>
-          <!-- <div class="block">
-            <el-date-picker
-              v-model="value1"
-              align="right"
-              type="date"
-              placeholder="选择日期"
-              :picker-options="pickerOptions"
-              style="width: 265px"
-            >
-            </el-date-picker>
-          </div> -->
-          <hr
-            style="
-              border: 1px solid white;
-              margin-left: 10px;
-              margin-right: 10px;
-              margin-top: 10px;
-            "
-          />
         </div>
-
-        <!-- 第二个 div 的内容 -->
-        <div class="fullcalendar-area">
-          <div class="content-area">
-            <div class="schedular-area">
-              <p class="font-class">当前用户:{{ this.$store.state.cu_role }}</p>
-              <!-- 调用日程表在这里 -->
-              <!-- <div>{{this.orderEvents}}</div> -->
-              <Schedular
-                :events="orderEvents"
-                class="schedular"
-                @make-orders="handleMakeOrders"
-                @edit-orders="handleEditOrders"
-                @click-events="handleClickEvents"
-              />
-            </div>
-          </div>
-          <div class="content-area">
-            <div class="schedular-area">
-              <!-- 同样道理 -->
-              <el-select
-                v-model="newEqup"
-                @change="equSelectChange"
-                filterable
-                placeholder="请选择设备"
-                class="select-newequ"
-              >
-                <el-option
-                  v-for="item in device_options"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value"
-                >
-                </el-option>
-              </el-select>
-              <Schedular
-                :events="orderEvents2"
-                class="schedular"
-                @make-orders="handleMakeOrders"
-              />
-            </div>
+        <div class="content-area">
+          <div class="schedular-area">
+            <Schedular
+              :events="orderEvents2"
+              class="schedular"
+              @make-orders="handleMakeOrders"
+            />
           </div>
         </div>
       </div>
     </div>
   </div>
 </template>
-  
-  <script>
+
+<script>
 import Schedular from "../../components/common/schedular/Schedular";
 import { getEquList, getEquInform } from "../../network/equpment";
 import { getOrders, getequOrders } from "../../network/book";
@@ -85,7 +44,7 @@ import { formatDateToISOString } from "../../common/formatDateToISOString";
 
 export default {
   components: {
-    Schedular,
+    Schedular
   },
   data() {
     return {
@@ -99,7 +58,7 @@ export default {
             text: "今天",
             onClick(picker) {
               picker.$emit("pick", new Date());
-            },
+            }
           },
           {
             text: "昨天",
@@ -107,7 +66,7 @@ export default {
               const date = new Date();
               date.setTime(date.getTime() - 3600 * 1000 * 24);
               picker.$emit("pick", date);
-            },
+            }
           },
           {
             text: "一周前",
@@ -115,9 +74,9 @@ export default {
               const date = new Date();
               date.setTime(date.getTime() - 3600 * 1000 * 24 * 7);
               picker.$emit("pick", date);
-            },
-          },
-        ],
+            }
+          }
+        ]
       },
       value1: this.getCurrentDate(), //日期选择器传回来的数据
       newEqup: "",
@@ -128,6 +87,7 @@ export default {
       orderEvents: [], //将数据库中读出来的事件调整后的格式放到这个数组下,此数组存放是当前登录用户的所有预约记录
       orderEvents2: [], //此数组存放的是不同设备的所有预约记录
       eventGuid: 0,
+      curEquipment: {} //当前设备
     };
   },
   methods: {
@@ -149,7 +109,10 @@ export default {
       const now = new Date();
       const year = now.getFullYear();
       const month = (now.getMonth() + 1).toString().padStart(2, "0");
-      const day = now.getDate().toString().padStart(2, "0");
+      const day = now
+        .getDate()
+        .toString()
+        .padStart(2, "0");
       return `${year}-${month}-${day}`;
     },
 
@@ -190,17 +153,16 @@ export default {
         this.originEvents2 = res.data;
         // console.log(this.originEvents2);
         this.orderEvents2 = await Promise.all(
-          this.originEvents2.map(async (item) => {
+          this.originEvents2.map(async item => {
             const userName = await this.loadUserInform(item.userId);
             return {
               id: item.equipmentOrderId.toString(),
               title: "已被" + userName + "预约",
               start: formatDateToISOString(item.startTime).slice(0, -5),
-              end: formatDateToISOString(item.endTime).slice(0, -5),
+              end: formatDateToISOString(item.endTime).slice(0, -5)
             };
           })
         );
-        // console.log(this.orderEvents2);
       } catch (error) {
         console.error("Error loading data:", error);
       }
@@ -211,9 +173,8 @@ export default {
       try {
         const res = await getOrders();
         this.originEvents = res.data;
-        // console.log(this.originEvents);
         this.orderEvents = await Promise.all(
-          this.originEvents.map(async (item) => {
+          this.originEvents.map(async item => {
             const equName = await this.loadEquInform(item.equipmentId);
             const userName = await this.loadUserInform(item.userId);
             return {
@@ -221,7 +182,7 @@ export default {
               // title: (item.userId + "使用" + item.equipmentId).toString(),
               title: userName + "使用" + equName,
               start: formatDateToISOString(item.startTime).slice(0, -5),
-              end: formatDateToISOString(item.endTime).slice(0, -5),
+              end: formatDateToISOString(item.endTime).slice(0, -5)
             };
           })
         );
@@ -229,28 +190,34 @@ export default {
       } catch (error) {
         console.error("Error loading data:", error);
       }
-    },
+    }
   },
   created() {
     //获取设备列表，第一个日程表选中时需要，第二个日程表选择时需要
-    getEquList().then((res) => {
+    getEquList().then(res => {
       this.equlist = res.data;
       // console.log(this.equlist);
-      this.device_options = this.equlist.map((item) => {
+      this.device_options = this.equlist.map(item => {
         return {
           value: item.equipmentId,
-          label: item.equipmentName,
+          label: item.equipmentName
         };
       });
-      // console.log(this.device_options[0].value);
-      // this.newEqup = this.device_options[0].value
-    }),
-      this.loadOrderData();
+    });
+    this.loadOrderData();
   },
+  mounted() {
+    const currentEquId = this.$route.params.id;
+    getEquInform(currentEquId).then(res => {
+      this.curEquipment = res.data;
+      this.newEqup = currentEquId
+      this.loadEquOrder(currentEquId);
+    });
+  }
 };
 </script>
-  
-  <style scoped>
+
+<style scoped>
 .outer-container {
   display: flex;
   justify-content: center;
@@ -259,25 +226,10 @@ export default {
 .book-container {
   display: flex;
   flex-direction: column;
-  overflow: auto;
-  background-image: url("../../assets/img/qqq6.png");
-  background-repeat: no-repeat;
   width: 100%;
   height: 100%;
-  background-size: 100% 100%;
 }
-.inside {
-  height: 100%;
-  overflow-y: auto;
-}
-.clear {
-  clear: both;
-  height: 0px;
-}
-.button-hide {
-  font-size: 1rem;
-  margin-left: 10px;
-}
+
 .font-class {
   color: #656565;
   margin-top: 0px;
@@ -290,17 +242,6 @@ export default {
   line-height: 70px;
   font-size: 20px;
   font-family: w95fa;
-}
-.top-div {
-  display: flex;
-  flex-direction: row;
-  /* justify-content: space-evenly; */
-  width: 95%;
-  height: auto;
-  margin-top: 20px;
-  margin-bottom: 25px;
-  color: #656565;
-  /* 可以根据需要进行其他样式设置 */
 }
 .book-title {
   margin-left: 20px;
@@ -319,9 +260,6 @@ export default {
 .fullcalendar-area {
   display: flex;
   flex-direction: row;
-  /* overflow-x: auto; */
-  width: 100%;
-  height: auto;
 }
 
 .content-area {
@@ -331,15 +269,15 @@ export default {
 
 .schedular-area {
   width: 100%;
-  height: fit-content;
-  /* overflow: scroll; */
+  height: 100%;
 }
 .schedular {
-  height: 100vh;
+  height: 70%;
   color: #393939;
   font-size: 15px;
   overflow: auto;
 }
+
 .button-area {
   margin: 10px;
 }
