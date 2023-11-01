@@ -177,7 +177,7 @@ export default {
         headerToolbar: {
           left: "prev next today", //进行前后日子选择，以及跳到今天
           center: "title",
-          right: "timeGridWeek,timeGridDay"
+          right: "",
         },
 
         initialView: "timeGridWeek", //以日程图的方式初始化fullcalendar
