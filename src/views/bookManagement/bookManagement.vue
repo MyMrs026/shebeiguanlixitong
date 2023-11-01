@@ -2,7 +2,7 @@
   <div class="outer-container">
     <div class="book-container">
       <!-- 预约管理部分分为两个部分，上半部分为子导航条，下半部分包括当前用户预约设备的日程表、设备被预约的日程表等 -->
-      <!-- 第一个 div 的内容 -->
+      <!-- 当前设备的名称 -->
       <div class="book-title">
         <p>当前设备 {{ curEquipment.equipmentName }}</p>
       </div>
