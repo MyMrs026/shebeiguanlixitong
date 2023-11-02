@@ -2,25 +2,6 @@
   <div class="outer-container">
     <div class="bg">
       <el-tabs type="border-card">
-        <el-tab-pane label="基本信息">
-
-          <el-descriptions :column=1>
-            <el-descriptions-item label="头像">
-              <div class="block"><el-avatar
-                  :size="50"
-                  :src="circleUrl"
-                ></el-avatar></div>
-            </el-descriptions-item>
-            <el-descriptions-item label="昵称">kooriookami</el-descriptions-item>
-            <el-descriptions-item label="性别">男</el-descriptions-item>
-            <el-descriptions-item label="地区">
-              苏州市
-            </el-descriptions-item>
-            <el-descriptions-item label="邮箱">
-              12345@163.com
-            </el-descriptions-item>
-          </el-descriptions>
-        </el-tab-pane>
 
         <el-tab-pane
           label="用户账户"
@@ -73,9 +54,6 @@ export default {
     return {
       balance: 0,
       totalexpend: 0,
-      // totalincome:0,
-      circleUrl:
-        "https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png",
       expendRecord: [
         {
           date: "2016-05-02",

@@ -21,14 +21,15 @@ export function getequOrders(id) {
 }
 
 //设备预约
-export function makeOrder(endTime,equipmentId,startTime){
+export function makeOrder(endTime,equipmentId,startTime,projectId){
   return request ({
     url:'/equipment/order',
     method:'post',
     data: {
       endTime:endTime,
       equipmentId:equipmentId,
-      startTime:startTime
+      startTime:startTime,
+      projectId:projectId
     }
   })
 }

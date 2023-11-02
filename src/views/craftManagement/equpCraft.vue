@@ -20,11 +20,9 @@
         >
           <img
             v-bind:src="equipment.equipmentImageUrl"
-            style="width: 100%; height: 100%; float: left; max-height: 200px"
+            style="object-fit:contain;width: 100%; height: 100%; float: left; max-height: 200px"
             @click="gotoDeviceDetail(equipment.equipmentId)"
           />
-          设备名称：{{ equipment.equipmentName }}
-          <br />
           <router-link :to="'/book/' + equipment.equipmentId">
             <el-button
               type="primary"
@@ -39,6 +37,15 @@
               size="small"
             >立即测试</el-button>
           </router-link>
+          <router-link to="/train">
+            <el-button
+              type="primary"
+              plain
+              size="small"
+            >培训预约</el-button>
+          </router-link>
+          <br />
+          设备名称：{{ equipment.equipmentName }}
         </li>
       </ul>
     </div>

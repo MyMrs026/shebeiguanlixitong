@@ -78,7 +78,7 @@ export default {
               >项目管理</el-button
             >
           </router-link>
-          <router-link to="/equp">
+          <router-link to="/craft/equcraft">
             <el-button class="custom-button" type="info" round size="small"
               >设备管理</el-button
             >
@@ -91,6 +91,21 @@ export default {
           <router-link to="/train">
             <el-button class="custom-button" type="info" round size="small"
               >安全培训</el-button
+            >
+          </router-link>
+          <router-link to="/informationDisplay">
+            <el-button class="custom-button" type="info" round size="small"
+              >个人信息展示</el-button
+            >
+          </router-link>
+          <router-link to="/personalInfo">
+            <el-button class="custom-button" type="info" round size="small"
+              >个人信息编辑</el-button
+            >
+          </router-link>
+          <router-link to="/organizationInfo">
+            <el-button class="custom-button" type="info" round size="small"
+              >组织信息</el-button
             >
           </router-link>
         </el-col>
