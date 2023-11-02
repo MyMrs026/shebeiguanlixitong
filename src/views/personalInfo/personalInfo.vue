@@ -3,60 +3,43 @@
     <div class="bg-person">
       <h3>个人信息</h3>
       <el-tabs type="border-card">
+        <!-- 分页1.基本资料 -->
         <el-tab-pane label="基本资料">
-          <el-form
-            :label-position="labelPosition"
-            label-width="80px"
-            :model="formLabelAlign"
-            style="width:600px"
-          >
-            <el-form-item label="昵称">
-              <el-input v-model="formLabelAlign.name"></el-input>
-            </el-form-item>
-            <el-form-item label="地区">
-              <el-cascader
-                clearable
-                v-model="formLabelAlign.region"
-                :options="options"
-                @change="handleChange"
-              >
-              </el-cascader>
-            </el-form-item>
-            <el-form-item label="性别">
-              <el-radio-group v-model="formLabelAlign.gender">
-                <el-radio label="男"></el-radio>
-                <el-radio label="女"></el-radio>
-                <el-radio label="保密"></el-radio>
-              </el-radio-group>
-            </el-form-item>
-            <el-form-item
-              label="邮箱"
-              prop="email"
-              :rules="[
-      { message: '请输入邮箱地址', trigger: 'blur' },
-      { type: 'email', message: '请输入正确的邮箱地址', trigger: ['blur', 'change'] }
-    ]"
-            >
-              <el-input v-model="formLabelAlign.email"></el-input>
-            </el-form-item>
-            <br><br>
-            <el-button>保存</el-button>
-          </el-form>
+          <el-form ref="userForm" :model="user" label-width="80px">
+      <el-form-item label="用户名">
+        <el-input v-model="user.username" :disabled="!editMode.username" class="user-input" />
+        <el-button @click="toggleEditMode('username')" v-if="!editMode.username">修改</el-button>
+      </el-form-item>
+      <el-form-item label="电话">
+        <el-input v-model="user.tel" :disabled="!editMode.tel" class="user-input" />
+        <el-button @click="toggleEditMode('tel')" v-if="!editMode.tel">修改</el-button>
+      </el-form-item>
+      <el-form-item label="邮箱">
+        <el-input v-model="user.email" :disabled="!editMode.email" class="user-input"/>
+        <el-button @click="toggleEditMode('email')" v-if="!editMode.email">修改</el-button>
+      </el-form-item>
+      <el-form-item label="机构">
+        <el-input v-model="user.company" :disabled="!editMode.company" class="user-input"/>
+        <el-button @click="toggleEditMode('company')" v-if="!editMode.company">修改</el-button>
+      </el-form-item>
+      <el-form-item label="职业">
+        <el-input v-model="user.job" :disabled="!editMode.job" class="user-input"/>
+        <el-button @click="toggleEditMode('job')" v-if="!editMode.job">修改</el-button>
+      </el-form-item>
+      <el-form-item label="实验室">
+        <el-input v-model="user.labName" :disabled="!editMode.labName" class="user-input"/>
+        <el-button @click="toggleEditMode('labName')" v-if="!editMode.labName">修改</el-button>
+      </el-form-item>
+      <el-form-item label="性别">
+        <el-input v-model="user.gender" :disabled="!editMode.gender" class="user-input"/>
+        <el-button @click="toggleEditMode('gender')" v-if="!editMode.gender">修改</el-button>
+      </el-form-item>
+      <el-button @click="saveUser('userForm')">保存</el-button>
+    </el-form>
+
         </el-tab-pane>
-        <el-tab-pane label="修改头像">
-          <div>
-            <input
-              type="file"
-              @change="handleFileChange"
-              accept="image/*"
-            />
-            <button @click="uploadAvatar">上传头像</button>
-            <div class="block"><el-avatar
-                :size="50"
-                :src="circleUrl"
-              ></el-avatar></div>
-          </div>
-        </el-tab-pane>
+        
+        <!-- 分页2.修改密码 -->
         <el-tab-pane label="修改密码">
           <el-form
             :model="pwdForm"
@@ -105,6 +88,7 @@
             </el-form-item>
           </el-form>
         </el-tab-pane>
+        <!-- 分页3.更换绑定邮箱 -->
         <el-tab-pane label="更换绑定邮箱">
           <div>
             <input
@@ -126,6 +110,7 @@
             <button @click="changeEmail">更换验证</button>
           </div>
         </el-tab-pane>
+        <!-- 分页4.账号注销 -->
         <el-tab-pane label="账号注销">
           <button @click="logout">注销</button>
         </el-tab-pane>
@@ -135,6 +120,7 @@
 </template>
 
 <script>
+import { updateLoginUser,getLoginUserInfo } from "../../network/user";
 export default {
   data() {
     var validatePass = (rule, value, callback) => {
@@ -161,68 +147,17 @@ export default {
       newEmail: "",
       verificationCode: "",
       selectedFile: null, // 存储已选择的文件
-      // 头像的URL
-      circleUrl:
-        "https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png",
-      labelPosition: "right",
-      formLabelAlign: {
-        name: "",
-        region: [],
-        gender: "",
-        email: "",
+      // user:[],//temp
+      editMode: {          //用户信息进入修改模式
+        username: false,
+        tel: false,
+        email: false,
+        company: false,
+        job: false,
+        labName: false,
+        gender: false,
       },
-      options: [
-        {
-          value: "beijing",
-          label: "北京",
-          children: [
-            {
-              value: "dongchengqu",
-              label: "东城区",
-            },
-            {
-              value: "xichengqu",
-              label: "西城区",
-            },
-          ],
-        },
-        {
-          value: "shanghai",
-          label: "上海",
-          children: [
-            {
-              value: "huangpuqu",
-              label: "黄浦区",
-            },
-            {
-              value: "xuhuiqu",
-              label: "徐汇区",
-            },
-            {
-              value: "jinganqu",
-              label: "静安区",
-            },
-          ],
-        },
-        {
-          value: "guangzhou",
-          label: "广州",
-          children: [
-            {
-              value: "liwanqu",
-              label: "荔湾区",
-            },
-            {
-              value: "yuexiuqu",
-              label: "越秀区",
-            },
-            {
-              value: "haizhuqu",
-              label: "海珠区",
-            },
-          ],
-        },
-      ],
+      user: {}, // 保存原始用户数据
       pwdForm: {
         oldpass: "",
         pass: "",
@@ -235,6 +170,47 @@ export default {
     };
   },
   methods: {
+    toggleEditMode(field) {
+      this.editMode[field] = true;
+      // this.user[field] = this.editeduser[field];
+    },
+    saveUser(user) {
+     this.$refs[user].validate((valid) => {
+        if (valid) {
+          const updatedUser = {
+            company: this.user.company,
+            email: this.user.email,
+            gender: this.user.gender,
+            job: this.user.job,
+            labName: this.user.labName,
+            tel: this.user.tel,
+            username: this.user.username,
+          };
+          this.user = updatedUser;
+          updateLoginUser(
+            {
+            company:this.user.company,
+            email:this.user.email,
+            gender:this.user.gender,
+            job:this.user.job,
+            labName:this.user.labName,
+            tel:this.user.tel,
+            username:this.user.username,
+            }
+          )
+            .then((res) => {
+              console.log(res);
+            })
+            .catch((error) => {
+              console.error(error);
+            });
+          alert("提交成功!");
+        } else {
+          alert("请填写完整");
+        }
+      });
+      console.log('保存用户信息:', this.user);
+    },
     handleChange(value) {
       console.log(value);
     },
@@ -288,9 +264,18 @@ export default {
       this.$router.push("/login");
     },
   },
+  mounted(){
+    getLoginUserInfo().then((res) => {
+      this.user = res.data;
+      console.log(this.user);
+    });
+  }
 };
 </script>
 <style scoped>
+.user-input{
+  width:200px;
+}
 .outer-container {
   display: flex;
   justify-content: center;
@@ -299,7 +284,7 @@ export default {
   max-width: 1500px; /* 设置最大宽度 */
   margin: 0 auto; /* 居中 */
 }
-.bg-person{
+.bg-person {
   display: flex;
   flex-direction: column;
   background-image: url("../../assets/img/qqq6.png");

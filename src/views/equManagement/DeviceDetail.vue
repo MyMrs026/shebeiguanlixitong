@@ -16,6 +16,13 @@
         >
       </div>
       <div>
+          <ul class="equUl">
+            <li>联系人:{{equinform.linkman }}</li>
+            <li>联系方式:{{equinform.linkmanTel}}</li>
+            <li>放置地点:{{equinform.placementLocation}}</li>
+          </ul>
+      </div>
+      <div>
         <router-link to="/book">
           <el-button>机时预约</el-button>
         </router-link>
@@ -23,34 +30,58 @@
     </div>
     <!-- 下半部分详细信息 -->
     <div class="devicedown">
-      <p>设备信息</p>
-      <ul
-        class="medium"
-        style="width:50%;height:50%;float:left;margin-top:5px;"
-      >
-        <li>设备名称</li>
-        <li>{{equinform.equipmentName}}</li>
-        <li>设备分类</li>
-            <li>{{equinform.equipmentCategory}}</li>
-            <li>设备功能</li>
-            <li>{{equinform.equipmentFunction}}</li>
-            <li>设备状态</li>
-            <li>{{equinform.equipmentStatus}}</li>
-            <li>实验室名称</li>
-            <li>{{equinform.labName}}</li>
-            <li>联系人</li>
-            <li>{{equinform.linkman }}</li>
-            <li>联系方式</li>
-            <li>{{equinform.linkmanTel}}</li>
-            <li>设备标签</li>
-            <li>{{equinform.machineLabel}}</li>
-            <li>制造厂商</li>
-            <li>{{equinform.manufacturer}}</li>
-            <li>放置地点</li>
-            <li>{{equinform.placementLocation}}</li>
-            <li>机时价格</li>
-            <li>{{equinform.payment}}</li>
-      </ul>
+      <el-descriptions class="margin-top" title="设备信息" :column="3" :size="size" border>
+    <el-descriptions-item>
+      <template slot="label">
+        设备名称
+      </template>
+      {{equinform.equipmentName}}
+    </el-descriptions-item>
+    <el-descriptions-item>
+      <template slot="label">
+        设备分类
+      </template>
+      {{equinform.equipmentCategory}}
+    </el-descriptions-item>
+    <el-descriptions-item>
+      <template slot="label">
+        设备功能
+      </template>
+      {{equinform.equipmentFunction}}
+    </el-descriptions-item>
+    <el-descriptions-item>
+      <template slot="label">
+        
+        设备状态
+      </template>
+      {{equinform.equipmentStatus}}
+    </el-descriptions-item>
+    <el-descriptions-item>
+      <template slot="label">
+        
+        实验室名称
+      </template>
+      {{equinform.labName}}
+    </el-descriptions-item>
+    <el-descriptions-item>
+      <template slot="label">
+        设备标签
+      </template>
+      {{equinform.machineLabel}}
+    </el-descriptions-item>
+    <el-descriptions-item>
+      <template slot="label">
+        制造厂商
+      </template>
+      {{equinform.manufacturer}}
+    </el-descriptions-item>
+    <el-descriptions-item>
+      <template slot="label">
+        机时价格
+      </template>
+      {{equinform.payment}}
+    </el-descriptions-item>
+  </el-descriptions>
     </div>
   </div>
 </template>
@@ -117,5 +148,8 @@ export default {
 .deviceup {
   display: flex;
   flex-direction: row;
+}
+.equUl{
+  list-style-type:none;
 }
 </style>
