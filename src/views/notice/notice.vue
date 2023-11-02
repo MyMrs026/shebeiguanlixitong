@@ -93,7 +93,7 @@
       </div>
     </div>
     <!-- 下半部分为编辑公告内容，只有用户为管理员时才能显示 -->
-    <div class="box-wrap" v-if="this.$store.state.cu_role === 'admin'">
+    <!-- <div class="box-wrap" v-if="this.$store.state.cu_role === 'admin'">
       
       <div class="box-main">
         <div class="right-box-main">
@@ -138,7 +138,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
     </div>
   </div>
   </div>
@@ -310,7 +310,7 @@ export default {
 .outer-container {
   display: flex;
   justify-content: center;
-  align-items: center;
+  /* align-items: center; */
   margin: 0 auto; /* 居中 */
   height: 100%;
 }
