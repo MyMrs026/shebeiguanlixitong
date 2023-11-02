@@ -7,7 +7,7 @@ import { request } from "./request";
 export function getUserList() {
   return request({
     url:'/system/getUserList',
-    method:'post'
+    method:'get'
   })
 }
 //用户登录
@@ -65,9 +65,17 @@ export function getUserInform(id) {
   })
 }
 //修改当前用户信息
-export function updateLoginUser(){
+export function updateLoginUser(user){
   return request({
     url:'user/updateLoginUser',
-    method: 'put'
+    method: 'put',
+    data:user
+  })
+}
+//获取登录用户信息
+export function getLoginUserInfo(){
+  return request({
+    url:'user/getLoginUserInfo',
+    method: 'get'
   })
 }
