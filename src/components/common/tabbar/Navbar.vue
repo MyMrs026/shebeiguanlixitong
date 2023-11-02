@@ -78,7 +78,7 @@ export default {
               >项目管理</el-button
             >
           </router-link>
-          <router-link to="/equp">
+          <router-link to="/craft/equcraft">
             <el-button class="custom-button" type="info" round size="small"
               >设备管理</el-button
             >

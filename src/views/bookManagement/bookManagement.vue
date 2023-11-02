@@ -2,13 +2,14 @@
   <div class="outer-container">
     <div class="book-container">
       <!-- 预约管理部分分为两个部分，上半部分为子导航条，下半部分包括当前用户预约设备的日程表、设备被预约的日程表等 -->
-      <!-- 当前设备的名称 -->
-      <div class="book-title">
-        <p>当前设备 {{ curEquipment.equipmentName }}</p>
-      </div>
+
       <!-- 第二个 div 的内容 -->
       <div class="fullcalendar-area">
         <div class="content-area">
+          <!-- 当前用户的名称 -->
+          <div class="book-title">
+            <p>当前用户 {{ curUsername }}</p>
+          </div>
           <div class="schedular-area">
             <!-- 调用日程表在这里 -->
             <Schedular
@@ -22,6 +23,26 @@
           </div>
         </div>
         <div class="content-area">
+          <div class="top-content2">
+            <div style="font-size: 20px; color: #6d6c6c;">
+            <p>当前设备 {{ curEquipment.equipmentName }}</p>
+          </div>
+          <el-select
+            v-model="newEqup"
+            class="custom-select"
+            placeholder="请选择设备"
+            @change="equSelectChange"
+          >
+            <el-option
+              v-for="item in device_options"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+            >
+            </el-option>
+          </el-select>
+          </div>
+          
           <div class="schedular-area">
             <Schedular
               :events="orderEvents2"
@@ -44,7 +65,7 @@ import { formatDateToISOString } from "../../common/formatDateToISOString";
 
 export default {
   components: {
-    Schedular
+    Schedular,
   },
   data() {
     return {
@@ -58,7 +79,7 @@ export default {
             text: "今天",
             onClick(picker) {
               picker.$emit("pick", new Date());
-            }
+            },
           },
           {
             text: "昨天",
@@ -66,7 +87,7 @@ export default {
               const date = new Date();
               date.setTime(date.getTime() - 3600 * 1000 * 24);
               picker.$emit("pick", date);
-            }
+            },
           },
           {
             text: "一周前",
@@ -74,9 +95,9 @@ export default {
               const date = new Date();
               date.setTime(date.getTime() - 3600 * 1000 * 24 * 7);
               picker.$emit("pick", date);
-            }
-          }
-        ]
+            },
+          },
+        ],
       },
       value1: this.getCurrentDate(), //日期选择器传回来的数据
       newEqup: "",
@@ -87,7 +108,8 @@ export default {
       orderEvents: [], //将数据库中读出来的事件调整后的格式放到这个数组下,此数组存放是当前登录用户的所有预约记录
       orderEvents2: [], //此数组存放的是不同设备的所有预约记录
       eventGuid: 0,
-      curEquipment: {} //当前设备
+      curEquipment: {}, //当前设备
+      curUsername: "",
     };
   },
   methods: {
@@ -109,10 +131,7 @@ export default {
       const now = new Date();
       const year = now.getFullYear();
       const month = (now.getMonth() + 1).toString().padStart(2, "0");
-      const day = now
-        .getDate()
-        .toString()
-        .padStart(2, "0");
+      const day = now.getDate().toString().padStart(2, "0");
       return `${year}-${month}-${day}`;
     },
 
@@ -153,13 +172,13 @@ export default {
         this.originEvents2 = res.data;
         // console.log(this.originEvents2);
         this.orderEvents2 = await Promise.all(
-          this.originEvents2.map(async item => {
+          this.originEvents2.map(async (item) => {
             const userName = await this.loadUserInform(item.userId);
             return {
               id: item.equipmentOrderId.toString(),
               title: "已被" + userName + "预约",
               start: formatDateToISOString(item.startTime).slice(0, -5),
-              end: formatDateToISOString(item.endTime).slice(0, -5)
+              end: formatDateToISOString(item.endTime).slice(0, -5),
             };
           })
         );
@@ -174,15 +193,16 @@ export default {
         const res = await getOrders();
         this.originEvents = res.data;
         this.orderEvents = await Promise.all(
-          this.originEvents.map(async item => {
+          this.originEvents.map(async (item) => {
             const equName = await this.loadEquInform(item.equipmentId);
             const userName = await this.loadUserInform(item.userId);
+            this.curUsername = userName;
             return {
               id: item.equipmentOrderId.toString(),
               // title: (item.userId + "使用" + item.equipmentId).toString(),
               title: userName + "使用" + equName,
               start: formatDateToISOString(item.startTime).slice(0, -5),
-              end: formatDateToISOString(item.endTime).slice(0, -5)
+              end: formatDateToISOString(item.endTime).slice(0, -5),
             };
           })
         );
@@ -190,17 +210,17 @@ export default {
       } catch (error) {
         console.error("Error loading data:", error);
       }
-    }
+    },
   },
   created() {
     //获取设备列表，第一个日程表选中时需要，第二个日程表选择时需要
-    getEquList().then(res => {
+    getEquList().then((res) => {
       this.equlist = res.data;
-      // console.log(this.equlist);
-      this.device_options = this.equlist.map(item => {
+      console.log(this.equlist);
+      this.device_options = this.equlist.map((item) => {
         return {
           value: item.equipmentId,
-          label: item.equipmentName
+          label: item.equipmentName,
         };
       });
     });
@@ -208,12 +228,12 @@ export default {
   },
   mounted() {
     const currentEquId = this.$route.params.id;
-    getEquInform(currentEquId).then(res => {
+    getEquInform(currentEquId).then((res) => {
       this.curEquipment = res.data;
-      this.newEqup = currentEquId
+      // this.newEqup = currentEquId;
       this.loadEquOrder(currentEquId);
     });
-  }
+  },
 };
 </script>
 
@@ -237,12 +257,12 @@ export default {
   line-height: 55px;
   font-size: 20px;
 }
-.select-newequ {
-  margin-left: 20px;
-  line-height: 70px;
-  font-size: 20px;
-  font-family: w95fa;
+
+.top-content2 {
+  display: flex;
+  flex-direction: row;
 }
+
 .book-title {
   margin-left: 20px;
   font-size: 20px;
@@ -276,6 +296,10 @@ export default {
   color: #393939;
   font-size: 15px;
   overflow: auto;
+}
+
+.custom-select{
+  width: 200px;
 }
 
 .button-area {
