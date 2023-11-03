@@ -538,7 +538,7 @@ export default {
         }
       });
       this.dialogFormVisible2 = false;
-      // location.reload();
+      location.reload();
       this.$message({
         message: "预约成功！",
         type: "success",
