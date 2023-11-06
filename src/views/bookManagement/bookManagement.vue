@@ -27,7 +27,7 @@
             <div style="font-size: 20px; color: #6d6c6c;">
             <p>当前设备 {{ curEquipment.equipmentName }}</p>
           </div>
-          <el-select
+          <!-- <el-select
             v-model="newEqup"
             class="custom-select"
             placeholder="请选择设备"
@@ -38,9 +38,9 @@
               :key="item.value"
               :label="item.label"
               :value="item.value"
-            >
+            >s
             </el-option>
-          </el-select>
+          </el-select> -->
           </div>
           
           <div class="schedular-area">
@@ -141,7 +141,7 @@ export default {
       this.loadEquOrder(value);
     },
 
-    //根据id获取设备信息
+    //根据id获取设备名
     async loadEquInform(id) {
       try {
         const res = await getEquInform(id);
@@ -153,7 +153,7 @@ export default {
       }
     },
 
-    //根据id获取用户信息
+    //根据id获取用户名
     async loadUserInform(id) {
       try {
         const res = await getUserInform(id);

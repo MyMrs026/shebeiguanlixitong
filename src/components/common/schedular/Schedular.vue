@@ -217,7 +217,7 @@ export default {
 
         initialView: "timeGridWeek", //以日程图的方式初始化fullcalendar
 
-        hiddenDays: [0, 6],
+        // hiddenDays: [0, 6],
         events: this.events, // 初始化事件
         editable: true, //事件可以编辑
         eventStartEditable: false, //禁止使用拖动的方式修改事件的开始时间
@@ -245,14 +245,14 @@ export default {
       device_options: [],
       equlist: [],
       EventForm: {
-        date: "",//将日期初始化为今天
+        date: "", //将日期初始化为今天
         startTime: "",
         endTime: "",
         equid: this.$route.params.id,
         projectId: null,
       },
       EventForm2: {
-        date: new Date(),//将日期初始化为今天
+        date: new Date(), //将日期初始化为今天
         startTime: "",
         endTime: "",
         equid: this.$route.params.id,
@@ -274,8 +274,8 @@ export default {
             return true;
           }
           // 禁用周末日期
-          const day = time.getDay(); // 获取日期对应的星期几，0 表示星期日，1 表示星期一，依此类推
-          return day === 0 || day === 6; // 返回 true 表示禁用周末日期
+          // const day = time.getDay(); // 获取日期对应的星期几，0 表示星期日，1 表示星期一，依此类推
+          // return day === 0 || day === 6; // 返回 true 表示禁用周末日期
         },
       },
 
@@ -337,6 +337,15 @@ export default {
       return `${hours}:${minutes}`;
     },
 
+    //提取选中的日期
+    extractedDate(date) {
+      let dateTime = new Date(date);
+      // 提取日期部分并格式化为 "YYYY-MM-DD" 格式
+      let formatDate= dateTime.toISOString().split("T")[0];
+      // 如果需要，你还可以移除时区信息
+      formatDate = formatDate.replace(/-/g, "/");
+      return formatDate
+    },
     //其实是日期和具体时间的拼接罢了
     formatDateTime(date, time) {
       const eventDate = new Date(date);
@@ -377,10 +386,10 @@ export default {
 
     //拖拽选择事件触发
     handleDateSelect(selectInfo) {
+      console.log(selectInfo);
       // 获取拖选区域的开始时间和结束时间
       const start = new Date(selectInfo.startStr);
       const end = new Date(selectInfo.endStr);
-
       // 检查拖选的时间范围是否与已有事件冲突
       const isConflict = this.events.some((event) => {
         const eventStart = event.start;
@@ -400,12 +409,17 @@ export default {
 
       this.EventForm2.startTime = this.extractedTime(start);
       this.EventForm2.endTime = this.extractedTime(end);
+      this.EventForm2.date = this.extractedDate(start);
       console.log(
         "拖选事件的开始时间:" +
           this.EventForm2.startTime +
           ",结束时间:" +
-          this.EventForm2.endTime
+          this.EventForm2.endTime +
+          ",日期:" + 
+          this.EventForm2.date
       );
+
+      // this.EventForm2.date = calendar
     },
 
     //点击事件时触发的函数,直接打开一个对话框
@@ -456,7 +470,7 @@ export default {
                 this.EventForm.date,
                 this.EventForm.endTime
               ),
-              projectId:this.EventForm.projectId
+              projectId: this.EventForm.projectId,
             };
             console.log(this.formatEvent);
             removeOrder(this.selectEventId).then((res) => {
@@ -483,19 +497,23 @@ export default {
     },
 
     //编辑事件中删除按钮的实现
-    delClick() {
+    async delClick() {
       if (confirm(`你确定要删除这个事件吗？ '${this.editEvent.title}'`)) {
-        //撤销预约逻辑
-        removeOrder(this.selectEventId).then((res) => {
-          console.log(res);
-        });
+        try {
+          const response = await removeOrder(this.selectEventId);
+          console.log(response);
+          // 成功删除事件后，刷新Fullcalendar
+          // this.$refs.calendar.fullCalendar("refetchEvents");
+          this.$message({
+            message: "删除成功",
+            type: "success",
+          });
+          location.reload();
+        } catch (error) {
+          console.error(error);
+        }
       }
       this.dialogFormVisible = false;
-      location.reload();
-      this.$message({
-        message: "删除成功",
-        type: "success",
-      });
     },
 
     //新建事件中的申请提交
@@ -515,7 +533,7 @@ export default {
                 this.EventForm2.date,
                 this.EventForm2.endTime
               ),
-              projectId: this.EventForm2.projectId
+              projectId: this.EventForm2.projectId,
             };
 
             console.log(this.formatEvent);
@@ -527,6 +545,10 @@ export default {
             )
               .then((res) => {
                 console.log(res);
+                this.events.push(this.formatEvent);
+                console.log(this.events);
+                // this.$refs.calendar.fullCalendar("refetchEvents");
+                location.reload();
               })
               .catch((error) => {
                 console.error(error);
