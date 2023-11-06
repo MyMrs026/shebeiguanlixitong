@@ -44,27 +44,12 @@
           </div>
         </div>
       </div>
+
       <div class="text-home">
-        <p id="lab-map" style="margin-top: 8rem">超净室平面图</p>
-      </div>
-      <div
-        style="
-          display: flex;
-          height: 100%;
-          justify-content: center;
-          align-items: center;
-        "
-      >
-        <img
-          src="../../assets/img/超净室.jpg"
-          style="height: 100%; width: 80%; text-align: center"
-        />
-      </div>
-      <div class="text-home" style="background-color: rgb(222, 230, 244)">
         <p id="equ-use">设备使用情况</p>
       </div>
       <!-- 设备使用表(目前：写死的) -->
-      <div class="table-equ-use" style="background-color: rgb(222, 230, 244)">
+      <div class="table-equ-use">
         <el-table
           border
           :data="equpsUse"
@@ -85,25 +70,26 @@
           </el-table-column>
         </el-table>
       </div>
-      <div class="text-home" style="background-color: rgb(222, 230, 244)">
+      <div class="text-home">
         <p id="book-use">我的预约</p>
       </div>
       <!-- 用户个人的预约表(目前：写死的) -->
       <div class="table-book-use" style="background-color: rgb(222, 230, 244)">
-        <el-table :data="myBooks" class="table-book">
-          <el-table-column prop="equp" label="设备" width="140">
+        <el-table :data="orderEvents" class="table-book">
+          <el-table-column prop="equName" label="设备名" width="140">
           </el-table-column>
-          <el-table-column prop="status" label="状态" width="110">
+          <el-table-column prop="userName" label="用户名" width="140">
           </el-table-column>
-          <el-table-column prop="user" label="用户/操作人员" width="140">
+          <el-table-column prop="start" label="开始时间" width="140">
           </el-table-column>
-          <el-table-column prop="start" label="开始" width="140">
+          <el-table-column prop="end" label="结束时间" width="140">
           </el-table-column>
-          <el-table-column prop="end" label="结束" width="140">
-          </el-table-column>
-          <el-table-column prop="cal" label="规划方式" width="125">
-          </el-table-column>
-          <el-table-column prop="action" label="动作" width="115">
+          <el-table-column prop="operate" label="修改预约" width="125">
+            <template slot-scope="scope">
+              <router-link :to="'/book/' + scope.row.equId">
+                <el-button type="info">修改预约</el-button>
+              </router-link>
+            </template>
           </el-table-column>
           <el-table-column prop="operate" label="快捷操作" width="125">
             <router-link to="/test">
@@ -133,41 +119,21 @@
           </el-table-column>
         </el-table>
       </div>
-      <!-- 设备故障处理 -->
-      <div class="text-home" v-if="this.$store.state.cu_role === 'admin'">
-        <p>设备维修记录</p>
+      <div class="text-home">
+        <p id="lab-map" style="margin-top: 8rem">超净室平面图</p>
       </div>
-      <div class="table-dch-use" v-if="this.$store.state.cu_role === 'admin'">
-        <el-table :data="MaintainData" class="table-book" border>
-          <el-table-column
-            prop="deviceMaintenanceId"
-            label="设备维修ID"
-            width="100"
-          >
-          </el-table-column>
-          <el-table-column prop="deviceId" label="设备ID" width="100">
-          </el-table-column>
-          <el-table-column prop="content" label="内容" width="150">
-          </el-table-column>
-          <el-table-column
-            prop="expectedEndTime"
-            label="预期结束时间"
-            width="120"
-          >
-          </el-table-column>
-          <el-table-column prop="startTime" label="开始时间" width="170">
-          </el-table-column>
-          <el-table-column
-            prop="actualEndTime"
-            label="实际结束时间"
-            width="125"
-          >
-          </el-table-column>
-          <el-table-column prop="maintenanceStaff" label="维修人员" width="170">
-          </el-table-column>
-          <el-table-column prop="remark" label="评价" width="100">
-          </el-table-column>
-        </el-table>
+      <div
+        style="
+          display: flex;
+          height: 100%;
+          justify-content: center;
+          align-items: center;
+        "
+      >
+        <img
+          src="../../assets/img/超净室.jpg"
+          style="height: 100%; width: 80%; text-align: center"
+        />
       </div>
     </div>
   </div>
@@ -175,6 +141,11 @@
 
 <script>
 import { getNoticeList, getLatest } from "../../network/notice";
+import { getEquInform } from "../../network/equpment";
+import { getOrders } from "../../network/book";
+import { getUserInform } from "../../network/user";
+import { formatDateToISOString } from "../../common/formatDateToISOString";
+
 export default {
   data() {
     return {
@@ -186,13 +157,13 @@ export default {
       equpsStatus: [],
       notice: [], //公告信息，用来接收从axios传过来的公告信息
       MaintainData: [], //设备维保记录
-
       size: "",
       notice_content: "",
       notices: [],
       latestNotice: {},
-      // currentPage: 1,
-      // perPage: 5,
+      originEvents: [], //从数据库读出来的数据在这存放
+      orderEvents: [], //将数据库中读出来的事件调整后的格式放到这个数组下,此数组存放是当前登录用户的所有预约记录
+      curUsername: "", // 当前登录用户的名字
     };
   },
   methods: {
@@ -216,6 +187,55 @@ export default {
       }
       return "";
     },
+
+    //根据id获取设备名
+    async loadEquInform(id) {
+      try {
+        const res = await getEquInform(id);
+        const equName = res.data.equipmentName.toString();
+        // console.log(equName);
+        return equName;
+      } catch (error) {
+        console.error("Error loading data:", error);
+      }
+    },
+
+    //根据id获取用户名
+    async loadUserInform(id) {
+      try {
+        const res = await getUserInform(id);
+        const userName = res.data.username.toString();
+        // console.log(userName);
+        return userName;
+      } catch (error) {
+        console.error("Error loading data:", error);
+      }
+    },
+
+    //根据目前登录用户信息获取预约记录
+    async loadOrderData() {
+      try {
+        const res = await getOrders();
+        this.originEvents = res.data;
+        this.orderEvents = await Promise.all(
+          this.originEvents.map(async (item) => {
+            const equName = await this.loadEquInform(item.equipmentId);
+            const userName = await this.loadUserInform(item.userId);
+            this.curUsername = userName;
+            return {
+              equId: item.equipmentId,
+              equName: equName,
+              userName: userName,
+              start: formatDateToISOString(item.startTime).slice(0, -5),
+              end: formatDateToISOString(item.endTime).slice(0, -5),
+            };
+          })
+        );
+        console.log(this.orderEvents);
+      } catch (error) {
+        console.error("Error loading data:", error);
+      }
+    },
   },
   computed: {
     // paginatedData() {
@@ -230,20 +250,21 @@ export default {
     // this.equpsUse = this.$store.state.equpsUse;
     // this.myBooks = this.$store.state.myBooks;
     // this.equpsStatus = this.$store.state.equpsStatus;
-    getNoticeList().then((res) => {
+    getNoticeList().then(res => {
       this.notices = res.data;
     });
-    getLatest().then((res) => {
+    getLatest().then(res => {
       this.latestNotice = res.data;
     });
+    this.loadOrderData();
   },
   filters: {
     //处理日期的显示格式问题，使日期以xxxx年xx月xx日的形式显示
-    formatDate: function (value) {
+    formatDate: function(value) {
       return new Date(value).toLocaleDateString();
-    },
+    }
   },
-  mounted() {},
+  mounted() {}
 };
 </script>
 
@@ -254,7 +275,7 @@ export default {
   align-items: center;
 }
 .total {
-  background-image: url("../../assets/img/qqq6.png");
+  /* background-image: url("../../assets/img/qqq6.png"); */
   width: 100%;
   margin-bottom: 2rem;
   height: 100%;
@@ -343,6 +364,7 @@ export default {
 }
 
 .text-home {
+  margin-left: 16rem;
   margin-top: 0rem;
   padding-left: 3.125rem;
   line-height: 3.4375rem;

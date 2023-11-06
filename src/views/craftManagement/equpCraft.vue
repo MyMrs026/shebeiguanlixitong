@@ -223,6 +223,7 @@ export default {
   border-radius: 10px; /* 添加圆角效果，可以根据需要调整 */
   /* 添加其他样式，例如边框 */
   border: 1px solid #ccc; /* 添加边框 */
+  list-style: none;
   padding-bottom: 30px;
 }
 .equ-item + .equ-item {
