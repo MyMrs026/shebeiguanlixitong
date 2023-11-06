@@ -30,7 +30,7 @@
     </div>
     <!-- 下半部分详细信息 -->
     <div class="devicedown">
-      <el-descriptions class="margin-top" title="设备信息" :column="3" :size="size" border>
+      <el-descriptions class="margin-top" title="设备信息" :column="3"  border>
     <el-descriptions-item>
       <template slot="label">
         设备名称
