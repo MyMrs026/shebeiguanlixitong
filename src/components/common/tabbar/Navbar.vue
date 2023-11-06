@@ -93,21 +93,7 @@ export default {
               >安全培训</el-button
             >
           </router-link>
-          <router-link to="/informationDisplay">
-            <el-button class="custom-button" type="info" round size="small"
-              >个人信息展示</el-button
-            >
-          </router-link>
-          <router-link to="/personalInfo">
-            <el-button class="custom-button" type="info" round size="small"
-              >个人信息编辑</el-button
-            >
-          </router-link>
-          <router-link to="/organizationInfo">
-            <el-button class="custom-button" type="info" round size="small"
-              >组织信息</el-button
-            >
-          </router-link>
+          
         </el-col>
       </el-col>
       <el-col
