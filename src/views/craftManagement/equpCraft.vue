@@ -18,11 +18,13 @@
           v-for="(equipment,index) in equinform"
           :key="equipment.equipmentId"
         >
+        <div class="image-container" >
           <img
             v-bind:src="equipment.equipmentImageUrl"
             style="object-fit:contain;width: 100%; height: 100%; float: left; max-height: 200px"
             @click="gotoDeviceDetail(equipment.equipmentId)"
           />
+          </div>
           <router-link :to="'/book/' + equipment.equipmentId">
             <el-button
               type="primary"
@@ -292,6 +294,15 @@ export default {
 
 div /deep/ .el-card.is-always-shadow {
   width: 50%;
+}
+.image-container {
+  width: 100%; /* 设置容器宽度 */
+  max-height: 200px; /* 设置最大高度，控制图片的高度 */
+  background-color: white; /* 设置占位背景颜色为白色 */
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .image {
   width: 50%;

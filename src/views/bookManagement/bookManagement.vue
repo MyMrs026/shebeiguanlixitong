@@ -211,6 +211,14 @@ export default {
         console.error("Error loading data:", error);
       }
     },
+
+    async loadData() {
+      try {
+        await this.loadOrderData()
+      } catch(error) {
+        console.log(1);
+      }
+    }
   },
   created() {
     //获取设备列表，第一个日程表选中时需要，第二个日程表选择时需要
@@ -224,7 +232,7 @@ export default {
         };
       });
     });
-    this.loadOrderData();
+    this.loadData()
   },
   mounted() {
     const currentEquId = this.$route.params.id;

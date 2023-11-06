@@ -544,11 +544,13 @@ export default {
               this.formatEvent.projectId
             )
               .then((res) => {
-                console.log(res);
                 this.events.push(this.formatEvent);
-                console.log(this.events);
                 // this.$refs.calendar.fullCalendar("refetchEvents");
                 location.reload();
+                this.$message({
+                  message: "预约成功！",
+                  type: "success",
+                });
               })
               .catch((error) => {
                 console.error(error);
@@ -560,11 +562,7 @@ export default {
         }
       });
       this.dialogFormVisible2 = false;
-      location.reload();
-      this.$message({
-        message: "预约成功！",
-        type: "success",
-      });
+      
     },
 
     //弹窗中的取消按钮实现
