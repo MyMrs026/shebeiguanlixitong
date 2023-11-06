@@ -44,27 +44,12 @@
           </div>
         </div>
       </div>
+
       <div class="text-home">
-        <p id="lab-map" style="margin-top: 8rem">超净室平面图</p>
-      </div>
-      <div
-        style="
-          display: flex;
-          height: 100%;
-          justify-content: center;
-          align-items: center;
-        "
-      >
-        <img
-          src="../../assets/img/超净室.jpg"
-          style="height: 100%; width: 80%; text-align: center"
-        />
-      </div>
-      <div class="text-home" style="background-color: rgb(222, 230, 244)">
         <p id="equ-use">设备使用情况</p>
       </div>
       <!-- 设备使用表(目前：写死的) -->
-      <div class="table-equ-use" style="background-color: rgb(222, 230, 244)">
+      <div class="table-equ-use">
         <el-table
           border
           :data="equpsUse"
@@ -85,7 +70,7 @@
           </el-table-column>
         </el-table>
       </div>
-      <div class="text-home" style="background-color: rgb(222, 230, 244)">
+      <div class="text-home">
         <p id="book-use">我的预约</p>
       </div>
       <!-- 用户个人的预约表(目前：写死的) -->
@@ -134,41 +119,21 @@
           </el-table-column>
         </el-table>
       </div>
-      <!-- 设备故障处理 -->
-      <div class="text-home" v-if="this.$store.state.cu_role === 'admin'">
-        <p>设备维修记录</p>
+      <div class="text-home">
+        <p id="lab-map" style="margin-top: 8rem">超净室平面图</p>
       </div>
-      <div class="table-dch-use" v-if="this.$store.state.cu_role === 'admin'">
-        <el-table :data="MaintainData" class="table-book" border>
-          <el-table-column
-            prop="deviceMaintenanceId"
-            label="设备维修ID"
-            width="100"
-          >
-          </el-table-column>
-          <el-table-column prop="deviceId" label="设备ID" width="100">
-          </el-table-column>
-          <el-table-column prop="content" label="内容" width="150">
-          </el-table-column>
-          <el-table-column
-            prop="expectedEndTime"
-            label="预期结束时间"
-            width="120"
-          >
-          </el-table-column>
-          <el-table-column prop="startTime" label="开始时间" width="170">
-          </el-table-column>
-          <el-table-column
-            prop="actualEndTime"
-            label="实际结束时间"
-            width="125"
-          >
-          </el-table-column>
-          <el-table-column prop="maintenanceStaff" label="维修人员" width="170">
-          </el-table-column>
-          <el-table-column prop="remark" label="评价" width="100">
-          </el-table-column>
-        </el-table>
+      <div
+        style="
+          display: flex;
+          height: 100%;
+          justify-content: center;
+          align-items: center;
+        "
+      >
+        <img
+          src="../../assets/img/超净室.jpg"
+          style="height: 100%; width: 80%; text-align: center"
+        />
       </div>
     </div>
   </div>
@@ -285,21 +250,21 @@ export default {
     // this.equpsUse = this.$store.state.equpsUse;
     // this.myBooks = this.$store.state.myBooks;
     // this.equpsStatus = this.$store.state.equpsStatus;
-    getNoticeList().then((res) => {
+    getNoticeList().then(res => {
       this.notices = res.data;
     });
-    getLatest().then((res) => {
+    getLatest().then(res => {
       this.latestNotice = res.data;
     });
     this.loadOrderData();
   },
   filters: {
     //处理日期的显示格式问题，使日期以xxxx年xx月xx日的形式显示
-    formatDate: function (value) {
+    formatDate: function(value) {
       return new Date(value).toLocaleDateString();
-    },
+    }
   },
-  mounted() {},
+  mounted() {}
 };
 </script>
 
@@ -310,7 +275,7 @@ export default {
   align-items: center;
 }
 .total {
-  background-image: url("../../assets/img/qqq6.png");
+  /* background-image: url("../../assets/img/qqq6.png"); */
   width: 100%;
   margin-bottom: 2rem;
   height: 100%;
@@ -399,6 +364,7 @@ export default {
 }
 
 .text-home {
+  margin-left: 16rem;
   margin-top: 0rem;
   padding-left: 3.125rem;
   line-height: 3.4375rem;
