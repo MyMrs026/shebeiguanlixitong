@@ -110,6 +110,9 @@ export default {
     return {
       equinform: [],
       currentDate: new Date(),
+      currentPage:1,
+      perPage: 8,
+      goToPageNumber: "",
       message: "设备工艺展示",
       apiUrl : "http://47.98.160.222:8080/api/file/uploadImage",
       imageUrl: "",
