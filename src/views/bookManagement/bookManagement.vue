@@ -26,10 +26,10 @@
         </div>
         <div class="content-area">
           <div class="top-content2">
-            <div style="font-size: 20px; color: #6d6c6c;">
-            <p>当前设备 {{ curEquipment.equipmentName }}</p>
-          </div>
-          <!-- <el-select
+            <div style="font-size: 20px; color: #6d6c6c">
+              <p>当前设备 {{ curEquipment.equipmentName }}</p>
+            </div>
+            <!-- <el-select
             v-model="newEqup"
             class="custom-select"
             placeholder="请选择设备"
@@ -153,29 +153,24 @@ export default {
         console.error("Error loading data:", error);
       }
     },
-
+    
     //根据id获取用户名
-    async loadUserInform(id) {
+   async loadUserInform(id) {
       try {
+        let userName = ""
         const res = await getUserInform(id);
-        const userName = res.data.username.toString();
-        return userName;
+        if( res.data ){
+          userName = res.data.username.toString();
+          // console.log(userName);
+          return userName;
+        }else{
+          console.log("该用户已被删除");
+        }       
       } catch (error) {
         console.error("Error loading data:", error);
       }
     },
-
-    async loadLoginUserInfo() {
-      try {
-        const res = await getLoginUserInfo();
-        const userName = res.data.username.toString();
-        this.curUsername = userName
-        return userName;
-      } catch (error) {
-        console.error("Error loading data:", error);
-      }
-    },
-
+    
     //根据设备id获取该设备的预约信息
     async loadEquOrder(id) {
       try {
@@ -187,6 +182,7 @@ export default {
             return {
               id: item.equipmentOrderId.toString(),
               title: "已被" + userName + "预约",
+              projectId: item.projectId,
               start: formatDateToISOString(item.startTime).slice(0, -5),
               end: formatDateToISOString(item.endTime).slice(0, -5),
             };
@@ -209,6 +205,7 @@ export default {
             return {
               id: item.equipmentOrderId.toString(),
               title: userName + "使用" + equName,
+              projectId: item.projectId,
               start: formatDateToISOString(item.startTime).slice(0, -5),
               end: formatDateToISOString(item.endTime).slice(0, -5),
             };
@@ -310,7 +307,7 @@ export default {
   overflow: auto;
 }
 
-.custom-select{
+.custom-select {
   width: 200px;
 }
 
