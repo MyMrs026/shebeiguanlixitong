@@ -19,6 +19,8 @@
               @make-orders="handleMakeOrders"
               @edit-orders="handleEditOrders"
               @click-events="handleClickEvents"
+              @update-orders="handleUpdataData"
+
             />
           </div>
         </div>
@@ -60,7 +62,7 @@
 import Schedular from "../../components/common/schedular/Schedular";
 import { getEquList, getEquInform } from "../../network/equpment";
 import { getOrders, getequOrders } from "../../network/book";
-import { getUserInform } from "../../network/user";
+import { getLoginUserInfo, getUserInform, login } from "../../network/user";
 import { formatDateToISOString } from "../../common/formatDateToISOString";
 
 export default {
@@ -146,15 +148,14 @@ export default {
       try {
         const res = await getEquInform(id);
         const equName = res.data.equipmentName.toString();
-        // console.log(equName);
         return equName;
       } catch (error) {
         console.error("Error loading data:", error);
       }
     },
-
+    
     //根据id获取用户名
-    async loadUserInform(id) {
+   async loadUserInform(id) {
       try {
         let userName = ""
         const res = await getUserInform(id);
@@ -169,13 +170,12 @@ export default {
         console.error("Error loading data:", error);
       }
     },
-
+    
     //根据设备id获取该设备的预约信息
     async loadEquOrder(id) {
       try {
         const res = await getequOrders(id);
         this.originEvents2 = res.data;
-        // console.log(this.originEvents2);
         this.orderEvents2 = await Promise.all(
           this.originEvents2.map(async (item) => {
             const userName = await this.loadUserInform(item.userId);
@@ -202,10 +202,8 @@ export default {
           this.originEvents.map(async (item) => {
             const equName = await this.loadEquInform(item.equipmentId);
             const userName = await this.loadUserInform(item.userId);
-            this.curUsername = userName;
             return {
               id: item.equipmentOrderId.toString(),
-              // title: (item.userId + "使用" + item.equipmentId).toString(),
               title: userName + "使用" + equName,
               projectId: item.projectId,
               start: formatDateToISOString(item.startTime).slice(0, -5),
@@ -213,17 +211,20 @@ export default {
             };
           })
         );
-        // console.log(this.orderEvents);
       } catch (error) {
         console.error("Error loading data:", error);
       }
     },
+    handleUpdataData() {
+      this.loadOrderData()
+      this.loadEquOrder(this.$route.params.id)
+      console.log("调用父组件");
+    }
   },
   created() {
     //获取设备列表，第一个日程表选中时需要，第二个日程表选择时需要
     getEquList().then((res) => {
       this.equlist = res.data;
-      // console.log(this.equlist);
       this.device_options = this.equlist.map((item) => {
         return {
           value: item.equipmentId,
@@ -231,15 +232,16 @@ export default {
         };
       });
     });
+    this.loadLoginUserInfo();
     this.loadOrderData();
   },
   mounted() {
     const currentEquId = this.$route.params.id;
     getEquInform(currentEquId).then((res) => {
       this.curEquipment = res.data;
-      // this.newEqup = currentEquId;
       this.loadEquOrder(currentEquId);
     });
+
   },
 };
 </script>
