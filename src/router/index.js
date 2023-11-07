@@ -40,7 +40,7 @@ const Error = () => import("../components/common/error/Error.vue");
 const Message = () => import("../views/message/message");
 const MessageDetail = () => import("../views/message/messageDetail.vue");
 const TrainBooksDetail = () => import("../views/message/trainBooksDetail.vue");
-const Notice = () => import("../views/notice/notice.vue")
+const Notice = () => import("../views/notice/notice.vue");
 //1.安装插件
 Vue.use(Router);
 //创建router
@@ -87,7 +87,8 @@ const routes = [
   {
     path: "/book/:id",
     name: "Book",
-    component: Book
+    component: Book,
+
   },
   {
     path: "/train",
@@ -144,7 +145,7 @@ const routes = [
   },
   {
     path: "/notice",
-    name:"Notice",
+    name: "Notice",
     component: Notice
   },
   {
