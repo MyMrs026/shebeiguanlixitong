@@ -24,10 +24,10 @@
         </div>
         <div class="content-area">
           <div class="top-content2">
-            <div style="font-size: 20px; color: #6d6c6c;">
-            <p>当前设备 {{ curEquipment.equipmentName }}</p>
-          </div>
-          <!-- <el-select
+            <div style="font-size: 20px; color: #6d6c6c">
+              <p>当前设备 {{ curEquipment.equipmentName }}</p>
+            </div>
+            <!-- <el-select
             v-model="newEqup"
             class="custom-select"
             placeholder="请选择设备"
@@ -42,7 +42,7 @@
             </el-option>
           </el-select> -->
           </div>
-          
+
           <div class="schedular-area">
             <Schedular
               :events="orderEvents2"
@@ -156,10 +156,15 @@ export default {
     //根据id获取用户名
     async loadUserInform(id) {
       try {
+        let userName = ""
         const res = await getUserInform(id);
-        const userName = res.data.username.toString();
-        // console.log(userName);
-        return userName;
+        if( res.data ){
+          userName = res.data.username.toString();
+          // console.log(userName);
+          return userName;
+        }else{
+          console.log("该用户已被删除");
+        }       
       } catch (error) {
         console.error("Error loading data:", error);
       }
@@ -177,6 +182,7 @@ export default {
             return {
               id: item.equipmentOrderId.toString(),
               title: "已被" + userName + "预约",
+              projectId: item.projectId,
               start: formatDateToISOString(item.startTime).slice(0, -5),
               end: formatDateToISOString(item.endTime).slice(0, -5),
             };
@@ -201,6 +207,7 @@ export default {
               id: item.equipmentOrderId.toString(),
               // title: (item.userId + "使用" + item.equipmentId).toString(),
               title: userName + "使用" + equName,
+              projectId: item.projectId,
               start: formatDateToISOString(item.startTime).slice(0, -5),
               end: formatDateToISOString(item.endTime).slice(0, -5),
             };
@@ -216,7 +223,7 @@ export default {
     //获取设备列表，第一个日程表选中时需要，第二个日程表选择时需要
     getEquList().then((res) => {
       this.equlist = res.data;
-      console.log(this.equlist);
+      // console.log(this.equlist);
       this.device_options = this.equlist.map((item) => {
         return {
           value: item.equipmentId,
@@ -298,7 +305,7 @@ export default {
   overflow: auto;
 }
 
-.custom-select{
+.custom-select {
   width: 200px;
 }
 

@@ -341,10 +341,10 @@ export default {
     extractedDate(date) {
       let dateTime = new Date(date);
       // 提取日期部分并格式化为 "YYYY-MM-DD" 格式
-      let formatDate= dateTime.toISOString().split("T")[0];
+      let formatDate = dateTime.toISOString().split("T")[0];
       // 如果需要，你还可以移除时区信息
       formatDate = formatDate.replace(/-/g, "/");
-      return formatDate
+      return formatDate;
     },
     //其实是日期和具体时间的拼接罢了
     formatDateTime(date, time) {
@@ -415,7 +415,7 @@ export default {
           this.EventForm2.startTime +
           ",结束时间:" +
           this.EventForm2.endTime +
-          ",日期:" + 
+          ",日期:" +
           this.EventForm2.date
       );
 
@@ -425,9 +425,15 @@ export default {
     //点击事件时触发的函数,直接打开一个对话框
     handleEventClick(clickInfo) {
       const clickEvents = () => {
+        // console.log("日期："+this.extractedDate(clickInfo.event.start));
+        // console.log("开始事件："+this.extractedTime(clickInfo.event.start));
+        // console.log("结束时间："+this.extractedTime(clickInfo.event.end));
+        this.EventForm.date = this.extractedDate(clickInfo.event.start);
+        this.EventForm.startTime = this.extractedTime(clickInfo.event.start);
+        this.EventForm.endTime = this.extractedTime(clickInfo.event.end);
         this.openEditModal(clickInfo.event);
         this.selectEventId = clickInfo.event.id;
-        console.log(this.selectEventId);
+        // console.log(this.selectEventId);
       };
       this.$emit("click-events", clickEvents);
     },
@@ -544,11 +550,22 @@ export default {
               this.formatEvent.projectId
             )
               .then((res) => {
-                console.log(res);
-                this.events.push(this.formatEvent);
-                console.log(this.events);
-                // this.$refs.calendar.fullCalendar("refetchEvents");
-                location.reload();
+                if (res.data === null) {
+                  this.$message.error("预约失败,请重新预约");
+                  this.dialogFormVisible2 = false;
+                } else {
+                  console.log(res);
+                  this.events.push(this.formatEvent);
+                  console.log(this.events);
+                  // this.$refs.calendar.fullCalendar("refetchEvents");
+
+                  this.dialogFormVisible2 = false;
+                  this.$message({
+                    message: "预约成功！",
+                    type: "success",
+                  });
+                  location.reload();
+                }
               })
               .catch((error) => {
                 console.error(error);
@@ -558,12 +575,6 @@ export default {
         } else {
           alert("请填写完整");
         }
-      });
-      this.dialogFormVisible2 = false;
-      location.reload();
-      this.$message({
-        message: "预约成功！",
-        type: "success",
       });
     },
 
@@ -598,7 +609,7 @@ export default {
           projectName: item.projectName,
         };
       });
-      console.log(this.projectList);
+      // console.log(this.projectList);
     });
   },
 };
