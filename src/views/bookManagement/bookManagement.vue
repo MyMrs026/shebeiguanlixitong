@@ -165,10 +165,11 @@ export default {
       try {
         const res = await getequOrders(id);
         this.originEvents2 = res.data;
+        // console.log(this.originEvents2);
         this.orderEvents2 = await Promise.all(
           this.originEvents2.map(async (item) => {
             const userInfo = await this.loadUserInformation(item.userId);
-            console.log(userInfo);
+            // console.log(userInfo);
             return {
               id: item.equipmentOrderId.toString(),
               title: "已被" + userInfo.username + "预约",
@@ -181,37 +182,37 @@ export default {
             };
           })
         );
-        console.log(this.orderEvents2);
+        // console.log(this.orderEvents2);
       } catch (error) {
         console.error("Error loading data:", error);
       }
     },
 
     // 根据目前登录用户获取预约记录
-    async loadOrderData() {
-      try {
-        const res = await getOrders();
-        this.originEvents = res.data;
-        this.orderEvents = await Promise.all(
-          this.originEvents.map(async (item) => {
-            const equName = await this.loadEquInform(item.equipmentId);
-            const userInfo = await this.loadUserInformation(item.userId);
-            return {
-              id: item.equipmentOrderId.toString(),
-              title: userInfo.username + "使用" + equName,
-              projectId: item.projectId,
-              start: formatDateToISOString(item.startTime).slice(0, -5),
-              end: formatDateToISOString(item.endTime).slice(0, -5),
-            };
-          })
-        );  
-        console.log(this.orderEvents);
-      } catch (error) {
-        console.error("Error loading data:", error);
-      }
-    },
+    // async loadOrderData() {
+    //   try {
+    //     const res = await getOrders();
+    //     this.originEvents = res.data;
+    //     this.orderEvents = await Promise.all(
+    //       this.originEvents.map(async (item) => {
+    //         const equName = await this.loadEquInform(item.equipmentId);
+    //         const userInfo = await this.loadUserInformation(item.userId);
+    //         return {
+    //           id: item.equipmentOrderId.toString(),
+    //           title: userInfo.username + "使用" + equName,
+    //           projectId: item.projectId,
+    //           start: formatDateToISOString(item.startTime).slice(0, -5),
+    //           end: formatDateToISOString(item.endTime).slice(0, -5),
+    //         };
+    //       })
+    //     );  
+    //     console.log(this.orderEvents);
+    //   } catch (error) {
+    //     console.error("Error loading data:", error);
+    //   }
+    // },
     handleUpdataData() {
-      this.loadOrderData();
+      // this.loadOrderData();
       this.loadEquOrder(this.$route.params.id);
       console.log("调用父组件");
     },
@@ -228,7 +229,7 @@ export default {
       });
     });
     this.loadUserInformation();
-    this.loadOrderData();
+    // this.loadOrderData();
   },
   mounted() {
     const currentEquId = this.$route.params.id;

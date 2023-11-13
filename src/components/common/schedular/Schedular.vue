@@ -179,7 +179,7 @@ import interactionPlugin from "@fullcalendar/interaction"; //日程图的一些�
 import zhLocale from "@fullcalendar/core/locales/zh-cn";
 import { getProjectList } from "../../../network/project";
 import { getEquList } from "../../../network/equpment";
-import { makeOrder, removeOrder } from "../../../network/book";
+import { makeOrder, removeOrder,updateOrder } from "../../../network/book";
 
 export default {
   components: {
@@ -437,6 +437,7 @@ export default {
         this.EventForm.date = this.extractedDate(clickInfo.event.start);
         this.EventForm.startTime = this.extractedTime(clickInfo.event.start);
         this.EventForm.endTime = this.extractedTime(clickInfo.event.end);
+        this.EventForm.projectId = clickInfo.event.extendedProps.projectId
         this.openEditModal(clickInfo.event);
         this.selectEventId = clickInfo.event.id;
       };
@@ -470,13 +471,9 @@ export default {
     submitClick(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          // removeOrder(this.selectEventId).then((res) => {
-          // console.log(res);
-          //   console.log(this.selectEventId);
-          // });
           const editEvents = () => {
-            // console.log(this.EventForm);
             this.formatEvent = {
+              equipmentOrderId:this.selectEventId,
               equipmentId: this.EventForm.equid,
               startTime: this.formatDateTime(
                 this.EventForm.date,
@@ -489,14 +486,15 @@ export default {
               projectId: this.EventForm.projectId,
             };
 
-            // console.log(this.formatEvent);
-            this.makeEditOrder(
+            console.log(this.formatEvent);
+            updateOrder(
               this.formatEvent.endTime,
               this.formatEvent.equipmentId,
-              this.formatEvent.startTime,
-              this.formatEvent.projectId
+              this.formatEvent.equipmentOrderId,
+              this.formatEvent.projectId,
+              this.formatEvent.startTime
             ).then((res) => {
-              if (res.data === true) {
+              if (res.data === null) {
                 console.log(res);
                 this.$message.error("修改预约失败，请检查日期或是否时间冲突");
                 this.dialogFormVisible = false;
