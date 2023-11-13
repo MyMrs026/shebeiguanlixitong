@@ -437,9 +437,15 @@ export default {
     //点击事件时触发的函数,直接打开一个对话框
     handleEventClick(clickInfo) {
       const clickEvents = () => {
+        // console.log("日期："+this.extractedDate(clickInfo.event.start));
+        // console.log("开始事件："+this.extractedTime(clickInfo.event.start));
+        // console.log("结束时间："+this.extractedTime(clickInfo.event.end));
+        this.EventForm.date = this.extractedDate(clickInfo.event.start);
+        this.EventForm.startTime = this.extractedTime(clickInfo.event.start);
+        this.EventForm.endTime = this.extractedTime(clickInfo.event.end);
         this.openEditModal(clickInfo.event);
         this.selectEventId = clickInfo.event.id;
-        console.log(this.selectEventId);
+        // console.log(this.selectEventId);
       };
       this.$emit("click-events", clickEvents);
     },
@@ -554,13 +560,21 @@ export default {
               this.formatEvent.startTime,
               this.formatEvent.projectId
             )
-              .then(res => {
-                this.events.push(this.formatEvent);
-                this.updataData();
-                this.$message({
-                  message: "预约成功！",
-                  type: "success"
-                });
+              .then((res) => {
+                if (res.data === null) {
+                  this.$message.error("预约失败,请重新预约");
+                  this.dialogFormVisible2 = false;
+                } else {
+                  console.log(res);
+                  this.events.push(this.formatEvent);
+                  this.updataData();
+                  this.dialogFormVisible2 = false;
+                  this.$message({
+                    message: "预约成功！",
+                    type: "success",
+                  });
+                  location.reload();
+                }
               })
               .catch(error => {
                 console.error(error);
@@ -571,7 +585,6 @@ export default {
           alert("请填写完整");
         }
       });
-      this.dialogFormVisible2 = false;
     },
 
     //弹窗中的取消按钮实现
