@@ -6,6 +6,9 @@ import Router from "vue-router";
 
 const Home = () => import("@/views/home/Home");
 const Project = () => import("@/views/projectManagement/projectManagement");
+const AddProject = () => import("@/views/projectManagement/AddProject.vue")
+const MyProject = () => import("@/views/projectManagement/MyProject.vue")
+
 const Equp = () => import("@/views/equManagement/equManagement");
 const Book = () => import("@/views/bookManagement/bookManagement");
 
@@ -63,6 +66,16 @@ const routes = [
     path: "/project",
     name: "Project",
     component: Project
+  },
+  {
+    path: "/addProject",
+    name: "AddPRoject",
+    component: AddProject
+  },
+  {
+    path: "/myProject",
+    name: "MyProject",
+    component: MyProject
   },
   {
     path: "/device/:index",
