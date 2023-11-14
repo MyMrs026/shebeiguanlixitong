@@ -9,10 +9,10 @@
     </div>
     <!-- 中间部分：图片、联系方式、预约链接 -->
     <div class="deviceup">
-      <div>
+      <div class="image-container">
         <img
           :src="equinform.equipmentImageUrl"
-          style="width:300px;height:300px;"
+          class="image"
         >
       </div>
       <div>
@@ -30,7 +30,7 @@
     </div>
     <!-- 下半部分详细信息 -->
     <div class="devicedown">
-      <el-descriptions class="margin-top" title="设备信息" :column="3"  border>
+      <el-descriptions class="margin-top" title="设备信息" :column="3" n border>
     <el-descriptions-item>
       <template slot="label">
         设备名称
@@ -148,8 +148,24 @@ export default {
 .deviceup {
   display: flex;
   flex-direction: row;
+  height:100%;
 }
 .equUl{
   list-style-type:none;
+}
+.image-container {
+  width: 300px; /* 设置容器宽度 */
+  height: 300px; /* 设置容器高度 */
+  background-color: white; /* 设置占位背景颜色为白色 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden; /* 隐藏超出容器的部分 */
+}
+
+.image {
+  max-width: 100%; /* 图片最大宽度为容器宽度 */
+  max-height: 100%; /* 图片最大高度为容器高度 */
+  object-fit: cover; /* 保持宽高比例，裁剪并填充容器 */
 }
 </style>

@@ -12,13 +12,13 @@
         <el-form-item label="密 码"  prop="password">
           <input class="registerpwd" type="password" v-model="registerData.password"/>
         </el-form-item>
-        <el-form-item label="重复密码 " prop="right">
+        <el-form-item label="重复密码 " prop="checkPassword">
           <input class="registerpwd" type="password" v-model="registerData.checkPassword"/>
         </el-form-item>
-        <el-form-item label="邮箱 " prop="right">
+        <el-form-item label="邮箱 " prop="email">
           <input class="registerpwd"  v-model="registerData.email"/>
         </el-form-item>
-        <el-form-item label="电话 " prop="right">
+        <el-form-item label="电话 " prop="tel">
           <input class="registerpwd"  v-model="registerData.tel"/>
         </el-form-item>
         </div>
@@ -39,13 +39,14 @@
           <input class="registerpwd"  v-model="registerData.mentor"/>
         </el-form-item>
         </div>
-        <div class="button-container">
-        <el-form-item style="text-align:center;margin-top:40px">
+        
+      </el-form>
+      <div class="button-container">
+        
           <el-button  type="primary" @click="userRegister('registerForm')">注册</el-button>
           <el-button  @click="userCancel('registerForm')">取消</el-button>
-        </el-form-item>
+
         </div>
-      </el-form>
     </el-card>
   </div>
 </template>
@@ -120,15 +121,20 @@ export default {
             this.registerData.username
           )
             .then((res) => {
-              console.log(res);
+              console.log(res); 
+              if(res.code==2001){
+                this.success();
+                this.$router.push('/login')
+              }else{
+                this.warn(res.message);
+                // alert(res.message);
+              }
             })
             .catch((error) => {
               console.error(error);
-            });
-          alert("注册成功!");
-          this.$router.push('/login')
-        } else {
-          alert("请填写完整");
+            });    
+        // } else {
+        //   alert(error);
         }
       });
     },
@@ -137,7 +143,21 @@ export default {
     },
     backItem() {
       this.$router.push('/login')
-    }
+    },
+    success() {
+        this.$notify({
+          title: '成功',
+          message: '注册成功！',
+          type: 'success'
+        });
+    },
+    warn(message) {
+        this.$notify({
+          title: '警告',
+          message:message,
+          type: 'warning'
+        });
+    },
   },
 
 };
@@ -148,6 +168,7 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
+  width:40%;
 }
 .button-container {
   text-align: center;
@@ -167,8 +188,6 @@ export default {
 .register-card {
   position: absolute;
   border-radius:10px;
-  padding:30px;
-  padding-top:50px;
   left: 50%;
   top:50%;
   transform: translate(-50%, -50%);
@@ -238,5 +257,11 @@ export default {
   outline:none;
   width: 185px;
   margin-left:10px;
+}
+div /deep/ .el-form-item.is-required{
+  width:100%;
+}
+div /deep/ .el-form-item{
+  width: 100%;
 }
 </style>

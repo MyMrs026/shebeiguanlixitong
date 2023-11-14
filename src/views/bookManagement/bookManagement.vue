@@ -216,6 +216,14 @@ export default {
       this.loadEquOrder(this.$route.params.id);
       console.log("调用父组件");
     },
+
+    async loadData() {
+      try {
+        await this.loadOrderData()
+      } catch(error) {
+        console.log(1);
+      }
+    }
   },
   created() {
     //获取设备列表，第一个日程表选中时需要，第二个日程表选择时需要
@@ -229,7 +237,6 @@ export default {
       });
     });
     this.loadUserInformation();
-    // this.loadOrderData();
   },
   mounted() {
     const currentEquId = this.$route.params.id;
