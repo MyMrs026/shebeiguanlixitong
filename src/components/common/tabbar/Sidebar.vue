@@ -45,8 +45,17 @@ export default {
 };
 </script>
 <template>
-    <el-menu accordion class="drawer-menu" :unique-opened="true" text-color="#000" active-text-color="#4737ec">
-        
+    <el-menu
+      router
+      default-active="2"
+      background-color="#eee"
+      class="el-menu-vertical-demo"
+      @open="handleOpen"
+      @close="handleClose">
+      <el-menu-item index="/myProject">
+        <i class="el-icon-menu"></i>
+        <span slot="title">我管理的项目</span>
+      </el-menu-item>
     </el-menu>
 </template>
 <style scoped>
