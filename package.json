@@ -26,6 +26,7 @@
     "dayjs": "^1.11.10",
     "dayjs-ext": "^2.2.0",
     "element-ui": "^2.15.13",
+    "jquery": "^3.7.1",
     "lib-flexible": "^0.3.2",
     "normalize.css": "^8.0.1",
     "vue": "^2.5.2",
