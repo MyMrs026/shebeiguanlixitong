@@ -93,7 +93,13 @@ export default {
               >安全培训</el-button
             >
           </router-link>
-          
+
+          <router-link to="/addProject">
+            <el-button class="custom-button" type="info" round size="small"
+              >新建项目</el-button
+            >
+          </router-link>
+
         </el-col>
       </el-col>
       <el-col
