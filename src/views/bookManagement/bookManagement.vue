@@ -5,13 +5,12 @@
 
       <!-- 第二个 div 的内容 -->
       <div class="fullcalendar-area">
-        <div class="content-area">
-          <!-- 当前用户的名称 -->
+        <!-- 原本展示用户所有的预约记录 -->
+        <!-- <div class="content-area">
           <div class="book-title">
             <p>当前用户 {{ curUsername }}</p>
           </div>
           <div class="schedular-area">
-            <!-- 调用日程表在这里 -->
             <Schedular
               :events="orderEvents"
               :equipmentId="curEquipment.equipmentId"
@@ -20,10 +19,10 @@
               @edit-orders="handleEditOrders"
               @click-events="handleClickEvents"
               @update-orders="handleUpdataData"
-
             />
           </div>
-        </div>
+        </div> -->
+        <!-- 目前只按设备展示预约记录 -->
         <div class="content-area">
           <div class="top-content2">
             <div style="font-size: 20px; color: #6d6c6c">
@@ -48,8 +47,12 @@
           <div class="schedular-area">
             <Schedular
               :events="orderEvents2"
+              :equipmentId="curEquipment.equipmentId"
               class="schedular"
               @make-orders="handleMakeOrders"
+              @edit-orders="handleEditOrders"
+              @click-events="handleClickEvents"
+              @update-orders="handleUpdataData"
             />
           </div>
         </div>
@@ -71,36 +74,6 @@ export default {
   },
   data() {
     return {
-      //elementui中的日期选择器
-      pickerOptions: {
-        disabledDate(time) {
-          // return time.getTime() < Date.now();
-        },
-        shortcuts: [
-          {
-            text: "今天",
-            onClick(picker) {
-              picker.$emit("pick", new Date());
-            },
-          },
-          {
-            text: "昨天",
-            onClick(picker) {
-              const date = new Date();
-              date.setTime(date.getTime() - 3600 * 1000 * 24);
-              picker.$emit("pick", date);
-            },
-          },
-          {
-            text: "一周前",
-            onClick(picker) {
-              const date = new Date();
-              date.setTime(date.getTime() - 3600 * 1000 * 24 * 7);
-              picker.$emit("pick", date);
-            },
-          },
-        ],
-      },
       value1: this.getCurrentDate(), //日期选择器传回来的数据
       newEqup: "",
       equlist: [], // 从数据库读入所有设备信息
@@ -153,73 +126,96 @@ export default {
         console.error("Error loading data:", error);
       }
     },
-    
-    //根据id获取用户名
-   async loadUserInform(id) {
+
+    // 根据用户id获取用户名
+    // async loadUserInform(id) {
+    //   try {
+    //     let userName = "";
+    //     const res = await getUserInform(id);
+    //     if (res.data) {
+    //       userName = res.data.username.toString();
+    //       // console.log(userName);
+    //       return userName;
+    //     } else {
+    //       console.log("该用户已被删除");
+    //     }
+    //   } catch (error) {
+    //     console.error("Error loading data:", error);
+    //   }
+    // },
+
+    //根据用户id获取用户的更多信息
+    async loadUserInformation(id) {
       try {
-        let userName = ""
+        let userInfo = {};
         const res = await getUserInform(id);
-        if( res.data ){
-          userName = res.data.username.toString();
-          // console.log(userName);
-          return userName;
-        }else{
+        if (res.data) {
+          userInfo = res.data;
+          return userInfo;
+        } else {
           console.log("该用户已被删除");
-        }       
+        }
       } catch (error) {
         console.error("Error loading data:", error);
       }
     },
-    
+
     //根据设备id获取该设备的预约信息
     async loadEquOrder(id) {
       try {
         const res = await getequOrders(id);
         this.originEvents2 = res.data;
+        // console.log(this.originEvents2);
         this.orderEvents2 = await Promise.all(
           this.originEvents2.map(async (item) => {
-            const userName = await this.loadUserInform(item.userId);
+            const userInfo = await this.loadUserInformation(item.userId);
+            // console.log(userInfo);
             return {
               id: item.equipmentOrderId.toString(),
-              title: "已被" + userName + "预约",
+              title: "已被" + userInfo.username + "预约",
+              username:userInfo.username,
+              userEmail: userInfo.email,
+              userTel: userInfo.tel,
               projectId: item.projectId,
               start: formatDateToISOString(item.startTime).slice(0, -5),
               end: formatDateToISOString(item.endTime).slice(0, -5),
             };
           })
         );
+        // console.log(this.orderEvents2);
       } catch (error) {
         console.error("Error loading data:", error);
       }
     },
 
     // 根据目前登录用户获取预约记录
-    async loadOrderData() {
-      try {
-        const res = await getOrders();
-        this.originEvents = res.data;
-        this.orderEvents = await Promise.all(
-          this.originEvents.map(async (item) => {
-            const equName = await this.loadEquInform(item.equipmentId);
-            const userName = await this.loadUserInform(item.userId);
-            return {
-              id: item.equipmentOrderId.toString(),
-              title: userName + "使用" + equName,
-              projectId: item.projectId,
-              start: formatDateToISOString(item.startTime).slice(0, -5),
-              end: formatDateToISOString(item.endTime).slice(0, -5),
-            };
-          })
-        );
-      } catch (error) {
-        console.error("Error loading data:", error);
-      }
-    },
+    // async loadOrderData() {
+    //   try {
+    //     const res = await getOrders();
+    //     this.originEvents = res.data;
+    //     this.orderEvents = await Promise.all(
+    //       this.originEvents.map(async (item) => {
+    //         const equName = await this.loadEquInform(item.equipmentId);
+    //         const userInfo = await this.loadUserInformation(item.userId);
+    //         return {
+    //           id: item.equipmentOrderId.toString(),
+    //           title: userInfo.username + "使用" + equName,
+    //           projectId: item.projectId,
+    //           start: formatDateToISOString(item.startTime).slice(0, -5),
+    //           end: formatDateToISOString(item.endTime).slice(0, -5),
+    //         };
+    //       })
+    //     );  
+    //     console.log(this.orderEvents);
+    //   } catch (error) {
+    //     console.error("Error loading data:", error);
+    //   }
+    // },
     handleUpdataData() {
-      this.loadOrderData()
-      this.loadEquOrder(this.$route.params.id)
+      // this.loadOrderData();
+      this.loadEquOrder(this.$route.params.id);
       console.log("调用父组件");
-    }
+    },
   },
   created() {
     //获取设备列表，第一个日程表选中时需要，第二个日程表选择时需要
@@ -232,8 +228,8 @@ export default {
         };
       });
     });
-    this.loadLoginUserInfo();
-    this.loadOrderData();
+    this.loadUserInformation();
+    // this.loadOrderData();
   },
   mounted() {
     const currentEquId = this.$route.params.id;
@@ -241,7 +237,6 @@ export default {
       this.curEquipment = res.data;
       this.loadEquOrder(currentEquId);
     });
-
   },
 };
 </script>
@@ -263,17 +258,18 @@ export default {
   color: #656565;
   margin-top: 0px;
   margin-left: 20px;
-  line-height: 55px;
+  line-height: 30px;
   font-size: 20px;
 }
 
 .top-content2 {
   display: flex;
   flex-direction: row;
+  margin-top: 20px;
+  margin-left: 20px;
 }
 
 .book-title {
-  margin-left: 20px;
   font-size: 20px;
   color: #6d6c6c;
 }
@@ -292,7 +288,7 @@ export default {
 }
 
 .content-area {
-  width: 50%;
+  width: 100%;
   height: auto;
 }
 
@@ -304,7 +300,6 @@ export default {
   height: 70%;
   color: #393939;
   font-size: 15px;
-  overflow: auto;
 }
 
 .custom-select {
