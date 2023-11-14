@@ -2,6 +2,7 @@
  * 这部分是关于
 */
 
+import { start } from "@popperjs/core";
 import { request } from "./request";
 
 //获取登录用户的所有预约信息
@@ -30,6 +31,21 @@ export function makeOrder(endTime,equipmentId,startTime,projectId){
       equipmentId:equipmentId,
       startTime:startTime,
       projectId:projectId
+    }
+  })
+}
+
+//更改预约信息
+export function updateOrder(endTime,equipmentId,equipmentOrderId,projectId,startTime) {
+  return request ({
+    url: '/equipment/updateOrder',
+    method: 'post',
+    data: {
+      endTime: endTime,
+      equipmentId: equipmentId,
+      equipmentOrderId: equipmentOrderId,
+      projectId: projectId,
+      startTime: startTime
     }
   })
 }
