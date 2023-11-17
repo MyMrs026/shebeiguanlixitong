@@ -1,16 +1,38 @@
 <template>
   <div class="demo-app">
     <div class="demo-app-main">
-      <FullCalendar
-        ref="calendar"
-        class="demo-app-calendar"
-        :options="calendarOptions"
+      <!-- 悬浮显示更多信息 -->
+      <el-popover
+        v-model="popoverVisible"
+        :placement="popoverPlacement"
+        trigger="manual"
+        popper-class="event-popover"
       >
-        <template v-slot:eventContent="arg">
-          <b>{{ arg.timeText }}</b>
-          <i>{{ arg.event.title }}</i>
-        </template>
-      </FullCalendar>
+        <p v-html="popoverContent"></p>
+      </el-popover>
+      <div class="calendar-container">
+        <!-- 查询日期 -->
+        <el-date-picker
+          v-model="queryDate"
+          type="date"
+          placeholder="选择查询的日期"
+        >
+        </el-date-picker>
+        <el-button @click="dateSearch">查询</el-button>
+        <FullCalendar
+          id="calendar"
+          ref="calendar"
+          class="demo-app-calendar"
+          :options="calendarOptions"
+        >
+          <template v-slot:eventContent="arg">
+            <b>{{ arg.timeText }}</b>
+            <br />
+            <i>{{ arg.event.title }}</i>
+            <!-- <i>{{ arg.event }}</i> -->
+          </template>
+        </FullCalendar>
+      </div>
 
       <!-- 编辑事件弹出框 -->
       <el-dialog
@@ -19,21 +41,6 @@
         @close="closeDialog"
       >
         <el-form :model="EventForm" ref="EventForm" :rules="rules">
-          <!-- <el-form-item label="设备" label-width="120px" prop="equid">
-            <el-select
-              v-model="EventForm.equid"
-              class="custom-select"
-              placeholder="请选择设备"
-            >
-              <el-option
-                v-for="item in device_options"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
-              >
-              </el-option>
-            </el-select>
-          </el-form-item> -->
           <el-form-item label="项目" label-width="120px" prop="proid">
             <el-select
               v-model="EventForm.projectId"
@@ -101,27 +108,8 @@
         @close="closeDialog"
       >
         <el-form :model="EventForm2" ref="EventForm2" :rules="rules2">
-          <!-- <el-form-item label="设备" label-width="120px" prop="equid">
-            <el-select
-              v-model="EventForm2.equid"
-              class="custom-select"
-              placeholder="请选择设备"
-            >
-              <el-option
-                v-for="item in device_options"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
-              >
-              </el-option>
-            </el-select>
-          </el-form-item> -->
           <el-form-item label="项目" label-width="120px" prop="proid">
-            <el-select
-              v-model="EventForm2.projectId"
-              class="custom-select"
-              placeholder="请选择项目"
-            >
+            <el-select v-model="EventForm2.projectId" placeholder="请选择项目">
               <el-option
                 v-for="item in projectList"
                 :key="item.projectId"
@@ -191,7 +179,7 @@ import interactionPlugin from "@fullcalendar/interaction"; //日程图的一些�
 import zhLocale from "@fullcalendar/core/locales/zh-cn";
 import { getProjectList } from "../../../network/project";
 import { getEquList } from "../../../network/equpment";
-import { makeOrder, removeOrder } from "../../../network/book";
+import { makeOrder, removeOrder,updateOrder } from "../../../network/book";
 
 export default {
   components: {
@@ -212,16 +200,14 @@ export default {
         headerToolbar: {
           left: "prev next", //进行前后日子选择，以及跳到今天
           center: "title",
-          right: "",
+          right: "timeGridWeek,dayGridMonth",
         },
-
         initialView: "timeGridWeek", //以日程图的方式初始化fullcalendar
-
-        // hiddenDays: [0, 6],
         events: this.events, // 初始化事件
         editable: true, //事件可以编辑
         eventStartEditable: false, //禁止使用拖动的方式修改事件的开始时间
         expandRows: true,
+        showNonCurrentDates: false,
         eventDurationEditable: false,
         selectable: true,
         selectMirror: true,
@@ -237,9 +223,10 @@ export default {
         slotMinTime: "08:30:00", //日程图从几点开始
         slotMaxTime: "17:00:00", //到几点结束
         slotDuration: "00:15:00", //时间间隔为15分钟
-        //  slotLabelFormat:'H:mm',//以 24 小时格式显示时间。
         dateClick: this.handleDateClick, //定义点击日历中的日期时触发的回调函数，在此打算当点击时弹出日历
         eventDrop: this.handleEventDrop, //定义当拖拽事件结束时出发的事件，看看吧，不行的话把可拖拽禁掉
+        eventMouseEnter: this.handleEventMouseEnter,
+        eventMouseLeave: this.handleEventMouseLeave,
       },
       currentEvents: [],
       device_options: [],
@@ -261,9 +248,7 @@ export default {
 
       startTimeStr: "",
       endTimeStr: "",
-
       formatEvent: {},
-
       pickerOptions: {
         // 设置日期范围
         disabledDate(time) {
@@ -306,6 +291,9 @@ export default {
       editEvent: {},
       selectEventId: null,
       projectList: [],
+      popoverVisible: false,
+      popoverContent: "",
+      queryDate: "",
     };
   },
 
@@ -319,8 +307,29 @@ export default {
   mounted() {
     this.updateCalendarOptions();
   },
+  computed: {
+    popoverPlacement() {
+      return "top";
+    },
+  },
 
   methods: {
+    updataData() {
+      this.$emit("update-orders");
+      console.log("子组件执行");
+    },
+
+    //fullcalendar跳转到指定日期
+    dateSearch() {
+      const calendarApi = this.$refs.calendar.getApi();
+      console.log(calendarApi);
+      if (this.queryDate) {
+        const selectDate = new Date(this.queryDate);
+        calendarApi.changeView("timeGridWeek", selectDate);
+      }
+      // console.log('查询日期'+this.queryDate);
+    },
+
     //获取今天的日期
     getCurrentDate() {
       const now = new Date();
@@ -341,10 +350,10 @@ export default {
     extractedDate(date) {
       let dateTime = new Date(date);
       // 提取日期部分并格式化为 "YYYY-MM-DD" 格式
-      let formatDate= dateTime.toISOString().split("T")[0];
+      let formatDate = dateTime.toISOString().split("T")[0];
       // 如果需要，你还可以移除时区信息
       formatDate = formatDate.replace(/-/g, "/");
-      return formatDate
+      return formatDate;
     },
     //其实是日期和具体时间的拼接罢了
     formatDateTime(date, time) {
@@ -415,7 +424,7 @@ export default {
           this.EventForm2.startTime +
           ",结束时间:" +
           this.EventForm2.endTime +
-          ",日期:" + 
+          ",日期:" +
           this.EventForm2.date
       );
 
@@ -425,9 +434,12 @@ export default {
     //点击事件时触发的函数,直接打开一个对话框
     handleEventClick(clickInfo) {
       const clickEvents = () => {
+        this.EventForm.date = this.extractedDate(clickInfo.event.start);
+        this.EventForm.startTime = this.extractedTime(clickInfo.event.start);
+        this.EventForm.endTime = this.extractedTime(clickInfo.event.end);
+        this.EventForm.projectId = clickInfo.event.extendedProps.projectId
         this.openEditModal(clickInfo.event);
         this.selectEventId = clickInfo.event.id;
-        console.log(this.selectEventId);
       };
       this.$emit("click-events", clickEvents);
     },
@@ -449,6 +461,7 @@ export default {
       try {
         const res = await makeOrder(endTime, equipmentId, startTime, projectId);
         console.log(res);
+        return res;
       } catch (error) {
         console.error(error);
       }
@@ -459,8 +472,8 @@ export default {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           const editEvents = () => {
-            console.log(this.EventForm);
             this.formatEvent = {
+              equipmentOrderId:this.selectEventId,
               equipmentId: this.EventForm.equid,
               startTime: this.formatDateTime(
                 this.EventForm.date,
@@ -472,24 +485,33 @@ export default {
               ),
               projectId: this.EventForm.projectId,
             };
+
             console.log(this.formatEvent);
-            removeOrder(this.selectEventId).then((res) => {
-              console.log(res);
-            });
-            this.makeEditOrder(
+            updateOrder(
               this.formatEvent.endTime,
               this.formatEvent.equipmentId,
-              this.formatEvent.startTime,
-              this.formatEvent.projectId
-            );
+              this.formatEvent.equipmentOrderId,
+              this.formatEvent.projectId,
+              this.formatEvent.startTime
+            ).then((res) => {
+              if (res.data === null) {
+                console.log(res);
+                this.$message.error("修改预约失败，请检查日期或是否时间冲突");
+                this.dialogFormVisible = false;
+              } else {
+                console.log(res);
+                this.events.push(this.formatEvent);
+                this.dialogFormVisible = false;
+                this.$message({
+                  message: "修改预约成功",
+                  type: "success",
+                });
+                this.updataData();
+              }
+              this.dialogFormVisible = false;
+            });
           };
           this.$emit("edit-orders", editEvents);
-          this.dialogFormVisible = false;
-          location.reload();
-          this.$message({
-            message: "修改成功！",
-            type: "success",
-          });
         } else {
           alert("请填写完整");
         }
@@ -500,15 +522,13 @@ export default {
     async delClick() {
       if (confirm(`你确定要删除这个事件吗？ '${this.editEvent.title}'`)) {
         try {
-          const response = await removeOrder(this.selectEventId);
-          console.log(response);
-          // 成功删除事件后，刷新Fullcalendar
-          // this.$refs.calendar.fullCalendar("refetchEvents");
-          this.$message({
-            message: "删除成功",
-            type: "success",
+          await removeOrder(this.selectEventId).then((res) => {
+            this.updataData();
+            this.$message({
+              message: "删除成功",
+              type: "success",
+            });
           });
-          location.reload();
         } catch (error) {
           console.error(error);
         }
@@ -544,13 +564,22 @@ export default {
               this.formatEvent.projectId
             )
               .then((res) => {
-                this.events.push(this.formatEvent);
-                // this.$refs.calendar.fullCalendar("refetchEvents");
-                location.reload();
-                this.$message({
-                  message: "预约成功！",
-                  type: "success",
-                });
+                if (res.data === null) {
+                  console.log(res);
+                  this.$message.error(
+                    "预约失败,请重新预约,请检查日期或者是否时间冲突"
+                  );
+                  this.dialogFormVisible2 = false;
+                } else {
+                  console.log(res);
+                  this.events.push(this.formatEvent);
+                  this.dialogFormVisible2 = false;
+                  this.$message({
+                    message: "预约成功！",
+                    type: "success",
+                  });
+                  this.updataData();
+                }
               })
               .catch((error) => {
                 console.error(error);
@@ -561,8 +590,6 @@ export default {
           alert("请填写完整");
         }
       });
-      this.dialogFormVisible2 = false;
-      
     },
 
     //弹窗中的取消按钮实现
@@ -574,6 +601,35 @@ export default {
     //设置事件
     handleEvents(events) {
       this.currentEvents = events;
+    },
+
+    // 在鼠标进入事件时触发的逻辑,显示用户的详细信息
+    handleEventMouseEnter(info) {
+      // console.log("Mouse enter event:", info.event);
+      this.popoverContent =
+        "用户名" +
+        info.event.extendedProps.username +
+        "<br>" +
+        "用户邮箱" +
+        info.event.extendedProps.userEmail +
+        "<br>" +
+        "用户电话" +
+        info.event.extendedProps.userTel +
+        "<br>" +
+        "预约日期" +
+        this.extractedDate(info.event.start) +
+        "<br>" +
+        "预约时间" +
+        this.extractedTime(info.event.start) +
+        "~" +
+        this.extractedTime(info.event.end);
+      this.popoverVisible = true;
+    },
+
+    // 在鼠标离开事件时触发的逻辑
+    handleEventMouseLeave(info) {
+      // console.log("Mouse leave event:", info.event);
+      this.popoverVisible = false;
     },
   },
   created() {
@@ -596,39 +652,31 @@ export default {
           projectName: item.projectName,
         };
       });
-      console.log(this.projectList);
     });
   },
 };
 </script>
 
 <style lang="css">
-h2 {
-  margin: 0;
-  font-size: 3px !important;
-}
-
-ul {
-  margin: 0;
-  padding: 0 0 0 1.5em;
-}
-
-li {
-  margin: 1.5em 0;
-  padding: 0;
-}
-
-b {
-  /* used for event dates/times */
-  margin-right: 3px;
-}
-
 .demo-app {
   display: flex;
   min-height: 100%;
   font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
   font-size: 6px !important;
-  height: 400px;
+  height: 100%;
+}
+
+.calendar-container {
+  width: 1160px !important;
+}
+
+.fc-day {
+  width: 150px;
+}
+
+.fc-daygrid-day {
+  height: 80px; /* 设置单元格的高度 */
+  width: 120px; /* 设置单元格的宽度 */
 }
 
 .demo-app-sidebar {
@@ -653,8 +701,9 @@ b {
 
 .fc {
   /* the calendar root */
-  max-width: 1100px;
+  /* max-width: 1100px; */
   margin: 0 auto;
+  font-size: 1rem;
 }
 
 .button-area {
@@ -663,9 +712,6 @@ b {
   justify-content: space-around;
 }
 
-.fc {
-  font-size: 1rem;
-}
 /* .fc-header-toolbar h2{
   font-size: 14px;
 }
@@ -677,5 +723,13 @@ b {
 }
 div > .fc {
   width: 100%;
+}
+
+.fc table {
+  border: 1px solid #000 !important;
+}
+
+.fc-daygrid-day {
+  border: 1px solid #000 !important;
 }
 </style>

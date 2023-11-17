@@ -6,6 +6,9 @@ import Router from "vue-router";
 
 const Home = () => import("@/views/home/Home");
 const Project = () => import("@/views/projectManagement/projectManagement");
+const AddProject = () => import("@/views/projectManagement/AddProject.vue")
+const MyProject = () => import("@/views/projectManagement/MyProject.vue")
+
 const Equp = () => import("@/views/equManagement/equManagement");
 const Book = () => import("@/views/bookManagement/bookManagement");
 
@@ -40,7 +43,7 @@ const Error = () => import("../components/common/error/Error.vue");
 const Message = () => import("../views/message/message");
 const MessageDetail = () => import("../views/message/messageDetail.vue");
 const TrainBooksDetail = () => import("../views/message/trainBooksDetail.vue");
-const Notice = () => import("../views/notice/notice.vue")
+const Notice = () => import("../views/notice/notice.vue");
 //1.安装插件
 Vue.use(Router);
 //创建router
@@ -65,6 +68,16 @@ const routes = [
     component: Project
   },
   {
+    path: "/addProject",
+    name: "AddPRoject",
+    component: AddProject
+  },
+  {
+    path: "/myProject",
+    name: "MyProject",
+    component: MyProject
+  },
+  {
     path: "/device/:index",
     name: "device-detail",
     component: DeviceDetail // 设备详情页面
@@ -87,7 +100,8 @@ const routes = [
   {
     path: "/book/:id",
     name: "Book",
-    component: Book
+    component: Book,
+
   },
   {
     path: "/train",
@@ -144,7 +158,7 @@ const routes = [
   },
   {
     path: "/notice",
-    name:"Notice",
+    name: "Notice",
     component: Notice
   },
   {
