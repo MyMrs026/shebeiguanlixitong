@@ -9,8 +9,6 @@
       </router-link>
     </div>
     <p class="text-title">{{ message }}</p>
-    <!-- 设备列表页面有两个部分组成 -->
-    <!-- 设备工艺表格 -->
     <div>
       <ul class="table-equcraft-use">
         <li
@@ -30,22 +28,81 @@
               type="primary"
               plain
               size="small"
-            >立即预约</el-button>
+            >实验预约</el-button>
           </router-link>
           <router-link to="/test">
             <el-button
               type="primary"
               plain
               size="small"
-            >立即测试</el-button>
+            >实验记录</el-button>
           </router-link>
-          <router-link to="/train">
             <el-button
               type="primary"
               plain
               size="small"
+              @click="dialogFormVisible = true,openTrainingDialog(equipment.equipmentId)"
             >培训预约</el-button>
-          </router-link>
+            <!-- 培训预约对话框 -->
+            <el-dialog
+        title="申请培训预约"
+        :visible.sync="dialogFormVisible"
+        @close="closeDialog"
+      >
+        <el-form :model="TrainBook" ref="TrainBook" :rules="rule">
+          <el-form-item  label="当前设备" label-width="120px" prop="equipmentName">
+            <el-input
+              :placeholder="equipment.equipmentName"
+              v-model="TrainBook.curEquipment"
+              :disabled="true">
+            </el-input>
+          </el-form-item>
+          <el-form-item label="项目" label-width="120px" prop="proid">
+            <el-select
+              v-model="TrainBook.projectId"
+              class="custom-select"
+              placeholder="请选择项目"
+            >
+              <el-option
+                v-for="item in projectList"
+                :key="item.projectId"
+                :label="item.projectName"
+                :value="item.projectId"
+              >
+              </el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item  label="用户名" label-width="120px" prop="curUsername">
+              <el-input
+              :placeholder="TrainBook.curUsername"
+              v-model="TrainBook.curUsername"
+              :disabled="true">
+            </el-input>
+          </el-form-item>
+          <el-form-item  label="机构" label-width="120px" prop="company">
+            <el-input
+              :placeholder="TrainBook.company"
+              v-model="TrainBook.company"
+              :disabled="true">
+            </el-input>
+          </el-form-item>
+          <el-form-item  label="电话" label-width="120px" prop="tel">
+            <el-input
+              :placeholder="TrainBook.tel"
+              v-model="TrainBook.tel"
+              :disabled="true">
+            </el-input>
+          </el-form-item>
+          <el-form-item>
+            <div class="button-area">
+              <el-button type="primary" @click="submitClick('TrainBook')"
+                >提交</el-button
+              >
+              <el-button type="danger" @click="cancelClick">取消</el-button>
+            </div>
+          </el-form-item>
+        </el-form>
+      </el-dialog>
           <br />
           设备名称：{{ equipment.equipmentName }}
         </li>
@@ -106,10 +163,25 @@
   </div>
 </template>
 <script>
-import { getEquList } from "../../network/equpment";
+import { getUserInform } from "../../network/user";
+import { getEquList,getEquInform} from "../../network/equpment";
+import { getProjectList } from "../../network/project";
 export default {
   data() {
     return {
+      TrainBook: {
+        curUsername: "", //将日期初始化为今天
+        company: "",
+        tel: "",
+        projectId: null,
+      },
+      curEquipment: {}, //当前设备
+      curUsername: "",
+      dialogFormVisible: false,
+      rule:{
+        proid: [{ required: true, message: "请选择项目", trigger: "change" }],
+      },
+      projectList: [],
       equinform: [],
       currentDate: new Date(),
       currentPage:1,
@@ -125,6 +197,18 @@ export default {
     };
   },
   methods: {
+    //关闭对话框
+    closeDialog() {
+      this.dialogFormVisible = false;
+    },
+    //弹窗中的取消按钮实现
+    cancelClick() {
+      this.dialogFormVisible = false;
+      console.log("取消申请");
+    },
+    openTrainingDialog(equipmentId){
+      const curEquipmentId = equipmentId;
+    },
     gotoDeviceDetail(index) {
       this.$router.push({ path: `/device/${index}` });
     },
@@ -159,6 +243,21 @@ export default {
       }
       this.goToPageNumber = "";
     },
+    //根据id获取用户信息
+    async loadUserInform(id) {
+      try {
+        const res = await getUserInform(id);
+        const userName = res.data.username.toString();
+        this.curUsername = userName;
+        const company = res.data.company.toString();
+        const tel = res.data.tel.toString();        // console.log(userName);
+        console.log('用户信息！！！',userName,company,tel);
+        return userName,company,tel;
+        
+      } catch (error) {
+        console.error("Error loading data:", error);
+      }
+    },
   },
   computed: {
     paginatedData() {
@@ -173,9 +272,28 @@ export default {
     },
   },
   mounted() {
+    //获取设备列表
     getEquList().then((res) => {
       this.equinform = res.data;
-      console.log(this.equinform);
+      //console.log(this.equinform);
+      this.TrainBook.curEquipment = this.equinform.equipmentName;
+    });
+    getEquInform(this.curEquipmentId).then((res) => {
+      this.curEquipment = res.data;
+      console.log("当前设备"+this.curEquipment);
+      // this.newEqup = currentEquId;
+    });
+  },
+  created(){
+    //获取项目列表
+    getProjectList().then((res) => {
+      this.projectList = res.data.map((item) => {
+        return {
+          projectId: item.projectId,
+          projectName: item.projectName,
+        };
+      });
+      //console.log(this.projectList);
     });
   },
 };
