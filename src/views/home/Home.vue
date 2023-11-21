@@ -92,9 +92,13 @@
             </template>
           </el-table-column>
           <el-table-column prop="operate" label="快捷操作" width="125">
-            <router-link to="/test">
-              <el-button type="info">立即测试</el-button>
-            </router-link>
+            <template slot-scope="scope">
+              <el-button
+                type="info"
+                @click="handleStartExperimentClick(scope.row)"
+                >开始实验</el-button
+              >
+            </template>
           </el-table-column>
         </el-table>
       </div>
@@ -188,6 +192,26 @@ export default {
       return "";
     },
 
+    handleStartExperimentClick(row) {
+      // 处理开始实验按钮点击事件
+      // console.log(row);
+      const userName = row.userName;
+      const equName = row.equName;
+      const equId = row.equId;
+      const equipmentOrderId = row.equipmentOrderId;
+      // console.log("用户为:"+userName+"所选择行的设备为:"+equName+"预约id为:"+equipmentOrderId);
+      // 在这里可以根据需要处理点击按钮的信息
+      // 例如：跳转到开始实验页面
+      this.$router.push({
+        path: "/addRecords",
+        query: {
+          userName,
+          equName,
+          equId,
+          equipmentOrderId,
+        },
+      });
+    },
     //根据id获取设备名
     async loadEquInform(id) {
       try {
@@ -217,12 +241,14 @@ export default {
       try {
         const res = await getOrders();
         this.originEvents = res.data;
+        console.log(this.originEvents);
         this.orderEvents = await Promise.all(
           this.originEvents.map(async (item) => {
             const equName = await this.loadEquInform(item.equipmentId);
             const userName = await this.loadUserInform(item.userId);
             this.curUsername = userName;
             return {
+              equipmentOrderId: item.equipmentOrderId,
               equId: item.equipmentId,
               equName: equName,
               userName: userName,
@@ -250,21 +276,21 @@ export default {
     // this.equpsUse = this.$store.state.equpsUse;
     // this.myBooks = this.$store.state.myBooks;
     // this.equpsStatus = this.$store.state.equpsStatus;
-    getNoticeList().then(res => {
+    getNoticeList().then((res) => {
       this.notices = res.data;
     });
-    getLatest().then(res => {
+    getLatest().then((res) => {
       this.latestNotice = res.data;
     });
     this.loadOrderData();
   },
   filters: {
     //处理日期的显示格式问题，使日期以xxxx年xx月xx日的形式显示
-    formatDate: function(value) {
+    formatDate: function (value) {
       return new Date(value).toLocaleDateString();
-    }
+    },
   },
-  mounted() {}
+  mounted() {},
 };
 </script>
 
@@ -414,8 +440,6 @@ export default {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding-left: 5px;
-  padding-bottom: 30px;
 }
 
 .table-book {
