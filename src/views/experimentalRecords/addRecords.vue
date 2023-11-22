@@ -1,8 +1,15 @@
 <template>
   <div class="container-area">
+    <h3 style="margin-top: 20px">添加实验记录</h3>
+    <div class="button-area text-right">
+      <el-button class="align-right" @click="openNewTab"
+        >历史实验记录</el-button
+      >
+    </div>
     <div class="title-area">
       <div>当前设备：{{ this.equName }}</div>
       <div>当前用户：{{ this.userName }}</div>
+      <div>当前项目: {{ this.projectName }}</div>
     </div>
     <div class="form-area">
       <el-form
@@ -22,6 +29,14 @@
           </el-date-picker>
         </el-form-item>
 
+        <el-form-item label="序号" label-width="150px" prop="experimentNum">
+          <el-input
+            v-model="ruleForm.experimentNum"
+            style="width: 200px"
+            type="number"
+            :min="1"
+          ></el-input>
+        </el-form-item>
         <el-form-item
           v-for="(value, key) in equAttrs"
           :label="key"
@@ -54,6 +69,7 @@
 </template>
 <script>
 import { getEquAttr, addExperiment } from "../../network/equpment";
+import { getProjectDetail } from "../../network/project";
 export default {
   components: {},
   data() {
@@ -62,10 +78,13 @@ export default {
       equName: "",
       equId: "",
       equipmentOrderId: "",
-      labelPosition: "left",
+      projectId: "",
+      projectName: "",
+      labelPosition: "right",
       equAttrs: [],
       ruleForm: {
         startTime: new Date(),
+        experimentNum: null,
         result: "",
         remark: "",
       },
@@ -77,6 +96,13 @@ export default {
             message: "请选择日期",
             trigger: "change",
           },
+        ],
+        experimentNum: [
+          {
+            required: true,
+            message: "请输入实验序号",
+            trigger: "blur"
+          }
         ],
         remark: [
           {
@@ -112,6 +138,21 @@ export default {
       return formattedDate;
     },
 
+    //查看历史实验记录
+    openNewTab() {
+      // 获取当前路由路径
+      const currentRoute = this.$route.fullPath;
+
+      // 拼接新页面的路由路径
+      const newTabRoute = "/searchRecords";
+
+      // 在新标签页中打开新页面
+      window.open(newTabRoute, "_blank");
+
+      // 在原页面保持路由不变
+      this.$router.replace({ path: currentRoute });
+    },
+    //提交新建表单
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
@@ -128,7 +169,7 @@ export default {
           this.ruleForm.startTime = this.formatDate(this.ruleForm.startTime);
           console.log(
             this.equipmentOrderId,
-            0,
+            this.ruleForm.experimentNum,
             params,
             this.ruleForm.remark,
             this.ruleForm.result,
@@ -136,7 +177,7 @@ export default {
           );
           addExperiment(
             this.equipmentOrderId,
-            0,
+            this.ruleForm.experimentNum,
             params,
             this.ruleForm.remark,
             this.ruleForm.result,
@@ -150,9 +191,11 @@ export default {
         }
       });
     },
+    //重置表单
     resetForm(formName) {
       this.$refs[formName].resetFields();
     },
+    //我也不知道有什么用，好像不能成功加入到rules中
     generateRules() {
       // 动态生成验证规则
       this.rules = Object.fromEntries(
@@ -168,7 +211,7 @@ export default {
     this.equName = this.$route.query.equName;
     this.equId = this.$route.query.equId;
     this.equipmentOrderId = this.$route.query.equipmentOrderId;
-
+    this.projectId = this.$route.query.projectId;
     // 现在你可以在组件中使用 equId 和 equipmentOrderId 了
     // console.log("userName:", this.userName);
     // console.log("equName:", this.equName);
@@ -176,13 +219,19 @@ export default {
     // console.log("equipmentOrderId:", this.equipmentOrderId);
 
     getEquAttr(this.equId).then((res) => {
-      console.log(res.data);
+      // console.log(res.data);
       // 使用 reduce 方法将 attrName 赋值给 equAttrs 对象
       this.equAttrs = res.data.reduce((acc, currentItem) => {
         acc[currentItem.attrName] = currentItem.attrValue;
         return acc;
       }, {});
-      console.log(this.equAttrs);
+      // console.log(this.equAttrs);
+    });
+
+    getProjectDetail(this.projectId).then((res) => {
+      // console.log(res.data);
+      this.projectName = res.data.project.projectName;
+      // console.log(this.projectName);
     });
   },
 };
@@ -191,8 +240,12 @@ export default {
 .container-area {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  /* justify-content: center; */
   align-items: center;
+}
+.button-area {
+  align-self: flex-end;
+  margin-right: 30px;
 }
 .title-area {
   display: flex;
@@ -200,8 +253,12 @@ export default {
   justify-content: space-between;
   margin-top: 30px;
   margin-bottom: 30px;
+  font-size: 1.25rem;
 }
 .title-area div {
   margin-right: 25px;
+}
+.el-form-item__label {
+  font-size: 16px;
 }
 </style>

@@ -4,6 +4,7 @@
   </div>
 </template>
 <script>
+import { getExperimentList, getMineExperiment } from '../../network/equpment'
 export default {
   components:{
 
