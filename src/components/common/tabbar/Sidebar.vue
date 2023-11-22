@@ -49,9 +49,7 @@ export default {
       router
       default-active="2"
       background-color="#eee"
-      class="el-menu-vertical-demo"
-      @open="handleOpen"
-      @close="handleClose">
+      class="el-menu-vertical-demo">
       <el-menu-item index="/myProject">
         <i class="el-icon-menu"></i>
         <span slot="title">我管理的项目</span>
