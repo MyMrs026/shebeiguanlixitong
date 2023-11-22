@@ -44,15 +44,16 @@ export function endEqu(equipmentOrderId){
     method: 'put'
   })
 }
-//6.添加实验记录
-export function addExperiment(endTime,equipmentOrderId,params,result,startTime){
+//6.添加实验记录(修改后)
+export function addExperiment(equipmentOrderId,experimentNum,params,remark,result,startTime){
   return request({
     url:'/equipment/experiment/add',
     method:'post',
     data:{
-      endTime:endTime,
       equipmentOrderId:equipmentOrderId,
-      params: {},
+      experimentNum:experimentNum,
+      params: params,
+      remark:remark,
       result: result,
       startTime: startTime
     }
@@ -172,6 +173,14 @@ export function getEquInform(id){
   url: `/equipment/${id}`,
   method: 'get',
  })
+}
+
+//23.根据设备id获取设备参数列表
+export function getEquAttr(id) {
+  return request({
+    url: `/equipment/attr/list/${id}`,
+    method:'get',
+  })
 }
 
 

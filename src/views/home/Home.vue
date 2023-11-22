@@ -17,30 +17,28 @@
               content="点击查看更多"
               placement="right"
             >
-              <div>
+              <div class="notice-area">
                 最新通知：{{ latestNotice.content
                 }}{{ latestNotice.createTime | formatDate }}
               </div>
             </el-tooltip>
           </router-link>
-          <div
-            class="menu-icon"
-            style="
-              margin-top: 2.5rem;
-              margin-bottom: 3rem;
-              height: 20rem;
-              font-size: 1.2rem;
-              letter-spacing: 0.3125rem;
-              text-align: left;
-            "
-          >
-            微纳加工平台主攻光/电芯片的异质异构集成以及多材料体系的超精细加工。<br />
-            <br />
-            微纳加工平台总面积641.78m²，其中百级区182.42m²，千级区368.67m²，湿法工作区26.48m²，灰区36.5
-            m²。<br />
-            <br />
-            加工平台管理网站旨在为您提供正确的设备建议，并为您的微纳米制造工艺以及芯片检测工作提供一个良好的起点。<br />
-            如果您需要有关某些仪器或流程的更多信息，请联系相关人员。欢迎您对微纳加工平台管理网站提供任何反馈或意见。
+          <div class="intro-area">
+            <div class="intro-pic">
+              <img
+                src="../../assets/img/home1.jpg"
+                style="height: 100%; width: 100%; text-align: center;object-fit: contain;"
+              />
+            </div>
+            <div class="intro-text">
+              <el-card class="box-card">
+                <span class="bullet">&bull;</span>微纳加工平台主攻光/电芯片的异质异构集成以及多材料体系的超精细加工。<br />
+                <span class="bullet">&bull;</span>微纳加工平台总面积641.78m²，其中百级区182.42m²，千级区368.67m²，湿法工作区26.48m²，灰区36.5
+                m²。<br />
+                <span class="bullet">&bull;</span>加工平台管理网站旨在为您提供正确的设备建议，并为您的微纳米制造工艺以及芯片检测工作提供一个良好的起点。<br />
+                如果您需要有关某些仪器或流程的更多信息，请联系相关人员。欢迎您对微纳加工平台管理网站提供任何反馈或意见。
+              </el-card>
+            </div>
           </div>
         </div>
       </div>
@@ -74,15 +72,15 @@
         <p id="book-use">我的预约</p>
       </div>
       <!-- 用户个人的预约表(目前：写死的) -->
-      <div class="table-book-use" style="background-color: rgb(222, 230, 244)">
+      <div class="table-book-use">
         <el-table :data="orderEvents" class="table-book">
-          <el-table-column prop="equName" label="设备名" width="140">
+          <el-table-column prop="equName" label="设备名" width="180">
           </el-table-column>
           <el-table-column prop="userName" label="用户名" width="140">
           </el-table-column>
-          <el-table-column prop="start" label="开始时间" width="140">
+          <el-table-column prop="start" label="开始时间" width="180">
           </el-table-column>
-          <el-table-column prop="end" label="结束时间" width="140">
+          <el-table-column prop="end" label="结束时间" width="180">
           </el-table-column>
           <el-table-column prop="operate" label="修改预约" width="125">
             <template slot-scope="scope">
@@ -91,10 +89,14 @@
               </router-link>
             </template>
           </el-table-column>
-          <el-table-column prop="operate" label="快捷操作" width="125">
-            <router-link to="/test">
-              <el-button type="info">立即测试</el-button>
-            </router-link>
+          <el-table-column prop="operate" label="开始实验" width="125">
+            <template slot-scope="scope">
+              <el-button
+                type="info"
+                @click="handleStartExperimentClick(scope.row)"
+                >开始实验</el-button
+              >
+            </template>
           </el-table-column>
         </el-table>
       </div>
@@ -188,6 +190,28 @@ export default {
       return "";
     },
 
+    handleStartExperimentClick(row) {
+      // 处理开始实验按钮点击事件
+      // console.log(row);
+      const userName = row.userName;
+      const equName = row.equName;
+      const equId = row.equId;
+      const equipmentOrderId = row.equipmentOrderId;
+      const projectId = row.projectId;
+      // console.log("用户为:"+userName+"所选择行的设备为:"+equName+"预约id为:"+equipmentOrderId);
+      // 在这里可以根据需要处理点击按钮的信息
+      // 例如：跳转到开始实验页面
+      this.$router.push({
+        path: "/addRecords",
+        query: {
+          userName,
+          equName,
+          equId,
+          equipmentOrderId,
+          projectId,
+        },
+      });
+    },
     //根据id获取设备名
     async loadEquInform(id) {
       try {
@@ -217,13 +241,16 @@ export default {
       try {
         const res = await getOrders();
         this.originEvents = res.data;
+        console.log(this.originEvents);
         this.orderEvents = await Promise.all(
           this.originEvents.map(async (item) => {
             const equName = await this.loadEquInform(item.equipmentId);
             const userName = await this.loadUserInform(item.userId);
             this.curUsername = userName;
             return {
+              equipmentOrderId: item.equipmentOrderId,
               equId: item.equipmentId,
+              projectId: item.projectId,
               equName: equName,
               userName: userName,
               start: formatDateToISOString(item.startTime).slice(0, -5),
@@ -250,25 +277,50 @@ export default {
     // this.equpsUse = this.$store.state.equpsUse;
     // this.myBooks = this.$store.state.myBooks;
     // this.equpsStatus = this.$store.state.equpsStatus;
-    getNoticeList().then(res => {
+    getNoticeList().then((res) => {
       this.notices = res.data;
     });
-    getLatest().then(res => {
+    getLatest().then((res) => {
       this.latestNotice = res.data;
     });
     this.loadOrderData();
   },
   filters: {
     //处理日期的显示格式问题，使日期以xxxx年xx月xx日的形式显示
-    formatDate: function(value) {
+    formatDate: function (value) {
       return new Date(value).toLocaleDateString();
-    }
+    },
   },
-  mounted() {}
+  mounted() {},
 };
 </script>
 
 <style>
+.intro-area {
+  display: flex;
+  flex-direction: row;
+  margin-top: 2.5rem;
+  margin-bottom: 3rem;
+  height: 20rem;
+  width: 100%;
+  font-size: 1.2rem;
+  letter-spacing: 0.3125rem;
+  text-align: left;
+}
+.intro-pic {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+}
+.intro-text {
+  width: 100%;
+  font-size: 1.05rem;
+}
+.bullet {
+  color: black; /* 设置圆点颜色为黑色 */
+}
 .outer-container {
   display: flex;
   justify-content: center;
@@ -289,8 +341,8 @@ export default {
 .left {
   text-align: center;
   height: 45rem;
-  padding-left: 10rem;
-  padding-right: 10rem;
+  padding-left: 5rem;
+  padding-right: 5rem;
 }
 .title1 {
   font-size: 3.5rem;
@@ -364,7 +416,7 @@ export default {
 }
 
 .text-home {
-  margin-left: 16rem;
+  margin-left: 1rem;
   margin-top: 0rem;
   padding-left: 3.125rem;
   line-height: 3.4375rem;
@@ -414,8 +466,6 @@ export default {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding-left: 5px;
-  padding-bottom: 30px;
 }
 
 .table-book {
