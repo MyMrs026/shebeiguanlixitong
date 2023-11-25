@@ -67,12 +67,12 @@ export function getExperimentList(){
   })
 }
 //8.获取我的实验记录列表
-export function getMineExperiment(){
-  return request({
-    url:'/equipment/experiment/mine',
-    method:'get'
-  })
-}
+// export function getMineExperiment(){
+//   return request({
+//     url:'/equipment/experiment/mine',
+//     method:'get'
+//   })
+// }
 //9.根据id删除实验记录
 export function removeExperiment(id){
   return request({

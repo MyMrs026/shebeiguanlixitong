@@ -68,7 +68,11 @@
   </div>
 </template>
 <script>
-import { getEquAttr, addExperiment } from "../../network/equpment";
+import {
+  getEquAttr,
+  addExperiment,
+  getExperimentList,
+} from "../../network/equpment";
 import { getProjectDetail } from "../../network/project";
 export default {
   components: {},
@@ -101,8 +105,8 @@ export default {
           {
             required: true,
             message: "请输入实验序号",
-            trigger: "blur"
-          }
+            trigger: "blur",
+          },
         ],
         remark: [
           {
@@ -184,10 +188,25 @@ export default {
             this.ruleForm.startTime
           ).then((res) => {
             console.log(res);
+            if (res.code == 2000) {
+              this.$notify({
+                title: "成功",
+                message: "添加成功，您可继续添加或查看实验记录",
+                type: "success",
+              });
+            } else {
+              this.$notify.error({
+                title: "错误",
+                message: "添加失败，请重新填写",
+              });
+              return false;
+            }
           });
         } else {
-          console.log("error submit!!");
-          return false;
+          this.$notify.error({
+            title: "错误",
+            message: "请填写完整",
+          });
         }
       });
     },
@@ -233,6 +252,10 @@ export default {
       this.projectName = res.data.project.projectName;
       // console.log(this.projectName);
     });
+
+    // getExperimentList().then(res => {
+    //   console.log(res.data);
+    // })
   },
 };
 </script>
