@@ -25,17 +25,18 @@
           width="180"
         ></el-table-column>
         <el-table-column label="实验条件">
-          <el-table :data="tableData">
-            <el-table-column label="设备名称" prop="equName"></el-table-column>
-            <el-table-column
-              label="实验属性"
-              prop="experimentAttrKey"
-            ></el-table-column>
-            <el-table-column
-              label="实验数值"
-              prop="experimentAttrValue"
-            ></el-table-column
-          ></el-table>
+          <template slot-scope="scope">
+            <el-table :data="scope.row.params">
+              <el-table-column
+                label="实验属性"
+                prop="experimentAttrKey"
+              ></el-table-column>
+              <el-table-column
+                label="实验数值"
+                prop="experimentAttrValue"
+              ></el-table-column
+            ></el-table>
+          </template>
         </el-table-column>
 
         <el-table-column
