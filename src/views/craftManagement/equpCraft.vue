@@ -46,6 +46,13 @@
               size="small"
             >培训预约</el-button>
           </router-link>
+          <router-link to="/searchRecords">
+            <el-button
+              type="primary"
+              plain
+              size="small"
+            >实验记录</el-button>
+          </router-link>
           <br />
           设备名称：{{ equipment.equipmentName }}
         </li>

@@ -1,5 +1,5 @@
 <template>
-  <div class="outer-container">
+  <div class="outer-container" ref="scrollArea" @wheel="handleScroll">
     <div class="total">
       <!-- 分割线 -->
 
@@ -7,28 +7,14 @@
         <br />
       </div>
       <!-- 标题+图标 -->
-      <div style="height: 35rem">
+      <div style="height: 35rem" v-if="currentPage === 1">
         <div class="left">
           <div class="title1">微纳加工平台</div>
-          <router-link to="/notice">
-            <el-tooltip
-              class="item"
-              effect="dark"
-              content="点击查看更多"
-              placement="right"
-            >
-              <div class="notice-area">
-                最新通知：{{ latestNotice.content
-                }}{{ latestNotice.createTime | formatDate }}
-              </div>
-            </el-tooltip>
-          </router-link>
+
           <div class="intro-area">
             <div class="intro-pic">
-              <img
-                src="../../assets/img/home1.jpg"
-                style="height: 100%; width: 100%; text-align: center;object-fit: contain;"
-              />
+              <img src="../../assets/img/home1.jpg"
+                style="height: 100%; width: 100%; text-align: center;object-fit: contain;" />
             </div>
             <div class="intro-text">
               <el-card class="box-card">
@@ -38,79 +24,78 @@
                 <span class="bullet">&bull;</span>加工平台管理网站旨在为您提供正确的设备建议，并为您的微纳米制造工艺以及芯片检测工作提供一个良好的起点。<br />
                 如果您需要有关某些仪器或流程的更多信息，请联系相关人员。欢迎您对微纳加工平台管理网站提供任何反馈或意见。
               </el-card>
+              <router-link to="/notice">
+                <el-tooltip class="item" effect="dark" content="点击查看更多" placement="right">
+                  <div style="margin-top: 15px;">
+                    最新通知：{{ latestNotice.content
+                    }}{{ latestNotice.createTime | formatDate }}
+                  </div>
+                </el-tooltip>
+              </router-link>
             </div>
           </div>
         </div>
       </div>
 
-      <div class="text-home">
-        <p id="equ-use">设备使用情况</p>
+      <div v-if="currentPage === 2 ">
+        <div class="text-home">
+          <p id="equ-use">设备使用情况</p>
+        </div>
+        <!-- 设备使用表(目前：写死的) -->
+        <div class="table-equ-use">
+          <el-table border :data="equpsUse" class="table-equ" :row-class-name="tableRowClassName">
+            <el-table-column prop="equp" label="设备名" width="170">
+            </el-table-column>
+            <el-table-column prop="status" label="使用情况" width="110">
+            </el-table-column>
+            <el-table-column prop="user" label="使用用户" width="110">
+            </el-table-column>
+            <el-table-column prop="org" label="使用组织" width="265">
+            </el-table-column>
+            <el-table-column prop="starttime" label="开始时间" width="190">
+            </el-table-column>
+            <el-table-column prop="endtime" label="结束时间" width="190">
+            </el-table-column>
+          </el-table>
+        </div>
       </div>
-      <!-- 设备使用表(目前：写死的) -->
-      <div class="table-equ-use">
-        <el-table
-          border
-          :data="equpsUse"
-          class="table-equ"
-          :row-class-name="tableRowClassName"
-        >
-          <el-table-column prop="equp" label="设备名" width="170">
-          </el-table-column>
-          <el-table-column prop="status" label="使用情况" width="110">
-          </el-table-column>
-          <el-table-column prop="user" label="使用用户" width="110">
-          </el-table-column>
-          <el-table-column prop="org" label="使用组织" width="265">
-          </el-table-column>
-          <el-table-column prop="starttime" label="开始时间" width="190">
-          </el-table-column>
-          <el-table-column prop="endtime" label="结束时间" width="190">
-          </el-table-column>
-        </el-table>
+      <div v-if="currentPage === 3 ">
+        <div class="text-home">
+          <p id="book-use">我的预约</p>
+        </div>
+        <!-- 用户个人的预约表(目前：写死的) -->
+        <div class="table-book-use">
+          <el-table :data="orderEvents" class="table-book">
+            <el-table-column prop="equName" label="设备名" width="180">
+            </el-table-column>
+            <el-table-column prop="userName" label="用户名" width="140">
+            </el-table-column>
+            <el-table-column prop="start" label="开始时间" width="180">
+            </el-table-column>
+            <el-table-column prop="end" label="结束时间" width="180">
+            </el-table-column>
+            <el-table-column prop="operate" label="修改预约" width="125">
+              <template slot-scope="scope">
+                <router-link :to="'/book/' + scope.row.equId">
+                  <el-button type="info">修改预约</el-button>
+                </router-link>
+              </template>
+            </el-table-column>
+            <el-table-column prop="operate" label="开始实验" width="125">
+              <template slot-scope="scope">
+                <el-button type="info" @click="handleStartExperimentClick(scope.row)">开始实验</el-button>
+              </template>
+            </el-table-column>
+          </el-table>
+        </div>
       </div>
-      <div class="text-home">
-        <p id="book-use">我的预约</p>
-      </div>
-      <!-- 用户个人的预约表(目前：写死的) -->
-      <div class="table-book-use">
-        <el-table :data="orderEvents" class="table-book">
-          <el-table-column prop="equName" label="设备名" width="180">
-          </el-table-column>
-          <el-table-column prop="userName" label="用户名" width="140">
-          </el-table-column>
-          <el-table-column prop="start" label="开始时间" width="180">
-          </el-table-column>
-          <el-table-column prop="end" label="结束时间" width="180">
-          </el-table-column>
-          <el-table-column prop="operate" label="修改预约" width="125">
-            <template slot-scope="scope">
-              <router-link :to="'/book/' + scope.row.equId">
-                <el-button type="info">修改预约</el-button>
-              </router-link>
-            </template>
-          </el-table-column>
-          <el-table-column prop="operate" label="开始实验" width="125">
-            <template slot-scope="scope">
-              <el-button
-                type="info"
-                @click="handleStartExperimentClick(scope.row)"
-                >开始实验</el-button
-              >
-            </template>
-          </el-table-column>
-        </el-table>
-      </div>
-      <div class="text-home">
+      <div v-if="currentPage === 4 ">
+        <div class="text-home">
         <p id="dch-use">设备使用状态</p>
       </div>
       <!-- 所有的设备使用状态表格(目前：写死的) -->
       <div class="table-dch-use">
-        <el-table
-          border
-          :data="equpsStatus"
-          class="table-dch"
-          :row-class-name="getRowClassName"
-        >
+        <el-table border :data="equpsStatus" class="table-dch" :row-class-name="getRowClassName">
           <el-table-column prop="equp" label="设备名" width="300">
           </el-table-column>
           <el-table-column prop="status" label="状态" width="200">
@@ -124,19 +109,16 @@
       <div class="text-home">
         <p id="lab-map" style="margin-top: 8rem">超净室平面图</p>
       </div>
-      <div
-        style="
+      <div style="
           display: flex;
           height: 100%;
           justify-content: center;
           align-items: center;
-        "
-      >
-        <img
-          src="../../assets/img/超净室.jpg"
-          style="height: 100%; width: 80%; text-align: center"
-        />
+        ">
+        <img src="../../assets/img/超净室.jpg" style="height: 100%; width: 80%; text-align: center" />
       </div>
+      </div>
+      
     </div>
   </div>
 </template>
@@ -166,6 +148,10 @@ export default {
       originEvents: [], //从数据库读出来的数据在这存放
       orderEvents: [], //将数据库中读出来的事件调整后的格式放到这个数组下,此数组存放是当前登录用户的所有预约记录
       curUsername: "", // 当前登录用户的名字
+
+      currentPage: 1,
+      totalPages: 4, // 假设有三页内容
+      scrolling: false
     };
   },
   methods: {
@@ -263,6 +249,21 @@ export default {
         console.error("Error loading data:", error);
       }
     },
+
+    //翻页功能实现
+    handleScroll(event) {
+      if (!this.scrolling) {
+        this.scrolling = true;
+        setTimeout(() => {
+          if (event.deltaY > 0 && this.currentPage < this.totalPages) {
+            this.currentPage++;
+          } else if (event.deltaY < 0 && this.currentPage > 1) {
+            this.currentPage--;
+          }
+          this.scrolling = false;
+        }, 200);
+      }
+    }
   },
   computed: {
     // paginatedData() {
@@ -291,7 +292,12 @@ export default {
       return new Date(value).toLocaleDateString();
     },
   },
-  mounted() {},
+  mounted() {
+    this.$refs.scrollArea.addEventListener('wheel', this.handleScroll);
+  },
+  destroyed() {
+    this.$refs.scrollArea.removeEventListener('wheel', this.handleScroll);
+  },
 };
 </script>
 
@@ -307,6 +313,7 @@ export default {
   letter-spacing: 0.3125rem;
   text-align: left;
 }
+
 .intro-pic {
   display: flex;
   height: 100%;
@@ -314,18 +321,23 @@ export default {
   justify-content: center;
   align-items: center;
 }
+
 .intro-text {
   width: 100%;
   font-size: 1.05rem;
 }
+
 .bullet {
-  color: black; /* 设置圆点颜色为黑色 */
+  color: black;
+  /* 设置圆点颜色为黑色 */
 }
+
 .outer-container {
   display: flex;
   justify-content: center;
   align-items: center;
 }
+
 .total {
   /* background-image: url("../../assets/img/qqq6.png"); */
   width: 100%;
@@ -335,15 +347,18 @@ export default {
   display: flex;
   flex-direction: column;
 }
+
 .first {
   height: 1.875rem;
 }
+
 .left {
   text-align: center;
   height: 45rem;
   padding-left: 5rem;
   padding-right: 5rem;
 }
+
 .title1 {
   font-size: 3.5rem;
   margin-top: 0.9375rem;
@@ -353,6 +368,7 @@ export default {
   font-weight: bolder;
   text-align: center;
 }
+
 .box {
   margin-top: 1.25rem;
   margin-right: 0.625rem;
@@ -494,9 +510,11 @@ export default {
   font-size: 1rem;
   font-family: w95fa;
 }
+
 div /deep/ .margin-top.el-descriptions .el-descriptions__table.is-bordered {
   height: 17.5rem;
 }
+
 div /deep/ .margin-top.el-descriptions .el-descriptions.is-bordered {
   height: 17.5rem;
 }

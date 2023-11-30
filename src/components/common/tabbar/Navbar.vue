@@ -48,7 +48,7 @@ export default {
   <!-- 导航栏部分 -->
   <div class="tabbar">
     <el-row>
-      <el-col :span="5">
+      <el-col :span="6">
         <el-col class="institution">
           <img
             src="../../../assets/img/weina.png"
@@ -59,7 +59,7 @@ export default {
               </div> -->
         </el-col>
       </el-col>
-      <el-col :span="15">
+      <el-col :span="14">
         <el-col
           :span="12"
           style="
@@ -102,11 +102,7 @@ export default {
 
         </el-col>
       </el-col>
-      <el-col
-        :span="3"
-        class="tab-icon"
-        style="display:flex;flex-direction:row;"
-      >
+      <el-col :span="4" class="tab-icon" style="display:flex;flex-direction:row;">
         <el-col :span="1" class="icon-question">
           <div class="help-box">
             <router-link to="/help">
@@ -117,6 +113,20 @@ export default {
                 placement="bottom"
               >
                 <i class="el-icon-question"></i>
+              </el-tooltip>
+            </router-link>
+          </div>
+        </el-col>
+        <el-col :span="1" class="icon-user">
+          <div class="help-box">
+            <router-link to="/personalInfo">
+              <el-tooltip
+                class="item"
+                effect="light"
+                content="我的信息"
+                placement="bottom"
+              >
+                <i class="el-icon-user"></i>
               </el-tooltip>
             </router-link>
           </div>
@@ -139,7 +149,6 @@ export default {
             </el-tooltip>
           </router-link>
         </el-col>
-
         <el-col :span="1" class="icon-back">
           <el-tooltip
             class="item"
@@ -191,6 +200,23 @@ export default {
 .el-icon-question {
   color: white;
 }
+
+.icon-user {
+  float: right;
+  display: flex;
+  font-size: 35px;
+
+  justify-content: center;
+  align-items: center;
+  margin-top: 5px;
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+.el-icon-user {
+  color: white;
+}
+
 /* 邮件icon的盒子 */
 .icon-message {
   float: right;

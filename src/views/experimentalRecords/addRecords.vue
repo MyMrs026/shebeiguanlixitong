@@ -2,9 +2,7 @@
   <div class="container-area">
     <h3 style="margin-top: 20px">添加实验记录</h3>
     <div class="button-area text-right">
-      <el-button class="align-right" @click="openNewTab"
-        >历史实验记录</el-button
-      >
+      <el-button class="align-right" @click="openNewTab">历史实验记录</el-button>
     </div>
     <div class="title-area">
       <div>当前设备：{{ this.equName }}</div>
@@ -12,43 +10,17 @@
       <div>当前项目: {{ this.projectName }}</div>
     </div>
     <div class="form-area">
-      <el-form
-        :model="ruleForm"
-        :rules="rules"
-        :label-position="labelPosition"
-        ref="ruleForm"
-        class="demo-ruleForm"
-      >
+      <el-form :model="ruleForm" :rules="rules" :label-position="labelPosition" ref="ruleForm" class="demo-ruleForm">
         <el-form-item label="实验开始日期" label-width="150px" required>
-          <el-date-picker
-            type="datetime"
-            placeholder="选择日期"
-            v-model="ruleForm.startTime"
-            style="width: 200px"
-          >
+          <el-date-picker type="datetime" placeholder="选择日期" v-model="ruleForm.startTime" style="width: 200px">
           </el-date-picker>
         </el-form-item>
 
         <el-form-item label="序号" label-width="150px" prop="experimentNum">
-          <el-input
-            v-model="ruleForm.experimentNum"
-            style="width: 200px"
-            type="number"
-            :min="1"
-          ></el-input>
+          <el-input v-model="ruleForm.experimentNum" style="width: 200px" type="number" :min="1"></el-input>
         </el-form-item>
-        <el-form-item
-          v-for="(value, key) in equAttrs"
-          :label="key"
-          :key="key"
-          label-width="150px"
-          :prop="key"
-        >
-          <el-input
-            v-model="equAttrs[key]"
-            :placeholder="value"
-            style="width: 200px"
-          ></el-input>
+        <el-form-item v-for="(value, key) in equAttrs" :label="key" :key="key" label-width="150px" :prop="key">
+          <el-input v-model="equAttrs[key]" :placeholder="value" style="width: 200px"></el-input>
         </el-form-item>
 
         <el-form-item label="结果" label-width="150px" prop="result">
@@ -58,9 +30,7 @@
           <el-input v-model="ruleForm.remark" style="width: 200px"></el-input>
         </el-form-item>
         <el-form-item label-width="150px">
-          <el-button type="primary" @click="submitForm('ruleForm')"
-            >立即创建</el-button
-          >
+          <el-button type="primary" @click="submitForm('ruleForm')">立即创建</el-button>
           <el-button @click="resetForm('ruleForm')">重置</el-button>
         </el-form-item>
       </el-form>
@@ -266,10 +236,12 @@ export default {
   /* justify-content: center; */
   align-items: center;
 }
+
 .button-area {
   align-self: flex-end;
   margin-right: 30px;
 }
+
 .title-area {
   display: flex;
   flex-direction: row;
@@ -278,9 +250,11 @@ export default {
   margin-bottom: 30px;
   font-size: 1.25rem;
 }
+
 .title-area div {
   margin-right: 25px;
 }
+
 .el-form-item__label {
   font-size: 16px;
 }

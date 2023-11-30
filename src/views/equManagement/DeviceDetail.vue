@@ -122,10 +122,10 @@ export default {
   display: flex;
   flex-direction: column;
   overflow: auto;
-  background-image: url("../../assets/img/qqq6.png");
-  background-repeat: no-repeat;
+  /* background-image: url("../../assets/img/qqq6.png"); */
+  /* background-repeat: no-repeat; */
   width: 100%;
-  background-size: 100% 100%;
+  /* background-size: 100% 100%; */
   padding-left: 100px;
 }
 .text-title {

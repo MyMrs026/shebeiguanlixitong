@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="table-area">
-      <el-table :data="formatExList" stripe style="width: 100%">
+      <el-table :data="formatExList" stripe class="search-table">
         <el-table-column prop="experimentNum" label="实验序号" width="80">
         </el-table-column>
         <el-table-column
@@ -128,4 +128,7 @@ export default {
 };
 </script>
 <style scope>
+.search-table{
+  
+}
 </style>
