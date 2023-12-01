@@ -114,17 +114,24 @@ export default {
 
     //查看历史实验记录
     openNewTab() {
+      const equId = this.equId;
+      const userName = this.userName
       // 获取当前路由路径
       const currentRoute = this.$route.fullPath;
-
       // 拼接新页面的路由路径
       const newTabRoute = "/searchRecords";
-
-      // 在新标签页中打开新页面
-      window.open(newTabRoute, "_blank");
-
-      // 在原页面保持路由不变
-      this.$router.replace({ path: currentRoute });
+      if (currentRoute !== newTabRoute) {
+        // 在新标签页中打开新页面
+        window.open(`${newTabRoute}?equId=${equId}&userName=${userName}`, "_blank");
+        // 在原页面保持路由不变
+        this.$router.replace({
+          path: currentRoute,
+          query: {
+            equId,
+            userName
+          }
+        });
+      }
     },
     //提交新建表单
     submitForm(formName) {
@@ -201,31 +208,16 @@ export default {
     this.equId = this.$route.query.equId;
     this.equipmentOrderId = this.$route.query.equipmentOrderId;
     this.projectId = this.$route.query.projectId;
-    // 现在你可以在组件中使用 equId 和 equipmentOrderId 了
-    // console.log("userName:", this.userName);
-    // console.log("equName:", this.equName);
-    // console.log("equId:", this.equId);
-    // console.log("equipmentOrderId:", this.equipmentOrderId);
-
     getEquAttr(this.equId).then((res) => {
-      // console.log(res.data);
-      // 使用 reduce 方法将 attrName 赋值给 equAttrs 对象
       this.equAttrs = res.data.reduce((acc, currentItem) => {
         acc[currentItem.attrName] = currentItem.attrValue;
         return acc;
       }, {});
-      // console.log(this.equAttrs);
     });
 
     getProjectDetail(this.projectId).then((res) => {
-      // console.log(res.data);
       this.projectName = res.data.project.projectName;
-      // console.log(this.projectName);
     });
-
-    // getExperimentList().then(res => {
-    //   console.log(res.data);
-    // })
   },
 };
 </script>

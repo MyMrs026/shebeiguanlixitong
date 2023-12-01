@@ -28,6 +28,7 @@
     "element-ui": "^2.15.13",
     "jquery": "^3.7.1",
     "lib-flexible": "^0.3.2",
+    "loadsh": "^0.0.4",
     "normalize.css": "^8.0.1",
     "vue": "^2.5.2",
     "vue-router": "^3.0.1",

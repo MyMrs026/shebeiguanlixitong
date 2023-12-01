@@ -94,11 +94,11 @@ export default {
             >
           </router-link>
 
-          <router-link to="/addProject">
+          <!-- <router-link to="/addProject">
             <el-button class="custom-button" type="info" round size="small"
               >新建项目</el-button
             >
-          </router-link>
+          </router-link> -->
 
         </el-col>
       </el-col>

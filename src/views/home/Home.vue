@@ -7,7 +7,7 @@
         <br />
       </div>
       <!-- 标题+图标 -->
-      <div style="height: 35rem" v-if="currentPage === 1">
+      <div style="height: 35rem" v-show="currentPage === 1">
         <div class="left">
           <div class="title1">微纳加工平台</div>
 
@@ -37,7 +37,7 @@
         </div>
       </div>
 
-      <div v-if="currentPage === 2 ">
+      <div v-show="currentPage === 2">
         <div class="text-home">
           <p id="equ-use">设备使用情况</p>
         </div>
@@ -59,7 +59,7 @@
           </el-table>
         </div>
       </div>
-      <div v-if="currentPage === 3 ">
+      <div v-show="currentPage === 3">
         <div class="text-home">
           <p id="book-use">我的预约</p>
         </div>
@@ -89,41 +89,42 @@
           </el-table>
         </div>
       </div>
-      <div v-if="currentPage === 4 ">
+      <div v-show="currentPage === 4">
         <div class="text-home">
-        <p id="dch-use">设备使用状态</p>
-      </div>
-      <!-- 所有的设备使用状态表格(目前：写死的) -->
-      <div class="table-dch-use">
-        <el-table border :data="equpsStatus" class="table-dch" :row-class-name="getRowClassName">
-          <el-table-column prop="equp" label="设备名" width="300">
-          </el-table-column>
-          <el-table-column prop="status" label="状态" width="200">
-          </el-table-column>
-          <el-table-column prop="expected" label="预期就绪" width="200">
-          </el-table-column>
-          <el-table-column prop="statuslog" label="状态日志" width="330">
-          </el-table-column>
-        </el-table>
-      </div>
-      <div class="text-home">
-        <p id="lab-map" style="margin-top: 8rem">超净室平面图</p>
-      </div>
-      <div style="
+          <p id="dch-use">设备使用状态</p>
+        </div>
+        <!-- 所有的设备使用状态表格(目前：写死的) -->
+        <div class="table-dch-use">
+          <el-table border :data="equpsStatus" class="table-dch" :row-class-name="getRowClassName">
+            <el-table-column prop="equp" label="设备名" width="300">
+            </el-table-column>
+            <el-table-column prop="status" label="状态" width="200">
+            </el-table-column>
+            <el-table-column prop="expected" label="预期就绪" width="200">
+            </el-table-column>
+            <el-table-column prop="statuslog" label="状态日志" width="330">
+            </el-table-column>
+          </el-table>
+        </div>
+        <div class="text-home">
+          <p id="lab-map" style="margin-top: 8rem">超净室平面图</p>
+        </div>
+        <div style="
           display: flex;
           height: 100%;
           justify-content: center;
           align-items: center;
         ">
-        <img src="../../assets/img/超净室.jpg" style="height: 100%; width: 80%; text-align: center" />
+          <img src="../../assets/img/超净室.jpg" style="height: 100%; width: 80%; text-align: center" />
+        </div>
       </div>
-      </div>
-      
+
     </div>
   </div>
 </template>
 
 <script>
+import _ from 'loadsh'
 import { getNoticeList, getLatest } from "../../network/notice";
 import { getEquInform } from "../../network/equpment";
 import { getOrders } from "../../network/book";
@@ -151,6 +152,7 @@ export default {
 
       currentPage: 1,
       totalPages: 4, // 假设有三页内容
+      lastScrollTime: 0,
       scrolling: false
     };
   },
@@ -251,33 +253,20 @@ export default {
     },
 
     //翻页功能实现
-    handleScroll(event) {
+    handleScroll: _.debounce(function (event) {
       if (!this.scrolling) {
         this.scrolling = true;
-        setTimeout(() => {
-          if (event.deltaY > 0 && this.currentPage < this.totalPages) {
-            this.currentPage++;
-          } else if (event.deltaY < 0 && this.currentPage > 1) {
-            this.currentPage--;
-          }
-          this.scrolling = false;
-        }, 200);
+
+        if (event.deltaY > 0 && this.currentPage < this.totalPages) {
+          this.currentPage++;
+        } else if (event.deltaY < 0 && this.currentPage > 1) {
+          this.currentPage--;
+        }
+        this.scrolling = false;
       }
-    }
-  },
-  computed: {
-    // paginatedData() {
-    //   const data = this.notices;
-    //   const startIndex = (this.currentPage - 1) * this.perPage;
-    //   const endIndex = startIndex + this.perPage;
-    //   return data.slice(startIndex, endIndex);
-    // },
+    }, 100),
   },
   created() {
-    //目前是从vuex中读取数据，后期可以从axios中读取数据
-    // this.equpsUse = this.$store.state.equpsUse;
-    // this.myBooks = this.$store.state.myBooks;
-    // this.equpsStatus = this.$store.state.equpsStatus;
     getNoticeList().then((res) => {
       this.notices = res.data;
     });
@@ -293,10 +282,14 @@ export default {
     },
   },
   mounted() {
-    this.$refs.scrollArea.addEventListener('wheel', this.handleScroll);
+    if (this.$refs.scrollArea) {
+      this.$refs.scrollArea.addEventListener('wheel', this.handleScroll);
+    }
   },
   destroyed() {
-    this.$refs.scrollArea.removeEventListener('wheel', this.handleScroll);
+    if (this.$refs.scrollArea) {
+      this.$refs.scrollArea.removeEventListener('wheel', this.handleScroll);
+    }
   },
 };
 </script>

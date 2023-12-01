@@ -81,9 +81,9 @@ export function removeExperiment(id){
   })
 }
 //10.根据id获取实验记录
-export function getExperimentById(id){
+export function getExperimentById(equipmentId){
   return request({
-   url: `/equipment/experiment/${id}`,
+   url: `/equipment/experiment/${equipmentId}`,
    method: 'get',
   })
 }

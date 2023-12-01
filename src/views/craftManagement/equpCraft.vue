@@ -13,46 +13,22 @@
     <!-- 设备工艺表格 -->
     <div>
       <ul class="table-equcraft-use">
-        <li
-          class="equ-item"
-          v-for="(equipment,index) in equinform"
-          :key="equipment.equipmentId"
-        >
-        <div class="image-container" >
-          <img
-            v-bind:src="equipment.equipmentImageUrl"
-            style="object-fit:contain;width: 100%; height: 100%; float: left; max-height: 200px"
-            @click="gotoDeviceDetail(equipment.equipmentId)"
-          />
+        <li class="equ-item" v-for="(equipment, index) in equinform" :key="equipment.equipmentId">
+          <div class="image-container">
+            <img v-bind:src="equipment.equipmentImageUrl"
+              style="object-fit:contain;width: 100%; height: 100%; float: left; max-height: 200px"
+              @click="gotoDeviceDetail(equipment.equipmentId)" />
           </div>
           <router-link :to="'/book/' + equipment.equipmentId">
-            <el-button
-              type="primary"
-              plain
-              size="small"
-            >立即预约</el-button>
+            <el-button type="primary" plain size="small">立即预约</el-button>
           </router-link>
           <router-link to="/test">
-            <el-button
-              type="primary"
-              plain
-              size="small"
-            >立即测试</el-button>
+            <el-button type="primary" plain size="small">立即测试</el-button>
           </router-link>
           <router-link to="/train">
-            <el-button
-              type="primary"
-              plain
-              size="small"
-            >培训预约</el-button>
+            <el-button type="primary" plain size="small">培训预约</el-button>
           </router-link>
-          <router-link to="/searchRecords">
-            <el-button
-              type="primary"
-              plain
-              size="small"
-            >实验记录</el-button>
-          </router-link>
+          <el-button type="primary" plain size="small" @click="openNewTab(equipment.equipmentId)">实验记录</el-button>
           <br />
           设备名称：{{ equipment.equipmentName }}
         </li>
@@ -60,54 +36,29 @@
     </div>
     <div class="pagination">
       <span>
-        <el-button
-          round
-          @click="goToFirstPage"
-          :disabled="currentPage === 1"
-        >
+        <el-button round @click="goToFirstPage" :disabled="currentPage === 1">
           第一页
         </el-button>
       </span>
       <span>
-        <el-button
-          round
-          @click="previousPage"
-          :disabled="currentPage === 1"
-        >
+        <el-button round @click="previousPage" :disabled="currentPage === 1">
           前一页
         </el-button>
       </span>
       <span>
-        <el-button
-          round
-          @click="nextPage"
-          :disabled="currentPage === totalPages"
-        >
+        <el-button round @click="nextPage" :disabled="currentPage === totalPages">
           下一页
         </el-button>
       </span>
       <span>
-        <el-button
-          round
-          @click="goToLastPage"
-          :disabled="currentPage === totalPages"
-        >
+        <el-button round @click="goToLastPage" :disabled="currentPage === totalPages">
           最后
         </el-button>
       </span>
       <span>
         &nbsp;&nbsp;&nbsp;&nbsp;跳转到第：
-        <el-input
-          type="text"
-          v-model.number="goToPageNumber"
-          style="width: 80px"
-        />
-        <el-button
-          type="success"
-          @click="goToPage"
-          round
-          style="margin-left: 10px"
-        >确定</el-button>
+        <el-input type="text" v-model.number="goToPageNumber" style="width: 80px" />
+        <el-button type="success" @click="goToPage" round style="margin-left: 10px">确定</el-button>
       </span>
     </div>
   </div>
@@ -119,14 +70,14 @@ export default {
     return {
       equinform: [],
       currentDate: new Date(),
-      currentPage:1,
+      currentPage: 1,
       perPage: 8,
       goToPageNumber: "",
       message: "设备工艺展示",
-      apiUrl : "http://47.98.160.222:8080/api/file/uploadImage",
+      apiUrl: "http://47.98.160.222:8080/api/file/uploadImage",
       imageUrl: "",
       customHeaders: {
-        'Authorization':localStorage.getItem('token')
+        'Authorization': localStorage.getItem('token')
       },
       value: "", //绑定设备的名称
     };
@@ -165,6 +116,25 @@ export default {
         this.currentPage = pageNumber;
       }
       this.goToPageNumber = "";
+    },
+    //查看历史实验记录
+    openNewTab(id) {
+      // 获取当前路由路径
+      const currentRoute = this.$route.fullPath;
+      // 拼接新页面的路由路径
+      const newTabRoute = "/searchRecords";
+      if (currentRoute !== newTabRoute) {
+        // 在新标签页中打开新页面
+        // window.open(`${newTabRoute}?equId=${id}&userName=${userName}`, "_blank");
+        window.open(`${newTabRoute}?equId=${id}`, "_blank");
+        // 在原页面保持路由不变
+        this.$router.replace({
+          path: currentRoute,
+          query: {
+            equId
+          }
+        });
+      }
     },
   },
   computed: {
@@ -211,6 +181,7 @@ export default {
   font-size: 20px;
   width: 30%;
 }
+
 .table-equcraft-use {
   display: flex;
   flex-direction: row;
@@ -221,23 +192,36 @@ export default {
   /* margin-right:50px; */
   /* gap:40px; */
 }
+
 .equ-item {
-  flex: 0 0 calc(25% - 20px); /* 让每个元素占据1/3的宽度，减去一些间距 */
-  margin-right: 20px; /* 可以根据需要添加间距 */
-  margin-bottom: 20px; /* 用于在垂直方向上添加间距 */
-  box-sizing: border-box; /* 确保元素的边框和内边距不会使它们超出指定的宽度 */
-  background-color: white; /* 设置背景颜色为白色 */
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2); /* 添加阴影效果 */
-  padding: 10px; /* 可以根据需要调整内边距 */
-  border-radius: 10px; /* 添加圆角效果，可以根据需要调整 */
+  flex: 0 0 calc(25% - 20px);
+  /* 让每个元素占据1/3的宽度，减去一些间距 */
+  margin-right: 20px;
+  /* 可以根据需要添加间距 */
+  margin-bottom: 20px;
+  /* 用于在垂直方向上添加间距 */
+  box-sizing: border-box;
+  /* 确保元素的边框和内边距不会使它们超出指定的宽度 */
+  background-color: white;
+  /* 设置背景颜色为白色 */
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+  /* 添加阴影效果 */
+  padding: 10px;
+  /* 可以根据需要调整内边距 */
+  border-radius: 10px;
+  /* 添加圆角效果，可以根据需要调整 */
   /* 添加其他样式，例如边框 */
-  border: 1px solid #ccc; /* 添加边框 */
+  border: 1px solid #ccc;
+  /* 添加边框 */
   list-style: none;
   padding-bottom: 30px;
 }
-.equ-item + .equ-item {
-  border-color: transparent; /* 隐藏相邻部分之间的边框 */
+
+.equ-item+.equ-item {
+  border-color: transparent;
+  /* 隐藏相邻部分之间的边框 */
 }
+
 .table-equcraft {
   width: auto;
   height: auto;
@@ -247,6 +231,7 @@ export default {
   font-size: 1rem;
   font-family: w95fa;
 }
+
 .p-device {
   width: 40%;
   float: left;
@@ -254,14 +239,17 @@ export default {
   margin-left: 50px;
   margin-right: 50px;
 }
+
 .form-equcraft-use {
   width: 40%;
   float: left;
   margin-left: 50px;
 }
+
 .form-equcraft {
   margin-left: 50px;
 }
+
 .form-equcraft label {
   font-size: 1rem;
   font-family: w95fa;
@@ -302,15 +290,20 @@ export default {
 div /deep/ .el-card.is-always-shadow {
   width: 50%;
 }
+
 .image-container {
-  width: 100%; /* 设置容器宽度 */
-  max-height: 200px; /* 设置最大高度，控制图片的高度 */
-  background-color: white; /* 设置占位背景颜色为白色 */
+  width: 100%;
+  /* 设置容器宽度 */
+  max-height: 200px;
+  /* 设置最大高度，控制图片的高度 */
+  background-color: white;
+  /* 设置占位背景颜色为白色 */
 
   display: flex;
   justify-content: center;
   align-items: center;
 }
+
 .image {
   width: 50%;
   display: block;
@@ -325,9 +318,11 @@ div /deep/ .el-card.is-always-shadow {
 .clearfix:after {
   clear: both;
 }
+
 .pagination {
   padding-left: 80px;
 }
+
 .avatar-uploader .el-upload {
   border: 1px dashed #d9d9d9;
   border-radius: 6px;
@@ -335,9 +330,11 @@ div /deep/ .el-card.is-always-shadow {
   position: relative;
   overflow: hidden;
 }
+
 .avatar-uploader .el-upload:hover {
   border-color: #409eff;
 }
+
 .avatar-uploader-icon {
   font-size: 28px;
   color: #8c939d;
@@ -346,6 +343,7 @@ div /deep/ .el-card.is-always-shadow {
   line-height: 178px;
   text-align: center;
 }
+
 .avatar {
   width: 178px;
   height: 178px;
