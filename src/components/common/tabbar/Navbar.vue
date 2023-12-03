@@ -100,6 +100,12 @@ export default {
             >
           </router-link> -->
 
+          <router-link to="/mall">
+            <el-button class="custom-button" type="info" round size="small"
+              >商城</el-button
+            >
+          </router-link>
+        
         </el-col>
       </el-col>
       <el-col :span="4" class="tab-icon" style="display:flex;flex-direction:row;">

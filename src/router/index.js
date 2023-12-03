@@ -31,11 +31,6 @@ const EquCategory = () => import("../views/equList/equCategory.vue");
 const Bill = () => import("../views/bill/bill.vue");
 const DeviceDetail = () => import("../views/equManagement/DeviceDetail.vue");
 
-const Goods = () => import("../views/goods/goodsPage.vue");
-const Goodscategory = () => import("../views/goods/goodsCategory.vue");
-const Goodsdetails = () => import("../views/goods/goodsDetails.vue");
-const GoodsItem = () => import("../views/goods/goodsItem.vue");
-
 const Login = () => import("@/views/login/index.vue");
 const Register = () => import("@/views/register/register.vue");
 const Error = () => import("../components/common/error/Error.vue");
@@ -47,6 +42,8 @@ const Notice = () => import("../views/notice/notice.vue");
 
 const AddRecords = () => import("../views/experimentalRecords/addRecords.vue");
 const SearchRecords = () => import("../views/experimentalRecords/searchRecords.vue")
+
+const Mall = () => import("../views/mall/mall.vue")
 //1.安装插件
 Vue.use(Router);
 //创建router
@@ -196,37 +193,18 @@ const routes = [
   },
   {
     path: "/addRecords",
-    name:"AddRecords",
+    name: "AddRecords",
     component: AddRecords
   },
   {
     path: "/searchRecords",
-    name:"SearchRecords",
+    name: "SearchRecords",
     component: SearchRecords
   },
   {
-    path: "/goods",
-    name: "Goods",
-    component: Goods,
-    redirect: "/goods/category",
-    children: [
-      {
-        //子路由
-        path: "/goods/category",
-        name: "Goodscategory",
-        component: Goodscategory
-      },
-      {
-        path: "/goods/details",
-        name: "Goodsdetails",
-        component: Goodsdetails
-      }
-    ]
-  },
-  {
-    path: "/goods/:id",
-    name: "GoodsItem",
-    component: GoodsItem
+    path: "/mall",
+    name:"Mall",
+    component: Mall
   }
 ];
 const router = new Router({
