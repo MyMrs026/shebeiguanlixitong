@@ -13,22 +13,37 @@
 
           <div class="intro-area">
             <div class="intro-pic">
-              <img src="../../assets/img/home1.jpg"
-                style="height: 100%; width: 100%; text-align: center;object-fit: contain;" />
+              <img
+                src="../../assets/img/home1.jpg"
+                style="
+                  height: 100%;
+                  width: 100%;
+                  text-align: center;
+                  object-fit: contain;
+                "
+              />
             </div>
             <div class="intro-text">
               <el-card class="box-card">
-                <span class="bullet">&bull;</span>微纳加工平台主攻光/电芯片的异质异构集成以及多材料体系的超精细加工。<br />
-                <span class="bullet">&bull;</span>微纳加工平台总面积641.78m²，其中百级区182.42m²，千级区368.67m²，湿法工作区26.48m²，灰区36.5
+                <span class="bullet">&bull;</span
+                >微纳加工平台主攻光/电芯片的异质异构集成以及多材料体系的超精细加工。<br />
+                <span class="bullet">&bull;</span
+                >微纳加工平台总面积641.78m²，其中百级区182.42m²，千级区368.67m²，湿法工作区26.48m²，灰区36.5
                 m²。<br />
-                <span class="bullet">&bull;</span>加工平台管理网站旨在为您提供正确的设备建议，并为您的微纳米制造工艺以及芯片检测工作提供一个良好的起点。<br />
+                <span class="bullet">&bull;</span
+                >加工平台管理网站旨在为您提供正确的设备建议，并为您的微纳米制造工艺以及芯片检测工作提供一个良好的起点。<br />
                 如果您需要有关某些仪器或流程的更多信息，请联系相关人员。欢迎您对微纳加工平台管理网站提供任何反馈或意见。
               </el-card>
               <router-link to="/notice">
-                <el-tooltip class="item" effect="dark" content="点击查看更多" placement="right">
-                  <div style="margin-top: 15px;">
+                <el-tooltip
+                  class="item"
+                  effect="dark"
+                  content="点击查看更多"
+                  placement="right"
+                >
+                  <div style="margin-top: 15px">
                     最新通知：{{ latestNotice.content
-                    }}{{ latestNotice.createTime | formatDate }}
+                    }}&nbsp;&nbsp;&nbsp;{{ latestNotice.createTime | formatDate }}
                   </div>
                 </el-tooltip>
               </router-link>
@@ -43,7 +58,12 @@
         </div>
         <!-- 设备使用表(目前：写死的) -->
         <div class="table-equ-use">
-          <el-table border :data="equpsUse" class="table-equ" :row-class-name="tableRowClassName">
+          <el-table
+            border
+            :data="equpsUse"
+            class="table-equ"
+            :row-class-name="tableRowClassName"
+          >
             <el-table-column prop="equp" label="设备名" width="170">
             </el-table-column>
             <el-table-column prop="status" label="使用情况" width="110">
@@ -58,8 +78,7 @@
             </el-table-column>
           </el-table>
         </div>
-      </div>
-      <div v-show="currentPage === 3">
+
         <div class="text-home">
           <p id="book-use">我的预约</p>
         </div>
@@ -83,19 +102,26 @@
             </el-table-column>
             <el-table-column prop="operate" label="开始实验" width="125">
               <template slot-scope="scope">
-                <el-button type="info" @click="handleStartExperimentClick(scope.row)">开始实验</el-button>
+                <el-button
+                  type="info"
+                  @click="handleStartExperimentClick(scope.row)"
+                  >开始实验</el-button
+                >
               </template>
             </el-table-column>
           </el-table>
         </div>
-      </div>
-      <div v-show="currentPage === 4">
         <div class="text-home">
           <p id="dch-use">设备使用状态</p>
         </div>
         <!-- 所有的设备使用状态表格(目前：写死的) -->
         <div class="table-dch-use">
-          <el-table border :data="equpsStatus" class="table-dch" :row-class-name="getRowClassName">
+          <el-table
+            border
+            :data="equpsStatus"
+            class="table-dch"
+            :row-class-name="getRowClassName"
+          >
             <el-table-column prop="equp" label="设备名" width="300">
             </el-table-column>
             <el-table-column prop="status" label="状态" width="200">
@@ -109,22 +135,25 @@
         <div class="text-home">
           <p id="lab-map" style="margin-top: 8rem">超净室平面图</p>
         </div>
-        <div style="
-          display: flex;
-          height: 100%;
-          justify-content: center;
-          align-items: center;
-        ">
-          <img src="../../assets/img/超净室.jpg" style="height: 100%; width: 80%; text-align: center" />
+        <div
+          style="
+            display: flex;
+            height: 100%;
+            justify-content: center;
+            align-items: center;
+          "
+        >
+          <img
+            src="../../assets/img/超净室.jpg"
+            style="height: 100%; width: 80%; text-align: center"
+          />
         </div>
       </div>
-
     </div>
   </div>
 </template>
 
 <script>
-import _ from 'loadsh'
 import { getNoticeList, getLatest } from "../../network/notice";
 import { getEquInform } from "../../network/equpment";
 import { getOrders } from "../../network/book";
@@ -151,9 +180,9 @@ export default {
       curUsername: "", // 当前登录用户的名字
 
       currentPage: 1,
-      totalPages: 4, // 假设有三页内容
+      totalPages: 2, // 假设有三页内容
       lastScrollTime: 0,
-      scrolling: false
+      scrolling: false,
     };
   },
   methods: {
@@ -252,19 +281,20 @@ export default {
       }
     },
 
-    //翻页功能实现
-    handleScroll: _.debounce(function (event) {
+    // 翻页功能实现
+    handleScroll(event) {
       if (!this.scrolling) {
         this.scrolling = true;
-
-        if (event.deltaY > 0 && this.currentPage < this.totalPages) {
-          this.currentPage++;
-        } else if (event.deltaY < 0 && this.currentPage > 1) {
-          this.currentPage--;
-        }
-        this.scrolling = false;
+        requestAnimationFrame(() => {
+          if (event.deltaY > 0 && this.currentPage < this.totalPages) {
+            this.currentPage++;
+          } else if (event.deltaY < 0 && this.currentPage > 1) {
+            this.currentPage--;
+          }
+          this.scrolling = false;
+        });
       }
-    }, 100),
+    },
   },
   created() {
     getNoticeList().then((res) => {
@@ -283,12 +313,12 @@ export default {
   },
   mounted() {
     if (this.$refs.scrollArea) {
-      this.$refs.scrollArea.addEventListener('wheel', this.handleScroll);
+      this.$refs.scrollArea.addEventListener("wheel", this.handleScroll);
     }
   },
   destroyed() {
     if (this.$refs.scrollArea) {
-      this.$refs.scrollArea.removeEventListener('wheel', this.handleScroll);
+      this.$refs.scrollArea.removeEventListener("wheel", this.handleScroll);
     }
   },
 };

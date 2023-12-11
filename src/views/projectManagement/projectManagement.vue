@@ -2,33 +2,38 @@
   <div class="project">
     <div class="project-buttons">
       <!-- 这里放四个按钮 -->
-      <el-button 
-       type="success" 
-       style="width: 120px; margin-bottom: 15px;" 
-       
-       @click="setCurrentProjectType('对内项目')"
-       >对内项目</el-button>
-      <el-button 
-       type="success" 
-       style="width: 120px; margin-bottom: 15px;" 
-       @click="setCurrentProjectType('对外项目')"
-       
-       >对外项目</el-button>
-      <el-button 
-       type="success" 
-       style="width: 120px; margin-bottom: 15px;" 
-       @click="redirectToMyProject('/myProject')"
-       
-       >我管理的项目</el-button>
-      <el-button 
-       type="success" 
-       style="width: 120px; margin-bottom: 15px;" 
-       @click="redirectToMyProject('/addProject')"
-       
-       >新建项目</el-button>
+      <el-button
+        :type="currentTab === 'security' ? 'info' : 'success'"
+        style="width: 120px; margin-bottom: 15px"
+        @click="setCurrentProjectType('对内项目')"
+        >对内项目</el-button
+      >
+      <el-button
+        :type="currentTab === 'equipment' ? 'info' : 'success'"
+        style="width: 120px; margin-bottom: 15px"
+        @click="setCurrentProjectType('对外项目')"
+        >对外项目</el-button
+      >
+      <el-button
+        :type="currentTab === 'equipment' ? 'info' : 'success'"
+        style="width: 120px; margin-bottom: 15px"
+        @click="redirectToMyProject('/myProject')"
+        >我管理的项目</el-button
+      >
+      <el-button
+        :type="currentTab === 'equipment' ? 'info' : 'success'"
+        style="width: 120px; margin-bottom: 15px"
+        @click="redirectToMyProject('/addProject')"
+        >新建项目</el-button
+      >
     </div>
     <div class="project-list">
-      <el-card class="list-item" v-for="(item, index) in filterProjects" :key="index" @click.native="toggleDetail(index)">
+      <el-card
+        class="list-item"
+        v-for="(item, index) in filterProjects"
+        :key="index"
+        @click.native="toggleDetail(index)"
+      >
         <div class="item-base">
           <div class="img-container">
             <el-image class="img" :src="item.project.projectImg">
@@ -42,8 +47,12 @@
             <p>项目名称：{{ item.project.projectName }}</p>
             <p>项目负责人：{{ item.project.leader }}</p>
             <p>
-              项目成员：<el-button v-for="(user, index) in item.userList" :key="index" @click.stop="handleShowUser(user)">{{
-                user.username }}</el-button>
+              项目成员：<el-button
+                v-for="(user, index) in item.userList"
+                :key="index"
+                @click.stop="handleShowUser(user)"
+                >{{ user.username }}</el-button
+              >
             </p>
             <p>项目性质：{{ item.project.projectNature }}</p>
           </div>
@@ -60,19 +69,31 @@
           </div>
           <div class="detail-2">
             <div>Ⅱ项目进度</div>
-            <el-link :href="item.project.projectProcessUrl" type="primary">附件：项目进度单</el-link>
+            <el-link :href="item.project.projectProcessUrl" type="primary"
+              >附件：项目进度单</el-link
+            >
           </div>
           <div class="detail-3">
             <div>Ⅲ项目使用设备</div>
             <p>
-              <el-button v-for="(equipment, index) in item.equipmentList" :key="index"
-                @click.stop="handleShowEquipment(equipment)">{{ equipment.equipmentName }}</el-button>
+              <el-button
+                v-for="(equipment, index) in item.equipmentList"
+                :key="index"
+                @click.stop="handleShowEquipment(equipment)"
+                >{{ equipment.equipmentName }}</el-button
+              >
             </p>
           </div>
         </div>
       </el-card>
     </div>
-    <el-dialog title="用户信息" :visible.sync="showUserInfo" width="30%" class="user-info" v-if="userInfo">
+    <el-dialog
+      title="用户信息"
+      :visible.sync="showUserInfo"
+      width="30%"
+      class="user-info"
+      v-if="userInfo"
+    >
       <p>用户名：{{ userInfo.username }}</p>
       <p>性别：{{ userInfo.gender }}</p>
       <p>实验室：{{ userInfo.labName }}</p>
@@ -81,10 +102,18 @@
       <p>邮箱：{{ userInfo.email }}</p>
       <span slot="footer" class="dialog-footer">
         <el-button @click="showUserInfo = false">取 消</el-button>
-        <el-button type="primary" @click="showUserInfo = false">确 定</el-button>
+        <el-button type="primary" @click="showUserInfo = false"
+          >确 定</el-button
+        >
       </span>
     </el-dialog>
-    <el-dialog title="设备信息" :visible.sync="showEquipmentInfo" width="30%" class="equipment-info" v-if="equipmentInfo">
+    <el-dialog
+      title="设备信息"
+      :visible.sync="showEquipmentInfo"
+      width="30%"
+      class="equipment-info"
+      v-if="equipmentInfo"
+    >
       <p>设备名称：{{ equipmentInfo.equipmentName }}</p>
       <p>设备分类：{{ equipmentInfo.equipmentCategory }}</p>
       <p>设备功能：{{ equipmentInfo.equipmentFunction }}</p>
@@ -97,7 +126,9 @@
       <p>联系方式：{{ equipmentInfo.linkmanTel }}</p>
       <span slot="footer" class="dialog-footer">
         <el-button @click="showEquipmentInfo = false">取 消</el-button>
-        <el-button type="primary" @click="showEquipmentInfo = false">确 定</el-button>
+        <el-button type="primary" @click="showEquipmentInfo = false"
+          >确 定</el-button
+        >
       </span>
     </el-dialog>
   </div>
@@ -113,11 +144,11 @@ export default {
       showEquipmentInfo: false,
       userInfo: null,
       equipmentInfo: null,
-      currentProjectType: "对内项目" // 初始项目类型为 '对内项目'
+      currentProjectType: "对内项目", // 初始项目类型为 '对内项目'
     };
   },
   mounted() {
-    getProjectDetailList().then(list => {
+    getProjectDetailList().then((list) => {
       this.projectList = list;
       console.log(this.projectList);
     });
@@ -139,9 +170,9 @@ export default {
     filterProjects() {
       // console.log(计算属性);
       return this.projectList.filter(
-        item => item.project.projectType === this.currentProjectType
+        (item) => item.project.projectType === this.currentProjectType
       );
-    }
+    },
   },
   methods: {
     toggleDetail(index) {
@@ -164,13 +195,12 @@ export default {
       this.equipmentInfo = equipment;
     },
     setCurrentProjectType(projectType) {
-      this.currentProjectType = projectType
-
+      this.currentProjectType = projectType;
     },
     redirectToMyProject(route) {
       this.$router.push(route);
-    }
-  }
+    },
+  },
 };
 </script>
 <style scoped>
@@ -207,8 +237,8 @@ export default {
   height: 300px;
 }
 
-.el-button+.el-button,
-.el-checkbox.is-bordered+.el-checkbox.is-bordered {
+.el-button + .el-button,
+.el-checkbox.is-bordered + .el-checkbox.is-bordered {
   margin-left: 0;
 }
 

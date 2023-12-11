@@ -1,36 +1,67 @@
 <template>
-    <div class="container">
-        <div class="button-group">
-            <el-button class="btn-left" @click="push('/train/security')">安全培训</el-button>
-            <el-button class="btn-right" @click="push('/train/equipment')">设备培训</el-button>
-        </div>
-        <router-view></router-view>
-
-
+  <div class="train-container">
+    <div class="button-group">
+      <el-button
+        :type="currentTab === 'security' ? 'info' : 'success'"
+        style="width: 120px; margin-bottom: 15px"
+        @click="push('/train/security')"
+        >安全培训</el-button
+      >
+      <el-button
+        :type="currentTab === 'equipment' ? 'info' : 'success'"
+        style="width: 120px; margin-bottom: 15px"
+        @click="push('/train/equipment')"
+        >设备培训</el-button
+      >
     </div>
+    <div class="content-area">
+      <router-view></router-view>
+    </div>
+  </div>
 </template>
   
 <script>
 export default {
-    methods: {
-        push(to) {
-            this.$router.push(to)
-        }
-    }
-}
+  data() {
+    return {
+      currentTab: "", // 用于记录当前选中的标签
+    };
+  },
+  methods: {
+    push(path) {
+      const targetTab = path.split("/").pop();
+      if (this.currentTab !== targetTab) {
+        this.currentTab = targetTab;
+        this.$router.push(path);
+      }
+    },
+  },
+  created() {
+    // 初始化为安全培训
+    this.currentTab = "security";
+    // 初始导航
+    this.$router.push("/train/security");
+  },
+};
 </script>
 <style scoped>
+.train-container {
+  display: flex;
+  flex-direction: row;
+}
 .button-group {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  margin-top: 30px;
+  margin-left: 30px;
 }
 
-.button-group .btn-left {
-    width: 33.33%;
+.content-area {
+  width: 100%;
 }
 
-.button-group .btn-right {
-    width: 33.33%;
+.el-button + .el-button,
+.el-checkbox.is-bordered + .el-checkbox.is-bordered {
+  margin-left: 0;
 }
 </style>

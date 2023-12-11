@@ -1,10 +1,33 @@
 <template>
-  <div>
+  <div class="mallLayer">
     <h3>{{ message }}</h3>
+
+    <!-- 筛选模块 -->
+    <el-row :gutter="20">
+      <el-col :span="8">
+        <el-input
+          v-model="filter.productId"
+          placeholder="请输入产品ID"
+        ></el-input>
+      </el-col>
+      <el-col :span="8">
+        <el-input
+          v-model="filter.productName"
+          placeholder="请输入产品名"
+        ></el-input>
+      </el-col>
+      <el-col :span="8">
+        <el-button @click="filterProducts" type="primary">筛选</el-button>
+        <el-button @click="resetFilter">重置</el-button>
+      </el-col>
+    </el-row>
+
     <el-table :data="pagedProductList" stripe style="width: 60%">
       <el-table-column fixed="left" label="操作" width="120">
         <template slot-scope="scope">
-          <el-button @click="showPurchaseDialog(scope)" size="small"> 购买 </el-button>
+          <el-button @click="showPurchaseDialog(scope.row)" size="small">
+            购买
+          </el-button>
         </template>
       </el-table-column>
       <el-table-column prop="productId" label="产品Id" width="80">
@@ -26,7 +49,7 @@
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
       :current-page="currentPage"
-      :page-sizes="[8, 16, 24, 32]"
+      :page-sizes="[8]"
       :page-size="pageSize"
       :total="productList.length"
       layout="total, sizes, prev, pager, next, jumper"
@@ -37,18 +60,25 @@
       title="购买商品"
       :visible="purchaseDialogVisible"
       @close="closePurchaseDialog"
+      :style="{ width: '50%', margin: '0 auto' }"
     >
       <div>
         <p>产品名称: {{ purchaseData.productName }}</p>
         <p>产品单价: {{ purchaseData.price }}</p>
         <p>
           购买数量:
-          <el-input-number v-model="purchaseQuantity" :min="1" :max="100" />
+          <el-input-number
+            v-model="purchaseQuantity"
+            :min="1"
+            :max="purchaseData.stock"
+            style="width: 150px"
+          />
         </p>
         <p>产品总价: {{ purchaseData.price * purchaseQuantity }}</p>
       </div>
       <span slot="footer" class="dialog-footer">
         <el-button @click="closePurchaseDialog">取消</el-button>
+        &nbsp;&nbsp;&nbsp;
         <el-button type="primary" @click="confirmPurchase">确定</el-button>
       </span>
     </el-dialog>
@@ -56,12 +86,14 @@
 </template>
   
 <script>
-import { getProduct } from "../../network/mall";
+import { getProduct, addProductOrder } from "../../network/mall";
+import { getLoginUserInfo } from "../../network/user";
 export default {
   data() {
     return {
       message: "商品页面",
       productList: [],
+      userInfo: {},
 
       currentPage: 1,
       pageSize: 8,
@@ -70,15 +102,30 @@ export default {
       purchaseDialogVisible: false,
       purchaseData: {},
       purchaseQuantity: 1,
+
+      filter: {
+        productId: "",
+        productName: "",
+      },
     };
   },
   methods: {
-    //加载所有的商品
+    // 加载所有的商品
     async loadProductList() {
       try {
         const res = await getProduct();
         this.productList = res.data;
-        console.log(this.productList);
+        // console.log(this.productList);
+      } catch (error) {
+        console.error("Error loading data:", error);
+      }
+    },
+    // 加载当前登录用户信息
+    async loadLoginUserInfo() {
+      try {
+        const res = await getLoginUserInfo();
+        this.userInfo = res.data;
+        console.log(this.userInfo);
       } catch (error) {
         console.error("Error loading data:", error);
       }
@@ -104,16 +151,57 @@ export default {
     },
     // 确认购买
     confirmPurchase() {
+      this.purchaseData.createTime = new Date();
       // 在这里处理购买逻辑，可以将购买的数据发送到后端等
+      const productId = this.purchaseData.productId;
+      const productName = this.purchaseData.productName;
+      const price = this.purchaseData.price;
+      const quantity = this.purchaseQuantity;
+      const totalPrice = this.purchaseData.price * this.purchaseQuantity;
+      const createTime = this.formattedDate;
+      const userId = this.userInfo.userId;
       console.log("购买数据:", {
-        productName: this.purchaseData.productName,
-        price: this.purchaseData.price,
-        quantity: this.purchaseQuantity,
-        totalPrice: this.purchaseData.price * this.purchaseQuantity,
+        productId,
+        productName,
+        price,
+        quantity,
+        totalPrice,
+        createTime,
+        userId,
+      });
+
+      addProductOrder(
+        createTime,
+        productId,
+        quantity,
+        0,
+        totalPrice,
+        userId
+      ).then((res) => {
+        console.log(res.data);
       });
 
       // 关闭弹窗
       this.closePurchaseDialog();
+    },
+    // 筛选产品
+    filterProducts() {``
+      this.pagedProductList = this.productList.filter((product) => {
+        return (
+          String(product.productId).includes(this.filter.productId) &&
+          product.productName.includes(this.filter.productName)
+        );
+      });
+      // 重置分页信息
+      this.currentPage = 1;
+      this.pageSize = 8;
+    },
+    // 重置筛选条件
+    resetFilter() {
+      this.filter.productId = "";
+      this.filter.productName = "";
+      this.pagedProductList = this.productList.slice(0, this.pageSize);
+      this.currentPage = 1;
     },
   },
   computed: {
@@ -122,6 +210,25 @@ export default {
       const start = (this.currentPage - 1) * this.pageSize;
       const end = start + this.pageSize;
       return this.productList.slice(start, end);
+    },
+
+    // 格式化日期
+    formattedDate() {
+      // 将字符串解析为Date对象
+      const originalDate = new Date(this.purchaseData.createTime);
+
+      // 获取年、月、日、时、分、秒
+      const year = originalDate.getFullYear();
+      const month = String(originalDate.getMonth() + 1).padStart(2, "0");
+      const day = String(originalDate.getDate()).padStart(2, "0");
+      const hours = String(originalDate.getHours()).padStart(2, "0");
+      const minutes = String(originalDate.getMinutes()).padStart(2, "0");
+      const seconds = String(originalDate.getSeconds()).padStart(2, "0");
+
+      // 拼接格式化后的日期字符串
+      const formattedDate = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+
+      return formattedDate;
     },
   },
   watch: {
@@ -135,8 +242,34 @@ export default {
   },
   created() {
     this.loadProductList();
+    this.loadLoginUserInfo();
   },
 };
 </script>
-<style scoped>
+<style>
+.mallLayer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.el-dialog__header {
+  padding: 20px 20px 10px; /* 您的原始样式 */
+  text-align: center;
+}
+
+.el-dialog__footer {
+  padding: 10px 20px 20px;
+  text-align: right;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+.el-dialog__body {
+  padding: 30px 60px;
+  color: #606266;
+  font-size: 14px;
+  word-break: break-all;
+}
 </style>

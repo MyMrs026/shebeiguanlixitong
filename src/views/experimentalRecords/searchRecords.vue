@@ -1,17 +1,57 @@
 <template>
   <div>
+    <div class="filter-area">
+      <el-row type="flex" class="filter-row">
+        <el-col :span="6">
+          <el-input
+            v-model="filters.experimentNum"
+            placeholder="实验序号"
+          ></el-input>
+        </el-col>
+        <el-col :span="6">
+          <el-input v-model="filters.username" placeholder="姓名"></el-input>
+        </el-col>
+        <el-col :span="6">
+          <el-input
+            v-model="filters.projectName"
+            placeholder="项目名"
+          ></el-input>
+        </el-col>
+      </el-row>
+    </div>
     <div class="table-area">
-      <el-table :data="tableData" stripe class="search-table">
+      <!-- 开始展示所有的内容，根据筛选字段展示筛选后的内容 -->
+      <el-table :data="filteredTableData" stripe class="search-table">
         <el-table-column prop="experimentNum" label="实验序号" width="80">
         </el-table-column>
-        <el-table-column prop="username" label="姓名" width="80"></el-table-column>
-        <el-table-column prop="equipmentName" label="设备名" width="180"></el-table-column>
-        <el-table-column prop="projectName" label="项目名" width="180"></el-table-column>
-        <el-table-column prop="startTime" label="开始时间" width="180"></el-table-column>
+        <el-table-column
+          prop="username"
+          label="姓名"
+          width="80"
+        ></el-table-column>
+        <el-table-column
+          prop="equipmentName"
+          label="设备名"
+          width="180"
+        ></el-table-column>
+        <el-table-column
+          prop="projectName"
+          label="项目名"
+          width="180"
+        ></el-table-column>
+        <el-table-column
+          prop="startTime"
+          label="开始时间"
+          width="180"
+        ></el-table-column>
 
         <!-- 根据param中对象的数量动态生成列 -->
-        <el-table-column v-for="(param, index) in uniqueParams" :key="index" :label="param.experimentAttrKey"
-          :prop="`param_${index}`"></el-table-column>
+        <el-table-column
+          v-for="(param, index) in uniqueParams"
+          :key="index"
+          :label="param.experimentAttrKey"
+          :prop="`param_${index}`"
+        ></el-table-column>
 
         <!-- <el-table-column label="实验条件">
           <template slot-scope="scope">
@@ -28,8 +68,16 @@
           </template>
         </el-table-column> -->
 
-        <el-table-column prop="result" label="结果" width="180"></el-table-column>
-        <el-table-column prop="remark" label="备注" width="80"></el-table-column>
+        <el-table-column
+          prop="result"
+          label="结果"
+          width="180"
+        ></el-table-column>
+        <el-table-column
+          prop="remark"
+          label="备注"
+          width="80"
+        ></el-table-column>
       </el-table>
     </div>
   </div>
@@ -45,7 +93,13 @@ export default {
       userName: "",
       originExList: [],
       formatExList: [],
-      tableData: [],//表格所有的数据
+      tableData: [], //表格所有的数据
+      filters: {
+        experimentNum: "",
+        username: "",
+        equipmentName: "",
+        projectName: "",
+      },
       uniqueParams: [], // 用于存储去重后的 params
     };
   },
@@ -118,7 +172,7 @@ export default {
           );
           rowData[`param_${param.index}`] = matchingParam
             ? matchingParam.experimentAttrValue
-            : ''; // 设置默认值，可根据实际情况修改
+            : ""; // 设置默认值，可根据实际情况修改
         });
 
         // 添加其他列，根据需要添加
@@ -139,7 +193,6 @@ export default {
     console.log("equId:", this.equId);
     console.log("userName:", this.userName);
     this.loadExperimentList();
-
   },
   watch: {
     // 当 uniqueExperimentAttrKeys 更新时，更新 uniqueParams 和 tableData
@@ -165,9 +218,24 @@ export default {
       });
       return Array.from(keys);
     },
+    //筛选后的数据
+    filteredTableData() {
+      // Use a computed property to filter the table data based on filters
+      return this.tableData.filter((item) => {
+        return (
+          item.experimentNum.toString().includes(this.filters.experimentNum) &&
+          item.username.includes(this.filters.username) &&
+          item.projectName.includes(this.filters.projectName)
+        );
+      });
+    },
   },
 };
 </script>
 <style scope>
-.search-table {}
+.search-table {
+}
+.filter-area {
+  text-align: left;
+}
 </style>

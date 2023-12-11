@@ -90,7 +90,7 @@ export default {
           </router-link>
           <router-link to="/train">
             <el-button class="custom-button" type="info" round size="small"
-              >安全培训</el-button
+              >培训管理</el-button
             >
           </router-link>
 

@@ -1,70 +1,195 @@
 <template>
   <div class="bgpic">
-    <div class="button-area">
+    <div class="equ-buttons">
       <router-link to="/equp">
-        <el-button plain>设备管理</el-button>
+        <el-button type="success" style="width: 120px; margin-bottom: 15px"
+          >设备管理</el-button
+        >
       </router-link>
       <router-link to="/craft/equcraft">
-        <el-button plain>设备信息展示</el-button>
+        <el-button type="success" style="width: 120px; margin-bottom: 15px"
+          >设备信息展示</el-button
+        >
       </router-link>
     </div>
-    <p class="text-title">{{ message }}</p>
-    <!-- 设备列表页面有两个部分组成 -->
-    <!-- 设备工艺表格 -->
-    <div>
-      <ul class="table-equcraft-use">
-        <li class="equ-item" v-for="(equipment, index) in equinform" :key="equipment.equipmentId">
-          <div class="image-container">
-            <img v-bind:src="equipment.equipmentImageUrl"
-              style="object-fit:contain;width: 100%; height: 100%; float: left; max-height: 200px"
-              @click="gotoDeviceDetail(equipment.equipmentId)" />
-          </div>
-          <router-link :to="'/book/' + equipment.equipmentId">
-            <el-button type="primary" plain size="small">立即预约</el-button>
-          </router-link>
-          <router-link to="/test">
-            <el-button type="primary" plain size="small">立即测试</el-button>
-          </router-link>
-          <router-link to="/train">
-            <el-button type="primary" plain size="small">培训预约</el-button>
-          </router-link>
-          <el-button type="primary" plain size="small" @click="openNewTab(equipment.equipmentId)">实验记录</el-button>
-          <br />
-          设备名称：{{ equipment.equipmentName }}
-        </li>
-      </ul>
-    </div>
-    <div class="pagination">
-      <span>
-        <el-button round @click="goToFirstPage" :disabled="currentPage === 1">
-          第一页
-        </el-button>
-      </span>
-      <span>
-        <el-button round @click="previousPage" :disabled="currentPage === 1">
-          前一页
-        </el-button>
-      </span>
-      <span>
-        <el-button round @click="nextPage" :disabled="currentPage === totalPages">
-          下一页
-        </el-button>
-      </span>
-      <span>
-        <el-button round @click="goToLastPage" :disabled="currentPage === totalPages">
-          最后
-        </el-button>
-      </span>
-      <span>
-        &nbsp;&nbsp;&nbsp;&nbsp;跳转到第：
-        <el-input type="text" v-model.number="goToPageNumber" style="width: 80px" />
-        <el-button type="success" @click="goToPage" round style="margin-left: 10px">确定</el-button>
-      </span>
+    <div class="main-content">
+      <p class="text-title">{{ message }}</p>
+      <div>
+        <ul class="table-equcraft-use">
+          <li
+            class="equ-item"
+            v-for="equipment in equinform"
+            :key="equipment.equipmentId"
+          >
+            <div class="image-container">
+              <img
+                v-bind:src="equipment.equipmentImageUrl"
+                style="
+                  object-fit: contain;
+                  width: 100%;
+                  height: 100%;
+                  float: left;
+                  max-height: 200px;
+                "
+                @click="gotoDeviceDetail(equipment.equipmentId)"
+              />
+            </div>
+            <router-link :to="'/book/' + equipment.equipmentId">
+              <el-button type="primary" plain size="small">设备预约</el-button>
+            </router-link>
+            <router-link to="/test">
+              <el-button type="primary" plain size="small">填写记录</el-button>
+            </router-link>
+            <el-button
+              @click="openTrainModel(equipment.equipmentId)"
+              type="primary"
+              plain
+              size="small"
+              >培训预约
+            </el-button>
+            <el-button
+              type="primary"
+              plain
+              size="small"
+              @click="openNewTab(equipment.equipmentId)"
+              >实验记录</el-button
+            >
+            <br />
+            设备名称：{{ equipment.equipmentName }}
+          </li>
+        </ul>
+      </div>
+      <div class="pagination">
+        <span>
+          <el-button round @click="goToFirstPage" :disabled="currentPage === 1">
+            第一页
+          </el-button>
+        </span>
+        <span>
+          <el-button round @click="previousPage" :disabled="currentPage === 1">
+            前一页
+          </el-button>
+        </span>
+        <span>
+          <el-button
+            round
+            @click="nextPage"
+            :disabled="currentPage === totalPages"
+          >
+            下一页
+          </el-button>
+        </span>
+        <span>
+          <el-button
+            round
+            @click="goToLastPage"
+            :disabled="currentPage === totalPages"
+          >
+            最后
+          </el-button>
+        </span>
+        <span>
+          &nbsp;&nbsp;&nbsp;&nbsp;跳转到第：
+          <el-input
+            type="text"
+            v-model.number="goToPageNumber"
+            style="width: 80px"
+          />
+          <el-button
+            type="success"
+            @click="goToPage"
+            round
+            style="margin-left: 10px"
+            >确定</el-button
+          >
+        </span>
+      </div>
+      <!-- 添加事件弹出框 -->
+      <el-dialog
+        title="添加培训预约"
+        :visible.sync="dialogFormVisible"
+        @close="closeDialog"
+      >
+        <el-form :model="EventForm" ref="EventForm" :rules="rules">
+          <el-form-item label="当前设备名" label-width="120px">
+            <el-input
+              v-model="EventForm.equName"
+              style="width: 200px"
+              :disabled="true"
+            >
+            </el-input>
+          </el-form-item>
+          <el-form-item label="当前用户名" label-width="120px">
+            <el-input
+              v-model="EventForm.userName"
+              style="width: 200px"
+              :disabled="true"
+            >
+            </el-input>
+          </el-form-item>
+          <el-form-item label="项目" label-width="120px" prop="proid">
+            <el-select v-model="EventForm.projectId" placeholder="请选择项目">
+              <el-option
+                v-for="item in projectList"
+                :key="item.projectId"
+                :label="item.projectName"
+                :value="item.projectId"
+              >
+              </el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="日期" label-width="120px" prop="date">
+            <el-date-picker
+              v-model="EventForm.date"
+              :picker-options="pickerOptions"
+              type="date"
+              placeholder="选择预约日期"
+            >
+            </el-date-picker>
+          </el-form-item>
+          <el-form-item label="开始时间" label-width="120px" prop="startTime">
+            <el-time-select
+              placeholder="起始时间"
+              v-model="EventForm.startTime"
+              :picker-options="{
+                start: '08:30',
+                step: '00:15',
+                end: '17:00',
+              }"
+            >
+            </el-time-select>
+          </el-form-item>
+          <el-form-item label="结束时间" label-width="120px" prop="endTime">
+            <el-time-select
+              placeholder="结束时间"
+              v-model="EventForm.endTime"
+              :picker-options="{
+                start: '08:30',
+                step: '00:15',
+                end: '17:00',
+                minTime: EventForm.startTime,
+              }"
+            >
+            </el-time-select>
+          </el-form-item>
+          <el-form-item>
+            <div class="button-area">
+              <el-button type="primary" @click="submitClick('EventForm')"
+                >提交</el-button
+              >
+              <el-button type="danger" @click="cancelClick">取消</el-button>
+            </div>
+          </el-form-item>
+        </el-form>
+      </el-dialog>
     </div>
   </div>
 </template>
 <script>
-import { getEquList } from "../../network/equpment";
+import { getEquList, getEquInform } from "../../network/equpment";
+import { getProjectList } from "../../network/project";
+import { getLoginUserInfo } from "../../network/user";
+import { applyTraining } from "../../network/train";
 export default {
   data() {
     return {
@@ -77,14 +202,92 @@ export default {
       apiUrl: "http://47.98.160.222:8080/api/file/uploadImage",
       imageUrl: "",
       customHeaders: {
-        'Authorization': localStorage.getItem('token')
+        Authorization: localStorage.getItem("token"),
       },
       value: "", //绑定设备的名称
+      dialogFormVisible: false, //添加预约弹窗不可见
+
+      pickerOptions: {
+        // 设置日期范围
+        disabledDate(time) {
+          const today = new Date();
+          today.setHours(0, 0, 0, 0);
+          // 禁用过去的日期
+          if (time.getTime() < today.getTime()) {
+            return true;
+          }
+        },
+      },
+
+      EventForm: {
+        equName: "",
+        trainingId: "",
+        userName: "",
+        userId: "",
+        projectId: "",
+        date: "",
+        startTime: "",
+        endTime: "",
+      },
+      formatEvent: {},
+      projectList: [],
+      rules: {
+        date: [{ required: true, message: "请选择日期", trigger: "blur" }],
+        startTime: [
+          { required: true, message: "请填写事件的开始事件", trigger: "blur" },
+        ],
+        endTime: [
+          { required: true, message: "请填写事件的结束事件", trigger: "blur" },
+        ],
+      },
     };
   },
   methods: {
     gotoDeviceDetail(index) {
       this.$router.push({ path: `/device/${index}` });
+    },
+
+    //其实是日期和具体时间的拼接罢了
+    formatDateTime(date, time) {
+      const eventDate = new Date(date);
+
+      // 解析时间
+      const [hours, minutes] = time.split(":");
+      eventDate.setHours(parseInt(hours));
+      eventDate.setMinutes(parseInt(minutes));
+
+      // 格式化日期时间
+      const inputDate = eventDate;
+
+      const year = inputDate.getFullYear();
+      const month = String(inputDate.getMonth() + 1).padStart(2, "0"); // 月份从0开始，需要加1
+      const day = String(inputDate.getDate()).padStart(2, "0");
+      const hour = String(inputDate.getHours()).padStart(2, "0");
+      const minute = String(inputDate.getMinutes()).padStart(2, "0");
+      const seconds = String(inputDate.getSeconds()).padStart(2, "0");
+
+      const formattedDate = `${year}-${month}-${day} ${hour}:${minute}:${seconds}`;
+
+      return formattedDate;
+    },
+
+    // 格式化日期
+    formattedDate(date) {
+      // 将字符串解析为Date对象
+      const originalDate = new Date(date);
+
+      // 获取年、月、日、时、分、秒
+      const year = originalDate.getFullYear();
+      const month = String(originalDate.getMonth() + 1).padStart(2, "0");
+      const day = String(originalDate.getDate()).padStart(2, "0");
+      const hours = String(originalDate.getHours()).padStart(2, "0");
+      const minutes = String(originalDate.getMinutes()).padStart(2, "0");
+      const seconds = String(originalDate.getSeconds()).padStart(2, "0");
+
+      // 拼接格式化后的日期字符串
+      date = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+
+      return date;
     },
 
     resetForm(equCraftForm) {
@@ -131,10 +334,81 @@ export default {
         this.$router.replace({
           path: currentRoute,
           query: {
-            equId
-          }
+            equId,
+          },
         });
       }
+    },
+    //培训预约弹窗
+    openTrainModel(id) {
+      getEquInform(id).then((res) => {
+        console.log(res.data);
+        this.EventForm.equName = res.data.equipmentName;
+        this.EventForm.trainingId = res.data.equipmentId;
+      });
+      this.dialogFormVisible = true;
+    },
+    //关闭对话框
+    closeDialog() {
+      this.dialogFormVisible = false;
+    },
+
+    //弹窗提交按钮实现
+    submitClick(formName) {
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          this.formatEvent = {
+            applicationStatus: 0,
+            createTime: this.formattedDate(new Date()),
+            endTime: this.formatDateTime(
+              this.EventForm.date,
+              this.EventForm.endTime
+            ),
+            startTime: this.formatDateTime(
+              this.EventForm.date,
+              this.EventForm.startTime
+            ),
+            trainingApplicationId: 0,
+            updateTime: this.formattedDate(new Date()),
+            trainingId: this.EventForm.trainingId,
+            userId: this.EventForm.userId,
+          };
+          console.log(this.formatEvent);
+          applyTraining(
+            this.formatEvent.applicationStatus,
+            this.formatEvent.createTime,
+            this.formatEvent.endTime,
+            this.formatEvent.startTime,
+            this.formatEvent.trainingApplicationId,
+            this.formatEvent.updateTime,
+            this.formatEvent.trainingId,
+            this.formatEvent.userId
+          ).then((res) => {
+            console.log(res);
+            // if (res.data === 2000) {
+            //   console.log(res);
+            //   this.dialogFormVisible = false;
+            //   this.$message({
+            //     message: "预约成功",
+            //     type: "success",
+            //   });
+            // } else {
+            //   console.log(res);
+            //   this.$message.error("修改预约失败，请检查日期或是否时间冲突");
+            //   this.dialogFormVisible = false;
+            // }
+            // this.dialogFormVisible = false;
+          });
+        } else {
+          alert("请填写完整");
+        }
+      });
+    },
+
+    //弹窗中的取消按钮实现
+    cancelClick() {
+      this.dialogFormVisible = false;
+      console.log("取消申请");
     },
   },
   computed: {
@@ -149,27 +423,60 @@ export default {
       return Math.ceil(data.length / this.perPage);
     },
   },
+  created() {
+    //获取项目列表
+    getProjectList().then((res) => {
+      this.projectList = res.data.map((item) => {
+        return {
+          projectId: item.projectId,
+          projectName: item.projectName,
+        };
+      });
+    });
+
+    // 获取登录用户信息
+    getLoginUserInfo().then((res) => {
+      console.log(res.data);
+      this.EventForm.userName = res.data.username;
+      this.EventForm.userId = res.data.userId;
+      // console.log(this.EventForm.userName);
+    });
+  },
   mounted() {
     getEquList().then((res) => {
       this.equinform = res.data;
       console.log(this.equinform);
     });
   },
+  watch: {
+    $route() {
+      location.reload();
+    },
+  },
 };
 </script>
 <style scope>
 .bgpic {
+  display: flex;
+  flex-direction: row;
   overflow: auto;
   background-image: url("../../assets/img/qqq6.png");
   background-repeat: no-repeat;
   width: 100%;
   background-size: 100% 100%;
 }
+.equ-buttons {
+  display: flex;
+  flex-direction: column;
+  margin-top: 30px;
+  margin-left: 30px;
+}
 
 .button-area {
-  margin-top: 10px;
   display: flex;
+  flex-direction: row;
   justify-content: space-evenly;
+  margin-top: 10px;
 }
 
 .text-title {
@@ -217,7 +524,12 @@ export default {
   padding-bottom: 30px;
 }
 
-.equ-item+.equ-item {
+.el-button + .el-button,
+.el-checkbox.is-bordered + .el-checkbox.is-bordered {
+  margin-left: 0px !important;
+}
+
+.equ-item + .equ-item {
   border-color: transparent;
   /* 隐藏相邻部分之间的边框 */
 }
