@@ -119,7 +119,7 @@
       <p>设备功能：{{ equipmentInfo.equipmentFunction }}</p>
       <p>机器标签：{{ equipmentInfo.machineLabel }}</p>
       <p>厂商：{{ equipmentInfo.manufacturer }}</p>
-      <p>厂商：{{ equipmentInfo.specificationModel }}</p>
+      <p>规格型号：{{ equipmentInfo.specificationModel }}</p>
       <p>所属地区：{{ equipmentInfo.area }}</p>
       <p>实验室：{{ equipmentInfo.labName }}</p>
       <p>联系人：{{ equipmentInfo.linkman }}</p>
@@ -211,47 +211,23 @@ export default {
 
 .project-buttons {
   display: flex;
+  flex: 1;
   flex-direction: column;
   margin-top: 30px;
   margin-left: 30px;
 }
 
 .project-list {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  margin-top: 30px;
+  flex: 7;
 }
 
 .list-item {
-  flex-basis: 40%;
-  margin: 0 10px 20px 0;
-  background-color: #fff;
-  border: 1px solid #e0e0e0;
-  border-radius: 5px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  transition: transform 0.2s;
-  /* 添加过渡效果 */
-  position: relative;
-  /* 设置相对定位 */
-  height: 300px;
+  margin: 20px;
 }
 
 .el-button + .el-button,
 .el-checkbox.is-bordered + .el-checkbox.is-bordered {
   margin-left: 0;
-}
-
-.list-item:not(.active) {
-  transform: scale(1);
-  /* 未激活时保持原始大小 */
-}
-
-.list-item.active {
-  transform: scale(1.05);
-  /* 激活时放大 */
-  z-index: 2;
-  /* 设置z-index以覆盖其他卡片 */
 }
 
 .img-container {
@@ -284,18 +260,29 @@ export default {
   padding: 10px;
 }
 
-.item-detail {
-  position: absolute;
-  /* 设置绝对定位 */
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: #f9f9f9;
-  border: 1px solid #e0e0e0;
-  border-radius: 5px;
-  z-index: 1;
-  /* 位于卡片下方 */
+.detail-1 {
+  margin: 10px 0;
   padding: 10px;
+  background-color: #dee1e6;
+  border-radius: 5px;
 }
+
+.detail-2 {
+  margin: 10px 0;
+  padding: 10px;
+  background-color: #dee1e6;
+  border-radius: 5px;
+}
+
+.detail-3 {
+  margin: 10px 0;
+  padding: 10px;
+  background-color: #dee1e6;
+  border-radius: 5px;
+}
+
+.item-detail {
+  height: 51vh;
+}
+
 </style>

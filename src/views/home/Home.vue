@@ -3,7 +3,7 @@
     <div class="total">
       <!-- 分割线 -->
 
-      <div style="height=1.875rem" class="first">
+      <div style="height:1.875rem;" class="first">
         <br />
       </div>
       <!-- 标题+图标 -->
@@ -24,7 +24,7 @@
               />
             </div>
             <div class="intro-text">
-              <el-card class="box-card">
+<!--              <el-card class="box-card">-->
                 <span class="bullet">&bull;</span
                 >微纳加工平台主攻光/电芯片的异质异构集成以及多材料体系的超精细加工。<br />
                 <span class="bullet">&bull;</span
@@ -33,7 +33,7 @@
                 <span class="bullet">&bull;</span
                 >加工平台管理网站旨在为您提供正确的设备建议，并为您的微纳米制造工艺以及芯片检测工作提供一个良好的起点。<br />
                 如果您需要有关某些仪器或流程的更多信息，请联系相关人员。欢迎您对微纳加工平台管理网站提供任何反馈或意见。
-              </el-card>
+<!--              </el-card>-->
               <router-link to="/notice">
                 <el-tooltip
                   class="item"
@@ -527,7 +527,7 @@ export default {
 .table-dch {
   width: auto;
   height: auto;
-  border: 0rem solid ccc;
+  border: 0rem solid #ccc;
   border-radius: 0rem;
   margin: 0 auto;
   font-size: 1rem;
