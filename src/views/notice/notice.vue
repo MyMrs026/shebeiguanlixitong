@@ -110,6 +110,7 @@ export default {
   margin-top: 18px;
   margin-right: 20px;
   padding-left: 10px;
+  overflow-y: scroll;
   /* border: 1px solid #000; */
 }
 

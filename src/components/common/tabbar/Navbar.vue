@@ -41,7 +41,12 @@ export default {
     meta.name = "viewport";
     meta.content = "width=device-width, initial-scale=1.0, user-scalable";
     document.head.appendChild(meta);
-  }
+  },
+  // watch: {
+  //   $route() {
+  //     location.reload();
+  //   },
+  // },
 };
 </script>
 <template>
@@ -78,7 +83,7 @@ export default {
               >项目管理</el-button
             >
           </router-link>
-          <router-link to="/craft/equcraft">
+          <router-link to="/equPage">
             <el-button class="custom-button" type="info" round size="small"
               >设备管理</el-button
             >

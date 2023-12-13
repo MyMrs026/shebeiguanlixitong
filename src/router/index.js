@@ -9,7 +9,7 @@ const Project = () => import("@/views/projectManagement/projectManagement");
 const AddProject = () => import("@/views/projectManagement/AddProject.vue")
 const MyProject = () => import("@/views/projectManagement/MyProject.vue")
 
-const Equp = () => import("@/views/equManagement/equManagement");
+const EqupManagement = () => import("@/views/equManagement/equManagement");
 const Book = () => import("@/views/bookManagement/bookManagement");
 
 const Train = () => import("@/views/trainManagement/trainManagement");
@@ -25,11 +25,13 @@ const PersonalInfo = () => import("../views/personalInfo/personalInfo.vue");
 const OrganizationInfo = () =>
   import("../views/organizationInfo/organizationInfo.vue");
 const Craft = () => import("@/views/craftManagement/craftManagement.vue");
-const EquCraft = () => import("@/views/craftManagement/equpCraft.vue");
+
 const Help = () => import("../views/helpPage/help.vue");
 const EquCategory = () => import("../views/equList/equCategory.vue");
 const Bill = () => import("../views/bill/bill.vue");
 const DeviceDetail = () => import("../views/equManagement/DeviceDetail.vue");
+const EquPage = () => import("../views/equManagement/equPage.vue")
+const EquCraftList = () => import("../views/equManagement/equCraft")
 
 const Login = () => import("@/views/login/index.vue");
 const Register = () => import("@/views/register/register.vue");
@@ -83,19 +85,27 @@ const routes = [
     component: DeviceDetail // 设备详情页面
   },
   {
-    path: "/equp",
-    name: "Equp",
-    component: Equp
+    path: "/equPage",
+    name: "EquPage",
+    redirect: "/equPage/equCraft",
+    component: EquPage,
+    children: [
+      {
+        path: "/equPage/equCraft",
+        name: "EquCraftList",
+        component: EquCraftList
+      },
+      {
+        path: "/equPage/equManagement",
+        name: "EqupManagement",
+        component: EqupManagement
+      }
+    ]
   },
   {
     path: "/craft",
     name: "Craft",
     component: Craft
-  },
-  {
-    path: "/craft/equcraft",
-    name: "equcraft",
-    component: EquCraft
   },
   {
     path: "/book/:id",
