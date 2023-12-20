@@ -1,8 +1,6 @@
 <template>
   <div class="outer-container">
     <div class="bg-bill">
-      <h3>账单页面</h3>
-      <hr>
       <div style="display: flex;flex-direction:column;">
         培训费用
         <el-table
@@ -183,7 +181,7 @@ export default {
 .bg-bill{
   display: flex;
   flex-direction: column;
-  background-image: url("../../assets/img/qqq6.png");
+  /* background-image: url("../../assets/img/qqq6.png"); */
   background-repeat: no-repeat;
   width: 100%;
   height: 100%;

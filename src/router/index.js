@@ -9,7 +9,7 @@ const Project = () => import("@/views/projectManagement/projectManagement");
 const AddProject = () => import("@/views/projectManagement/AddProject.vue")
 const MyProject = () => import("@/views/projectManagement/MyProject.vue")
 
-const Equp = () => import("@/views/equManagement/equManagement");
+const EqupManagement = () => import("@/views/equManagement/equManagement");
 const Book = () => import("@/views/bookManagement/bookManagement");
 
 const Train = () => import("@/views/trainManagement/trainManagement");
@@ -25,16 +25,13 @@ const PersonalInfo = () => import("../views/personalInfo/personalInfo.vue");
 const OrganizationInfo = () =>
   import("../views/organizationInfo/organizationInfo.vue");
 const Craft = () => import("@/views/craftManagement/craftManagement.vue");
-const EquCraft = () => import("@/views/craftManagement/equpCraft.vue");
+
 const Help = () => import("../views/helpPage/help.vue");
 const EquCategory = () => import("../views/equList/equCategory.vue");
 const Bill = () => import("../views/bill/bill.vue");
 const DeviceDetail = () => import("../views/equManagement/DeviceDetail.vue");
-
-const Goods = () => import("../views/goods/goodsPage.vue");
-const Goodscategory = () => import("../views/goods/goodsCategory.vue");
-const Goodsdetails = () => import("../views/goods/goodsDetails.vue");
-const GoodsItem = () => import("../views/goods/goodsItem.vue");
+const EquPage = () => import("../views/equManagement/equPage.vue")
+const EquCraftList = () => import("../views/equManagement/equCraft")
 
 const Login = () => import("@/views/login/index.vue");
 const Register = () => import("@/views/register/register.vue");
@@ -47,6 +44,8 @@ const Notice = () => import("../views/notice/notice.vue");
 
 const AddRecords = () => import("../views/experimentalRecords/addRecords.vue");
 const SearchRecords = () => import("../views/experimentalRecords/searchRecords.vue")
+
+const Mall = () => import("../views/mall/mall.vue")
 //1.安装插件
 Vue.use(Router);
 //创建router
@@ -86,19 +85,27 @@ const routes = [
     component: DeviceDetail // 设备详情页面
   },
   {
-    path: "/equp",
-    name: "Equp",
-    component: Equp
+    path: "/equPage",
+    name: "EquPage",
+    redirect: "/equPage/equCraft",
+    component: EquPage,
+    children: [
+      {
+        path: "/equPage/equCraft",
+        name: "EquCraftList",
+        component: EquCraftList
+      },
+      {
+        path: "/equPage/equManagement",
+        name: "EqupManagement",
+        component: EqupManagement
+      }
+    ]
   },
   {
     path: "/craft",
     name: "Craft",
     component: Craft
-  },
-  {
-    path: "/craft/equcraft",
-    name: "equcraft",
-    component: EquCraft
   },
   {
     path: "/book/:id",
@@ -196,37 +203,18 @@ const routes = [
   },
   {
     path: "/addRecords",
-    name:"AddRecords",
+    name: "AddRecords",
     component: AddRecords
   },
   {
     path: "/searchRecords",
-    name:"SearchRecords",
+    name: "SearchRecords",
     component: SearchRecords
   },
   {
-    path: "/goods",
-    name: "Goods",
-    component: Goods,
-    redirect: "/goods/category",
-    children: [
-      {
-        //子路由
-        path: "/goods/category",
-        name: "Goodscategory",
-        component: Goodscategory
-      },
-      {
-        path: "/goods/details",
-        name: "Goodsdetails",
-        component: Goodsdetails
-      }
-    ]
-  },
-  {
-    path: "/goods/:id",
-    name: "GoodsItem",
-    component: GoodsItem
+    path: "/mall",
+    name:"Mall",
+    component: Mall
   }
 ];
 const router = new Router({

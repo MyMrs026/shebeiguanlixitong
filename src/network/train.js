@@ -23,10 +23,20 @@ export function addProjectTrain( docUrl,trainDuration,trainIntroduction,trainNam
   });
 }
 
-export function applyTraining(array) {
+//培训预约
+export function applyTraining(applicationStatus,createTime,endTime,startTime,trainingApplicationId,trainingId,updateTime,userId) {
     return request({
       url:'/training/submit',
       method: 'post',
-      data: array
+      data: {
+        applicationStatus:applicationStatus,
+        createTime:createTime,
+        endTime:endTime,
+        startTime:startTime,
+        trainingApplicationId:trainingApplicationId,
+        trainingId:trainingId,
+        updateTime:updateTime,
+        userId:userId
+      }
     });
 }

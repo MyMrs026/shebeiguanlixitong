@@ -1,17 +1,17 @@
 <template>
-  <div class="train-container">
+  <div class="equPage-container">
     <div class="button-group">
       <el-button
-        :type="currentTab === 'security' ? 'info' : 'success'"
+        :type="currentTab === 'equCraft' ? 'info' : 'success'"
         style="width: 120px; margin-bottom: 15px"
-        @click="push('/train/security')"
-        >安全培训</el-button
+        @click="push('/equPage/equCraft')"
+        >设备信息展示</el-button
       >
       <el-button
-        :type="currentTab === 'equipment' ? 'info' : 'success'"
+        :type="currentTab === 'equManagement' ? 'info' : 'success'"
         style="width: 120px; margin-bottom: 15px"
-        @click="push('/train/equipment')"
-        >设备培训</el-button
+        @click="push('/equPage/equManagement')"
+        >设备管理</el-button
       >
     </div>
     <div class="content-area">
@@ -38,14 +38,17 @@ export default {
   },
   created() {
     // 初始化为安全培训
-    this.currentTab = "security";
+    this.currentTab = "equCraft";
     // 初始导航
-    this.$router.push("/train/security");
+    this.$router.push("/equPage/equCraft");
+
+    // window.location.reload();
   },
+  
 };
 </script>
 <style scoped>
-.train-container {
+.equPage-container {
   display: flex;
   flex-direction: row;
 }

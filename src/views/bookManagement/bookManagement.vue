@@ -1,49 +1,13 @@
 <template>
   <div class="outer-container">
     <div class="book-container">
-      <!-- 预约管理部分分为两个部分，上半部分为子导航条，下半部分包括当前用户预约设备的日程表、设备被预约的日程表等 -->
-
-      <!-- 第二个 div 的内容 -->
       <div class="fullcalendar-area">
-        <!-- 原本展示用户所有的预约记录 -->
-        <!-- <div class="content-area">
-          <div class="book-title">
-            <p>当前用户 {{ curUsername }}</p>
-          </div>
-          <div class="schedular-area">
-            <Schedular
-              :events="orderEvents"
-              :equipmentId="curEquipment.equipmentId"
-              class="schedular"
-              @make-orders="handleMakeOrders"
-              @edit-orders="handleEditOrders"
-              @click-events="handleClickEvents"
-              @update-orders="handleUpdataData"
-            />
-          </div>
-        </div> -->
-        <!-- 目前只按设备展示预约记录 -->
         <div class="content-area">
           <div class="top-content2">
             <div style="font-size: 20px; color: #6d6c6c">
               <p>当前设备 {{ curEquipment.equipmentName }}</p>
             </div>
-            <!-- <el-select
-            v-model="newEqup"
-            class="custom-select"
-            placeholder="请选择设备"
-            @change="equSelectChange"
-          >
-            <el-option
-              v-for="item in device_options"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
-            >s
-            </el-option>
-          </el-select> -->
           </div>
-
           <div class="schedular-area">
             <Schedular
               :events="orderEvents2"
@@ -64,8 +28,8 @@
 <script>
 import Schedular from "../../components/common/schedular/Schedular";
 import { getEquList, getEquInform } from "../../network/equpment";
-import { getOrders, getequOrders } from "../../network/book";
-import { getLoginUserInfo, getUserInform, login } from "../../network/user";
+import { getequOrders } from "../../network/book";
+import { getUserInform } from "../../network/user";
 import { formatDateToISOString } from "../../common/formatDateToISOString";
 
 export default {
@@ -126,25 +90,6 @@ export default {
         console.error("Error loading data:", error);
       }
     },
-
-    // 根据用户id获取用户名
-    // async loadUserInform(id) {
-    //   try {
-    //     let userName = "";
-    //     const res = await getUserInform(id);
-    //     if (res.data) {
-    //       userName = res.data.username.toString();
-    //       // console.log(userName);
-    //       return userName;
-    //     } else {
-    //       console.log("该用户已被删除");
-    //     }
-    //   } catch (error) {
-    //     console.error("Error loading data:", error);
-    //   }
-    // },
-
-    //根据用户id获取用户的更多信息
     async loadUserInformation(id) {
       try {
         let userInfo = {};
@@ -173,7 +118,7 @@ export default {
             return {
               id: item.equipmentOrderId.toString(),
               title: "已被" + userInfo.username + "预约",
-              username:userInfo.username,
+              username: userInfo.username,
               userEmail: userInfo.email,
               userTel: userInfo.tel,
               projectId: item.projectId,
@@ -187,30 +132,6 @@ export default {
         console.error("Error loading data:", error);
       }
     },
-
-    // 根据目前登录用户获取预约记录
-    // async loadOrderData() {
-    //   try {
-    //     const res = await getOrders();
-    //     this.originEvents = res.data;
-    //     this.orderEvents = await Promise.all(
-    //       this.originEvents.map(async (item) => {
-    //         const equName = await this.loadEquInform(item.equipmentId);
-    //         const userInfo = await this.loadUserInformation(item.userId);
-    //         return {
-    //           id: item.equipmentOrderId.toString(),
-    //           title: userInfo.username + "使用" + equName,
-    //           projectId: item.projectId,
-    //           start: formatDateToISOString(item.startTime).slice(0, -5),
-    //           end: formatDateToISOString(item.endTime).slice(0, -5),
-    //         };
-    //       })
-    //     );  
-    //     console.log(this.orderEvents);
-    //   } catch (error) {
-    //     console.error("Error loading data:", error);
-    //   }
-    // },
     handleUpdataData() {
       // this.loadOrderData();
       this.loadEquOrder(this.$route.params.id);
@@ -219,14 +140,13 @@ export default {
 
     async loadData() {
       try {
-        await this.loadOrderData()
-      } catch(error) {
+        await this.loadOrderData();
+      } catch (error) {
         console.log(1);
       }
-    }
+    },
   },
   created() {
-    //获取设备列表，第一个日程表选中时需要，第二个日程表选择时需要
     getEquList().then((res) => {
       this.equlist = res.data;
       this.device_options = this.equlist.map((item) => {

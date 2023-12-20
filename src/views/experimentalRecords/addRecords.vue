@@ -2,9 +2,7 @@
   <div class="container-area">
     <h3 style="margin-top: 20px">添加实验记录</h3>
     <div class="button-area text-right">
-      <el-button class="align-right" @click="openNewTab"
-        >历史实验记录</el-button
-      >
+      <el-button class="align-right" @click="openNewTab">历史实验记录</el-button>
     </div>
     <div class="title-area">
       <div>当前设备：{{ this.equName }}</div>
@@ -12,43 +10,17 @@
       <div>当前项目: {{ this.projectName }}</div>
     </div>
     <div class="form-area">
-      <el-form
-        :model="ruleForm"
-        :rules="rules"
-        :label-position="labelPosition"
-        ref="ruleForm"
-        class="demo-ruleForm"
-      >
+      <el-form :model="ruleForm" :rules="rules" :label-position="labelPosition" ref="ruleForm" class="demo-ruleForm">
         <el-form-item label="实验开始日期" label-width="150px" required>
-          <el-date-picker
-            type="datetime"
-            placeholder="选择日期"
-            v-model="ruleForm.startTime"
-            style="width: 200px"
-          >
+          <el-date-picker type="datetime" placeholder="选择日期" v-model="ruleForm.startTime" style="width: 200px">
           </el-date-picker>
         </el-form-item>
 
         <el-form-item label="序号" label-width="150px" prop="experimentNum">
-          <el-input
-            v-model="ruleForm.experimentNum"
-            style="width: 200px"
-            type="number"
-            :min="1"
-          ></el-input>
+          <el-input v-model="ruleForm.experimentNum" style="width: 200px" type="number" :min="1"></el-input>
         </el-form-item>
-        <el-form-item
-          v-for="(value, key) in equAttrs"
-          :label="key"
-          :key="key"
-          label-width="150px"
-          :prop="key"
-        >
-          <el-input
-            v-model="equAttrs[key]"
-            :placeholder="value"
-            style="width: 200px"
-          ></el-input>
+        <el-form-item v-for="(value, key) in equAttrs" :label="key" :key="key" label-width="150px" :prop="key">
+          <el-input v-model="equAttrs[key]" :placeholder="value" style="width: 200px"></el-input>
         </el-form-item>
 
         <el-form-item label="结果" label-width="150px" prop="result">
@@ -58,9 +30,7 @@
           <el-input v-model="ruleForm.remark" style="width: 200px"></el-input>
         </el-form-item>
         <el-form-item label-width="150px">
-          <el-button type="primary" @click="submitForm('ruleForm')"
-            >立即创建</el-button
-          >
+          <el-button type="primary" @click="submitForm('ruleForm')">立即创建</el-button>
           <el-button @click="resetForm('ruleForm')">重置</el-button>
         </el-form-item>
       </el-form>
@@ -68,7 +38,11 @@
   </div>
 </template>
 <script>
-import { getEquAttr, addExperiment } from "../../network/equpment";
+import {
+  getEquAttr,
+  addExperiment,
+  getExperimentList,
+} from "../../network/equpment";
 import { getProjectDetail } from "../../network/project";
 export default {
   components: {},
@@ -101,8 +75,8 @@ export default {
           {
             required: true,
             message: "请输入实验序号",
-            trigger: "blur"
-          }
+            trigger: "blur",
+          },
         ],
         remark: [
           {
@@ -140,17 +114,24 @@ export default {
 
     //查看历史实验记录
     openNewTab() {
+      const equId = this.equId;
+      const userName = this.userName
       // 获取当前路由路径
       const currentRoute = this.$route.fullPath;
-
       // 拼接新页面的路由路径
       const newTabRoute = "/searchRecords";
-
-      // 在新标签页中打开新页面
-      window.open(newTabRoute, "_blank");
-
-      // 在原页面保持路由不变
-      this.$router.replace({ path: currentRoute });
+      if (currentRoute !== newTabRoute) {
+        // 在新标签页中打开新页面
+        window.open(`${newTabRoute}?equId=${equId}&userName=${userName}`, "_blank");
+        // 在原页面保持路由不变
+        this.$router.replace({
+          path: currentRoute,
+          query: {
+            equId,
+            userName
+          }
+        });
+      }
     },
     //提交新建表单
     submitForm(formName) {
@@ -184,10 +165,25 @@ export default {
             this.ruleForm.startTime
           ).then((res) => {
             console.log(res);
+            if (res.code == 2000) {
+              this.$notify({
+                title: "成功",
+                message: "添加成功，您可继续添加或查看实验记录",
+                type: "success",
+              });
+            } else {
+              this.$notify.error({
+                title: "错误",
+                message: "添加失败，请重新填写",
+              });
+              return false;
+            }
           });
         } else {
-          console.log("error submit!!");
-          return false;
+          this.$notify.error({
+            title: "错误",
+            message: "请填写完整",
+          });
         }
       });
     },
@@ -212,26 +208,15 @@ export default {
     this.equId = this.$route.query.equId;
     this.equipmentOrderId = this.$route.query.equipmentOrderId;
     this.projectId = this.$route.query.projectId;
-    // 现在你可以在组件中使用 equId 和 equipmentOrderId 了
-    // console.log("userName:", this.userName);
-    // console.log("equName:", this.equName);
-    // console.log("equId:", this.equId);
-    // console.log("equipmentOrderId:", this.equipmentOrderId);
-
     getEquAttr(this.equId).then((res) => {
-      // console.log(res.data);
-      // 使用 reduce 方法将 attrName 赋值给 equAttrs 对象
       this.equAttrs = res.data.reduce((acc, currentItem) => {
         acc[currentItem.attrName] = currentItem.attrValue;
         return acc;
       }, {});
-      // console.log(this.equAttrs);
     });
 
     getProjectDetail(this.projectId).then((res) => {
-      // console.log(res.data);
       this.projectName = res.data.project.projectName;
-      // console.log(this.projectName);
     });
   },
 };
@@ -243,10 +228,12 @@ export default {
   /* justify-content: center; */
   align-items: center;
 }
+
 .button-area {
   align-self: flex-end;
   margin-right: 30px;
 }
+
 .title-area {
   display: flex;
   flex-direction: row;
@@ -255,9 +242,11 @@ export default {
   margin-bottom: 30px;
   font-size: 1.25rem;
 }
+
 .title-area div {
   margin-right: 25px;
 }
+
 .el-form-item__label {
   font-size: 16px;
 }

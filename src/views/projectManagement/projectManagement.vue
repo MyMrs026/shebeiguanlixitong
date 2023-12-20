@@ -1,11 +1,30 @@
 <template>
   <div class="project">
-    <div class="project-type">
-      <el-button type="primary" @click="setCurrentProjectType('对内项目')"
+    <div class="project-buttons">
+      <!-- 这里放四个按钮 -->
+      <el-button
+        :type="currentTab === 'security' ? 'info' : 'success'"
+        style="width: 120px; margin-bottom: 15px"
+        @click="setCurrentProjectType('对内项目')"
         >对内项目</el-button
       >
-      <el-button type="success" @click="setCurrentProjectType('对外项目')"
+      <el-button
+        :type="currentTab === 'equipment' ? 'info' : 'success'"
+        style="width: 120px; margin-bottom: 15px"
+        @click="setCurrentProjectType('对外项目')"
         >对外项目</el-button
+      >
+      <el-button
+        :type="currentTab === 'equipment' ? 'info' : 'success'"
+        style="width: 120px; margin-bottom: 15px"
+        @click="redirectToMyProject('/myProject')"
+        >我管理的项目</el-button
+      >
+      <el-button
+        :type="currentTab === 'equipment' ? 'info' : 'success'"
+        style="width: 120px; margin-bottom: 15px"
+        @click="redirectToMyProject('/addProject')"
+        >新建项目</el-button
       >
     </div>
     <div class="project-list">
@@ -17,10 +36,11 @@
       >
         <div class="item-base">
           <div class="img-container">
-            <el-image class="img" :src="item.project.projectImg"
-              ><div slot="error" class="image-slot">
-                <i class="el-icon-picture-outline"></i></div
-            ></el-image>
+            <el-image class="img" :src="item.project.projectImg">
+              <div slot="error" class="image-slot">
+                <i class="el-icon-picture-outline"></i>
+              </div>
+            </el-image>
           </div>
 
           <div class="item-base-info">
@@ -99,7 +119,7 @@
       <p>设备功能：{{ equipmentInfo.equipmentFunction }}</p>
       <p>机器标签：{{ equipmentInfo.machineLabel }}</p>
       <p>厂商：{{ equipmentInfo.manufacturer }}</p>
-      <p>厂商：{{ equipmentInfo.specificationModel }}</p>
+      <p>规格型号：{{ equipmentInfo.specificationModel }}</p>
       <p>所属地区：{{ equipmentInfo.area }}</p>
       <p>实验室：{{ equipmentInfo.labName }}</p>
       <p>联系人：{{ equipmentInfo.linkman }}</p>
@@ -124,18 +144,18 @@ export default {
       showEquipmentInfo: false,
       userInfo: null,
       equipmentInfo: null,
-      currentProjectType: "对内项目" // 初始项目类型为 '对内项目'
+      currentProjectType: "对内项目", // 初始项目类型为 '对内项目'
     };
   },
   mounted() {
-    getProjectDetailList().then(list => {
+    getProjectDetailList().then((list) => {
       this.projectList = list;
       console.log(this.projectList);
     });
   },
   computed: {
     formattedDate() {
-      return function(date) {
+      return function (date) {
         if (!date) return "";
         return (
           date.slice(0, 4) +
@@ -150,9 +170,9 @@ export default {
     filterProjects() {
       // console.log(计算属性);
       return this.projectList.filter(
-        item => item.project.projectType === this.currentProjectType
+        (item) => item.project.projectType === this.currentProjectType
       );
-    }
+    },
   },
   methods: {
     toggleDetail(index) {
@@ -175,42 +195,39 @@ export default {
       this.equipmentInfo = equipment;
     },
     setCurrentProjectType(projectType) {
-      this.currentProjectType = projectType
-      console.log(this.currentProjectType);
+      this.currentProjectType = projectType;
     },
-  }
+    redirectToMyProject(route) {
+      this.$router.push(route);
+    },
+  },
 };
 </script>
 <style scoped>
-.project-type {
+.project {
   display: flex;
-  justify-content: space-around;
+  flex-direction: row;
 }
-.project-list {
+
+.project-buttons {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
+  flex: 1;
+  flex-direction: column;
+  margin-top: 30px;
+  margin-left: 30px;
+}
+
+.project-list {
+  flex: 7;
 }
 
 .list-item {
-  flex-basis: 40%;
-  margin: 0 10px 20px 0;
-  background-color: #fff;
-  border: 1px solid #e0e0e0;
-  border-radius: 5px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  transition: transform 0.2s; /* 添加过渡效果 */
-  position: relative; /* 设置相对定位 */
-  height: 300px;
+  margin: 20px;
 }
 
-.list-item:not(.active) {
-  transform: scale(1); /* 未激活时保持原始大小 */
-}
-
-.list-item.active {
-  transform: scale(1.05); /* 激活时放大 */
-  z-index: 2; /* 设置z-index以覆盖其他卡片 */
+.el-button + .el-button,
+.el-checkbox.is-bordered + .el-checkbox.is-bordered {
+  margin-left: 0;
 }
 
 .img-container {
@@ -218,17 +235,22 @@ export default {
   height: 200px;
   border: 2px solid #dcdfe6;
   margin-right: 10px;
-  position: relative; /* 设置相对定位 */
+  position: relative;
+  /* 设置相对定位 */
 }
 
 .img {
   max-width: 80%;
-  max-height: 80%; /* 限制图像的最大高度 */
-  object-fit: contain; /* 保持原始比例，完整显示图像 */
-  position: absolute; /* 设置绝对定位 */
+  max-height: 80%;
+  /* 限制图像的最大高度 */
+  object-fit: contain;
+  /* 保持原始比例，完整显示图像 */
+  position: absolute;
+  /* 设置绝对定位 */
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%); /* 居中显示图像 */
+  transform: translate(-50%, -50%);
+  /* 居中显示图像 */
 }
 
 .item-base {
@@ -238,16 +260,29 @@ export default {
   padding: 10px;
 }
 
-.item-detail {
-  position: absolute; /* 设置绝对定位 */
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: #f9f9f9;
-  border: 1px solid #e0e0e0;
-  border-radius: 5px;
-  z-index: 1; /* 位于卡片下方 */
+.detail-1 {
+  margin: 10px 0;
   padding: 10px;
+  background-color: #dee1e6;
+  border-radius: 5px;
 }
+
+.detail-2 {
+  margin: 10px 0;
+  padding: 10px;
+  background-color: #dee1e6;
+  border-radius: 5px;
+}
+
+.detail-3 {
+  margin: 10px 0;
+  padding: 10px;
+  background-color: #dee1e6;
+  border-radius: 5px;
+}
+
+.item-detail {
+  height: 51vh;
+}
+
 </style>

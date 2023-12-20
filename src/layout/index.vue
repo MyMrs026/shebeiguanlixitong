@@ -1,10 +1,10 @@
 <script>
-import Sidebar from "../components/common/tabbar/Sidebar.vue";
+// import Sidebar from "../components/common/tabbar/Sidebar.vue";
 import Navbar from "../components/common/tabbar/Navbar.vue";
 
 export default {
   components: {
-    Sidebar,
+    // Sidebar,
     Navbar
   },
   computed: {
@@ -21,9 +21,9 @@ export default {
       <Navbar />
     </div>
     <div class="content">
-      <div class="sidebar" v-if="isShowTabbar">
+      <!-- <div class="sidebar" v-if="isShowTabbar">
         <Sidebar />
-      </div>
+      </div> -->
       <div class="main">
         <router-view></router-view>
       </div>
