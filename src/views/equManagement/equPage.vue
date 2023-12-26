@@ -1,6 +1,6 @@
 <template>
   <div class="equPage-container">
-    <div class="button-group">
+    <div class="button-group" v-if="curUsername!=='guest'">
       <el-button
         :type="currentTab === 'equCraft' ? 'info' : 'success'"
         style="width: 120px; margin-bottom: 15px"
@@ -21,10 +21,12 @@
 </template>
   
 <script>
+import { getLoginUserInfo } from "../../network/user";
 export default {
   data() {
     return {
       currentTab: "", // 用于记录当前选中的标签
+      curUsername:'',
     };
   },
   methods: {
@@ -43,6 +45,12 @@ export default {
     this.$router.push("/equPage/equCraft");
 
     // window.location.reload();
+    // 获取登录用户信息
+    getLoginUserInfo().then((res) => {
+      // console.log(res.data);
+      this.curUsername = res.data.username;
+      // console.log(this.curUsername);
+    });
   },
   
 };
