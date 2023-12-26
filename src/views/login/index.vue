@@ -17,28 +17,22 @@
                         <img src="../../assets/img/pwd.png" title="pwd icon" style="width: 40px; height: 40px" />
                         <input id="password" placeholder="请输入密码" type="password" v-model="password" required
                             autocomplete="password" />
-                    </div>
-                    <br />
-                    <div style="text-align: center">
-                        <!-- <img src="../../assets/img/rights.png" title="rights icon" style="width:40px;height:40px"/> -->
-                        <!-- <select id="select" v-model="value">
-          <option disabled selected>请选择您的身份</option>
-          <option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
-          </option>
-        </select> -->
-                    </div>
+                    </div>               
                     <br /><br />
                     <div style="text-align: center">
                         <el-button @click="login" id="button-3">登&nbsp;&nbsp;录</el-button>
                         <el-divider direction="vertical"></el-divider>
                         <el-button @click="register" id="button-4">注&nbsp;&nbsp;册</el-button>
+                        <el-divider direction="vertical"></el-divider>
+                        <el-button @click="login" id="button-3">游客登录</el-button>
                     </div>
+                    <el-tag type="success" style="font-size: 0.6rem;">游客登录请输入"账号：100000 密码：guest"</el-tag>
+                    <el-tag type="success" style="font-size: 0.6rem;">注：游客对于部分功能有限制，如果需要请注册账号</el-tag>
                 </form>
             </div>
         </div>
     </div>
 </template>
-
 <script>
 /**
  * 登录逻辑在这里写
@@ -54,6 +48,7 @@ export default {
         };
     },
     methods: {
+        //普通用户登录
         login(event) {
             // 方法是 JavaScript 中一个常用的事件方法，它用于阻止事件的默认行为或默认操作发生。当事件发生时，通常会触发一些默认行为，例如点击链接时会跳转到链接的URL，提交表单时会发送表单数据到服务器，按下键盘的 Enter 键时可能会触发表单的提交等。
             event.preventDefault();
@@ -103,7 +98,6 @@ export default {
             event.preventDefault();
             this.$router.push("/register");
         },
-
         //将vuex中用于用户登录状态保存的变量进行改变
         updateCurole(value) {
             this.$store.commit("setCurole", value);

@@ -54,7 +54,6 @@
             label="是否处于维护中"
             width="150"
           > -->
-        </el-table-column>
         <el-table-column
           prop="linkman"
           label="联系人"
@@ -144,7 +143,7 @@
               class="el-icon-plus avatar-uploader-icon"
             ></i>
           </el-upload>
-          </el-upload>
+
         </el-form-item>
         <el-form-item
           label="设备状态"
@@ -444,10 +443,10 @@ export default {
       equcategory: [],
       labinform: [],
       apiUrl: "http://47.98.160.222:8080/api/file/uploadImage",
-      resUrl:"",
-      imageUrl:"",
+      resUrl: "",
+      imageUrl: "",
       customHeaders: {
-        'Authorization':localStorage.getItem('token')
+        Authorization: localStorage.getItem("token"),
       },
       equForm: {
         newEquipmentFunction: "",
@@ -522,7 +521,7 @@ export default {
       // console.log(res.data);
       this.resUrl = res.data;
       // this.eqpinform.newEquipmentImageUrl = res.data
-      console.log(this.resUrl );
+      console.log(this.resUrl);
       this.imageUrl = URL.createObjectURL(file.raw);
     },
     submitForm(formName) {

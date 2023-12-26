@@ -222,7 +222,7 @@ const router = new Router({
   mode: "history"
 });
 
-//添加路由守卫，它的作用就是，如果没有登录就无法直接跳转指定页面
+// 添加路由守卫，它的作用就是，如果没有登录就无法直接跳转指定页面
 router.beforeEach((to, from, next) => {
   const token = localStorage.getItem("token");
   const isAuthenticated = !!token;
