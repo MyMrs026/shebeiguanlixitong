@@ -1,87 +1,94 @@
 <template>
   <div class="mallLayer">
-    <h3>{{ message }}</h3>
-
-    <!-- 筛选模块 -->
-    <el-row :gutter="20">
-      <el-col :span="8">
+    <div class="button-area">
+      <el-button>硅片</el-button>
+      <el-button>材料</el-button>
+      <el-button>试剂</el-button>
+      <el-button>产品</el-button>
+    </div>
+    <div class="content-area">
+      <!-- 筛选模块 -->
+      <div class="filter-area">
         <el-input
           v-model="filter.productId"
           placeholder="请输入产品ID"
         ></el-input>
-      </el-col>
-      <el-col :span="8">
+
         <el-input
           v-model="filter.productName"
           placeholder="请输入产品名"
         ></el-input>
-      </el-col>
-      <el-col :span="8">
-        <el-button @click="filterProducts" type="primary">筛选</el-button>
-        <el-button @click="resetFilter">重置</el-button>
-      </el-col>
-    </el-row>
 
-    <el-table :data="pagedProductList" stripe style="width: 60%">
-      <el-table-column fixed="left" label="操作" width="120">
-        <template slot-scope="scope">
-          <el-button @click="showPurchaseDialog(scope.row)" size="small">
-            购买
-          </el-button>
-        </template>
-      </el-table-column>
-      <el-table-column prop="productId" label="产品Id" width="80">
-      </el-table-column>
-      <el-table-column prop="productName" label="产品名" width="180">
-      </el-table-column>
-      <el-table-column prop="unit" label="单位名称" width="100">
-      </el-table-column>
-      <el-table-column prop="stock" label="库存" width="80"> </el-table-column>
-      <el-table-column prop="price" label="单价" width="100"> </el-table-column>
-      <el-table-column prop="func" label="功能" width="180"> </el-table-column>
-      <el-table-column prop="description" label="介绍" width="180">
-      </el-table-column>
-      <el-table-column prop="remark" label="备注" width="180">
-      </el-table-column>
-    </el-table>
-    <!-- 分页 -->
-    <el-pagination
-      @size-change="handleSizeChange"
-      @current-change="handleCurrentChange"
-      :current-page="currentPage"
-      :page-sizes="[8]"
-      :page-size="pageSize"
-      :total="productList.length"
-      layout="total, sizes, prev, pager, next, jumper"
-    />
-
-    <!-- 购买弹窗 -->
-    <el-dialog
-      title="购买商品"
-      :visible="purchaseDialogVisible"
-      @close="closePurchaseDialog"
-      :style="{ width: '50%', margin: '0 auto' }"
-    >
-      <div>
-        <p>产品名称: {{ purchaseData.productName }}</p>
-        <p>产品单价: {{ purchaseData.price }}</p>
-        <p>
-          购买数量:
-          <el-input-number
-            v-model="purchaseQuantity"
-            :min="1"
-            :max="purchaseData.stock"
-            style="width: 150px"
-          />
-        </p>
-        <p>产品总价: {{ purchaseData.price * purchaseQuantity }}</p>
+        <el-button @click="filterProducts" type="primary" style="width: 80px"
+          >筛选</el-button
+        >
+        <el-button @click="resetFilter" style="width: 80px">重置</el-button>
       </div>
-      <span slot="footer" class="dialog-footer">
-        <el-button @click="closePurchaseDialog">取消</el-button>
-        &nbsp;&nbsp;&nbsp;
-        <el-button type="primary" @click="confirmPurchase">确定</el-button>
-      </span>
-    </el-dialog>
+
+      <el-table :data="pagedProductList" stripe style="width: 100%">
+        <el-table-column fixed="left" label="操作" width="120" v-if="curUsername!=='guest'">
+          <template slot-scope="scope">
+            <el-button @click="showPurchaseDialog(scope.row)" size="small">
+              购买
+            </el-button>
+          </template>
+        </el-table-column>
+        <el-table-column prop="productId" label="产品Id" width="80">
+        </el-table-column>
+        <el-table-column prop="productName" label="产品名" width="220">
+        </el-table-column>
+        <el-table-column prop="unit" label="单位名称" width="100">
+        </el-table-column>
+        <el-table-column prop="stock" label="库存" width="100">
+        </el-table-column>
+        <el-table-column prop="price" label="单价" width="100">
+        </el-table-column>
+        <el-table-column prop="func" label="功能" width="220">
+        </el-table-column>
+        <el-table-column prop="description" label="介绍" width="220">
+        </el-table-column>
+        <el-table-column prop="remark" label="备注"> </el-table-column>
+      </el-table>
+      <!-- 分页 -->
+      <div class="pagination-container">
+        <el-pagination
+          @size-change="handleSizeChange"
+          @current-change="handleCurrentChange"
+          :current-page="currentPage"
+          :page-sizes="[8]"
+          :page-size="pageSize"
+          :total="productList.length"
+          layout="total, sizes, prev, pager, next, jumper"
+        />
+      </div>
+      <!-- 购买弹窗 -->
+      <el-dialog
+        title="购买商品"
+        :visible="purchaseDialogVisible"
+        @close="closePurchaseDialog"
+        :style="{ width: '50%', margin: '0 auto' }"
+      >
+        <div>
+          <p>产品名称: {{ purchaseData.productName }}</p>
+          <p>产品单价: {{ purchaseData.price }}</p>
+          <p>
+            购买数量:
+            <el-input-number
+              v-model="purchaseQuantity"
+              :min="1"
+              :max="purchaseData.stock"
+              style="width: 150px"
+            />
+          </p>
+          <p>产品总价: {{ purchaseData.price * purchaseQuantity }}</p>
+        </div>
+        <span slot="footer" class="dialog-footer">
+          <el-button @click="closePurchaseDialog">取消</el-button>
+          &nbsp;&nbsp;&nbsp;
+          <el-button type="primary" @click="confirmPurchase">确定</el-button>
+        </span>
+      </el-dialog>
+    </div>
   </div>
 </template>
   
@@ -107,6 +114,8 @@ export default {
         productId: "",
         productName: "",
       },
+
+      curUsername:'',
     };
   },
   methods: {
@@ -185,7 +194,8 @@ export default {
       this.closePurchaseDialog();
     },
     // 筛选产品
-    filterProducts() {``
+    filterProducts() {
+      ``;
       this.pagedProductList = this.productList.filter((product) => {
         return (
           String(product.productId).includes(this.filter.productId) &&
@@ -243,16 +253,51 @@ export default {
   created() {
     this.loadProductList();
     this.loadLoginUserInfo();
+    // 获取登录用户信息
+    getLoginUserInfo().then((res) => {
+      // console.log(res.data);
+      this.curUsername = res.data.username;
+      // console.log(this.curUsername);
+    });
   },
 };
 </script>
 <style>
 .mallLayer {
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  flex-direction: row;
 }
-
+.button-area {
+  display: flex;
+  flex-direction: column;
+  width: 20%;
+  align-items: center;
+  justify-content: center;
+}
+.button-area .el-button {
+  margin-bottom: 15px;
+  width: 150px !important;
+}
+.content-area {
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+}
+.filter-area {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px; /* Adjust as needed */
+  width: 100%;
+}
+.el-button + .el-button,
+.el-checkbox.is-bordered + .el-checkbox.is-bordered {
+  margin-left: 0px !important;
+}
+.pagination-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px; /* Adjust as needed */
+}
 .el-dialog__header {
   padding: 20px 20px 10px; /* 您的原始样式 */
   text-align: center;

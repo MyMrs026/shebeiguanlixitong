@@ -3,11 +3,11 @@
     <div class="total">
       <!-- 分割线 -->
 
-      <div style="height:1.875rem;" class="first">
+      <div style="height: 1.875rem" class="first">
         <br />
       </div>
       <!-- 标题+图标 -->
-      <div style="height: 35rem" v-show="currentPage === 1">
+      <div style="height: 35rem">
         <div class="left">
           <div class="title1">微纳加工平台</div>
 
@@ -24,16 +24,16 @@
               />
             </div>
             <div class="intro-text">
-<!--              <el-card class="box-card">-->
-                <span class="bullet">&bull;</span
-                >微纳加工平台主攻光/电芯片的异质异构集成以及多材料体系的超精细加工。<br />
-                <span class="bullet">&bull;</span
-                >微纳加工平台总面积641.78m²，其中百级区182.42m²，千级区368.67m²，湿法工作区26.48m²，灰区36.5
-                m²。<br />
-                <span class="bullet">&bull;</span
-                >加工平台管理网站旨在为您提供正确的设备建议，并为您的微纳米制造工艺以及芯片检测工作提供一个良好的起点。<br />
-                如果您需要有关某些仪器或流程的更多信息，请联系相关人员。欢迎您对微纳加工平台管理网站提供任何反馈或意见。
-<!--              </el-card>-->
+              <!--              <el-card class="box-card">-->
+              <span class="bullet">&bull;</span
+              >微纳加工平台主攻光/电芯片的异质异构集成以及多材料体系的超精细加工。<br />
+              <span class="bullet">&bull;</span
+              >微纳加工平台总面积641.78m²，其中百级区182.42m²，千级区368.67m²，湿法工作区26.48m²，灰区36.5
+              m²。<br />
+              <span class="bullet">&bull;</span
+              >加工平台管理网站旨在为您提供正确的设备建议，并为您的微纳米制造工艺以及芯片检测工作提供一个良好的起点。<br />
+              如果您需要有关某些仪器或流程的更多信息，请联系相关人员。欢迎您对微纳加工平台管理网站提供任何反馈或意见。
+              <!--              </el-card>-->
               <router-link to="/notice">
                 <el-tooltip
                   class="item"
@@ -42,8 +42,9 @@
                   placement="right"
                 >
                   <div style="margin-top: 15px">
-                    最新通知：{{ latestNotice.content
-                    }}&nbsp;&nbsp;&nbsp;{{ latestNotice.createTime | formatDate }}
+                    最新通知：{{ latestNotice.content }}&nbsp;&nbsp;&nbsp;{{
+                      latestNotice.createTime | formatDate
+                    }}
                   </div>
                 </el-tooltip>
               </router-link>
@@ -52,12 +53,12 @@
         </div>
       </div>
 
-      <div v-show="currentPage === 2">
-        <div class="text-home">
+      <div>
+        <div class="text-home" v-if="curUsername !== 'guest'">
           <p id="equ-use">设备使用情况</p>
         </div>
         <!-- 设备使用表(目前：写死的) -->
-        <div class="table-equ-use">
+        <div class="table-equ-use" v-if="curUsername !== 'guest'">
           <el-table
             border
             :data="equpsUse"
@@ -79,11 +80,11 @@
           </el-table>
         </div>
 
-        <div class="text-home">
+        <div class="text-home" v-if="curUsername !== 'guest'">
           <p id="book-use">我的预约</p>
         </div>
         <!-- 用户个人的预约表(目前：写死的) -->
-        <div class="table-book-use">
+        <div class="table-book-use" v-if="curUsername !== 'guest'">
           <el-table :data="orderEvents" class="table-book">
             <el-table-column prop="equName" label="设备名" width="180">
             </el-table-column>
@@ -111,11 +112,11 @@
             </el-table-column>
           </el-table>
         </div>
-        <div class="text-home">
+        <div class="text-home" v-if="curUsername !== 'guest'">
           <p id="dch-use">设备使用状态</p>
         </div>
         <!-- 所有的设备使用状态表格(目前：写死的) -->
-        <div class="table-dch-use">
+        <div class="table-dch-use" v-if="curUsername !== 'guest'">
           <el-table
             border
             :data="equpsStatus"
@@ -157,7 +158,7 @@
 import { getNoticeList, getLatest } from "../../network/notice";
 import { getEquInform } from "../../network/equpment";
 import { getOrders } from "../../network/book";
-import { getUserInform } from "../../network/user";
+import { getUserInform,getLoginUserInfo } from "../../network/user";
 import { formatDateToISOString } from "../../common/formatDateToISOString";
 
 export default {
@@ -304,22 +305,18 @@ export default {
       this.latestNotice = res.data;
     });
     this.loadOrderData();
+
+    getLoginUserInfo().then(res=>{
+      console.log(res.data);
+      this.curUsername = res.data.username;
+      console.log(this.curUsername);
+    })
   },
   filters: {
     //处理日期的显示格式问题，使日期以xxxx年xx月xx日的形式显示
     formatDate: function (value) {
       return new Date(value).toLocaleDateString();
     },
-  },
-  mounted() {
-    if (this.$refs.scrollArea) {
-      this.$refs.scrollArea.addEventListener("wheel", this.handleScroll);
-    }
-  },
-  destroyed() {
-    if (this.$refs.scrollArea) {
-      this.$refs.scrollArea.removeEventListener("wheel", this.handleScroll);
-    }
   },
 };
 </script>

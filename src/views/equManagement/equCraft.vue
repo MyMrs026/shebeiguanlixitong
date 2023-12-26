@@ -2,11 +2,11 @@
   <div class="bgpic">
     <div class="main-content">
       <p class="text-title">{{ message }}</p>
-      <div>
+      <div class="equ-list-area">
         <ul class="table-equcraft-use">
           <li
             class="equ-item"
-            v-for="equipment in equinform"
+            v-for="equipment in paginatedEquInform"
             :key="equipment.equipmentId"
           >
             <div class="image-container">
@@ -22,75 +22,45 @@
                 @click="gotoDeviceDetail(equipment.equipmentId)"
               />
             </div>
-            <router-link :to="'/book/' + equipment.equipmentId">
-              <el-button type="primary" plain size="small">设备预约</el-button>
-            </router-link>
-            <router-link to="/test">
-              <el-button type="primary" plain size="small">填写记录</el-button>
-            </router-link>
-            <el-button
-              @click="openTrainModel(equipment.equipmentId)"
-              type="primary"
-              plain
-              size="small"
-              >培训预约
-            </el-button>
-            <el-button
-              type="primary"
-              plain
-              size="small"
-              @click="openNewTab(equipment.equipmentId)"
-              >实验记录</el-button
-            >
+            <div v-if="curUsername!=='guest'">
+              <router-link :to="'/book/' + equipment.equipmentId">
+                <el-button type="primary" plain size="small"
+                  >设备预约</el-button
+                >
+              </router-link>
+              <router-link to="/test">
+                <el-button type="primary" plain size="small"
+                  >填写记录</el-button
+                >
+              </router-link>
+              <el-button
+                @click="openTrainModel(equipment.equipmentId)"
+                type="primary"
+                plain
+                size="small"
+                >培训预约
+              </el-button>
+              <el-button
+                type="primary"
+                plain
+                size="small"
+                @click="openNewTab(equipment.equipmentId)"
+                >实验记录
+              </el-button>
+            </div>
+
             <br />
             设备名称：{{ equipment.equipmentName }}
           </li>
         </ul>
-      </div>
-      <div class="pagination">
-        <span>
-          <el-button round @click="goToFirstPage" :disabled="currentPage === 1">
-            第一页
-          </el-button>
-        </span>
-        <span>
-          <el-button round @click="previousPage" :disabled="currentPage === 1">
-            前一页
-          </el-button>
-        </span>
-        <span>
-          <el-button
-            round
-            @click="nextPage"
-            :disabled="currentPage === totalPages"
-          >
-            下一页
-          </el-button>
-        </span>
-        <span>
-          <el-button
-            round
-            @click="goToLastPage"
-            :disabled="currentPage === totalPages"
-          >
-            最后
-          </el-button>
-        </span>
-        <span>
-          &nbsp;&nbsp;&nbsp;&nbsp;跳转到第：
-          <el-input
-            type="text"
-            v-model.number="goToPageNumber"
-            style="width: 80px"
-          />
-          <el-button
-            type="success"
-            @click="goToPage"
-            round
-            style="margin-left: 10px"
-            >确定</el-button
-          >
-        </span>
+
+        <div class="pagination-container">
+          <el-pagination
+            :total="equinform.length"
+            :page-size="pageSize"
+            @current-change="handleCurrentChange"
+          ></el-pagination>
+        </div>
       </div>
       <!-- 添加事件弹出框 -->
       <el-dialog
@@ -182,10 +152,8 @@ export default {
   data() {
     return {
       equinform: [],
-      currentDate: new Date(),
+      pageSize: 8,
       currentPage: 1,
-      perPage: 8,
-      goToPageNumber: "",
       message: "设备工艺展示",
       apiUrl: "http://47.98.160.222:8080/api/file/uploadImage",
       imageUrl: "",
@@ -194,7 +162,6 @@ export default {
       },
       value: "", //绑定设备的名称
       dialogFormVisible: false, //添加预约弹窗不可见
-
       pickerOptions: {
         // 设置日期范围
         disabledDate(time) {
@@ -206,7 +173,6 @@ export default {
           }
         },
       },
-
       EventForm: {
         equName: "",
         trainingId: "",
@@ -228,13 +194,13 @@ export default {
           { required: true, message: "请填写事件的结束事件", trigger: "blur" },
         ],
       },
+      curUsername: "",
     };
   },
   methods: {
     gotoDeviceDetail(index) {
       this.$router.push({ path: `/device/${index}` });
     },
-
     //其实是日期和具体时间的拼接罢了
     formatDateTime(date, time) {
       const eventDate = new Date(date);
@@ -258,7 +224,6 @@ export default {
 
       return formattedDate;
     },
-
     // 格式化日期
     formattedDate(date) {
       // 将字符串解析为Date对象
@@ -277,36 +242,8 @@ export default {
 
       return date;
     },
-
     resetForm(equCraftForm) {
       this.$refs[equCraftForm].resetFields();
-    },
-    // 分页逻辑
-    updatePagination() {
-      this.currentPage = 1;
-    },
-    goToFirstPage() {
-      this.currentPage = 1;
-    },
-    previousPage() {
-      if (this.currentPage > 1) {
-        this.currentPage--;
-      }
-    },
-    nextPage() {
-      if (this.currentPage < this.totalPages) {
-        this.currentPage++;
-      }
-    },
-    goToLastPage() {
-      this.currentPage = this.totalPages;
-    },
-    goToPage() {
-      const pageNumber = parseInt(this.goToPageNumber);
-      if (pageNumber >= 1 && pageNumber <= this.totalPages) {
-        this.currentPage = pageNumber;
-      }
-      this.goToPageNumber = "";
     },
     //查看历史实验记录
     openNewTab(id) {
@@ -340,7 +277,6 @@ export default {
     closeDialog() {
       this.dialogFormVisible = false;
     },
-
     //弹窗提交按钮实现
     submitClick(formName) {
       this.$refs[formName].validate((valid) => {
@@ -373,42 +309,28 @@ export default {
             this.formatEvent.userId
           ).then((res) => {
             console.log(res);
-            // if (res.data === 2000) {
-            //   console.log(res);
-            //   this.dialogFormVisible = false;
-            //   this.$message({
-            //     message: "预约成功",
-            //     type: "success",
-            //   });
-            // } else {
-            //   console.log(res);
-            //   this.$message.error("修改预约失败，请检查日期或是否时间冲突");
-            //   this.dialogFormVisible = false;
-            // }
-            // this.dialogFormVisible = false;
           });
         } else {
           alert("请填写完整");
         }
       });
     },
-
     //弹窗中的取消按钮实现
     cancelClick() {
       this.dialogFormVisible = false;
       console.log("取消申请");
     },
+    // 处理页码变化
+    handleCurrentChange(page) {
+      this.currentPage = page;
+    },
   },
   computed: {
-    paginatedData() {
-      const data = this.equinform;
-      const startIndex = (this.currentPage - 1) * this.perPage;
-      const endIndex = startIndex + this.perPage;
-      return data.slice(startIndex, endIndex);
-    },
-    totalPages() {
-      const data = this.equinform;
-      return Math.ceil(data.length / this.perPage);
+    // 根据当前页计算分页后的设备数据
+    paginatedEquInform() {
+      const startIndex = (this.currentPage - 1) * this.pageSize;
+      const endIndex = startIndex + this.pageSize;
+      return this.equinform.slice(startIndex, endIndex);
     },
   },
   created() {
@@ -424,16 +346,17 @@ export default {
 
     // 获取登录用户信息
     getLoginUserInfo().then((res) => {
-      console.log(res.data);
+      // console.log(res.data);
       this.EventForm.userName = res.data.username;
+      this.curUsername = res.data.username;
       this.EventForm.userId = res.data.userId;
-      // console.log(this.EventForm.userName);
+      console.log(this.curUsername);
     });
   },
   mounted() {
     getEquList().then((res) => {
       this.equinform = res.data;
-      console.log(this.equinform);
+      // console.log(this.equinform);
     });
   },
   watch: {
@@ -486,6 +409,11 @@ export default {
   margin-left: 50px;
   /* margin-right:50px; */
   /* gap:40px; */
+}
+.pagination-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px; /* 调整上边距以适应您的布局 */
 }
 
 .equ-item {

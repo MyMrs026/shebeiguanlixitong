@@ -141,6 +141,7 @@ export default {
       projectList: [],
       showDetail: null,
       showUserInfo: false, // 添加showUserInfo状态来控制el-dialog的显示
+      currentTab:'',
       showEquipmentInfo: false,
       userInfo: null,
       equipmentInfo: null,
