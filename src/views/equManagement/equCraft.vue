@@ -8,6 +8,7 @@
             class="equ-item"
             v-for="equipment in paginatedEquInform"
             :key="equipment.equipmentId"
+            style="text-align: center;"
           >
             <div class="image-container">
               <img
@@ -30,7 +31,7 @@
               </router-link>
               <router-link to="/test">
                 <el-button type="primary" plain size="small"
-                  >填写记录</el-button
+                  >实验记录</el-button
                 >
               </router-link>
               <el-button
@@ -45,12 +46,14 @@
                 plain
                 size="small"
                 @click="openNewTab(equipment.equipmentId)"
-                >实验记录
+                >历史记录
               </el-button>
             </div>
 
             <br />
             设备名称：{{ equipment.equipmentName }}
+            <br>
+            设备型号：{{ equipment.specificationModel }}
           </li>
         </ul>
 
@@ -332,7 +335,7 @@ export default {
   mounted() {
     getEquList().then((res) => {
       this.equinform = res.data;
-      // console.log(this.equinform);
+      console.log(this.equinform);
     });
   },
   watch: {
@@ -347,7 +350,7 @@ export default {
   display: flex;
   flex-direction: row;
   overflow: auto;
-  background-image: url("../../assets/img/qqq6.png");
+  /* background-image: url("../../assets/img/qqq6.png"); */
   background-repeat: no-repeat;
   width: 100%;
   background-size: 100% 100%;

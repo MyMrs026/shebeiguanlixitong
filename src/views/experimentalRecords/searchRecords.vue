@@ -22,27 +22,27 @@
     <div class="table-area">
       <!-- 开始展示所有的内容，根据筛选字段展示筛选后的内容 -->
       <el-table :data="filteredTableData" stripe class="search-table">
-        <el-table-column prop="experimentNum" label="实验序号" width="80">
+        <el-table-column prop="experimentNum" label="实验序号" min-width="30px" align="center">
         </el-table-column>
         <el-table-column
           prop="username"
           label="姓名"
-          width="80"
+          min-width="50px" align="center"
         ></el-table-column>
         <el-table-column
           prop="equipmentName"
           label="设备名"
-          width="180"
+          min-width="100px" align="center"
         ></el-table-column>
         <el-table-column
           prop="projectName"
           label="项目名"
-          width="180"
+          min-width="100px" align="center"
         ></el-table-column>
         <el-table-column
           prop="startTime"
           label="开始时间"
-          width="180"
+          min-width="100px" align="center"
         ></el-table-column>
 
         <!-- 根据param中对象的数量动态生成列 -->
@@ -51,6 +51,7 @@
           :key="index"
           :label="param.experimentAttrKey"
           :prop="`param_${index}`"
+          align="center"
         ></el-table-column>
 
         <!-- <el-table-column label="实验条件">
@@ -71,12 +72,14 @@
         <el-table-column
           prop="result"
           label="结果"
-          width="180"
+          min-width="40px"
+          align="center"
         ></el-table-column>
         <el-table-column
           prop="remark"
           label="备注"
-          width="80"
+          min-width="40px"
+          align="center"
         ></el-table-column>
       </el-table>
     </div>
