@@ -160,23 +160,19 @@ export default {
       const totalPrice = this.purchaseData.price * this.purchaseQuantity;
       const createTime = this.formattedDate;
       const userId = this.userInfo.userId;
+      const orderType = "product";
       console.log("购买数据:", {
         productId,
-        productName,
-        price,
         quantity,
-        totalPrice,
-        createTime,
-        userId,
+        orderType,
+        totalPrice
       });
 
       addProductOrder(
-        createTime,
         productId,
         quantity,
-        0,
-        totalPrice,
-        userId
+        orderType,
+        totalPrice
       ).then((res) => {
         console.log(res.data);
       });

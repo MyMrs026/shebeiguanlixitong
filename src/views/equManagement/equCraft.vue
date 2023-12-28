@@ -22,7 +22,7 @@
                 @click="gotoDeviceDetail(equipment.equipmentId)"
               />
             </div>
-            <div v-if="curUsername!=='guest'">
+            <div v-if="curUsername !== 'guest'">
               <router-link :to="'/book/' + equipment.equipmentId">
                 <el-button type="primary" plain size="small"
                   >设备预约</el-button
@@ -62,7 +62,7 @@
           ></el-pagination>
         </div>
       </div>
-      <!-- 添加事件弹出框 -->
+      <!-- 添加培训弹出框 -->
       <el-dialog
         title="添加培训预约"
         :visible.sync="dialogFormVisible"
@@ -96,39 +96,14 @@
               </el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="日期" label-width="120px" prop="date">
-            <el-date-picker
-              v-model="EventForm.date"
-              :picker-options="pickerOptions"
-              type="date"
-              placeholder="选择预约日期"
+          <el-form-item>
+            <el-input
+              type="textarea"
+              :rows="2"
+              placeholder="请输入内容"
+              v-model="EventForm.experimentContent"
             >
-            </el-date-picker>
-          </el-form-item>
-          <el-form-item label="开始时间" label-width="120px" prop="startTime">
-            <el-time-select
-              placeholder="起始时间"
-              v-model="EventForm.startTime"
-              :picker-options="{
-                start: '08:30',
-                step: '00:15',
-                end: '17:00',
-              }"
-            >
-            </el-time-select>
-          </el-form-item>
-          <el-form-item label="结束时间" label-width="120px" prop="endTime">
-            <el-time-select
-              placeholder="结束时间"
-              v-model="EventForm.endTime"
-              :picker-options="{
-                start: '08:30',
-                step: '00:15',
-                end: '17:00',
-                minTime: EventForm.startTime,
-              }"
-            >
-            </el-time-select>
+            </el-input>
           </el-form-item>
           <el-form-item>
             <div class="button-area">
@@ -177,6 +152,7 @@ export default {
         equName: "",
         trainingId: "",
         userName: "",
+        experimentContent:"",
         userId: "",
         projectId: "",
         date: "",
