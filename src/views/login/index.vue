@@ -1,9 +1,33 @@
 <template>
-  <div class="max">
-    <div class="animate__animated animate__backInDown">
-      <div class="login">
-        <div class="title">
-          <h3>微纳加工平台</h3>
+    <div class="max">
+        <div class="animate__animated animate__backInDown">
+            <div class="login">
+                <div class="title">
+                    <h3>微纳加工平台</h3>
+                </div>
+                <br />
+                <form @submit="login">
+                    <div style="text-align: center">
+                        <img src="../../assets/img/my.png" title="user icon" style="width: 40px; height: 40px" />
+                        <input id="password" placeholder="请输入电话" type="text" v-model="tel" required
+                            autocomplete="tel" />
+                    </div>
+                    <br />
+                    <div style="text-align: center">
+                        <img src="../../assets/img/pwd.png" title="pwd icon" style="width: 40px; height: 40px" />
+                        <input id="password" placeholder="请输入密码" type="password" v-model="password" required
+                            autocomplete="password" />
+                    </div>               
+                    <br /><br />
+                    <div style="text-align: center">
+                        <el-button @click="login" id="button-3">登&nbsp;&nbsp;录</el-button>
+                        <el-divider direction="vertical"></el-divider>
+                        <el-button @click="register" id="button-4">注&nbsp;&nbsp;册</el-button>
+                        <el-divider direction="vertical"></el-divider>
+                        <el-button @click="guestlogin" id="button-3" this.tel="100000" this.password="guest">游客登录</el-button>
+                    </div>
+                </form>
+            </div>
         </div>
         <br />
         <form @submit="login">
@@ -111,43 +135,61 @@ export default {
                 }
               });
             }
-          })
-          .catch((error) => {
-            console.error(error);
-          });
-      }
-      this.tel = "";
-      this.password = "";
-    },
-    //游客登录
-    guestLogin() {
-      login('100000', 'guest')
-        .then((res) => {
-          console.log(res);
-          if (res.code === 3003) {
-            this.$message({
-              message: "账号密码错误，验证失败请重新尝试",
-              type: "error",
-            });
-          } else if (res.code === 2002) {
-            this.$message({
-              message: "游客登录成功",
-              type: "success",
-            });
-            const token = res.data;
-            localStorage.setItem("token", token);
-            console.log("token", token);
-            this.$router.push("/home");
-          }
-        })
-        .catch((error) => {
-          console.error(error);
-        });
-    },
-    //跳转到注册界面
-    register(event) {
-      event.preventDefault();
-      this.$router.push("/register");
+            this.tel = "";
+            this.password = "";
+        },
+
+        //游客登陆
+        guestlogin(event) {
+            // 方法是 JavaScript 中一个常用的事件方法，它用于阻止事件的默认行为或默认操作发生。当事件发生时，通常会触发一些默认行为，例如点击链接时会跳转到链接的URL，提交表单时会发送表单数据到服务器，按下键盘的 Enter 键时可能会触发表单的提交等。
+            event.preventDefault();
+                login("100000", "guest")
+                    .then((res) => {
+                        console.log(res);
+                        if (res.code === 3003) {
+                            this.$message({
+                                message: '账号密码错误，验证失败请重新尝试',
+                                type: 'error'
+                            });
+                        } else if (res.code === 2002) {
+                            this.$message({
+                                message: '登录成功',
+                                type: 'success'
+                            });
+                            const token = res.data;
+                            localStorage.setItem("token", token);
+                            console.log("token", token);
+                            this.$router.push("/home");
+
+                            //获取登录用户角色
+                            getLoginUserRole().then((res) => {
+                                // console.log(res.data);
+                                this.userrole = res.data;
+                                console.log(this.userrole);
+                                if (this.userrole === "1") {
+                                    this.updateCurole("admin");
+                                } else {
+                                    this.updateCurole("staff");
+                                }
+                            });
+                        }
+                    })
+                    .catch((error) => {
+                        console.error(error);
+                    });
+            this.tel = "";
+            this.password = "";
+        },
+        //跳转到注册界面
+        register(event) {
+            event.preventDefault();
+            this.$router.push("/register");
+        },
+        //将vuex中用于用户登录状态保存的变量进行改变
+        updateCurole(value) {
+            this.$store.commit("setCurole", value);
+        },
+
     },
     //将vuex中用于用户登录状态保存的变量进行改变
     updateCurole(value) {
