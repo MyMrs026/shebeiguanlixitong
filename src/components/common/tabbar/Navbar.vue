@@ -19,19 +19,21 @@
               </div> -->
         </el-col>
       </el-col>
-      <el-menu-item index="/home">首页</el-menu-item>
-      <el-submenu index="/project" v-if="this.userName!=='guest'">
+
+      <el-col :span="2"><el-menu-item index="/home">首页</el-menu-item></el-col>
+      <el-col :span="2"><el-submenu index="/project" v-if="this.userName!=='guest'">
         <template slot="title">项目管理</template>
         <el-menu-item index="/project">项目展示</el-menu-item>
         <el-menu-item index="/myProject">我管理的项目</el-menu-item>
         <el-menu-item index="/参与项目">我参与的项目</el-menu-item>
         <!--更改链接到我参与的项目页-->
         <el-menu-item index="/addProject">新建项目</el-menu-item>
-      </el-submenu>
-      <el-menu-item index="/equPage">设备管理</el-menu-item>
-      <el-menu-item index="/craft">工艺管理</el-menu-item>
-      <el-menu-item index="/train" v-if="this.userName!=='guest'">培训管理</el-menu-item>
-      <el-menu-item index="/mall">商城</el-menu-item>
+      </el-submenu></el-col>
+      <el-col :span="2"><el-menu-item index="/equPage">设备管理</el-menu-item></el-col>
+      <el-col :span="2"><el-menu-item index="/craft">工艺管理</el-menu-item></el-col>
+      <el-col :span="2"><el-menu-item index="/train" v-if="this.userName!=='guest'">培训管理</el-menu-item></el-col>
+      <el-col :span="2"><el-menu-item index="/mall">商城</el-menu-item></el-col>
+
       <el-col
         :span="4"
         class="tab-icon"
@@ -150,6 +152,13 @@ export default {
   background-size: 100% 100%;
 }
 
+.el-menu-item{
+  text-align: center;
+}
+
+.el-submenu{
+  text-align: center;
+}
 .custom-button {
   margin-right: 0px;
   margin-left: 3px;

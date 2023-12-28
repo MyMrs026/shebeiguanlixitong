@@ -607,19 +607,19 @@ export default {
     handleEventMouseEnter(info) {
       // console.log("Mouse enter event:", info.event);
       this.popoverContent =
-        "用户名" +
+        "用户名:" +
         info.event.extendedProps.username +
         "<br>" +
-        "用户邮箱" +
+        "用户邮箱:" +
         info.event.extendedProps.userEmail +
         "<br>" +
-        "用户电话" +
+        "用户电话:" +
         info.event.extendedProps.userTel +
         "<br>" +
-        "预约日期" +
+        "预约日期:" +
         this.extractedDate(info.event.start) +
         "<br>" +
-        "预约时间" +
+        "预约时间:" +
         this.extractedTime(info.event.start) +
         "~" +
         this.extractedTime(info.event.end);
@@ -658,6 +658,17 @@ export default {
 </script>
 
 <style lang="css">
+
+.event-popover{
+  background-color: rgb(38, 94, 212);
+  height: 200px;
+  width: 300px;
+  font-size: large;
+  font-weight: bolder;
+  color: #fff;
+  border-radius: 10px;
+}
+
 .demo-app {
   display: flex;
   min-height: 100%;
