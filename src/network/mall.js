@@ -1,9 +1,30 @@
 import { request } from "./request";
 
-//1.获取所有的商品
+//1.获取所有的产品
 export function getProduct() {
   return request({
     url:'/product/list'
+  })
+}
+
+//2.获取所有的硅片
+export function getSilicon() {
+  return request({
+    url:'/product/silicon/list'
+  })
+}
+
+//3.获取所有的商品材料列表
+export function getMaterialList() {
+  return request({
+    url:'/product/material/list'
+  })
+}
+
+//4.获取所有的试剂列表
+export function getReagentList() {
+  return request({
+    url:'/product/reagent/list'
   })
 }
 

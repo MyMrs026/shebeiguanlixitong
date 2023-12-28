@@ -46,6 +46,10 @@ const AddRecords = () => import("../views/experimentalRecords/addRecords.vue");
 const SearchRecords = () => import("../views/experimentalRecords/searchRecords.vue")
 
 const Mall = () => import("../views/mall/mall.vue")
+const Product = () => import("../views/mall/product.vue")
+const Silicon = () => import("../views/mall/silicon.vue")
+const Material = () => import("../views/mall/material.vue")
+const Reagent = () => import("../views/mall/reagent.vue")
 //1.安装插件
 Vue.use(Router);
 //创建router
@@ -213,9 +217,32 @@ const routes = [
   },
   {
     path: "/mall",
-    name:"Mall",
-    component: Mall
-  }
+    name: "Mall",
+    redirect: "/mall/product",
+    component: Mall,
+    children: [
+      {
+        path: "/mall/product",
+        name: "Product",
+        component: Product
+      },
+      {
+        path: "/mall/silicon",
+        name: "Silicon",
+        component: Silicon
+      },
+      {
+        path: "/mall/reagent",
+        name: "Reagent",
+        component: Reagent
+      },
+      {
+        path: "/mall/material",
+        name: "Material",
+        component: Material
+      }
+    ]
+  },
 ];
 const router = new Router({
   routes,
