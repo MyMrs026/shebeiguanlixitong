@@ -2,106 +2,149 @@
   <div class="outer-container" ref="scrollArea" @wheel="handleScroll">
     <div class="total">
       <!-- 分割线 -->
-
-      <div style="height: 1.875rem" class="first">
+      
+      <!-- <div style="height:1.875rem;" class="first">
         <br />
-      </div>
+      </div> -->
       <!-- 标题+图标 -->
-      <div style="height: 35rem">
-        <div class="left">
-          <div class="title1">微纳加工平台</div>
-
-          <div class="intro-area">
-            <div class="intro-pic">
-              <img
+      <section style="width: 90%; margin-left: 5%;">
+        <div class="border-style" style="min-width: 1700px;height: 480px;">
+          <section style="width: 47%;float: left;height: 80%;margin: 0 0 0 2%;">
+            <h1 class="title">实验室图片</h1>
+            <img
                 src="../../assets/img/home1.jpg"
                 style="
                   height: 100%;
                   width: 100%;
                   text-align: center;
                   object-fit: contain;
+                  background-color: #fff;
+                  border-radius: 0 0 20px 20px;
                 "
               />
-            </div>
-            <div class="intro-text">
-              <!--              <el-card class="box-card">-->
-              <span class="bullet">&bull;</span
-              >微纳加工平台主攻光/电芯片的异质异构集成以及多材料体系的超精细加工。<br />
-              <span class="bullet">&bull;</span
-              >微纳加工平台总面积641.78m²，其中百级区182.42m²，千级区368.67m²，湿法工作区26.48m²，灰区36.5
-              m²。<br />
-              <span class="bullet">&bull;</span
-              >加工平台管理网站旨在为您提供正确的设备建议，并为您的微纳米制造工艺以及芯片检测工作提供一个良好的起点。<br />
-              如果您需要有关某些仪器或流程的更多信息，请联系相关人员。欢迎您对微纳加工平台管理网站提供任何反馈或意见。
-              <!--              </el-card>-->
-              <router-link to="/notice">
-                <el-tooltip
-                  class="item"
-                  effect="dark"
-                  content="点击查看更多"
-                  placement="right"
-                >
-                  <div style="margin-top: 15px">
-                    最新通知：{{ latestNotice.content }}&nbsp;&nbsp;&nbsp;{{
-                      latestNotice.createTime | formatDate
-                    }}
-                  </div>
-                </el-tooltip>
-              </router-link>
-            </div>
-          </div>
-        </div>
-      </div>
+          </section>
 
-      <div>
-        <div class="text-home" v-if="curUsername !== 'guest'">
-          <p id="equ-use">设备使用情况</p>
+          <section style="width: 47%;float: left;height: 80%;margin: 0 2% 0 2%;">
+              <h1 class="title">微纳加工平台</h1>
+              <div class="page">
+                <p>微纳加工平台主攻光/电芯片的异质异构集成以及多材料体系的超精细加工。</p>
+                <p>微纳加工平台总面积641.78m²，其中百级区182.42m²，千级区368.67m²，湿法工作区26.48m²，灰区36.5m²。</p>
+                <p>加工平台管理网站旨在为您提供正确的设备建议，并为您的微纳米制造工艺以及芯片检测工作提供一个良好的起点。</p>
+               <p>如果您需要有关某些仪器或流程的更多信息，请联系相关人员。欢迎您对微纳加工平台管理网站提供任何反馈或意见。</p>
+              </div>
+              
+          </section>
         </div>
-        <!-- 设备使用表(目前：写死的) -->
-        <div class="table-equ-use" v-if="curUsername !== 'guest'">
+
+        <!-- 此处为通知公告栏 -->
+        <div class="border-style" style="min-width: 1700px;margin: 0;height: 400px;">
+          <section style="width: 62%;float: left;height: 100%;margin: 0 1% 0 2%">
+              <h1 class="title" style="text-align: left;">通知公告</h1>
+              <ul class="page" style="height: 75%;">
+                <ol>
+                  <time style="font-size: 25px;">{{ latestNotice.createTime | formatDate }}</time>
+                  <a href="/notice" style="font-size: 25px;">{{ latestNotice.content}}</a>
+                </ol>
+                <li>
+                  <time datetime="">2023-11-11</time>
+                  <a href="">第二条公告</a>
+                </li>
+                <li>
+                  <time datetime="">2023-11-11</time>
+                  <a href="">第三条通告</a>
+                </li>
+                <li>
+                  <time datetime="">2023-11-11</time>
+                  <a href="">第四条通告</a>
+                </li>
+                <li>
+                  <time datetime="">2023-11-11</time>
+                  <a href="">第五条通告</a>
+                </li>
+                <li>
+                  <time datetime="">2023-11-11</time>
+                  <a href="">第六条通告</a>
+                </li>
+              </ul>
+          </section>
+
+          <section style="width: 32%;float: left;height: 100%;margin: 0 2% 0 1%">
+            <h1 class="title" style="text-align: left;">导航</h1>
+            <ul class="page" style="height: 75%;">
+              <li class="nvi" style="background-color: rgb(7, 80, 175);">
+                <router-link to="/project">
+                  <p>项目管理</p>
+                </router-link>
+              </li>
+              <li class="nvi" style="background-color: rgb(63, 184, 48);">
+                <router-link to="/equPage">
+                  <p>设备管理</p>
+                </router-link>
+              </li>
+              <li class="nvi" style="background-color: rgb(228, 200, 41);">
+                <router-link to="/craft">
+                  <p>工艺管理</p>
+                </router-link>
+              </li>
+              <li class="nvi" style="background-color: rgb(22, 150, 107);">
+                <router-link to="/mall">
+                  <p>商城</p>
+                </router-link>
+              </li>
+            </ul>
+          </section>
+        </div>
+
+        <!--设备使用情况-->
+        <div class="border-style" v-if="curUsername !== 'guest'" style="min-width: 1700px;margin: 0;">
+          <section style="width: 96%;float: left; margin-left: 2%;" :max-height="tableHeight">
+            <h1 class="title">设备使用情况</h1>
+            <div class="page">
           <el-table
             border
             :data="equpsUse"
             class="table-equ"
             :row-class-name="tableRowClassName"
           >
-            <el-table-column prop="equp" label="设备名" width="170">
+            <el-table-column prop="equp" label="设备名" min-width="200" align="center">
             </el-table-column>
-            <el-table-column prop="status" label="使用情况" width="110">
+            <el-table-column prop="status" label="使用情况" min-width="110" align="center">
             </el-table-column>
-            <el-table-column prop="user" label="使用用户" width="110">
+            <el-table-column prop="user" label="使用用户" min-width="110" align="center">
             </el-table-column>
-            <el-table-column prop="org" label="使用组织" width="265">
+            <el-table-column prop="org" label="使用组织" min-width="265" align="center">
             </el-table-column>
-            <el-table-column prop="starttime" label="开始时间" width="190">
+            <el-table-column prop="starttime" label="开始时间" min-width="190" align="center">
             </el-table-column>
-            <el-table-column prop="endtime" label="结束时间" width="190">
+            <el-table-column prop="endtime" label="结束时间" min-width="190" align="center">
             </el-table-column>
           </el-table>
         </div>
-
-        <div class="text-home" v-if="curUsername !== 'guest'">
-          <p id="book-use">我的预约</p>
+          </section>
         </div>
-        <!-- 用户个人的预约表(目前：写死的) -->
-        <div class="table-book-use" v-if="curUsername !== 'guest'">
+
+        <!--我的预约-->
+        <div class="border-style" v-if="curUsername !== 'guest'" style="min-width: 1700px;margin: 0;">
+          <section style="width: 96%;float: left;margin-left: 2%;" :max-height="tableHeight">
+          <h1 class="title">我的预约</h1>
+          <div class="page">
           <el-table :data="orderEvents" class="table-book">
-            <el-table-column prop="equName" label="设备名" width="180">
+            <el-table-column prop="equName" label="设备名" min-width="15%" align="center">
             </el-table-column>
-            <el-table-column prop="userName" label="用户名" width="140">
+            <el-table-column prop="userName" label="用户名" min-width="15%" align="center">
             </el-table-column>
-            <el-table-column prop="start" label="开始时间" width="180">
+            <el-table-column prop="start" label="开始时间" min-width="20%" align="center">
             </el-table-column>
-            <el-table-column prop="end" label="结束时间" width="180">
+            <el-table-column prop="end" label="结束时间" min-width="20%" align="center">
             </el-table-column>
-            <el-table-column prop="operate" label="修改预约" width="125">
+            <el-table-column prop="operate" label="修改预约" min-width="15%" align="center">
               <template slot-scope="scope">
                 <router-link :to="'/book/' + scope.row.equId">
                   <el-button type="info">修改预约</el-button>
                 </router-link>
               </template>
             </el-table-column>
-            <el-table-column prop="operate" label="开始实验" width="125">
+            <el-table-column prop="operate" label="开始实验" min-width="15%" align="center">
               <template slot-scope="scope">
                 <el-button
                   type="info"
@@ -112,11 +155,25 @@
             </el-table-column>
           </el-table>
         </div>
-        <div class="text-home" v-if="curUsername !== 'guest'">
-          <p id="dch-use">设备使用状态</p>
+        </section>
         </div>
+      
+      <div class="border-style" style="min-width: 1700px;margin: 0;">
+        <section style="width: 96%;float: left;margin-left: 2%;">
+          <h1 class="title">超净室平面图</h1>
+          <img
+            src="../../assets/img/超净室.jpg"
+            style="height: 100%; width: 100%; text-align: center"
+          />
+        </section>
+      </div>
+
+      <!-- <div> -->
+        <!-- <div class="text-home">
+          <p id="dch-use">设备使用状态</p>
+        </div> -->
         <!-- 所有的设备使用状态表格(目前：写死的) -->
-        <div class="table-dch-use" v-if="curUsername !== 'guest'">
+        <!-- <div class="table-dch-use">
           <el-table
             border
             :data="equpsStatus"
@@ -132,8 +189,8 @@
             <el-table-column prop="statuslog" label="状态日志" width="330">
             </el-table-column>
           </el-table>
-        </div>
-        <div class="text-home">
+        </div> -->
+        <!-- <div class="text-home">
           <p id="lab-map" style="margin-top: 8rem">超净室平面图</p>
         </div>
         <div
@@ -148,8 +205,9 @@
             src="../../assets/img/超净室.jpg"
             style="height: 100%; width: 80%; text-align: center"
           />
-        </div>
-      </div>
+        </div> -->
+      <!-- </div> -->
+    </section>
     </div>
   </div>
 </template>
@@ -165,7 +223,7 @@ export default {
   data() {
     return {
       //设备使用表数据
-      equpsUse: [],
+      equpsUse: [] ,
       //用户个人设备预约表数据
       myBooks: [],
       //设备使用状态表数据
@@ -185,6 +243,7 @@ export default {
       lastScrollTime: 0,
       scrolling: false,
     };
+   tableHeight:0
   },
   methods: {
     //这个方法是为了使表格呈现灰黑相间模式
@@ -274,6 +333,7 @@ export default {
               start: formatDateToISOString(item.startTime).slice(0, -5),
               end: formatDateToISOString(item.endTime).slice(0, -5),
             };
+            tableHeight:0
           })
         );
         console.log(this.orderEvents);
@@ -322,6 +382,82 @@ export default {
 </script>
 
 <style>
+
+
+.nvi{
+  width: 90%;
+  list-style-type: none;
+  height: 50px;
+  margin-bottom: 15px;
+  border-radius: 10px;
+}
+
+.nvi a{
+  width: 100%;
+  height: 100%;
+}
+
+.nvi p{
+  text-align: center;
+  line-height: 200%;
+  color: #fff;
+  font-size: 25px;
+}
+
+.border-style{
+  margin-top: 5px;
+  display: block;
+  height:100%; 
+  width: 100%;
+  min-height: 100px;
+}
+
+ul{
+  padding: 0;
+}
+
+time{
+  float: right;
+  font-size: 20px;
+  padding-right: 5%;
+}
+
+ol{
+  height: 40px;
+}
+
+li{
+  margin-top: 1%;
+  margin-left: 5%;
+}
+
+
+.title{
+  margin: 0 0 0 0;
+  font-size: 12px;
+  line-height: 50px;
+  color: #fff;
+  font-weight: normal;
+  background-color: #4a8ae2;
+  padding: 6px 15px;
+  border-radius: 20px 20px 0 0 ;
+}
+
+p{
+  margin-bottom: 8px;
+  width: 80%;
+  margin-left: 10%;
+}
+.page{
+  height: 100%;
+  font-size: 22px;
+  color: #666;
+  background-color: #fff;
+  -webkit-text-size-adjust: none;
+  padding-top: 20px;
+  border-radius: 0 0 20px 20px;
+}
+
 .intro-area {
   display: flex;
   flex-direction: row;
@@ -336,8 +472,8 @@ export default {
 
 .intro-pic {
   display: flex;
-  height: 100%;
-  width: 100%;
+  height: 70%;
+  width: 70%;
   justify-content: center;
   align-items: center;
 }
@@ -473,8 +609,9 @@ export default {
   border: 0rem solid #000000;
   box-shadow: 0 0.125rem 0.25rem rgba(246, 245, 245, 1);
   margin: 0 auto;
-  font-size: 1rem;
-  font-family: w95fa;
+  font-weight: bold;
+  font-size: 20px;
+  font-family:system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
 .el-table .warning-row {
@@ -510,8 +647,9 @@ export default {
   border: 0rem solid #e9eefe;
   border-radius: 0rem;
   margin: 0 auto;
-  font-size: 1rem;
-  font-family: w95fa;
+  font-size: 20px;
+  font-weight: bold;
+  font-family:system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
 .table-dch-use {
@@ -539,3 +677,4 @@ div /deep/ .margin-top.el-descriptions .el-descriptions.is-bordered {
   height: 17.5rem;
 }
 </style>
+

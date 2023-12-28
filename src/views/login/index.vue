@@ -24,10 +24,8 @@
                         <el-divider direction="vertical"></el-divider>
                         <el-button @click="register" id="button-4">注&nbsp;&nbsp;册</el-button>
                         <el-divider direction="vertical"></el-divider>
-                        <el-button @click="login" id="button-3">游客登录</el-button>
+                        <el-button @click="guestlogin" id="button-3" this.tel="100000" this.password="guest">游客登录</el-button>
                     </div>
-                    <el-tag type="success" style="font-size: 0.6rem;">游客登录请输入"账号：100000 密码：guest"</el-tag>
-                    <el-tag type="success" style="font-size: 0.6rem;">注：游客对于部分功能有限制，如果需要请注册账号</el-tag>
                 </form>
             </div>
         </div>
@@ -90,6 +88,48 @@ export default {
                         console.error(error);
                     });
             }
+            this.tel = "";
+            this.password = "";
+        },
+
+        //游客登陆
+        guestlogin(event) {
+            // 方法是 JavaScript 中一个常用的事件方法，它用于阻止事件的默认行为或默认操作发生。当事件发生时，通常会触发一些默认行为，例如点击链接时会跳转到链接的URL，提交表单时会发送表单数据到服务器，按下键盘的 Enter 键时可能会触发表单的提交等。
+            event.preventDefault();
+                login("100000", "guest")
+                    .then((res) => {
+                        console.log(res);
+                        if (res.code === 3003) {
+                            this.$message({
+                                message: '账号密码错误，验证失败请重新尝试',
+                                type: 'error'
+                            });
+                        } else if (res.code === 2002) {
+                            this.$message({
+                                message: '登录成功',
+                                type: 'success'
+                            });
+                            const token = res.data;
+                            localStorage.setItem("token", token);
+                            console.log("token", token);
+                            this.$router.push("/home");
+
+                            //获取登录用户角色
+                            getLoginUserRole().then((res) => {
+                                // console.log(res.data);
+                                this.userrole = res.data;
+                                console.log(this.userrole);
+                                if (this.userrole === "1") {
+                                    this.updateCurole("admin");
+                                } else {
+                                    this.updateCurole("staff");
+                                }
+                            });
+                        }
+                    })
+                    .catch((error) => {
+                        console.error(error);
+                    });
             this.tel = "";
             this.password = "";
         },
