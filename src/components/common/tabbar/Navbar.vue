@@ -30,7 +30,7 @@
         <el-menu-item index="/addProject">新建项目</el-menu-item>
       </el-submenu></el-col>
       <el-col :span="2"><el-menu-item index="/equPage">设备管理</el-menu-item></el-col>
-      <el-col :span="2"><el-menu-item index="/craft">工艺管理</el-menu-item></el-col>
+      <el-col :span="2"><el-menu-item index="/craftPage">工艺管理</el-menu-item></el-col>
       <el-col :span="2"><el-menu-item index="/train" v-if="this.userName!=='guest'">培训管理</el-menu-item></el-col>
       <el-col :span="2"><el-menu-item index="/mall">商城</el-menu-item></el-col>
 

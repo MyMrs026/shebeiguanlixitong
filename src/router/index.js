@@ -24,7 +24,19 @@ const InformationDisplay = () =>
 const PersonalInfo = () => import("../views/personalInfo/personalInfo.vue");
 const OrganizationInfo = () =>
   import("../views/organizationInfo/organizationInfo.vue");
-const Craft = () => import("@/views/craftManagement/craftManagement.vue");
+
+const keshi = () => import("@/views/craftManagement/keshi.vue");
+const craftPage = () => import("@/views/craftManagement/craftPage.vue");
+const guangke = () => import("@/views/craftManagement/guangke.vue");
+const bomochenji = () => import("@/views/craftManagement/bomochenji.vue");
+const canza = () => import("@/views/craftManagement/canza.vue");
+const biaozheng = () => import("@/views/craftManagement/biaozheng.vue");
+const jianhe = () => import("@/views/craftManagement/jianhe.vue");
+const rechuli = () => import("@/views/craftManagement/rechuli.vue");
+const tuan = () => import("@/views/craftManagement/tuan.vue");
+const houduanjiagong = () => import("@/views/craftManagement/houduanjiagong.vue");
+const guipianqingxi = () => import("@/views/craftManagement/guipianqingxi.vue");
+
 
 const Help = () => import("../views/helpPage/help.vue");
 const EquCategory = () => import("../views/equList/equCategory.vue");
@@ -102,11 +114,67 @@ const routes = [
       }
     ]
   },
+  
   {
-    path: "/craft",
-    name: "Craft",
-    component: Craft
+    path: "/craftPage",
+    name: "craftPage",
+    redirect: "/craftPage/guangke",
+    component: craftPage,
+    children: [
+      {
+        path: "/craftPage/guangke",
+        name: "craftManagement",
+        component: guangke
+      },
+      {
+        path: "/craftPage/keshi",
+        name: "craftManagement",
+        component: keshi
+      },
+      {
+        path: "/craftPage/bomochenji",
+        name: "craftManagement",
+        component: bomochenji
+      },
+      {
+        path: "/craftPage/canza",
+        name: "craftManagement",
+        component: canza
+      },
+      {
+        path: "/craftPage/biaozheng",
+        name: "craftManagement",
+        component: biaozheng
+      },
+      {
+        path: "/craftPage/jianhe",
+        name: "craftManagement",
+        component: jianhe
+      },
+      {
+        path: "/craftPage/rechuli",
+        name: "craftManagement",
+        component: rechuli
+      },
+      {
+        path: "/craftPage/tuan",
+        name: "craftManagement",
+        component: tuan
+      },
+      {
+        path: "/craftPage/houduanjiagong",
+        name: "craftManagement",
+        component: houduanjiagong
+      },
+      {
+        path: "/craftPage/guipianqingxi",
+        name: "craftManagement",
+        component: guipianqingxi
+      },
+    ]
   },
+
+
   {
     path: "/book/:id",
     name: "Book",
