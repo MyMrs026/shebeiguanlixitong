@@ -109,6 +109,7 @@ export default {
   methods: {
     async loadExperimentList() {
       try {
+        console.log(this.equId);
         const res = await getExperimentById(this.equId);
         console.log(res.data);
         this.originExList = res.data;
