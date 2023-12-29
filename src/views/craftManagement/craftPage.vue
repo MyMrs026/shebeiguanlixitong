@@ -1,6 +1,6 @@
 <template>
     <div class="equPage-container">
-      <div class="button-group" v-if="curUsername!=='guest'">
+      <div class="button-group">
         <el-button
           :type="currentTab === 'guangke' ? 'info' : 'success'"
           style="width: 170px; margin-bottom: 15px"
