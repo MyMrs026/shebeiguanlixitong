@@ -91,14 +91,12 @@
           min-width="10%">
           </el-table-column>
           <el-table-column
-          fixed
           prop="hejin"
           label="合金"
           align="center"
           min-width="10%">
           </el-table-column>
           <el-table-column
-          fixed
           prop="danhuawu"
           label="氮化物"
           align="center"

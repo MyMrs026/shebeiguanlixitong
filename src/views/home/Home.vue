@@ -43,27 +43,27 @@
               <ul class="page" style="height: 75%;">
                 <ol>
                   <time style="font-size: 25px;">{{ latestNotice.createTime | formatDate }}</time>
-                  <a href="/notice" style="font-size: 25px;">{{ latestNotice.content}}</a>
+                  <a href="/notice" style="font-size: 25px;">{{ latestNotice.title}}</a>
                 </ol>
                 <li>
-                  <time datetime="">2023-11-11</time>
-                  <a href="">第二条公告</a>
+                  <time style="font-size: 25px;">{{ notices[1].createTime | formatDate }}</time>
+                  <a href="/notice" style="font-size: 25px;">{{ notices[1].title}}</a>
                 </li>
                 <li>
-                  <time datetime="">2023-11-11</time>
-                  <a href="">第三条通告</a>
+                  <time style="font-size: 25px;">{{ notices[2].createTime | formatDate }}</time>
+                  <a href="/notice" style="font-size: 25px;">{{ notices[2].title}}</a>
                 </li>
                 <li>
-                  <time datetime="">2023-11-11</time>
-                  <a href="">第四条通告</a>
+                  <time style="font-size: 25px;">{{ notices[3].createTime | formatDate }}</time>
+                  <a href="/notice" style="font-size: 25px;">{{ notices[3].title}}</a>
                 </li>
                 <li>
-                  <time datetime="">2023-11-11</time>
-                  <a href="">第五条通告</a>
+                  <time style="font-size: 25px;">{{ notices[4].createTime | formatDate }}</time>
+                  <a href="/notice" style="font-size: 25px;">{{ notices[4].title}}</a>
                 </li>
                 <li>
-                  <time datetime="">2023-11-11</time>
-                  <a href="">第六条通告</a>
+                  <time style="font-size: 25px;">{{ notices[5].createTime | formatDate }}</time>
+                  <a href="/notice" style="font-size: 25px;">{{ notices[5].title}}</a>
                 </li>
               </ul>
           </section>
@@ -168,45 +168,6 @@
         </section>
       </div>
 
-      <!-- <div> -->
-        <!-- <div class="text-home">
-          <p id="dch-use">设备使用状态</p>
-        </div> -->
-        <!-- 所有的设备使用状态表格(目前：写死的) -->
-        <!-- <div class="table-dch-use">
-          <el-table
-            border
-            :data="equpsStatus"
-            class="table-dch"
-            :row-class-name="getRowClassName"
-          >
-            <el-table-column prop="equp" label="设备名" width="300">
-            </el-table-column>
-            <el-table-column prop="status" label="状态" width="200">
-            </el-table-column>
-            <el-table-column prop="expected" label="预期就绪" width="200">
-            </el-table-column>
-            <el-table-column prop="statuslog" label="状态日志" width="330">
-            </el-table-column>
-          </el-table>
-        </div> -->
-        <!-- <div class="text-home">
-          <p id="lab-map" style="margin-top: 8rem">超净室平面图</p>
-        </div>
-        <div
-          style="
-            display: flex;
-            height: 100%;
-            justify-content: center;
-            align-items: center;
-          "
-        >
-          <img
-            src="../../assets/img/超净室.jpg"
-            style="height: 100%; width: 80%; text-align: center"
-          />
-        </div> -->
-      <!-- </div> -->
     </section>
     </div>
   </div>
@@ -242,8 +203,8 @@ export default {
       totalPages: 2, // 假设有三页内容
       lastScrollTime: 0,
       scrolling: false,
+      tableHeight:0
     };
-   tableHeight:0
   },
   methods: {
     //这个方法是为了使表格呈现灰黑相间模式
@@ -266,7 +227,6 @@ export default {
       }
       return "";
     },
-
     handleStartExperimentClick(row) {
       // 处理开始实验按钮点击事件
       // console.log(row);
@@ -318,7 +278,7 @@ export default {
       try {
         const res = await getOrders();
         this.originEvents = res.data;
-        console.log(this.originEvents);
+        // console.log(this.originEvents);
         this.orderEvents = await Promise.all(
           this.originEvents.map(async (item) => {
             const equName = await this.loadEquInform(item.equipmentId);
@@ -332,11 +292,12 @@ export default {
               userName: userName,
               start: formatDateToISOString(item.startTime).slice(0, -5),
               end: formatDateToISOString(item.endTime).slice(0, -5),
+              tableHeight:0
             };
-            tableHeight:0
+            
           })
         );
-        console.log(this.orderEvents);
+        // console.log(this.orderEvents);
       } catch (error) {
         console.error("Error loading data:", error);
       }
@@ -367,10 +328,10 @@ export default {
     this.loadOrderData();
 
     getLoginUserInfo().then(res=>{
-      console.log(res.data);
+      // console.log(res.data);
       this.curUsername = res.data.username;
-      console.log(this.curUsername);
-    })
+      // console.log(this.curUsername);
+    });
   },
   filters: {
     //处理日期的显示格式问题，使日期以xxxx年xx月xx日的形式显示
