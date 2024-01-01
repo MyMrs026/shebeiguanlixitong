@@ -154,7 +154,6 @@ export default {
 </script>
 <style scoped >
 .max {
-    background: url("../../assets/img/loginbg1.jpg");
     width: 100%;
     height: 100%;
     position: fixed;
@@ -165,7 +164,7 @@ export default {
     position: absolute;
     border-radius: 10px;
     padding: 40px;
-    left: 70%;
+    left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
     margin: auto;

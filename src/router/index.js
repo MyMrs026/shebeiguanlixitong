@@ -8,6 +8,7 @@ const Home = () => import("@/views/home/Home");
 const Project = () => import("@/views/projectManagement/projectManagement");
 const AddProject = () => import("@/views/projectManagement/AddProject.vue")
 const MyProject = () => import("@/views/projectManagement/MyProject.vue")
+const Projectinfo = () => import("@/views/projectManagement/projectinfo.vue")
 
 const EqupManagement = () => import("@/views/equManagement/equManagement");
 const Book = () => import("@/views/bookManagement/bookManagement");
@@ -86,6 +87,11 @@ const routes = [
     component: Project
   },
   {
+    path: "/Projectinfo",
+    name: "Projectinfo",
+    component: Projectinfo
+  },
+  {
     path: "/addProject",
     name: "AddPRoject",
     component: AddProject
@@ -127,52 +133,52 @@ const routes = [
     children: [
       {
         path: "/craftPage/guangke",
-        name: "craftManagement",
+        name: "guangke",
         component: guangke
       },
       {
         path: "/craftPage/keshi",
-        name: "craftManagement",
+        name: "keshi",
         component: keshi
       },
       {
         path: "/craftPage/bomochenji",
-        name: "craftManagement",
+        name: "bomochenji",
         component: bomochenji
       },
       {
         path: "/craftPage/canza",
-        name: "craftManagement",
+        name: "canza",
         component: canza
       },
       {
         path: "/craftPage/biaozheng",
-        name: "craftManagement",
+        name: "biaozheng",
         component: biaozheng
       },
       {
         path: "/craftPage/jianhe",
-        name: "craftManagement",
+        name: "jianhe",
         component: jianhe
       },
       {
         path: "/craftPage/rechuli",
-        name: "craftManagement",
+        name: "rechuli",
         component: rechuli
       },
       {
         path: "/craftPage/tuan",
-        name: "craftManagement",
+        name: "tuan",
         component: tuan
       },
       {
         path: "/craftPage/houduanjiagong",
-        name: "craftManagement",
+        name: "houduanjiagong",
         component: houduanjiagong
       },
       {
         path: "/craftPage/guipianqingxi",
-        name: "craftManagement",
+        name: "guipianqingxi",
         component: guipianqingxi
       },
     ]
@@ -321,7 +327,7 @@ const router = new Router({
 router.beforeEach((to, from, next) => {
   const token = localStorage.getItem("token");
   const isAuthenticated = !!token;
-
+  
   if (to.name !== "Login" && to.name !== "Register" && !isAuthenticated) {
     next("/login");
   } else {
@@ -330,3 +336,4 @@ router.beforeEach((to, from, next) => {
 });
 
 export default router;
+
