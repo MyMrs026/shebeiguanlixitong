@@ -28,18 +28,16 @@ export function getReagentList() {
   })
 }
 
-//2.添加单个商品订单
-export function addProductOrder(createTime,productId,productNum,productOrderId,total,userId) {
+//2.添加商品订单（四种类型）
+export function addProductOrder(id,orderType,productNum,total) {
   return request({
-    url:'/product/order/add',
+    url:'/product/order/submit',
     method:'post',
     data:{
-      createTime:createTime,
-      productId:productId,
+      id:id,
+      orderType:orderType,
       productNum:productNum,
-      productOrderId:productOrderId,
-      total:total,
-      userId:userId
+      total:total
     }
   })
 }

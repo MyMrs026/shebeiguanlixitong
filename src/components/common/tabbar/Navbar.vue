@@ -47,14 +47,15 @@
         <el-col class="icon-user">
           <div class="help-box">
             <router-link v-if="userName !== 'guest'" to="/personalInfo">
-              <el-tooltip
+              <!-- <el-tooltip
                 class="item"
                 effect="light"
                 :content="this.userName"
                 placement="bottom"
               >
                 <i class="el-icon-user"></i>
-              </el-tooltip>
+              </el-tooltip> -->
+              <div>{{ this.userName }}</div>
             </router-link>
           </div>
         </el-col>
@@ -188,7 +189,6 @@ export default {
   float: right;
   display: flex;
   font-size: 35px;
-
   justify-content: center;
   align-items: center;
   margin-top: 5px;
