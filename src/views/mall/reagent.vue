@@ -2,14 +2,8 @@
   <div class="product-area">
     <!-- 筛选模块 -->
     <div class="filter-area">
-      <el-input
-        v-model="filter.id"
-        placeholder="请输入试剂ID"
-      ></el-input>
-      <el-input
-        v-model="filter.name"
-        placeholder="请输入试剂名"
-      ></el-input>
+      <el-input v-model="filter.id" placeholder="请输入试剂ID"></el-input>
+      <el-input v-model="filter.name" placeholder="请输入试剂名"></el-input>
       <el-button @click="filterProducts" type="primary" style="width: 80px"
         >筛选</el-button
       >
@@ -143,31 +137,21 @@ export default {
       this.purchaseData.createTime = new Date();
       // 在这里处理购买逻辑，可以将购买的数据发送到后端等
       const productId = this.purchaseData.id;
-      const name = this.purchaseData.name;
-      const price = this.purchaseData.price;
       const quantity = this.purchaseQuantity;
       const totalPrice = this.purchaseData.price;
-      const createTime = this.formattedDate;
-      const userId = this.userInfo.userId;
+      const orderType = "reagent";
       console.log("购买数据:", {
         productId,
-        name,
-        price,
+        orderType,
+        quantity,
         totalPrice,
-        createTime,
-        userId,
       });
 
-      // addProductOrder(
-      //   createTime,
-      //   productId,
-      //   quantity,
-      //   0,
-      //   totalPrice,
-      //   userId
-      // ).then((res) => {
-      //   console.log(res.data);
-      // });
+      addProductOrder(productId, orderType, quantity, totalPrice).then(
+        (res) => {
+          console.log(res.data);
+        }
+      );
 
       // 关闭弹窗
       this.closePurchaseDialog();

@@ -294,7 +294,7 @@ export default {
               end: formatDateToISOString(item.endTime).slice(0, -5),
               tableHeight:0
             };
-            
+
           })
         );
         // console.log(this.orderEvents);
