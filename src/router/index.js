@@ -8,6 +8,7 @@ const Home = () => import("@/views/home/Home");
 const Project = () => import("@/views/projectManagement/projectManagement");
 const AddProject = () => import("@/views/projectManagement/AddProject.vue")
 const MyProject = () => import("@/views/projectManagement/MyProject.vue")
+const Projectinfo = () => import("@/views/projectManagement/projectinfo.vue")
 
 const EqupManagement = () => import("@/views/equManagement/equManagement");
 const Book = () => import("@/views/bookManagement/bookManagement");
@@ -24,7 +25,19 @@ const InformationDisplay = () =>
 const PersonalInfo = () => import("../views/personalInfo/personalInfo.vue");
 const OrganizationInfo = () =>
   import("../views/organizationInfo/organizationInfo.vue");
-const Craft = () => import("@/views/craftManagement/craftManagement.vue");
+
+const keshi = () => import("@/views/craftManagement/keshi.vue");
+const craftPage = () => import("@/views/craftManagement/craftPage.vue");
+const guangke = () => import("@/views/craftManagement/guangke.vue");
+const bomochenji = () => import("@/views/craftManagement/bomochenji.vue");
+const canza = () => import("@/views/craftManagement/canza.vue");
+const biaozheng = () => import("@/views/craftManagement/biaozheng.vue");
+const jianhe = () => import("@/views/craftManagement/jianhe.vue");
+const rechuli = () => import("@/views/craftManagement/rechuli.vue");
+const tuan = () => import("@/views/craftManagement/tuan.vue");
+const houduanjiagong = () => import("@/views/craftManagement/houduanjiagong.vue");
+const guipianqingxi = () => import("@/views/craftManagement/guipianqingxi.vue");
+
 
 const Help = () => import("../views/helpPage/help.vue");
 const EquCategory = () => import("../views/equList/equCategory.vue");
@@ -74,6 +87,11 @@ const routes = [
     component: Project
   },
   {
+    path: "/Projectinfo",
+    name: "Projectinfo",
+    component: Projectinfo
+  },
+  {
     path: "/addProject",
     name: "AddPRoject",
     component: AddProject
@@ -106,11 +124,67 @@ const routes = [
       }
     ]
   },
+  
   {
-    path: "/craft",
-    name: "Craft",
-    component: Craft
+    path: "/craftPage",
+    name: "craftPage",
+    redirect: "/craftPage/guangke",
+    component: craftPage,
+    children: [
+      {
+        path: "/craftPage/guangke",
+        name: "guangke",
+        component: guangke
+      },
+      {
+        path: "/craftPage/keshi",
+        name: "keshi",
+        component: keshi
+      },
+      {
+        path: "/craftPage/bomochenji",
+        name: "bomochenji",
+        component: bomochenji
+      },
+      {
+        path: "/craftPage/canza",
+        name: "canza",
+        component: canza
+      },
+      {
+        path: "/craftPage/biaozheng",
+        name: "biaozheng",
+        component: biaozheng
+      },
+      {
+        path: "/craftPage/jianhe",
+        name: "jianhe",
+        component: jianhe
+      },
+      {
+        path: "/craftPage/rechuli",
+        name: "rechuli",
+        component: rechuli
+      },
+      {
+        path: "/craftPage/tuan",
+        name: "tuan",
+        component: tuan
+      },
+      {
+        path: "/craftPage/houduanjiagong",
+        name: "houduanjiagong",
+        component: houduanjiagong
+      },
+      {
+        path: "/craftPage/guipianqingxi",
+        name: "guipianqingxi",
+        component: guipianqingxi
+      },
+    ]
   },
+
+
   {
     path: "/book/:id",
     name: "Book",
@@ -253,7 +327,7 @@ const router = new Router({
 router.beforeEach((to, from, next) => {
   const token = localStorage.getItem("token");
   const isAuthenticated = !!token;
-
+  
   if (to.name !== "Login" && to.name !== "Register" && !isAuthenticated) {
     next("/login");
   } else {
@@ -262,3 +336,4 @@ router.beforeEach((to, from, next) => {
 });
 
 export default router;
+

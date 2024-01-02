@@ -70,9 +70,9 @@
               placeholder="起始时间"
               v-model="EventForm.startTime"
               :picker-options="{
-                start: '08:30',
+                start: '00:00',
                 step: '00:15',
-                end: '17:00',
+                end: '24:00',
               }"
             >
             </el-time-select>
@@ -82,9 +82,9 @@
               placeholder="结束时间"
               v-model="EventForm.endTime"
               :picker-options="{
-                start: '08:30',
+                start: '00:00',
                 step: '00:15',
-                end: '17:00',
+                end: '24:00',
                 minTime: EventForm.startTime,
               }"
             >
@@ -133,9 +133,9 @@
               placeholder="起始时间"
               v-model="EventForm2.startTime"
               :picker-options="{
-                start: '08:30',
+                start: '00:00',
                 step: '00:15',
-                end: '17:00',
+                end: '24:00',
               }"
             >
             </el-time-select>
@@ -145,9 +145,9 @@
               placeholder="结束时间"
               v-model="EventForm2.endTime"
               :picker-options="{
-                start: '08:30',
+                start: '00:00',
                 step: '00:15',
-                end: '17:00',
+                end: '24:00',
                 minTime: EventForm2.startTime,
               }"
             >
@@ -220,8 +220,8 @@ export default {
         eventClick: this.handleEventClick,
         eventsSet: this.handleEvents,
         locale: zhLocale, //使整个日程图以中文的形式输出
-        slotMinTime: "08:30:00", //日程图从几点开始
-        slotMaxTime: "17:00:00", //到几点结束
+        slotMinTime: "00:00:00", //日程图从几点开始
+        slotMaxTime: "24:00:00", //到几点结束
         slotDuration: "00:15:00", //时间间隔为15分钟
         dateClick: this.handleDateClick, //定义点击日历中的日期时触发的回调函数，在此打算当点击时弹出日历
         eventDrop: this.handleEventDrop, //定义当拖拽事件结束时出发的事件，看看吧，不行的话把可拖拽禁掉

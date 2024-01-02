@@ -14,25 +14,12 @@
         @click="setCurrentProjectType('对外项目')"
         >对外项目</el-button
       >
-      <el-button
-        :type="currentTab === 'equipment' ? 'info' : 'success'"
-        style="width: 120px; margin-bottom: 15px"
-        @click="redirectToMyProject('/myProject')"
-        >我管理的项目</el-button
-      >
-      <el-button
-        :type="currentTab === 'equipment' ? 'info' : 'success'"
-        style="width: 120px; margin-bottom: 15px"
-        @click="redirectToMyProject('/addProject')"
-        >新建项目</el-button
-      >
     </div>
     <div class="project-list">
       <el-card
         class="list-item"
         v-for="(item, index) in filterProjects"
         :key="index"
-        @click.native="toggleDetail(index)"
       >
         <div class="item-base">
           <div class="img-container">
@@ -42,7 +29,6 @@
               </div>
             </el-image>
           </div>
-
           <div class="item-base-info">
             <p>项目名称：{{ item.project.projectName }}</p>
             <p>项目负责人：{{ item.project.leader }}</p>
@@ -56,81 +42,14 @@
             </p>
             <p>项目性质：{{ item.project.projectNature }}</p>
           </div>
+          <div style="left: 70%px;position: relative;">
+            <el-button type="primary" plain size="small"  @click="handleStartExperimentClick(item.project.projectId)"
+                  >查看详细信息</el-button
+                >
         </div>
-        <div class="item-detail" v-if="showDetail === index">
-          <div class="detail-1">
-            <div class="">Ⅰ项目信息</div>
-            <p>项目来源：{{ item.project.projectSource }}</p>
-            <p>
-              项目周期：{{ formattedDate(item.project.startTime) }} -
-              {{ formattedDate(item.project.endTime) }}
-            </p>
-            <p>项目预算：{{ item.project.projectBudget }}</p>
-          </div>
-          <div class="detail-2">
-            <div>Ⅱ项目进度</div>
-            <el-link :href="item.project.projectProcessUrl" type="primary"
-              >附件：项目进度单</el-link
-            >
-          </div>
-          <div class="detail-3">
-            <div>Ⅲ项目使用设备</div>
-            <p>
-              <el-button
-                v-for="(equipment, index) in item.equipmentList"
-                :key="index"
-                @click.stop="handleShowEquipment(equipment)"
-                >{{ equipment.equipmentName }}</el-button
-              >
-            </p>
-          </div>
         </div>
       </el-card>
     </div>
-    <el-dialog
-      title="用户信息"
-      :visible.sync="showUserInfo"
-      width="30%"
-      class="user-info"
-      v-if="userInfo"
-    >
-      <p>用户名：{{ userInfo.username }}</p>
-      <p>性别：{{ userInfo.gender }}</p>
-      <p>实验室：{{ userInfo.labName }}</p>
-      <p>职称：{{ userInfo.job }}</p>
-      <p>电话：{{ userInfo.tel }}</p>
-      <p>邮箱：{{ userInfo.email }}</p>
-      <span slot="footer" class="dialog-footer">
-        <el-button @click="showUserInfo = false">取 消</el-button>
-        <el-button type="primary" @click="showUserInfo = false"
-          >确 定</el-button
-        >
-      </span>
-    </el-dialog>
-    <el-dialog
-      title="设备信息"
-      :visible.sync="showEquipmentInfo"
-      width="30%"
-      class="equipment-info"
-      v-if="equipmentInfo"
-    >
-      <p>设备名称：{{ equipmentInfo.equipmentName }}</p>
-      <p>设备分类：{{ equipmentInfo.equipmentCategory }}</p>
-      <p>设备功能：{{ equipmentInfo.equipmentFunction }}</p>
-      <p>机器标签：{{ equipmentInfo.machineLabel }}</p>
-      <p>厂商：{{ equipmentInfo.manufacturer }}</p>
-      <p>规格型号：{{ equipmentInfo.specificationModel }}</p>
-      <p>所属地区：{{ equipmentInfo.area }}</p>
-      <p>实验室：{{ equipmentInfo.labName }}</p>
-      <p>联系人：{{ equipmentInfo.linkman }}</p>
-      <p>联系方式：{{ equipmentInfo.linkmanTel }}</p>
-      <span slot="footer" class="dialog-footer">
-        <el-button @click="showEquipmentInfo = false">取 消</el-button>
-        <el-button type="primary" @click="showEquipmentInfo = false"
-          >确 定</el-button
-        >
-      </span>
-    </el-dialog>
   </div>
 </template>
 <script>
@@ -153,6 +72,7 @@ export default {
       this.projectList = list;
       console.log(this.projectList);
     });
+    
   },
   computed: {
     formattedDate() {
@@ -183,6 +103,16 @@ export default {
       } else {
         this.showDetail = index;
       }
+    },
+    handleStartExperimentClick(projectId) {
+      // console.log(row);
+      const projectid = projectId;
+      this.$router.push({
+        path: "/projectinfo",
+        query: {
+          projectid,
+        },
+      });
     },
     handleShowUser(user) {
       // 在这里更新showUserInfo的状态以控制el-dialog的显示
@@ -253,12 +183,16 @@ export default {
   transform: translate(-50%, -50%);
   /* 居中显示图像 */
 }
-
+.item-base-info{
+  width: 75%;
+}
 .item-base {
   display: flex;
-  justify-content: center;
+  float: left;
+  justify-content: left;
   align-items: center;
   padding: 10px;
+  width: 100%;
 }
 
 .detail-1 {

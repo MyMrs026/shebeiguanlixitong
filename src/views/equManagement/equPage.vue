@@ -5,14 +5,14 @@
         :type="currentTab === 'equCraft' ? 'info' : 'success'"
         style="width: 120px; margin-bottom: 15px"
         @click="push('/equPage/equCraft')"
-        >设备信息展示</el-button
+        >设备工艺展示</el-button
       >
-      <el-button
+      <!-- <el-button
         :type="currentTab === 'equManagement' ? 'info' : 'success'"
         style="width: 120px; margin-bottom: 15px"
         @click="push('/equPage/equManagement')"
         >设备管理</el-button
-      >
+      > -->
     </div>
     <div class="content-area">
       <router-view></router-view>
