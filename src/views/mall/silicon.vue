@@ -170,31 +170,24 @@ export default {
       this.purchaseData.createTime = new Date();
       // 在这里处理购买逻辑，可以将购买的数据发送到后端等
       const productId = this.purchaseData.id;
-      const name = this.purchaseData.name;
-      const price = this.purchaseData.price;
       const quantity = this.purchaseQuantity;
       const totalPrice = this.purchaseData.price * this.purchaseQuantity;
-      const createTime = this.formattedDate;
-      const userId = this.userInfo.userId;
+      const orderType = "silicon"
       console.log("购买数据:", {
         productId,
-        name,
-        price,
-        totalPrice,
-        createTime,
-        userId,
+        orderType,
+        quantity,
+        totalPrice
       });
 
-      // addProductOrder(
-      //   createTime,
-      //   productId,
-      //   quantity,
-      //   0,
-      //   totalPrice,
-      //   userId
-      // ).then((res) => {
-      //   console.log(res.data);
-      // });
+      addProductOrder(
+        productId,
+        orderType,
+        quantity,
+        totalPrice
+      ).then((res) => {
+        console.log(res.data);
+      });
 
       // 关闭弹窗
       this.closePurchaseDialog();

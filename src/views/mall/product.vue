@@ -154,12 +154,8 @@ export default {
       this.purchaseData.createTime = new Date();
       // 在这里处理购买逻辑，可以将购买的数据发送到后端等
       const productId = this.purchaseData.productId;
-      const productName = this.purchaseData.productName;
-      const price = this.purchaseData.price;
       const quantity = this.purchaseQuantity;
       const totalPrice = this.purchaseData.price * this.purchaseQuantity;
-      const createTime = this.formattedDate;
-      const userId = this.userInfo.userId;
       const orderType = "product";
       console.log("购买数据:", {
         productId,
@@ -170,11 +166,11 @@ export default {
 
       addProductOrder(
         productId,
-        quantity,
         orderType,
+        quantity,
         totalPrice
-      ).then((res) => {
-        console.log(res.data);
+      ).then(res => {
+        console.log(res);
       });
 
       // 关闭弹窗

@@ -8,7 +8,7 @@
             class="equ-item"
             v-for="equipment in paginatedEquInform"
             :key="equipment.equipmentId"
-            style="text-align: center;"
+            style="text-align: center"
           >
             <div class="image-container">
               <img
@@ -29,11 +29,13 @@
                   >设备预约</el-button
                 >
               </router-link>
-              <router-link to="/test">
-                <el-button type="primary" plain size="small"
-                  >实验记录</el-button
-                >
-              </router-link>
+              <el-button
+                type="primary"
+                plain
+                size="small"
+                @click="experimentRecords(experiment.equipmentId)"
+                >实验记录</el-button
+              >
               <el-button
                 @click="openTrainModel(equipment.equipmentId)"
                 type="primary"
@@ -52,7 +54,7 @@
 
             <br />
             设备名称：{{ equipment.equipmentName }}
-            <br>
+            <br />
             设备型号：{{ equipment.specificationModel }}
           </li>
         </ul>
@@ -91,6 +93,7 @@
           <el-form-item label="项目" label-width="120px" prop="proid">
             <el-select v-model="EventForm.projectId" placeholder="请选择项目">
               <el-option
+                style="width: 200px"
                 v-for="item in projectList"
                 :key="item.projectId"
                 :label="item.projectName"
@@ -99,8 +102,9 @@
               </el-option>
             </el-select>
           </el-form-item>
-          <el-form-item>
+          <el-form-item label="实验内容" label-width="120px" prop="proid">
             <el-input
+              style="width: 200px"
               type="textarea"
               :rows="2"
               placeholder="请输入内容"
@@ -155,14 +159,14 @@ export default {
         equName: "",
         trainingId: "",
         userName: "",
-        experimentContent:"",
+        experimentContent: "",
         userId: "",
         projectId: "",
         date: "",
         startTime: "",
         endTime: "",
       },
-      formatEvent: {},
+      formatEvent: [],
       projectList: [],
       rules: {
         date: [{ required: true, message: "请选择日期", trigger: "blur" }],
@@ -243,6 +247,16 @@ export default {
         });
       }
     },
+    //跳转到实验记录
+    experimentRecords(id) {
+      this.$router.push({
+        path: "/addRecords",
+        query: {
+          curUsername,
+          id
+        },
+      });
+    },
     //培训预约弹窗
     openTrainModel(id) {
       getEquInform(id).then((res) => {
@@ -260,33 +274,21 @@ export default {
     submitClick(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          this.formatEvent = {
-            applicationStatus: 0,
-            createTime: this.formattedDate(new Date()),
-            endTime: this.formatDateTime(
-              this.EventForm.date,
-              this.EventForm.endTime
-            ),
-            startTime: this.formatDateTime(
-              this.EventForm.date,
-              this.EventForm.startTime
-            ),
-            trainingApplicationId: 0,
-            updateTime: this.formattedDate(new Date()),
-            trainingId: this.EventForm.trainingId,
-            userId: this.EventForm.userId,
-          };
+          this.formatEvent = [
+            {
+              applicationStatus: 0,
+              createTime: "",
+              endTime: "",
+              experimentContent: this.EventForm.experimentContent,
+              startTime: "",
+              trainingApplicationId: 0,
+              trainingId: this.EventForm.trainingId,
+              updateTime: "",
+              userId: this.EventForm.userId,
+            },
+          ];
           console.log(this.formatEvent);
-          applyTraining(
-            this.formatEvent.applicationStatus,
-            this.formatEvent.createTime,
-            this.formatEvent.endTime,
-            this.formatEvent.startTime,
-            this.formatEvent.trainingApplicationId,
-            this.formatEvent.updateTime,
-            this.formatEvent.trainingId,
-            this.formatEvent.userId
-          ).then((res) => {
+          applyTraining(this.formatEvent).then((res) => {
             console.log(res);
           });
         } else {
