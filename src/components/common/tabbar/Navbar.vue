@@ -53,7 +53,7 @@
               >
                 <i class="el-icon-user"></i>
               </el-tooltip> -->
-              <div>{{ this.userName }}</div>
+              <div style="font-size: 40%;color: #fff;margin-top:15% ;">{{ this.userName }}</div>
             </router-link>
           </div>
         </el-col>

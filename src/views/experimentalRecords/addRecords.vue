@@ -30,8 +30,9 @@
           <el-input v-model="ruleForm.remark" style="width: 200px"></el-input>
         </el-form-item>
         <el-form-item label-width="150px">
-          <el-button type="primary" @click="submitForm('ruleForm')">立即创建</el-button>
+          <el-button type="primary" @click="submitForm('ruleForm')">添加记录</el-button>
           <el-button @click="resetForm('ruleForm')">重置</el-button>
+          <el-button @click="deleteRecord()">结束实验</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -42,6 +43,7 @@ import {
   getEquAttr,
   addExperiment,
   getExperimentList,
+  endEqu,
 } from "../../network/equpment";
 import { getProjectDetail } from "../../network/project";
 export default {
@@ -112,6 +114,19 @@ export default {
       return formattedDate;
     },
 
+
+    deleteRecord() {
+    endEqu(this.equipmentOrderId)
+      .then(response => {
+        // 删除成功的处理逻辑
+        console.log('记录删除成功');
+        this.$router.push('/home')
+      })
+      .catch(error => {
+        // 删除失败的处理逻辑
+        console.error('记录删除失败', error);
+      });
+    },
     //查看历史实验记录
     openNewTab() {
       const equId = this.equId;
