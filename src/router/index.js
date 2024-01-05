@@ -45,6 +45,7 @@ const Bill = () => import("../views/bill/bill.vue");
 const DeviceDetail = () => import("../views/equManagement/DeviceDetail.vue");
 const EquPage = () => import("../views/equManagement/equPage.vue")
 const EquCraftList = () => import("../views/equManagement/equCraft")
+const jianceEqu = () => import("../views/equManagement/jiance.vue");
 
 const Login = () => import("@/views/login/index.vue");
 const Register = () => import("@/views/register/register.vue");
@@ -121,6 +122,11 @@ const routes = [
         path: "/equPage/equManagement",
         name: "EqupManagement",
         component: EqupManagement
+      },
+      {
+        path: "/equPage/jiance",
+        name: "jiance",
+        component: jianceEqu
       }
     ]
   },

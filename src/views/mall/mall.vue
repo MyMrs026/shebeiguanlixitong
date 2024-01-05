@@ -82,7 +82,7 @@ export default {
 .content-area {
   display: flex;
   flex-direction: column;
-  width: 80%;
+  width: 100%;
 }
 .el-button + .el-button,
 .el-checkbox.is-bordered + .el-checkbox.is-bordered {

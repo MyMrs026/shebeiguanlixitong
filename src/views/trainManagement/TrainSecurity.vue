@@ -12,6 +12,7 @@ export default {
       dataList: [],
       selection: [],
       dialogVisible: false,
+      fileUrl:"http://47.98.160.222:8080/api/file/trainword.docx"
     };
   },
   methods: {
@@ -59,49 +60,39 @@ export default {
 </script>
 
 <template>
-  <div class="train-security">
-    <MulTable
-      ref="mulTable"
-      :data="dataList"
-      :items-per-page="2"
-      row-key-field="trainingId"
-      @selection-change="handleSelectionChange"
-    >
-      <template v-slot:columns>
-        <el-table-column label="编号" type="index"> </el-table-column>
-        <el-table-column label="培训名称" prop="trainingName">
-        </el-table-column>
-        <el-table-column label="培训类型" prop="trainingType">
-        </el-table-column>
-        <el-table-column label="单价(元)" prop="trainingPrice">
-        </el-table-column>
-      </template>
-    </MulTable>
-    <el-button @click="dialogVisible = true">提交申请</el-button>
-    <el-button @click="toggleSelection">取消所有</el-button>
-
-    <el-dialog :visible.sync="dialogVisible" width="30%">
-      <div class="dialog-content">确定要提交设备培训申请吗</div>
-      <span slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="submit(selection)">确 定</el-button>
-        <el-button @click="dialogVisible = false">取 消</el-button>
-      </span>
-    </el-dialog>
+  <div class="border-style">
+    <h1>微纳加工平台培训</h1>
+    <p>根据微纳加工平台管理制度,用户需经注册审核,综合培训(含现场培训和安全培训)后方可开通门禁进入超净室;设备培训考核通过后方可自行操作设备.</p>
+    <h2>用户注册方法</h2>
+    <p>在下方页面下载填写”用户申请表”,参加培训时请携带用户申请表,身份证,申请表交由微纳加工中心存档及开通门禁.</p>
+    <h2>综合培训</h2>
+    <p>微纳加工中心每周二上午9:00-11:00组织综合培训.每期报名截止时间为每周日晚上12:00. 
+       综合培训随时开放报名.报名申请时请按要求提供姓名,机构,职位,联系电话,邮箱等信息.报名过程中如有疑问,请联系18822595138.
+       通过综合培训后方可开通门禁.
+    </p>
+    <h2>设备培训及考核</h2>
+    <p>请与各台设备的负责老师联系,确定培训,考核相关事宜.联系方式详见设备详情页.</p><br>
+    <p>附件：<a :href="fileUrl" download>微纳加工平台培训预约用户申请表</a></p>
   </div>
 </template>
 
 <style scoped>
-.train-security {
-    
-}   
-
-.dialog-content {
-  text-align: center;
-  font-size: large;
+.border-style{
+  width: 80%;
+  margin-left: 10%;
 }
-
-.dialog-footer {
-  display: flex;
-  justify-content: space-around;
+h1{
+  text-align: center;
+  font-size: 40px;
+  color: black;
+}
+p{
+  color: black;
+  text-indent: 2em;
+  
+}
+h2{
+  color: black;
+  font-size: 20px;
 }
 </style>

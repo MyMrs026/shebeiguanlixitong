@@ -7,8 +7,8 @@
         <br />
       </div> -->
       <!-- 标题+图标 -->
-      <section style="width: 90%; margin-left: 5%;">
-        <div class="border-style" style="min-width: 1700px;height: 480px;">
+      <section style="width: 90%;margin-left: 5%;">
+        <div class="border-style" style="min-width: 30%;height: 480px;">
           <section style="width: 47%;float: left;height: 80%;margin: 0 0 0 2%;">
             <h1 class="title">实验室图片</h1>
             <img
@@ -37,32 +37,32 @@
         </div>
 
         <!-- 此处为通知公告栏 -->
-        <div class="border-style" style="min-width: 1700px;margin: 0;height: 400px;">
+        <div class="border-style" style="min-width: 30%;margin: 0;height: 400px;">
           <section style="width: 62%;float: left;height: 100%;margin: 0 1% 0 2%">
               <h1 class="title" style="text-align: left;">通知公告</h1>
               <ul class="page" style="height: 75%;">
-                <ol>
-                  <time style="font-size: 25px;">{{ latestNotice.createTime | formatDate }}</time>
+                <ol class="ol-style">
+                  <time class="time-style" style="font-size: 25px;">{{ latestNotice.createTime | formatDate }}</time>
                   <a href="/notice" style="font-size: 25px;">{{ latestNotice.title}}</a>
                 </ol>
-                <li>
-                  <time style="font-size: 25px;">{{ notices[1].createTime | formatDate }}</time>
+                <li class="li-style">
+                  <time class="time-style">{{ notices[1].createTime | formatDate }}</time>
                   <a href="/notice" style="font-size: 25px;">{{ notices[1].title}}</a>
                 </li>
-                <li>
-                  <time style="font-size: 25px;">{{ notices[2].createTime | formatDate }}</time>
+                <li class="li-style">
+                  <time class="time-style">{{ notices[2].createTime | formatDate }}</time>
                   <a href="/notice" style="font-size: 25px;">{{ notices[2].title}}</a>
                 </li>
-                <li>
-                  <time style="font-size: 25px;">{{ notices[3].createTime | formatDate }}</time>
+                <li class="li-style">
+                  <time class="time-style">{{ notices[3].createTime | formatDate }}</time>
                   <a href="/notice" style="font-size: 25px;">{{ notices[3].title}}</a>
                 </li>
-                <li>
-                  <time style="font-size: 25px;">{{ notices[4].createTime | formatDate }}</time>
+                <li class="li-style">
+                  <time class="time-style">{{ notices[4].createTime | formatDate }}</time>
                   <a href="/notice" style="font-size: 25px;">{{ notices[4].title}}</a>
                 </li>
-                <li>
-                  <time style="font-size: 25px;">{{ notices[5].createTime | formatDate }}</time>
+                <li class="li-style">
+                  <time class="time-style">{{ notices[5].createTime | formatDate }}</time>
                   <a href="/notice" style="font-size: 25px;">{{ notices[5].title}}</a>
                 </li>
               </ul>
@@ -96,7 +96,7 @@
         </div>
 
         <!--设备使用情况-->
-        <div class="border-style" v-if="curUsername !== 'guest'" style="min-width: 1700px;margin: 0;">
+        <div class="border-style" v-if="curUsername !== 'guest'" style="min-width: 30%;margin: 0;height: auto;">
           <section style="width: 96%;float: left; margin-left: 2%;" :max-height="tableHeight">
             <h1 class="title">设备使用情况</h1>
             <div class="page">
@@ -124,7 +124,7 @@
         </div>
 
         <!--我的预约-->
-        <div class="border-style" v-if="curUsername !== 'guest'" style="min-width: 1700px;margin: 0;">
+        <div class="border-style" v-if="curUsername !== 'guest'" style="min-width: 30%;margin: 0;height: auto;">
           <section style="width: 96%;float: left;margin-left: 2%;" :max-height="tableHeight">
           <h1 class="title">我的预约</h1>
           <div class="page">
@@ -158,7 +158,7 @@
         </section>
         </div>
       
-      <div class="border-style" style="min-width: 1700px;margin: 0;">
+      <div class="border-style" style="min-width: 30%;margin: 0;height: auto;">
         <section style="width: 96%;float: left;margin-left: 2%;">
           <h1 class="title">超净室平面图</h1>
           <img
@@ -342,7 +342,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 
 
 .nvi{
@@ -366,28 +366,28 @@ export default {
 }
 
 .border-style{
-  margin-top: 5px;
   display: block;
   height:100%; 
   width: 100%;
   min-height: 100px;
+  margin: 5px 0 0 0;
 }
 
-ul{
+.ul-style{
   padding: 0;
 }
 
-time{
+.time-style{
   float: right;
   font-size: 20px;
   padding-right: 5%;
 }
 
-ol{
+.ol-style{
   height: 40px;
 }
 
-li{
+.li-style{
   margin-top: 1%;
   margin-left: 5%;
 }
@@ -411,7 +411,7 @@ p{
 }
 .page{
   height: 100%;
-  font-size: 22px;
+  font-size: 20px;
   color: #666;
   background-color: #fff;
   -webkit-text-size-adjust: none;

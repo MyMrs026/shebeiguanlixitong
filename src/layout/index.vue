@@ -31,7 +31,7 @@ export default {
   </div>
 </template>
 
-<style>
+<style scoped>
 .layout {
   display: flex;
   flex-direction: column;
@@ -62,6 +62,11 @@ export default {
   background-image: url("../assets/img/qqq6.png");
   background-repeat: no-repeat;
   background-size: 100% 100%;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  border: 0;
+  padding: 0;
   /* 在右侧内容过多时出现纵向滚动条 */
 }
 </style>

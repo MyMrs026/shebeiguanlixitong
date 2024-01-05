@@ -126,7 +126,7 @@
   </div>
 </template>
 <script>
-import { getEquList, getEquInform } from "../../network/equpment";
+import { getEquList, getEquInform,getProcessEqu } from "../../network/equpment";
 import { getProjectList } from "../../network/project";
 import { getLoginUserInfo } from "../../network/user";
 import { applyTraining } from "../../network/train";
@@ -335,7 +335,7 @@ export default {
     });
   },
   mounted() {
-    getEquList().then((res) => {
+    getProcessEqu().then((res) => {
       this.equinform = res.data;
       console.log(this.equinform);
     });

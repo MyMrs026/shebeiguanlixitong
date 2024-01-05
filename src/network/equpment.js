@@ -256,3 +256,19 @@ export function updateDeviceMaintenance(
     }
   })
 }
+
+//获取加工设备
+export function getProcessEqu() {
+  return request({
+    url:'/equipment/getProcessEqu',
+    method: 'get'
+  })
+}
+
+//获取检测设备
+export function getDetectEqu() {
+  return request({
+    url:'/equipment/getDetectEqu',
+    method: 'get'
+  })
+}

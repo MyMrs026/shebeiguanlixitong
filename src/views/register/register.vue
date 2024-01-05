@@ -179,7 +179,7 @@ export default {
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background: url("../../assets/img/loginbg1.jpg");
+  /* background: url("../../assets/img/loginbg1.jpg"); */
   width:100%;
   position:fixed;
   background-size:100% 100%;

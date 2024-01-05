@@ -89,7 +89,7 @@
     },
     created() {
 
-      this.currentTab = "craftPage";
+      this.currentTab = "guangke";
       this.$router.push("/craftPage/guangke");
   
       // window.location.reload();

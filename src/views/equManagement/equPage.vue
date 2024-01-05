@@ -5,7 +5,13 @@
         :type="currentTab === 'equCraft' ? 'info' : 'success'"
         style="width: 120px; margin-bottom: 15px"
         @click="push('/equPage/equCraft')"
-        >设备工艺展示</el-button
+        >加工设备</el-button
+      >
+      <el-button
+        :type="currentTab === 'jiance' ? 'info' : 'success'"
+        style="width: 120px; margin-bottom: 15px"
+        @click="push('/equPage/jiance')"
+        >检测设备</el-button
       >
       <!-- <el-button
         :type="currentTab === 'equManagement' ? 'info' : 'success'"
@@ -65,6 +71,7 @@ export default {
   flex-direction: column;
   margin-top: 30px;
   margin-left: 30px;
+  width:15%;
 }
 
 .content-area {
