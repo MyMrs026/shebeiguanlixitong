@@ -3,13 +3,13 @@
     <div class="project-buttons">
       <!-- 这里放四个按钮 -->
       <el-button
-        :type="currentTab === 'security' ? 'info' : 'success'"
+        :type="currentTab === 'inside' ? 'info' : 'success'"
         style="width: 120px; margin-bottom: 15px"
         @click="setCurrentProjectType('对内项目')"
         >对内项目</el-button
       >
       <el-button
-        :type="currentTab === 'equipment' ? 'info' : 'success'"
+        :type="currentTab === 'outside' ? 'info' : 'success'"
         style="width: 120px; margin-bottom: 15px"
         @click="setCurrentProjectType('对外项目')"
         >对外项目</el-button
@@ -126,11 +126,31 @@ export default {
       this.equipmentInfo = equipment;
     },
     setCurrentProjectType(projectType) {
+      if (this.currentProjectType === "对内项目") {
+        this.currentTab = 'outside';
+      }
+      else{
+        this.currentTab = 'inside';
+      }
       this.currentProjectType = projectType;
     },
     redirectToMyProject(route) {
       this.$router.push(route);
     },
+  },
+  created() {
+    // 初始化为安全培训
+    this.currentTab = "inside";
+    // 初始导航
+    this.$router.push("/project");
+
+    // window.location.reload();
+    // 获取登录用户信息
+    getLoginUserInfo().then((res) => {
+      // console.log(res.data);
+      this.curUsername = res.data.username;
+      // console.log(this.curUsername);
+    });
   },
 };
 </script>
